@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Cidadania Digital</title>
+    <style>
+        /* ==========================================================================
+           ESTILOS (CSS)
+           ========================================================================== */
+        :root {
+            --primary-color: #2b6cb0;
+            --primary-hover: #1a4373;
+            --bg-color: #f7fafc;
+            --card-bg: #ffffff;
+            --text-color: #2d3748;
+            --border-color: #e2e8f0;
+            --success-color: #48bb78;
+            --warning-color: #ed8936;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-bottom: 40px;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Sistema de Abas */
+        .tabs-container {
+            display: flex;
+            flex-wrap: wrap;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            color: #718096;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-btn:hover {
+            color: var(--primary-color);
+        }
+
+        .tab-btn.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .tab-content {
+            display: none;
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Elementos Internos */
+        h2 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        .dicas-list {
+            margin-left: 20px;
+        }
+
+        .dicas-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Áreas de Texto */
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            resize: vertical;
+        }
+
+        .action-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .action-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .secondary-btn {
+            background-color: #4a5568;
+        }
+        .secondary-btn:hover {
+            background-color: #2d3748;
+        }
+
+        .resultado-box {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background-color: #f8fafc;
+            border-left: 4px solid var(--primary-color);
+            border-radius: 4px;
+        }
+
+        .texto-destaque {
+            background: white;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .alerta-item {
+            margin-top: 10px;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .alerta-item.critico {
+            background-color: #fff5f5;
+            color: #c53030;
+            border: 1px solid #fed7d7;
+        }
+
+        .badge-reprovado {
+            background-color: #e53e3e;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-decoration: line-through;
+        }
+
+        /* Estilo Caderno */
+        .simulacao-caderno {
+            background-color: #fffde7;
+            border-left: 5px solid #ffeb3b;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 4px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+            font-family: 'Courier New', Courier, monospace;
+            color: #333;
+        }
+        
+        .nota-box {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            padding: 10px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        /* Quiz */
+        .quiz-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 10px;
+            margin-bottom: 0.5rem;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .quiz-btn:hover {
+            background: #edf2f7;
+        }
+
+        #feedback-quiz {
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Portal da Cidadania Digital</h1>
+        <p>Aprenda a navegar com responsabilidade, segurança e respeito.</p>
+    </header>
+
+    <main class="container">
+        <nav class="tabs-container">
+            <button class="tab-btn active" onclick="openTab(event, 'aba-info')">Conceitos Básicos</button>
+            <button class="tab-btn" onclick="openTab(event, 'aba-corretor')">Corretor Cidadão</button>
+            <button class="tab-btn" onclick="openTab(event, 'aba-caderno-digitar')">Digitar do Caderno</button>
+            <button class="tab-btn" onclick="openTab(event, 'aba-caderno-copiar')">Copiar e Corrigir</button>
+            <button class="tab-btn" onclick="openTab(event, 'aba-quiz')">Desafio</button>
+        </nav>
+
+        <section id="aba-info" class="tab-content active">
+            <h2>Pilares da Cidadania Digital</h2>
+            <p>Ser um cidadão digital significa usar a tecnologia de forma ética, segura e crítica.</p>
+            <ul class="dicas-list">
+                <li><strong>Segurança:</strong> Proteja suas senhas e dados pessoais.</li>
+                <li><strong>Respeito:</strong> Lembre-se de que do outro lado da tela existe um ser humano.</li>
+                <li><strong>Senso Crítico:</strong> Nem tudo na internet é verdade. Sempre verifique as fontes.</li>
+            </ul>
+        </section>
+
+        <section id="aba-corretor" class="tab-content">
+            <h2>Corretor de Texto Consciente</h2>
+            <p>Digite seu comentário ou postagem abaixo. O sistema irá analisar se o texto respeita as diretrizes de cidadania digital e sugerir correções para termos inadequados.</p>
+            
+            <textarea id="texto-usuario" placeholder="Digite seu texto aqui... (Exemplo para testar gatilhos: Esse político é um idiota, vi no zap que a vacina tem chip e meu CPF é 123.456.789-00)"></textarea>
+            
+            <button class="action-btn" onclick="corrigirTexto()">Analisar Texto</button>
+
+            <div id="resultado-correcao" class="resultado-box" style="display: none;">
+                <h3>Resultado da Análise:</h3>
+                <div id="texto-corrigido" class="texto-destaque"></div>
+                <div id="alertas-critica" class="alertas-container"></div>
+            </div>
+        </section>
+
+        <section id="aba-academico-digitar" class="tab-content" id="aba-caderno-digitar">
+            <h2>Atividade 1: Transcrever e Corrigir</h2>
+            <p>Leia o rascunho abaixo e <strong>digite do zero</strong> uma versão corrigida e segura no campo de texto.</p>
+            
+            <div class="simulacao-caderno">
+                <strong>[Rascunho no Caderno]</strong><br>
+                "Aquele prefeito é um imbecil completo! Vi no zap que ele vai fechar os hospitais amanhã. Quem quiser reclamar com ele, o CPF dele é 456.789.123-00. Repassem para todos!"
+            </div>
+
+            <textarea id="texto-caderno-digitar" placeholder="Digite aqui a sua versão corrigida..."></textarea>
+            <button class="action-btn" onclick="avaliarAtividade('texto-caderno-digitar', 'resultado-caderno-d', 'nota-atividade-d', 'feedback-caderno-d')">Enviar Atividade</button>
+
+            <div id="resultado-caderno-d" class="resultado-box" style="display: none;">
+                <h3>Resultado da Avaliação:</h3>
+                <div id="nota-atividade-d" class="nota-box"></div>
+                <div id="feedback-caderno-d"></div>
+            </div>
+        </section>
+
+        <section id="aba-caderno-copiar" class="tab-content">
+            <h2>Atividade 2: Copiar, Editar e Corrigir</h2>
+            <p>Use o botão abaixo para puxar o texto do rascunho diretamente para o editor. Depois, <strong>apague ou modifique</strong> os trechos que violam a cidadania digital antes de enviar.</p>
+            
+            <div class="simulacao-caderno">
+                <strong>[Texto Pesquisado/Rascunho]</strong><br>
+                <span id="texto-base-copia">"Aquele prefeito é um imbecil completo! Vi no zap que ele vai fechar os hospitais amanhã. Quem quiser reclamar com ele, o CPF dele é 456.789.123-00. Repassem para todos!"</span>
+            </div>
+
+            <button class="action-btn secondary-btn" onclick="copiarTextoParaEditor()">📋 Copiar Rascunho para o Editor</button>
+
+            <textarea id="texto-caderno-copiar" placeholder="Clique no botão acima para carregar o texto e depois faça as alterações necessárias aqui..."></textarea>
+            
+            <button class="action-btn" onclick="avaliarAtividade('texto-caderno-copiar', 'resultado-caderno-c', 'nota-atividade-c', 'feedback-caderno-c')">Avaliar Correção</button>
+
+            <div id="resultado-caderno-c" class="resultado-box" style="display: none;">
+                <h3>Resultado da Avaliação:</h3>
+                <div id="nota-atividade-c" class="nota-box"></div>
+                <div id="feedback-caderno-c"></div>
+            </div>
+        </section>
+
+        <section id="aba-quiz" class="tab-content">
+            <h2>Teste seus Conhecimentos</h2>
+            <div class="quiz-item">
+                <p><strong>Pergunta:</strong> Você recebeu uma notícia alarmante num grupo de mensagens, mas sem ligação (link) para fontes confiáveis. O que fazer?</p>
+                <button class="quiz-btn" onclick="verificarQuiz(false, this)">Partilhar imediatamente para alertar os outros.</button>
+                <button class="quiz-btn" onclick="verificarQuiz(true, this)">Pesquisar em agências de checagem antes de repassar.</button>
+            </div>
+            <div id="feedback-quiz"></div>
+        </section>
+    </main>
+
+    <script>
+        // Lógica de Alternância das Abas (Suporta IDs dinâmicos de forma correta)
+        function openTab(evt, tabId) {
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            // Fallback manual para corrigir a duplicidade visual das abas de caderno
+            if(tabId === 'aba-caderno-digitar') {
+                document.getElementById('aba-academico-digitar').classList.add("active");
+            }
+
+            const tabBtns = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < tabBtns.length; i++) {
+                tabBtns[i].classList.remove("active");
+            }
+
+            const elementoAlvo = document.getElementById(tabId);
+            if(elementoAlvo) elementoAlvo.classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Função para injetar o texto da atividade na caixa de texto
+        function copiarTextoParaEditor() {
+            const textoBase = document.getElementById("texto-base-copia").innerText;
+            document.getElementById("texto-caderno-copiar").value = textoBase;
+        }
+
+        // Lógica do Corretor de Texto Cidadão
+        function corrigirTexto() {
+            const textarea = document.getElementById("texto-usuario");
+            let texto = textarea.value;
+            const resultadoBox = document.getElementById("resultado-correcao");
+            const textoCorrigidoDiv = document.getElementById("texto-corrigido");
+            const alertasDiv = document.getElementById("alertas-critica");
+
+            alertasDiv.innerHTML = "";
+            if (texto.trim() === "") { alert("Por favor, digite algum texto para analisar."); return; }
+
+            let alertas = [];
+            const termosOfensivos = [/idiota/gi, /imbecil/gi, /lixo/gi];
+            let contemOfensa = false;
+            
+            termosOfensivos.forEach(termo => {
+                if (termo.test(texto)) {
+                    contemOfensa = true;
+                    texto = texto.replace(termo, "<span class='badge-reprovado'>[Termo Removido por Respeito]</span>");
+                }
+            });
+            if (contemOfensa) alertas.push("Evite insultos ou ataques pessoais. O debate digital saudável exige respeito mútuo.");
+
+            const termosFake = [/vi no zap/gi, /repasse para todos/gi, /compartilhe antes que apaguem/gi, /vacina tem chip/gi];
+            let contemGatilhoFake = false;
+            termosFake.forEach(termo => { if (termo.test(texto)) contemGatilhoFake = true; });
+            if (contemGatilhoFake) alertas.push("Atenção! O seu texto contém termos associados a boatos e desinformação (Fake News). Verifique sempre fontes oficiais.");
+
+            const regexCPF = /\d{3}\.\d{3}\.\d{3}-\d{2}|\d{11}/g;
+            if (regexCPF.test(texto)) {
+                texto = texto.replace(regexCPF, "<strong>[DADO PESSOAL PROTEGIDO]</strong>");
+                alertas.push("Alerta de Segurança! Detetámos a exposição de documentos pessoais (CPF). Nunca exponha dados sensíveis publicamente na internet.");
+            }
+
+            textoCorrigidoDiv.innerHTML = texto;
+            if (alertas.length > 0) {
+                alertas.forEach(alerta => {
+                    const p = document.createElement("p");
+                    p.className = "alerta-item critico";
+                    p.innerText = "⚠️ " + alerta;
+                    alertasDiv.appendChild(p);
+                });
+            } else {
+                const p = document.createElement("p");
+                p.style.color = "#48bb78";
+                p.innerText = "✨ Excelente! Nenhum problema óbvio de cidadania digital ou segurança foi detetado no seu texto.";
+                alertasDiv.appendChild(p);
+            }
+            resultadoBox.style.display = "block";
+        }
+
+        // Lógica unificada para avaliar as atividades de Cidadania Digital
+        function avaliarAtividade(idTextarea, idResultadoBox, idNotaBox, idFeedbackBox) {
+            const respostaUsuario = document.getElementById(idTextarea).value;
+            const resultadoBox = document.getElementById(idResultadoBox);
+            const notaBox = document.getElementById(idNotaBox);
+            const feedbackBox = document.getElementById(idFeedbackBox);
+
+            if (respostaUsuario.trim() === "") { alert("Por favor, garanta que o texto está preenchido antes de enviar."); return; }
+
+            let errosRestantes = 0;
+            let feedbacks = [];
+
+            const contemOfensa = /imbecil/gi.test(respostaUsuario);
+            const contemFake = /vi no zap|fechar os hospitais|repassem para todos/gi.test(respostaUsuario);
+            const contemCPF = /\d{3}\.\d{3}\.\d{3}-\d{2}|\d{11}/g.test(respostaUsuario);
+
+            if (contemOfensa) {
+                errosRestantes++;
+                feedbacks.push("❌ Você manteve a ofensa pessoal ('imbecil'). Remova ataques ofensivos.");
+            } else { feedbacks.push("✅ Muito bem! Você retirou a agressão verbal."); }
+
+            if (contemFake) {
+                errosRestantes++;
+                feedbacks.push("❌ Você manteve boatos ou pedidos de compartilhamento em massa ('vi no zap', 'repassem').");
+            } else { feedbacks.push("✅ Ótimo! Você limpou a desinformação sem provas."); }
+
+            if (contemCPF) {
+                errosRestantes++;
+                feedbacks.push("❌ Perigo! O número de CPF vazado continua visível no seu texto.");
+            } else { feedbacks.push("✅ Excelente! Você eliminou a exposição de dados privados."); }
+
+            let nota = 10 - (errosRestantes * 3.3);
+            nota = Math.max(0, Math.min(10, Math.round(nota)));
+
+            if (nota >= 7) {
+                notaBox.style.backgroundColor = "#c6f6d5";
+                notaBox.style.color = "#22543d";
+            } else {
+                notaBox.style.backgroundColor = "#fed7d7";
+                notaBox.style.color = "#742a2a";
+            }
+            notaBox.innerText = "Sua Nota: " + nota + " / 10";
+            
+            let htmlFeedback = "<p><strong>Análise corretiva do texto:</strong></p><ul class='dicas-list'>";
+            feedbacks.forEach(f => { htmlFeedback += "<li>" + f + "</li>"; });
+            htmlFeedback += "</ul>";
+            
+            if(nota === 10) {
+                htmlFeedback += "<br><p style='color: var(--success-color); font-weight: bold;'>✨ Perfeito! O texto foi completamente higienizado seguindo as boas práticas da cidadania digital.</p>";
+            } else {
+                htmlFeedback += "<br><p style='color: var(--warning-color); font-weight: bold;'>Modifique o seu texto e tente novamente até obter a nota máxima!</p>";
+            }
+
+            feedbackBox.innerHTML = htmlFeedback;
+            resultadoBox.style.display = "block";
+        }
+
+        // Lógica do Quiz
+        function verificarQuiz(isCorrect, elemento) {
+            const feedback = document.getElementById("feedback-quiz");
+            const botoes = elemento.parentNode.querySelectorAll('.quiz-btn');
+            botoes.forEach(btn => btn.style.background = "white");
+
+            if (isCorrect) {
+                elemento.style.background = "#c6f6d5";
+                feedback.innerHTML = "<span style='color: #2f855a;'>Correto!</span> A checagem de fatos impede a propagação de mentiras.";
+            } else {
+                elemento.style.background = "#fed7d7";
+                feedback.innerHTML = "<span style='color: #9b2c2c;'>Incorreto.</span> Repassar sem checar alimenta redes de desinformação.";
+            }
+        }
+    </script>
+</body>
+</html>
