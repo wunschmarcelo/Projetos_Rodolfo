@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PORTAL DE EDUCAÇÃO DIGITAL E TECNOLOGIA</title>
+    <style>
+        /* RESET E CONFIGURAÇÕES GERAIS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #E0F7FA;
+            color: #333;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        /* TEXTO EM CAIXA ALTA */
+        h1, h2, h3, p, a, span, div {
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* TOPO DO PORTAL */
+        header {
+            background-color: #0288D1;
+            color: white;
+            padding: 30px 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        header p { font-size: 1.2rem; font-weight: bold; color: #E1F5FE; }
+
+        /* CONTAINER PRINCIPAL */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        /* SEÇÃO SOBRE A EDUCAÇÃO DIGITAL */
+        .secao-texto {
+            background: #F5F5F5;
+            border-left: 6px solid #0288D1;
+            padding: 20px;
+            border-radius: 0 15px 15px 0;
+            margin-bottom: 30px;
+            text-align: justify;
+        }
+
+        .secao-texto h2 {
+            color: #01579B;
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+        }
+
+        .secao-texto p {
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+            color: #455A64;
+            text-transform: none; /* Mantém o texto explicativo mais legível, tirando o uppercase se preferir, ou comente esta linha */
+        }
+
+        /* CONFIGURAÇÃO DOS BLOCOS DE LINKS */
+        .categoria-titulo {
+            color: #01579B;
+            font-size: 1.5rem;
+            margin: 25px 0 15px 0;
+            border-bottom: 3px dashed #B0BEC5;
+            padding-bottom: 5px;
+            text-align: left;
+        }
+
+        .grid-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        /* CARD DE LINK / BOTÃO */
+        .card-link {
+            background: #FFFFFF;
+            border: 3px solid #0288D1;
+            border-radius: 12px;
+            padding: 20px;
+            text-decoration: none;
+            color: #0288D1;
+            font-weight: bold;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px #01579B;
+            transition: all 0.1s ease;
+            cursor: pointer;
+        }
+
+        .card-link:active {
+            transform: translateY(4px);
+            box-shadow: 0 0px #01579B;
+        }
+
+        /* CORES DIFERENTES PARA O TÉCNICO */
+        .card-tecnico {
+            border-color: #4CAF50;
+            color: #4CAF50;
+            box-shadow: 0 4px #388E3C;
+        }
+        
+        .card-tecnico:active {
+            box-shadow: 0 0px #388E3C;
+        }
+
+        .emoji-card {
+            font-size: 1.8rem;
+        }
+
+        /* RODAPÉ */
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #757575;
+            border-top: 1px solid #E0E0E0;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>PORTAL DE EDUCAÇÃO DIGITAL</h1>
+        <p>TECNOLOGIA, INCLUSÃO E CULTURA MAKER NA ESCOLA</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- INTRODUÇÃO PEDAGÓGICA -->
+        <div class="secao-texto">
+            <h2>O COMPROMISSO COM A EDUCAÇÃO DIGITAL EM SANTA CATARINA</h2>
+            <p>ESTE PORTAL CONCENTRA AS ATIVIDADES PRÁTICAS E JOGOS DESENVOLVIDOS PARA OS ESTUDANTES, PROMOVENDO O LETRAMENTO DIGITAL DESDE OS ANOS INICIAIS ATÉ A FORMAÇÃO PROFISSIONAL.</p>
+            <p>NOSSO TRABALHO ESTÁ ALINHADO AO <strong>CURRÍCULO BASE DO TERRITÓRIO CATARINENSE (CBTC)</strong> E ÀS DIRETRIZES DA <strong>COMPETÊNCIA 5 DA BNCC (CULTURA DIGITAL)</strong>. BUSCAMOS REFORÇAR O PENSAMENTO COMPUTACIONAL, A CULTURA MAKER, A INCLUSÃO DE MANEIRA ADAPTADA E O USO SEGURO E CONSCIENTE DA INTERNET, FORMANDO CIDADÃOS CRÍTICOS E PRODUTORES DE TECNOLOGIA, E NÃO APENAS CONSUMIDORES.</p>
+        </div>
+
+        <!-- ENSINO FUNDAMENTAL -->
+        <div class="categoria-titulo">🏫 ENSINO FUNDAMENTAL</div>
+        <div class="grid-links">
+            
+            <a href="ensino-fundamental/1-ano/index.html" class="card-link">
+                <span class="emoji-card">🧸</span>
+                <span>1º ANO FUNDAMENTAL</span>
+            </a>
+
+            <a href="ensino-fundamental/2-ano/index.html" class="card-link">
+                <span class="emoji-card">🎨</span>
+                <span>2º ANO FUNDAMENTAL</span>
+            </a>
+
+            <a href="ensino-fundamental/3-ano/index.html" class="card-link">
+                <span class="emoji-card">🌱</span>
+                <span>3º ANO FUNDAMENTAL</span>
+            </a>
+
+            <a href="ensino-fundamental/4-ano/index.html" class="card-link">
+                <span class="emoji-card">🚀</span>
+                <span>4º ANO FUNDAMENTAL</span>
+            </a>
+
+            <a href="ensino-fundamental/5-ano/index.html" class="card-link">
+                <span class="emoji-card">📐</span>
+                <span>5º ANO FUNDAMENTAL</span>
+            </a>
+
+            <a href="ensino-fundamental/6-ano/index.html" class="card-link">
+                <span class="emoji-card">🧪</span>
+                <span>6º ANO FUNDAMENTAL</span>
+            </a>
+
+            <a href="ensino-fundamental/7-ano/index.html" class="card-link">
+                <span class="emoji-card">🤖</span>
+                <span>7º ANO FUNDAMENTAL</span>
+            </a>
+
+        </div>
+
+        <!-- CURSO TÉCNICO -->
+        <div class="categoria-titulo">💻 CURSO TÉCNICO EM INFORMÁTICA</div>
+        <div class="grid-links">
+            
+            <a href="tecnico/1-ano/index.html" class="card-link card-tecnico">
+                <span class="emoji-card">⚡</span>
+                <span>1º ANO CURSO TÉCNICO</span>
+            </a>
+
+            <a href="tecnico/2-ano/index.html" class="card-link card-tecnico">
+                <span class="emoji-card">☕</span>
+                <span>2º ANO CURSO TÉCNICO</span>
+            </a>
+
+        </div>
+
+    </div>
+
+    <footer>
+        <p>DESENVOLVIDO PARA SUPORTE ÀS AULAS DE TECNOLOGIA E INFORMÁTICA. 🌐</p>
+    </footer>
+
+</body>
+</html>
