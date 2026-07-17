@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESPAÇO DIGITAL INTERATIVO - 1º ANO (FIXO)</title>
+    <style>
+        /* --- ESTILOS GERAIS COGNITIVOS E VISUAIS --- */
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+            background-color: #f0fdf4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            background-color: #4338ca;
+            color: white;
+            width: 100%;
+            text-align: center;
+            padding: 15px 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        header h1 { margin: 0; font-size: 26px; text-transform: uppercase; }
+        header p { margin: 5px 0 0 0; font-size: 15px; opacity: 0.9; text-transform: uppercase; font-weight: bold; }
+
+        /* --- SISTEMA DE ABAS --- */
+        .tabs-container {
+            width: 95%;
+            max-width: 1000px;
+            margin-top: 20px;
+        }
+
+        .tabs-menu {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: -2px;
+        }
+
+        .tab-btn {
+            background-color: #e0e7ff;
+            border: 3px solid #b4c6fc;
+            border-bottom: none;
+            padding: 12px 16px;
+            font-size: 13px;
+            font-weight: bold;
+            font-family: inherit;
+            color: #3730a3;
+            cursor: pointer;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            transition: 0.2s;
+            text-transform: uppercase;
+        }
+
+        .tab-btn:hover { background-color: #c7d2fe; }
+
+        .tab-btn.active {
+            background-color: white;
+            border-color: #4338ca;
+            color: #4338ca;
+            padding-bottom: 14px;
+            z-index: 2;
+        }
+
+        .tab-content {
+            background-color: white;
+            border: 4px solid #4338ca;
+            border-radius: 0 12px 12px 12px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            display: none;
+            min-height: 400px;
+        }
+
+        .tab-content.active { display: block; }
+
+        /* --- DESIGN DAS ATIVIDADES --- */
+        .game-title { font-size: 24px; margin-top: 0; text-align: center; text-transform: uppercase; color: #1e1b4b; }
+        .game-desc { text-align: center; font-size: 16px; color: #4b5563; margin-bottom: 25px; text-transform: uppercase; font-weight: bold; }
+        .feedback-box { text-align: center; font-size: 22px; font-weight: bold; margin-top: 15px; min-height: 40px; text-transform: uppercase; }
+        
+        .btn-group { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 10px; }
+
+        /* Controles do Professor para guiar a turma junta */
+        .nav-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 500px;
+            margin: 20px auto 0 auto;
+            border-top: 2px dashed #cbd5e1;
+            padding-top: 15px;
+        }
+
+        .btn-nav {
+            background-color: #475569;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            text-transform: uppercase;
+        }
+        .btn-nav:hover { background-color: #334155; }
+        .btn-nav:disabled { background-color: #cbd5e1; cursor: not-allowed; }
+
+        .counter-label {
+            font-size: 16px;
+            font-weight: bold;
+            color: #475569;
+        }
+
+        .main-card { 
+            background-color: #f9fafb; 
+            border: 4px dashed #4338ca; 
+            border-radius: 20px; 
+            padding: 20px; 
+            font-size: 24px; 
+            font-weight: bold; 
+            text-align: center; 
+            max-width: 500px; 
+            margin: 0 auto 20px auto; 
+            text-transform: uppercase;
+        }
+
+        .big-emoji { font-size: 85px; display: block; margin-bottom: 12px; }
+
+        .input-copia {
+            display: block;
+            width: 85%;
+            max-width: 450px;
+            margin: 20px auto;
+            padding: 15px;
+            font-size: 22px;
+            font-family: inherit;
+            text-transform: uppercase;
+            border: 4px solid #b4c6fc;
+            border-radius: 12px;
+            text-align: center;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+        .input-copia:focus {
+            outline: none;
+            border-color: #4338ca;
+            background-color: #eff6ff;
+        }
+
+        .textarea-copia {
+            display: block;
+            width: 90%;
+            max-width: 550px;
+            margin: 20px auto;
+            padding: 15px;
+            font-size: 18px;
+            font-family: inherit;
+            text-transform: uppercase;
+            border: 4px solid #b4c6fc;
+            border-radius: 12px;
+            text-align: left;
+            font-weight: bold;
+            resize: none;
+            height: 100px;
+        }
+        .textarea-copia:focus {
+            outline: none;
+            border-color: #4338ca;
+            background-color: #eff6ff;
+        }
+
+        .btn-game { 
+            font-size: 18px; 
+            font-weight: bold; 
+            padding: 16px 28px; 
+            border: none; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            color: white; 
+            font-family: inherit; 
+            text-transform: uppercase; 
+            box-shadow: 0 5px 0 rgba(0,0,0,0.15); 
+        }
+        .btn-game:active { transform: translateY(3px); box-shadow: none; }
+        
+        .btn-blue { background-color: #2563eb; }
+        .btn-amber { background-color: #d97706; }
+        .btn-purple { background-color: #9333ea; }
+        .btn-pink { background-color: #db2777; }
+        .btn-green { background-color: #16a34a; }
+        .btn-red { background-color: #dc2626; }
+
+        /* --- PALAVRAS CRUZADAS E CAÇA-PALAVRAS --- */
+        .grid-cruzada {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px auto;
+        }
+
+        .celula-cruzada {
+            width: 50px;
+            height: 50px;
+            border: 3px solid #4338ca;
+            border-radius: 8px;
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 50px;
+            text-transform: uppercase;
+            background-color: #faf5ff;
+            color: #4338ca;
+        }
+
+        .celula-cruzada.preenchida {
+            background-color: #e0e7ff;
+        }
+
+        .teclado-letras {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .btn-letra {
+            width: 45px;
+            height: 45px;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            background-color: #3b82f6;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #1d4ed8;
+            font-family: inherit;
+        }
+
+        .btn-letra:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #1d4ed8;
+        }
+
+        .grid-caca {
+            display: grid;
+            grid-template-columns: repeat(6, 50px);
+            gap: 6px;
+            justify-content: center;
+            margin: 20px auto;
+        }
+
+        .celula-caca {
+            width: 50px;
+            height: 50px;
+            border: 3px solid #b4c6fc;
+            border-radius: 8px;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 46px;
+            cursor: pointer;
+            background-color: white;
+            color: #1e3a8a;
+            user-select: none;
+            transition: 0.2s;
+        }
+
+        .celula-caca.selecionada {
+            background-color: #10b981;
+            color: white;
+            border-color: #047857;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🌟 ESPAÇO DIGITAL INTERATIVO 🌟</h1>
+        <p>1º ANO - EEB RODOLFO ZIPPERER</p>
+    </header>
+
+    <div class="tabs-container">
+        <div class="tabs-menu" id="menu-abas">
+            <button class="tab-btn active" id="btn-armazenamento" onclick="openTab(event, 'armazenamento')">💾 ONDE GUARDA?</button>
+            <button class="tab-btn" id="btn-transmissao" onclick="openTab(event, 'transmissao')">🗣️ BOCA OU TELA?</button>
+            <button class="tab-btn" id="btn-tiposdado" onclick="openTab(event, 'tiposdado')">🔢 LETRA OU NÚMERO?</button>
+            <button class="tab-btn" id="btn-seguranca" onclick="openTab(event, 'seguranca')">🕵️‍♂️ DETETIVE DIGITAL</button>
+            <button class="tab-btn" id="btn-atitudes" onclick="openTab(event, 'atitudes')">🟢 SEMÁFORO VIRTUAL</button>
+            <button class="tab-btn" id="btn-copia" onclick="openTab(event, 'copia')">✍️ COPIA JOGUINHO</button>
+            <button class="tab-btn" id="btn-copiapalavras" onclick="openTab(event, 'copiapalavras')">🔤 COPIA PALAVRAS</button>
+            <button class="tab-btn" id="btn-copiatextos" onclick="openTab(event, 'copiatextos')">📖 COPIA TEXTOS</button>
+            <button class="tab-btn" id="btn-correcao" onclick="openTab(event, 'correcao')">✏️ CORREÇÃO DIGITAL</button>
+            <button class="tab-btn" id="btn-cruzada" onclick="openTab(event, 'cruzada')">🧩 PALAVRAS CRUZADAS</button>
+            <button class="tab-btn" id="btn-cacapalavras" onclick="openTab(event, 'cacapalavras')">🔍 CAÇA-PALAVRAS</button>
+        </div>
+
+        <!-- 1. ONDE GUARDA -->
+        <div id="armazenamento" class="tab-content active">
+            <h2 class="game-title" style="color: #2563eb;">ONDE GUARDA?</h2>
+            <p class="game-desc">OLHE O DESENHO! ISSO FICA NO MUNDO REAL OU NO COMPUTADOR?</p>
+            <div class="main-card" id="card-armazenamento">...</div>
+            <div class="btn-group">
+                <button class="btn-game btn-amber" onclick="jogos.armazenamento.verificar('real')">📦 MUNDO REAL / PAPEL</button>
+                <button class="btn-game btn-blue" onclick="jogos.armazenamento.verificar('digital')">💻 COMPUTADOR / DIGITAL</button>
+            </div>
+            <div class="feedback-box" id="fb-armazenamento"></div>
+            <div class="nav-controls">
+                <button class="btn-nav" onclick="jogos.armazenamento.anterior()">⬅️ ANTERIOR</button>
+                <span class="counter-label" id="lbl-armazenamento">1 / 10</span>
+                <button class="btn-nav" onclick="jogos.armazenamento.proxima()">PRÓXIMA ➡️</button>
+            </div>
+        </div>
+
+        <!-- 2. BOCA OU TELA -->
+        <div id="transmissao" class="tab-content">
+            <h2 class="game-title" style="color: #d97706;">🗣️ BOCA OU TELA?</h2>
+            <p class="game-desc">ESSA CONVERSA ACONTECE PELA BOCA OU PELA TELA DO COMPUTADOR?</p>
+            <div class="main-card" id="card-transmissao">...</div>
+            <div class="btn-group">
+                <button class="btn-game btn-purple" onclick="jogos.transmissao.verificar('boca')">🗣️ BOCA / VOZ</button>
+                <button class="btn-game btn-blue" onclick="jogos.transmissao.verificar('tela')">💻 TELA / INTERNET</button>
+            </div>
+            <div class="feedback-box" id="fb-transmissao"></div>
+            <div class="nav-controls">
+                <button class="btn-nav" onclick="jogos.transmissao.anterior()">⬅️ ANTERIOR</button>
+                <span class="counter-label" id="lbl-transmissao">1 / 10</span>
+                <button class="btn-nav" onclick="jogos.transmissao.proxima()">PRÓXIMA ➡️</button>
+            </div>
+        </div>
+
+        <!-- 3. LETRA OU NÚMERO -->
+        <div id="tiposdado" class="tab-content">
+            <h2 class="game-title" style="color: #ea580c;">LETRA OU NÚMERO?</h2>
+            <p class="game-desc">OLHE PARA O CARD ABAIXO. O QUE TEM NELE?</p>
+            <div class="main-card" id="card-tiposdado" style="font-size: 55px; padding: 20px; color: #1e3a8a;">...</div>
+            <div class="btn-group">
+                <button class="btn-game btn-pink" onclick="jogos.tiposdado.verificar('texto')">🔤 É LETRA / TEXTO</button>
+                <button class="btn-game btn-blue" onclick="jogos.tiposdado.verificar('numero')">🔢 É NÚMERO</button>
+            </div>
+            <div class="feedback-box" id="fb-tiposdado"></div>
+            <div class="nav-controls">
+                <button class="btn-nav" onclick="jogos.tiposdado.anterior()">⬅️ ANTERIOR</button>
+                <span class="counter-label" id="lbl-tiposdado">1 / 10</span>
+                <button class="btn-nav" onclick="jogos.tiposdado.proxima()">PRÓXIMA ➡️</button>
+            </div>
+        </div>
+
+        <!-- 4. DETETIVE DIGITAL -->
+        <div id="seguranca" class="tab-content">
+            <h2 class="game-title" style="color: #0891b2;">DETETIVES DA INTERNET</h2>
+            <p class="game-desc">PODE MOSTRAR PARA TODOS OU É SEGREDO?</p>
+            <div class="main-card" id="card-seguranca">...</div>
+            <div class="btn-group">
+                <button class="btn-game btn-green" onclick="jogos.seguranca.verificar('publico')">🟢 MOSTRAR / PÚBLICO</button>
+                <button class="btn-game btn-red" onclick="jogos.seguranca.verificar('secreto')">🔴 SEGREDO / PROIBIDO</button>
+            </div>
+            <div class="feedback-box" id="fb-seguranca"></div>
+            <div class="nav-controls">
+                <button class="btn-nav" onclick="jogos.seguranca.anterior()">⬅️ ANTERIOR</button>
+                <span class="counter-label" id="lbl-seguranca">1 / 10</span>
+                <button class="btn-nav" onclick="jogos.seguranca.proxima()">PRÓXIMA ➡️</button>
+            </div>
+        </div>
+
+        <!-- 5. SEMÁFORO DE ATITUDES -->
+        <div id="atitudes" class="tab-content">
+            <h2 class="game-title" style="color: #16a34a;">SEMÁFORO DE ATITUDES</h2>
+            <p class="game-desc">OLHE O DESENHO! ESSA ATITUDE É LEGAL OU PERIGOSA?</p>
+            <div class="main-card" id="card-atitudes">...</div>
+            <div class="btn-group">
+                <button class="btn-game btn-green" onclick="jogos.atitudes.verificar('segura')">🟢 ATITUDE LEGAL</button>
+                <button class="btn-game btn-red" onclick="jogos.atitudes.verificar('perigosa')">🔴 ATITUDE PERIGOSA</button>
+            </div>
+            <div class="feedback-box" id="fb-atitudes"></div>
+            <div class="nav-controls">
+                <button class="btn-nav" onclick="jogos.atitudes.anterior()">⬅️ ANTERIOR</button>
+                <span class="counter-label" id="lbl-atitudes">1 / 10</span>
+                <button class="btn-nav" onclick="jogos.atitudes.proxima()">PRÓXIMA ➡️</button>
+            </div>
+        </div>
+
+        <!-- 6. COPIA JOGUINHO -->
+        <div id="copia" class="tab-content">
+            <h2 class="game-title" style="color: #9333ea;">✍️ COPIA DO JOGUINHO</h2>
+            <p class="game-desc">DIGITE AS LETRINHAS IGUALZINHO NO CAMPO ABAIXO!</p>
+            <div class="main-card" id="texto-alvo-copia" style="background-color: #faf5ff; border-color: #9333ea; font-size: 32px; color: #6b21a8;">...</div>
+            <input type="text" class="input-copia" id="input-aluno-copia" placeholder="CLIQUE AQUI E DIGITE..." oninput="jogos.copia.checarDigitacao()">
+            <div class="feedback-box" id="fb-copia"></div>
+            <div class="nav-controls">
+                <button class="btn-nav" onclick="jogos.copia.anterior()">⬅️ ANTERIOR</button>
+                <span class="counter-label" id="lbl-copia">1 / 10</span>
+                <button class="btn-nav" onclick="jogos.copia.proxima()">PRÓXIMA ➡️</button>
+            </div>
+        </div>
+
+        <!-- 7. COPIA PALAVRAS -->
+        <div id="copiapalavras" class="tab-content">
+            <h2 class="game-title" style="color: #2563eb;">🔤 COPIA PALAVRAS</h2>
+            <p class="game-desc">OLHE A PALAVRA AZUL E DIGITE LETRA POR LETRA!</p>
+            <div class="main-card" id="palavra-alvo-copia" style="font-size: 42px; background-color: #f0fdfa; border-color: #2563eb; color: #1e3a8a; letter-spacing: 3px;">...</div>
+            <input type="text" class="input-copia" id="input-aluno-palavra" placeholder="DIGITE AQUI..." oninput="jogos.copiapalavras.checarDigitacao()">
+            <div class="feedback-box" id="fb-copiapalavras"></div>
+            <div class="nav-controls">
+                <button class="btn-nav" onclick="jogos.copiapalavras.anterior()">⬅️ ANTERIOR</button>
+                <span class="counter-label" id="lbl-copiapalavras">1 / 10</span>
+                <button class="btn-nav" onclick="jogos.copiapalavras.proxima()">PRÓXIMA ➡️</button>
+            </div>
+        </div>
+
+        <!-- 8. COPIA TEXTOS -->
+        <div id="copiatextos" class="tab-content">
+            <h2 class="game-title" style="color: #059669;">📖 COPIA TEXTOS CURTOS</h2>
+            <p class="game-desc">OLHE O TEXTO EM CAIXA ALTA E DIGITE ELE IGUALZINHO EMBAIXO!</p>
+            <div class="main-card" id="texto-longo-alvo" style="font-size: 18px; text-align: left; background-color: #f0fdf4; border-color: #059669; color: #065f46; line-height: 1.5; padding: 18px;">...</div>
+            <textarea class="textarea-copia" id="input-aluno-texto" placeholder="CLIQUE E DIGITE O TEXTO AQUI..." oninput="jogos.copiatextos.checarDigitacao()"></textarea>
+            <div class="feedback-box" id="fb-copiatextos"></div>
+            <div class="nav-controls">
+                <button class="btn-nav" onclick="jogos.copiatextos.anterior()">⬅️ ANTERIOR</button>
+                <span class="counter-label" id="lbl-copiatextos">1 / 5</span>
+                <button class="btn-nav" onclick="jogos.copiatextos.proxima()">PRÓXIMA ➡️</button>
+            </div>
+        </div>
+
+        <!-- 9. CORREÇÃO DIGITAL -->
+        <div id="correcao" class="tab-content">
+            <h2 class="game-title" style="color: #db2777;">✏️ CORREÇÃO DIGITAL</h2>
+            <p class="game-desc">A PALAVRA DO CARD ESTÁ ERRADA! CLIQUE NA PALAVRA CERTA:</p>
+            <div class="main-card" id="palavra-errada" style="color: #dc2626; font-size: 38px; background-color: #fff1f2; border-color: #db2777; letter-spacing: 2px;">...</div>
+            <div class="btn-group" id="opcoes-correcao"></div>
+            <div class="feedback-box" id="fb-correcao"></div>
+            <div class="nav-controls">
+                <button class="btn-nav" onclick="jogos.correcao.anterior()">⬅️ ANTERIOR</button>
+                <span class="counter-label" id="lbl-correcao">1 / 10</span>
+                <button class="btn-nav" onclick="jogos.correcao.proxima()">PRÓXIMA ➡️</button>
+            </div>
+        </div>
+
+        <!-- 10. PALAVRAS CRUZADAS -->
+        <div id="cruzada" class="tab-content">
+            <h2 class="game-title" style="color: #9333ea;">🧩 PALAVRAS CRUZADAS</h2>
+            <p class="game-desc">COMPLETE A PALAVRA DO CARD CLICANDO NAS LETRINHAS ABAIXO!</p>
+            <div class="main-card" id="card-cruzada">...</div>
+            <div class="grid-cruzada" id="tabuleiro-cruzada"></div>
+            <div class="teclado-letras" id="teclado-cruzada"></div>
+            <div class="feedback-box" id="fb-cruzada"></div>
+            <div class="nav-controls">
+                <button class="btn-nav" onclick="jogos.cruzada.anterior()">⬅️ ANTERIOR</button>
+                <span class="counter-label" id="lbl-cruzada">1 / 10</span>
+                <button class="btn-nav" onclick="jogos.cruzada.proxima()">PRÓXIMA ➡️</button>
+            </div>
+        </div>
+
+        <!-- 11. CAÇA-PALAVRAS -->
+        <div id="cacapalavras" class="tab-content">
+            <h2 class="game-title" style="color: #10b981;">🔍 CAÇA-PALAVRAS</h2>
+            <p class="game-desc">ACHAR A PALAVRA: <span id="palavra-alvo-caca" style="color: #047857; font-size: 26px; border-bottom: 3px dashed #10b981;">...</span></p>
+            <div class="grid-caca" id="tabuleiro-caca"></div>
+            <div class="feedback-box" id="fb-cacapalavras"></div>
+            <div class="nav-controls">
+                <button class="btn-nav" onclick="jogos.cacapalavras.anterior()">⬅️ ANTERIOR</button>
+                <span class="counter-label" id="lbl-cacapalavras">1 / 10</span>
+                <button class="btn-nav" onclick="jogos.cacapalavras.proxima()">PRÓXIMA ➡️</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openTab(evt, tabId) {
+            const contents = document.querySelectorAll(".tab-content");
+            contents.forEach(content => content.classList.remove("active"));
+
+            const buttons = document.querySelectorAll(".tab-btn");
+            buttons.forEach(btn => btn.classList.remove("active"));
+
+            document.getElementById(tabId).classList.add("active");
+            document.getElementById('btn-' + tabId).classList.add("active");
+            
+            if(jogos[tabId]) jogos[tabId].iniciar();
+        }
+
+        const jogos = {
+            // JOGO 1: ARMAZENAMENTO (10 PERGUNTAS FIXAS)
+            armazenamento: {
+                lista: [
+                    { t: "<span class='big-emoji'>📚</span>LIVRO DE PAPEL", tipo: "real" },
+                    { t: "<span class='big-emoji'>📱</span>FOTO NO CELULAR", tipo: "digital" },
+                    { t: "<span class='big-emoji'>📦</span>CAIXA DA SALA", tipo: "real" },
+                    { t: "<span class='big-emoji'>🖥️</span>JOGO NO PC", tipo: "digital" },
+                    { t: "<span class='big-emoji'>📝</span>CADERNO DE DESENHO", tipo: "real" },
+                    { t: "<span class='big-emoji'>🎬</span>VÍDEO NO YOUTUBE", tipo: "digital" },
+                    { t: "<span class='big-emoji'>📰</span>RECONTO EM PAPEL", tipo: "real" },
+                    { t: "<span class='big-emoji'>🎶</span>MÚSICA NO TABLET", tipo: "digital" },
+                    { t: "<span class='big-emoji'>✉️</span>CARTA EM ENVELOPE", tipo: "real" },
+                    { t: "<span class='big-emoji'>🎨</span>FOTO NO INSTAGRAM", tipo: "digital" }
+                ],
+                indexAtual: 0,
+                iniciar() {
+                    document.getElementById('fb-armazenamento').textContent = "";
+                    const item = this.lista[this.indexAtual];
+                    document.getElementById('card-armazenamento').innerHTML = item.t;
+                    document.getElementById('lbl-armazenamento').textContent = `${this.indexAtual + 1} / ${this.lista.length}`;
+                },
+                verificar(escolha) {
+                    const fb = document.getElementById('fb-armazenamento');
+                    const item = this.lista[this.indexAtual];
+                    if (escolha === item.tipo) {
+                        fb.style.color = "green"; fb.textContent = "PARABÉNS! VOCÊ ACERTOU! 🌟";
+                    } else {
+                        fb.style.color = "red"; fb.textContent = "TENTE DE NOVO! OLHE BEM O DESENHO! 🤔";
+                    }
+                },
+                proxima() {
+                    if (this.indexAtual < this.lista.length - 1) {
+                        this.indexAtual++;
+                        this.iniciar();
+                    }
+                },
+                anterior() {
+                    if (this.indexAtual > 0) {
+                        this.indexAtual--;
+                        this.iniciar();
+                    }
+                }
+            },
+
+            // JOGO 2: BOCA OU TELA (10 PERGUNTAS FIXAS)
+            transmissao: {
+                lista: [
+                    { t: "<span class='big-emoji'>🗣️</span>CONVERSA NO PÁTIO", tipo: "boca" },
+                    { t: "<span class='big-emoji'>📱</span>WHATSAPP DO CELULAR", tipo: "tela" },
+                    { t: "<span class='big-emoji'>📢</span>GRITO DO AMIGO", tipo: "boca" },
+                    { t: "<span class='big-emoji'>📧</span>MENSAGEM DE E-MAIL", tipo: "tela" },
+                    { t: "<span class='big-emoji'>👩‍🏫</span>EXPLICAÇÃO DA PROFESSORA", tipo: "boca" },
+                    { t: "<span class='big-emoji'>🎮</span>CHAT DO JOGO ROBLOX", tipo: "tela" },
+                    { t: "<span class='big-emoji'>🎶</span>CANTAR PARABÉNS NA SALA", tipo: "boca" },
+                    { t: "<span class='big-emoji'>🎬</span>VÍDEO DO YOUTUBE", tipo: "tela" },
+                    { t: "<span class='big-emoji'>👥</span>REUNIÃO NA ESCOLA", tipo: "boca" },
+                    { t: "<span class='big-emoji'>🔍</span>PESQUISA NO GOOGLE", tipo: "tela" }
+                ],
+                indexAtual: 0,
+                iniciar() {
+                    document.getElementById('fb-transmissao').textContent = "";
+                    const item = this.lista[this.indexAtual];
+                    document.getElementById('card-transmissao').innerHTML = item.t;
+                    document.getElementById('lbl-transmissao').textContent = `${this.indexAtual + 1} / ${this.lista.length}`;
+                },
+                verificar(escolha) {
+                    const fb = document.getElementById('fb-transmissao');
+                    const item = this.lista[this.indexAtual];
+                    if (escolha === item.tipo) {
+                        fb.style.color = "green"; fb.textContent = "MUITO BEM! VOCÊ ACERTOU! 🚀";
+                    } else {
+                        fb.style.color = "red"; fb.textContent = "VEJA O DESENHO E TENTE OUTRA VEZ! 🤔";
+                    }
+                },
+                proxima() {
+                    if (this.indexAtual < this.lista.length - 1) {
+                        this.indexAtual++;
+                        this.iniciar();
+                    }
+                },
+                anterior() {
+                    if (this.indexAtual > 0) {
+                        this.indexAtual--;
+                        this.iniciar();
+                    }
+                }
+            },
+
+            // JOGO 3: LETRA OU NÚMERO (10 PERGUNTAS FIXAS)
+            tiposdado: {
+                lista: [
+                    { valor: "7", tipo: "numero" },
+                    { valor: "BOLA", tipo: "texto" },
+                    { valor: "4", tipo: "numero" },
+                    { valor: "CASA", tipo: "texto" },
+                    { valor: "1", tipo: "numero" },
+                    { valor: "PATO", tipo: "texto" },
+                    { valor: "9", tipo: "numero" },
+                    { valor: "DADO", tipo: "texto" },
+                    { valor: "3", tipo: "numero" },
+                    { valor: "GATO", tipo: "texto" }
+                ],
+                indexAtual: 0,
+                iniciar() {
+                    document.getElementById('fb-tiposdado').textContent = "";
+                    const item = this.lista[this.indexAtual];
+                    document.getElementById('card-tiposdado').textContent = item.valor;
+                    document.getElementById('lbl-tiposdado').textContent = `${this.indexAtual + 1} / ${this.lista.length}`;
+                },
+                verificar(escolha) {
+                    const fb = document.getElementById('fb-tiposdado');
+                    const item = this.lista[this.indexAtual];
+                    if (escolha === item.tipo) {
+                        fb.style.color = "green"; fb.textContent = "CORRETO! VOCÊ É DEMAIS! 💎";
+                    } else {
+                        fb.style.color = "red"; fb.textContent = "OLHE COM ATENÇÃO! SÃO LETRAS OU NÚMEROS? 👀";
+                    }
+                },
+                proxima() {
+                    if (this.indexAtual < this.lista.length - 1) {
+                        this.indexAtual++;
+                        this.iniciar();
+                    }
+                },
+                anterior() {
+                    if (this.indexAtual > 0) {
+                        this.indexAtual--;
+                        this.iniciar();
+                    }
+                }
+            },
+
+            // JOGO 4: DETETIVE DIGITAL (10 PERGUNTAS FIXAS)
+            seguranca: {
+                lista: [
+                    { t: "<span class='big-emoji'>🔑</span>SENHA DO TABLET", tipo: "secreto" },
+                    { t: "<span class='big-emoji'>🎨</span>SEU DESENHO", tipo: "publico" },
+                    { t: "<span class='big-emoji'>🏠</span>SUA CASA", tipo: "secreto" },
+                    { t: "<span class='big-emoji'>🍎</span>FRUTA FAVORITA", tipo: "publico" },
+                    { t: "<span class='big-emoji'>📞</span>TELEFONE DA MÃE", tipo: "secreto" },
+                    { t: "<span class='big-emoji'>🐱</span>NOME DO GATO", tipo: "publico" },
+                    { t: "<span class='big-emoji'>💳</span>CARTÃO DO PAPAI", tipo: "secreto" },
+                    { t: "<span class='big-emoji'>🦖</span>BRINQUEDO QUE GOSTA", tipo: "publico" },
+                    { t: "<span class='big-emoji'>🎂</span>DIA DO ANIVERSÁRIO", tipo: "secreto" },
+                    { t: "<span class='big-emoji'>☀️</span>COR DO SEU BONÉ", tipo: "publico" }
+                ],
+                indexAtual: 0,
+                iniciar() {
+                    document.getElementById('fb-seguranca').textContent = "";
+                    const item = this.lista[this.indexAtual];
+                    document.getElementById('card-seguranca').innerHTML = item.t;
+                    document.getElementById('lbl-seguranca').textContent = `${this.indexAtual + 1} / ${this.lista.length}`;
+                },
+                verificar(escolha) {
+                    const fb = document.getElementById('fb-seguranca');
+                    const item = this.lista[this.indexAtual];
+                    if (escolha === item.tipo) {
+                        fb.style.color = "green"; fb.textContent = "MUITO BEM! DETETIVE SEGURO! 🕵️‍♂️";
+                    } else {
+                        fb.style.color = "red"; fb.textContent = "CUIDADO! ISSO PODE MOSTRAR OU É SEGREDO? 🤔";
+                    }
+                },
+                proxima() {
+                    if (this.indexAtual < this.lista.length - 1) {
+                        this.indexAtual++;
+                        this.iniciar();
+                    }
+                },
+                anterior() {
+                    if (this.indexAtual > 0) {
+                        this.indexAtual--;
+                        this.iniciar();
+                    }
+                }
+            },
+
+            // JOGO 5: SEMÁFORO DE ATITUDES (10 PERGUNTAS FIXAS)
+            atitudes: {
+                lista: [
+                    { t: "<span class='big-emoji'>👨‍🏫</span>PERTO DO PROFESSOR", tipo: "segura" },
+                    { t: "<span class='big-emoji'>🎁</span>CLICAR EM BRINQUEDO GRÁTIS", tipo: "perigosa" },
+                    { t: "<span class='big-emoji'>🙋‍♂️</span>PEDIR AJUDA SE A TELA ASSUSTAR", tipo: "segura" },
+                    { t: "<span class='big-emoji'>👤</span>FALAR COM ESTRANHO", tipo: "perigosa" },
+                    { t: "<span class='big-emoji'>⏰</span>USAR O COMPUTADOR NA HORA CERTA", tipo: "segura" },
+                    { t: "<span class='big-emoji'>🗣️</span>XINGAR NO CHAT DO JOGUINHO", tipo: "perigosa" },
+                    { t: "<span class='big-emoji'>💻</span>CUIDAR BEM DO MONITOR", tipo: "segura" },
+                    { t: "<span class='big-emoji'>🔋</span>PUXAR FIOS DA TOMADA", tipo: "perigosa" },
+                    { t: "<span class='big-emoji'>🧼</span>ESTAR COM AS MÃOS LIMPAS", tipo: "segura" },
+                    { t: "<span class='big-emoji'>🥤</span>BEBER SUCO EM CIMA DO PC", tipo: "perigosa" }
+                ],
+                indexAtual: 0,
+                iniciar() {
+                    document.getElementById('fb-atitudes').textContent = "";
+                    const item = this.lista[this.indexAtual];
+                    document.getElementById('card-atitudes').innerHTML = item.t;
+                    document.getElementById('lbl-atitudes').textContent = `${this.indexAtual + 1} / ${this.lista.length}`;
+                },
+                verificar(escolha) {
+                    const fb = document.getElementById('fb-atitudes');
+                    const item = this.lista[this.indexAtual];
+                    if (escolha === item.tipo) {
+                        fb.style.color = "green"; fb.textContent = "MUITO BEM! MANDOU BEM! 🟢";
+                    } else {
+                        fb.style.color = "red"; fb.textContent = "CUIDADO! ESSA ATITUDE É BOA OU PERIGOSA? 🔴";
+                    }
+                },
+                proxima() {
+                    if (this.indexAtual < this.lista.length - 1) {
+                        this.indexAtual++;
+                        this.iniciar();
+                    }
+                },
+                anterior() {
+                    if (this.indexAtual > 0) {
+                        this.indexAtual--;
+                        this.iniciar();
+                    }
+                }
+            },
+
+            // JOGO 6: COPIA JOGUINHO (10 PALAVRAS FIXAS)
+            copia: {
+                lista: ["NET", "LOG", "TELA", "CHIP", "WEB", "LINK", "APP", "CLICK", "MOUSE", "SITE"],
+                indexAtual: 0,
+                iniciar() {
+                    const input = document.getElementById('input-aluno-copia');
+                    const fb = document.getElementById('fb-copia');
+                    input.value = ""; fb.textContent = ""; fb.style.color = "purple";
+                    const item = this.lista[this.indexAtual];
+                    document.getElementById('texto-alvo-copia').textContent = item;
+                    document.getElementById('lbl-copia').textContent = `${this.indexAtual + 1} / ${this.lista.length}`;
+                },
+                checarDigitacao() {
+                    const digitado = document.getElementById('input-aluno-copia').value.toUpperCase();
+                    const fb = document.getElementById('fb-copia');
+                    const item = this.lista[this.indexAtual];
+                    if (digitado === item) {
+                        fb.style.color = "green"; fb.textContent = "PERFEITO! PALAVRA IGUALZINHA! ⭐";
+                    } else if (item.startsWith(digitado)) {
+                        fb.style.color = "#d97706"; fb.textContent = "ISSO! CONTINUE... ✍️";
+                    } else {
+                        fb.style.color = "red"; fb.textContent = "ARRUME AS LETRINHAS PARA FICAR IGUAL! 🤓";
+                    }
+                },
+                proxima() {
+                    if (this.indexAtual < this.lista.length - 1) {
+                        this.indexAtual++;
+                        this.iniciar();
+                    }
+                },
+                anterior() {
+                    if (this.indexAtual > 0) {
+                        this.indexAtual--;
+                        this.iniciar();
+                    }
+                }
+            },
+
+            // JOGO 7: COPIA PALAVRAS (10 PALAVRAS FIXAS)
+            copiapalavras: {
+                lista: ["SENHA", "DADO", "REDE", "FOTO", "JOGO", "SINAL", "CABO", "MENU", "FONE", "PASTA"],
+                indexAtual: 0,
+                iniciar() {
+                    const input = document.getElementById('input-aluno-palavra');
+                    const fb = document.getElementById('fb-copiapalavras');
+                    input.value = ""; fb.textContent = ""; fb.style.color = "blue";
+                    const item = this.lista[this.indexAtual];
+                    document.getElementById('palavra-alvo-copia').textContent = item;
+                    document.getElementById('lbl-copiapalavras').textContent = `${this.indexAtual + 1} / ${this.lista.length}`;
+                },
+                checarDigitacao() {
+                    const digitado = document.getElementById('input-aluno-palavra').value.toUpperCase();
+                    const fb = document.getElementById('fb-copiapalavras');
+                    const item = this.lista[this.indexAtual];
+                    if (digitado === item) {
+                        fb.style.color = "green"; fb.textContent = "MUITO BEM! DIGITOU CERTINHO! ⌨️";
+                    } else if (item.startsWith(digitado)) {
+                        fb.style.color = "#d97706"; fb.textContent = "LETRINHA POR LETRINHA... ✨";
+                    } else {
+                        fb.style.color = "red"; fb.textContent = "OLHE PARA AS LETRAS E REESCREVA! 🔎";
+                    }
+                },
+                proxima() {
+                    if (this.indexAtual < this.lista.length - 1) {
+                        this.indexAtual++;
+                        this.iniciar();
+                    }
+                },
+                anterior() {
+                    if (this.indexAtual > 0) {
+                        this.indexAtual--;
+                        this.iniciar();
+                    }
+                }
+            },
+
+            // JOGO 8: COPIA TEXTOS (5 TEXTOS FIXOS)
+            copiatextos: {
+                lista: [
+                    "O COMPUTADOR AJUDA A ESTUDAR E A JOGAR.",
+                    "A SENHA É UM SEGREDO QUE PROTEGE AS FOTOS.",
+                    "A INTERNET CONECTA PESSOAS DO MUNDO TODO.",
+                    "O MOUSE MOVIMENTA A SETINHA NA NOSSA TELA.",
+                    "O WI-FI ENVIA A MENSAGEM DO CELULAR PELO AR."
+                ],
+                indexAtual: 0,
+                iniciar() {
+                    const tx = document.getElementById('input-aluno-texto');
+                    const fb = document.getElementById('fb-copiatextos');
+                    tx.value = ""; fb.textContent = ""; fb.style.color = "#059669";
+                    const item = this.lista[this.indexAtual];
+                    document.getElementById('texto-longo-alvo').textContent = item;
+                    document.getElementById('lbl-copiatextos').textContent = `${this.indexAtual + 1} / ${this.lista.length}`;
+                },
+                checarDigitacao() {
+                    const digitado = document.getElementById('input-aluno-texto').value.toUpperCase();
+                    const fb = document.getElementById('fb-copiatextos');
+                    const item = this.lista[this.indexAtual];
+                    if (digitado === item) {
+                        fb.style.color = "green"; fb.textContent = "EXCELENTE! TEXTO INTEIRO COPIADO COM SUCESSO! 🏆";
+                    } else if (item.startsWith(digitado)) {
+                        fb.style.color = "#d97706"; fb.textContent = "MUITO BEM! FIQUE ATENTO AOS ESPAÇOS... 📝";
+                    } else {
+                        fb.style.color = "red"; fb.textContent = "UMA LETRINHA FICOU DIFERENTE. DÊ UMA OLHADA! 🔎";
+                    }
+                },
+                proxima() {
+                    if (this.indexAtual < this.lista.length - 1) {
+                        this.indexAtual++;
+                        this.iniciar();
+                    }
+                },
+                anterior() {
+                    if (this.indexAtual > 0) {
+                        this.indexAtual--;
+                        this.iniciar();
+                    }
+                }
+            },
+
+            // JOGO 9: CORREÇÃO DIGITAL (10 PALAVRAS FIXAS)
+            correcao: {
+                lista: [
+                    { errada: "SENA", certa: "SENHA", opcoes: ["SENHA", "CENA"] },
+                    { errada: "SELULAR", certa: "CELULAR", opcoes: ["CELULAR", "ZELULAR"] },
+                    { errada: "ZOGO", certa: "JOGO", opcoes: ["JOGO", "FOGO"] },
+                    { errada: "NETI", certa: "NET", opcoes: ["NET", "NETI"] },
+                    { errada: "MAUCI", certa: "MOUSE", opcoes: ["MOUSE", "MAUCI"] },
+                    { errada: "XIP", certa: "CHIP", opcoes: ["CHIP", "XIP"] },
+                    { errada: "REDI", certa: "REDE", opcoes: ["REDE", "REDI"] },
+                    { errada: "KAZA", certa: "CASA", opcoes: ["CASA", "KAZA"] },
+                    { errada: "PATOO", certa: "PATO", opcoes: ["PATO", "PATOO"] },
+                    { errada: "SAITI", certa: "SITE", opcoes: ["SITE", "SAITI"] }
+                ],
+                indexAtual: 0,
+                iniciar() {
+                    document.getElementById('fb-correcao').textContent = "";
+                    const item = this.lista[this.indexAtual];
+                    document.getElementById('palavra-errada').textContent = item.errada;
+                    document.getElementById('lbl-correcao').textContent = `${this.indexAtual + 1} / ${this.lista.length}`;
+                    const container = document.getElementById('opcoes-correcao');
+                    container.innerHTML = "";
+                    item.opcoes.forEach(palavra => {
+                        const btn = document.createElement('button');
+                        btn.classList.add('btn-game', 'btn-purple');
+                        btn.textContent = palavra;
+                        btn.onclick = () => this.verificar(palavra);
+                        container.appendChild(btn);
+                    });
+                },
+                verificar(palavra) {
+                    const fb = document.getElementById('fb-correcao');
+                    const item = this.lista[this.indexAtual];
+                    if (palavra === item.certa) {
+                        fb.style.color = "green"; fb.textContent = "🎉 PARABÉNS! VOCÊ CORRIGIU COM SUCESSO! 🏆";
+                    } else {
+                        fb.style.color = "red"; fb.textContent = "TENTE OUTRA PALAVRA... 👀";
+                    }
+                },
+                proxima() {
+                    if (this.indexAtual < this.lista.length - 1) {
+                        this.indexAtual++;
+                        this.iniciar();
+                    }
+                },
+                anterior() {
+                    if (this.indexAtual > 0) {
+                        this.indexAtual--;
+                        this.iniciar();
+                    }
+                }
+            },
+
+            // JOGO 10: PALAVRAS CRUZADAS (10 PALAVRAS FIXAS)
+            cruzada: {
+                lista: [
+                    { dica: "<span class='big-emoji'>🖱️</span>USADO PARA CLICAR NA TELA", resposta: "MOUSE" },
+                    { dica: "<span class='big-emoji'>🔑</span>SEGREDO QUE PROTEGE O CELULAR", resposta: "SENHA" },
+                    { dica: "<span class='big-emoji'>🛜</span>ENVIA A MENSAGEM PELO AR", resposta: "WIFI" },
+                    { dica: "<span class='big-emoji'>📱</span>APARELHO QUE SE LEVA NO BOLSO", resposta: "CELULAR" },
+                    { dica: "<span class='big-emoji'>🎮</span>ATIVIDADE DIVERTIDA NO PC", resposta: "JOGO" },
+                    { dica: "<span class='big-emoji'>📺</span>ONDE APARECEM OS JOGUINHOS E FOTOS", resposta: "TELA" },
+                    { dica: "<span class='big-emoji'>🎧</span>USADO NO OUVIDO PARA OUVIR MÚSICA", resposta: "FONE" },
+                    { dica: "<span class='big-emoji'>🔌</span>FIO QUE LIGA O COMPUTADOR NA TOMADA", resposta: "CABO" },
+                    { dica: "<span class='big-emoji'>🌐</span>PÁGINA QUE ENCONTRAMOS NA INTERNET", resposta: "SITE" },
+                    { dica: "<span class='big-emoji'>💾</span>PEÇA BEM PEQUENA DENTRO DO CELULAR", resposta: "CHIP" }
+                ],
+                indexAtual: 0,
+                progresso: [],
+                iniciar() {
+                    const fb = document.getElementById('fb-cruzada');
+                    fb.textContent = "";
+                    const item = this.lista[this.indexAtual];
+                    this.progresso = Array(item.resposta.length).fill("");
+                    
+                    document.getElementById('card-cruzada').innerHTML = item.dica;
+                    document.getElementById('lbl-cruzada').textContent = `${this.indexAtual + 1} / ${this.lista.length}`;
+                    
+                    this.renderizarTabuleiro();
+                    this.renderizarTeclado();
+                },
+                renderizarTabuleiro() {
+                    const container = document.getElementById('tabuleiro-cruzada');
+                    container.innerHTML = "";
+                    this.progresso.forEach(letra => {
+                        const div = document.createElement('div');
+                        div.className = "celula-cruzada" + (letra ? " preenchida" : "");
+                        div.textContent = letra;
+                        container.appendChild(div);
+                    });
+                },
+                renderizarTeclado() {
+                    const container = document.getElementById('teclado-cruzada');
+                    container.innerHTML = "";
+                    const alfabeto = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+                    alfabeto.forEach(letra => {
+                        const btn = document.createElement('button');
+                        btn.className = "btn-letra";
+                        btn.textContent = letra;
+                        btn.onclick = () => this.inserirLetra(letra);
+                        container.appendChild(btn);
+                    });
+                },
+                inserirLetra(letra) {
+                    const idxVazio = this.progresso.indexOf("");
+                    if(idxVazio !== -1) {
+                        this.progresso[idxVazio] = letra;
+                        this.renderizarTabuleiro();
+                        this.verificar();
+                    }
+                },
+                verificar() {
+                    const palavraDigitada = this.progresso.join("");
+                    const fb = document.getElementById('fb-cruzada');
+                    const item = this.lista[this.indexAtual];
+                    
+                    if(palavraDigitada.length === item.resposta.length) {
+                        if(palavraDigitada === item.resposta) {
+                            fb.style.color = "green";
+                            fb.textContent = "MUITO BEM! COMPLETOU A PALAVRA! 🏆";
+                        } else {
+                            fb.style.color = "red";
+                            fb.textContent = "OPS! ALGUMA LETRA FICOU ERRADA. REINICIANDO... 🤔";
+                            setTimeout(() => {
+                                this.progresso = Array(item.resposta.length).fill("");
+                                this.renderizarTabuleiro();
+                                fb.textContent = "";
+                            }, 1500);
+                        }
+                    }
+                },
+                proxima() {
+                    if (this.indexAtual < this.lista.length - 1) {
+                        this.indexAtual++;
+                        this.iniciar();
+                    }
+                },
+                anterior() {
+                    if (this.indexAtual > 0) {
+                        this.indexAtual--;
+                        this.iniciar();
+                    }
+                }
+            },
+
+            // JOGO 11: CAÇA-PALAVRAS (10 PALAVRAS FIXAS)
+            cacapalavras: {
+                lista: [
+                    { palavra: "NET", grade: ["N", "E", "T", "A", "B", "C", "X", "Y", "Z", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D"] },
+                    { palavra: "FOTO", grade: ["X", "Y", "F", "O", "T", "O", "Z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C"] },
+                    { palavra: "CHIP", grade: ["A", "B", "C", "D", "E", "F", "G", "H", "C", "H", "I", "P", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D", "E", "F"] },
+                    { palavra: "TELA", grade: ["Z", "X", "Y", "A", "B", "C", "D", "E", "F", "G", "H", "I", "T", "E", "L", "A", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D", "E", "F"] },
+                    { palavra: "JOGO", grade: ["J", "O", "G", "O", "X", "Y", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D"] },
+                    { palavra: "REDE", grade: ["X", "Y", "R", "E", "D", "E", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D"] },
+                    { palavra: "SINAL", grade: ["A", "B", "C", "D", "E", "F", "S", "I", "N", "A", "L", "X", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D"] },
+                    { palavra: "MENU", grade: ["A", "B", "C", "D", "E", "F", "G", "H", "M", "E", "N", "U", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D", "E", "F"] },
+                    { palavra: "FONE", grade: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "F", "O", "N", "E", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D", "E", "F"] },
+                    { palavra: "PASTA", grade: ["P", "A", "S", "T", "A", "X", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"] }
+                ],
+                indexAtual: 0,
+                selecionados: [],
+                iniciar() {
+                    const fb = document.getElementById('fb-cacapalavras');
+                    fb.textContent = "";
+                    this.selecionados = [];
+                    const item = this.lista[this.indexAtual];
+                    document.getElementById('palavra-alvo-caca').textContent = item.palavra;
+                    document.getElementById('lbl-cacapalavras').textContent = `${this.indexAtual + 1} / ${this.lista.length}`;
+                    this.renderizarGrade();
+                },
+                renderizarGrade() {
+                    const container = document.getElementById('tabuleiro-caca');
+                    container.innerHTML = "";
+                    const item = this.lista[this.indexAtual];
+                    item.grade.forEach((letra, index) => {
+                        const div = document.createElement('div');
+                        div.className = "celula-caca";
+                        div.textContent = letra;
+                        div.onclick = () => this.selecionarCelula(div, letra, index);
+                        container.appendChild(div);
+                    });
+                },
+                selecionarCelula(elemento, letra, index) {
+                    const jaSelecionado = this.selecionados.findIndex(item => item.index === index);
+                    
+                    if (jaSelecionado > -1) {
+                        elemento.classList.remove("selecionada");
+                        this.selecionados.splice(jaSelecionado, 1);
+                    } else {
+                        elemento.classList.add("selecionada");
+                        this.selecionados.push({ letra, index });
+                    }
+                    
+                    this.verificar();
+                },
+                verificar() {
+                    const palavraFormada = this.selecionados.map(item => item.letra).join("");
+                    const fb = document.getElementById('fb-cacapalavras');
+                    const item = this.lista[this.indexAtual];
+                    
+                    if (palavraFormada === item.palavra) {
+                        fb.style.color = "green";
+                        fb.textContent = "MUITO BEM! VOCÊ ENCONTROU A PALAVRA! 🔍🏆";
+                    }
+                },
+                proxima() {
+                    if (this.indexAtual < this.lista.length - 1) {
+                        this.indexAtual++;
+                        this.iniciar();
+                    }
+                },
+                anterior() {
+                    if (this.indexAtual > 0) {
+                        this.indexAtual--;
+                        this.iniciar();
+                    }
+                }
+            }
+        };
+
+        window.onload = () => {
+            jogos.armazenamento.iniciar();
+        };
+    </script>
+</body>
+</html>
