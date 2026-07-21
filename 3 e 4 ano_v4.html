@@ -3,470 +3,1033 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Cidadania Digital</title>
+    <title>INTERNET SEGURA - 1º ANO</title>
     <style>
-        /* ==========================================================================
-           ESTILOS (CSS)
-           ========================================================================== */
-        :root {
-            --primary-color: #2b6cb0;
-            --primary-hover: #1a4373;
-            --bg-color: #f7fafc;
-            --card-bg: #ffffff;
-            --text-color: #2d3748;
-            --border-color: #e2e8f0;
-            --success-color: #48bb78;
-            --warning-color: #ed8936;
-        }
-
+        /* RESET E CONFIGURAÇÕES GERAIS */
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            padding-bottom: 40px;
-        }
-
-        header {
-            background-color: var(--primary-color);
-            color: white;
+            background-color: #E0F7FA;
+            color: #333;
             text-align: center;
-            padding: 2rem 1rem;
-            margin-bottom: 2rem;
+            padding: 15px;
+            user-select: none;
         }
 
+        /* TEXTO SEMPRE EM CAIXA ALTA */
+        h1, h2, h3, p, button, span, textarea, div, input {
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* TOPO DO SITE */
+        header {
+            background-color: #0288D1;
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .header-titulos { text-align: left; }
+        header h1 { font-size: 2rem; }
+        header p { font-size: 1rem; font-weight: bold; }
+        
+        .placar-global {
+            background: #01579B;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border: 2px solid #FFF;
+        }
+
+        /* CONTAINER PRINCIPAL */
         .container {
-            max-width: 800px;
+            max-width: 950px;
             margin: 0 auto;
-            padding: 0 1rem;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
-        /* Sistema de Abas */
-        .tabs-container {
+        /* MENU DE ABAS */
+        .abas-container {
             display: flex;
             flex-wrap: wrap;
-            border-bottom: 2px solid var(--border-color);
-            margin-bottom: 1.5rem;
-        }
-
-        .tab-btn {
-            background: none;
-            border: none;
-            padding: 10px 20px;
-            font-size: 1rem;
-            cursor: pointer;
-            color: #718096;
-            transition: all 0.3s ease;
-            border-bottom: 3px solid transparent;
-        }
-
-        .tab-btn:hover {
-            color: var(--primary-color);
-        }
-
-        .tab-btn.active {
-            color: var(--primary-color);
-            border-bottom-color: var(--primary-color);
-            font-weight: bold;
-        }
-
-        .tab-content {
-            display: none;
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* Elementos Internos */
-        h2 {
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-        }
-
-        p {
-            margin-bottom: 1rem;
-        }
-
-        .dicas-list {
-            margin-left: 20px;
-        }
-
-        .dicas-list li {
-            margin-bottom: 0.5rem;
-        }
-
-        /* Áreas de Texto */
-        textarea {
-            width: 100%;
-            height: 120px;
+            gap: 6px;
+            justify-content: center;
+            margin-bottom: 20px;
+            background: #F5F5F5;
             padding: 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            margin-bottom: 1rem;
-            font-size: 1rem;
-            resize: vertical;
+            border-radius: 10px;
         }
 
-        .action-btn {
-            background-color: var(--primary-color);
+        .aba-btn {
+            background-color: #B0BEC5;
             color: white;
             border: none;
-            padding: 12px 24px;
-            font-size: 1rem;
-            border-radius: 6px;
+            padding: 10px 12px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            border-radius: 8px;
             cursor: pointer;
-            transition: background 0.2s;
-            margin-right: 10px;
+            transition: all 0.2s;
+        }
+
+        .aba-btn.ativa {
+            background-color: #0288D1;
+            transform: scale(1.05);
+            box-shadow: 0 4px #01579B;
+        }
+
+        /* ÁREA DA ATIVIDADE */
+        .card-atividade {
+            background-color: #F9F9F9;
+            border: 4px dashed #0288D1;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 10px;
+            min-height: 520px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .titulo-atividade {
+            color: #01579B;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            background: #E1F5FE;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .contador-perguntas {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #757575;
             margin-bottom: 10px;
         }
 
-        .action-btn:hover {
-            background-color: var(--primary-hover);
+        .emoji-grande {
+            font-size: 5.5rem;
+            margin: 15px 0;
+            display: block;
         }
 
-        .secondary-btn {
-            background-color: #4a5568;
-        }
-        .secondary-btn:hover {
-            background-color: #2d3748;
-        }
-
-        .resultado-box {
-            margin-top: 1.5rem;
-            padding: 1.5rem;
-            background-color: #f8fafc;
-            border-left: 4px solid var(--primary-color);
-            border-radius: 4px;
-        }
-
-        .texto-destaque {
-            background: white;
-            padding: 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            margin-top: 0.5rem;
-            font-style: italic;
-        }
-
-        .alerta-item {
-            margin-top: 10px;
-            padding: 8px;
-            border-radius: 4px;
-            font-size: 0.9rem;
-        }
-
-        .alerta-item.critico {
-            background-color: #fff5f5;
-            color: #c53030;
-            border: 1px solid #fed7d7;
-        }
-
-        .badge-reprovado {
-            background-color: #e53e3e;
-            color: white;
-            padding: 2px 6px;
-            border-radius: 4px;
-            text-decoration: line-through;
-        }
-
-        /* Estilo Caderno */
-        .simulacao-caderno {
-            background-color: #fffde7;
-            border-left: 5px solid #ffeb3b;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border-radius: 4px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
-            font-family: 'Courier New', Courier, monospace;
+        .pergunta-texto {
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin-bottom: 20px;
             color: #333;
+            min-height: 60px;
+            line-height: 1.4;
         }
-        
-        .nota-box {
+
+        /* BOTÕES GERAIS */
+        .btn {
+            font-size: 1.4rem;
+            font-weight: bold;
+            padding: 15px 35px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.1s;
+            color: white;
+        }
+
+        .btn:active { transform: scale(0.95); }
+        .btn-verde { background-color: #4CAF50; box-shadow: 0 6px #388E3C; }
+        .btn-vermelho { background-color: #F44336; box-shadow: 0 6px #D32F2F; }
+        .btn-proximo { background-color: #FF9800; box-shadow: 0 6px #E65100; margin: 15px auto 0 auto; display: block; }
+
+        /* FEEDBACK */
+        .feedback {
+            font-size: 1.8rem;
+            font-weight: bold;
+            min-height: 40px;
+            margin-top: 10px;
+        }
+
+        .acertou { color: #388E3C; }
+        .errou { color: #D32F2F; }
+
+        /* ABA DE CÓPIA DE TEXTO */
+        .area-copia {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .texto-modelo {
+            background: #FFF9C4;
+            border: 2px solid #FBC02D;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            width: 100%;
+            max-width: 700px;
+            line-height: 1.5;
+        }
+
+        .campo-digitar {
+            width: 100%;
+            max-width: 700px;
+            height: 120px;
+            font-size: 1.4rem;
+            padding: 15px;
+            border-radius: 10px;
+            border: 3px solid #B0BEC5;
+            outline: none;
+            resize: none;
+            text-align: center;
+        }
+
+        /* ESTILOS DA ATIVIDADE 11 - ASSOCIAÇÃO */
+        .painel-associacao {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .zona-cartao {
+            min-height: 140px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .cartao-arrastavel {
+            background: #FFF;
+            border: 3px solid #0288D1;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: grab;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            max-width: 450px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            touch-action: none;
+        }
+
+        .cartao-arrastavel:active { cursor: grabbing; }
+        .cartao-arrastavel .emoji-cartao { font-size: 3.5rem; }
+
+        .caixas-container {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .caixa-alvo {
+            flex: 1;
+            max-width: 350px;
+            min-height: 140px;
+            border: 4px dashed #B0BEC5;
+            border-radius: 15px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             font-size: 1.2rem;
             font-weight: bold;
-            margin-bottom: 1rem;
-            padding: 10px;
-            border-radius: 4px;
-            display: inline-block;
+            transition: background 0.2s;
         }
 
-        /* Quiz */
-        .quiz-btn {
-            display: block;
+        .caixa-segura { border-color: #4CAF50; background-color: #E8F5E9; color: #2E7D32; }
+        .caixa-segura.dragover { background-color: #C8E6C9; }
+        .caixa-perigosa { border-color: #F44336; background-color: #FFEBEE; color: #C62828; }
+        .caixa-perigosa.dragover { background-color: #FFCDD2; }
+        .caixa-alvo span { font-size: 2.5rem; margin-bottom: 5px; }
+
+        /* ESTILOS DOS LABIRINTOS */
+        .painel-labirinto {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
             width: 100%;
-            text-align: left;
-            padding: 10px;
-            margin-bottom: 0.5rem;
-            background: white;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            cursor: pointer;
         }
 
-        .quiz-btn:hover {
-            background: #edf2f7;
+        .grid-labirinto {
+            display: grid;
+            grid-template-columns: repeat(4, 75px);
+            grid-template-rows: repeat(4, 75px);
+            gap: 8px;
+            background: #CFD8DC;
+            padding: 12px;
+            border-radius: 15px;
+            border: 4px solid #37474F;
         }
 
-        #feedback-quiz {
-            margin-top: 1rem;
+        .celula {
+            background-color: white;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
             font-weight: bold;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
         }
+
+        .celula-parede {
+            background-color: #78909C;
+            font-size: 1.8rem;
+        }
+
+        .celula-perigosa {
+            background-color: #FFCDD2;
+            border: 2px solid #D32F2F;
+            font-size: 2rem;
+        }
+
+        .celula-destino {
+            background-color: #A5D6A7;
+            border: 3px solid #2E7D32;
+            font-size: 0.70rem;
+            color: #1B5E20;
+        }
+
+        .celula-destino span {
+            font-size: 1.5rem;
+            display: block;
+        }
+
+        .controles-labirinto {
+            display: grid;
+            grid-template-areas: 
+                ". cima ."
+                "esq . dir"
+                ". baixo .";
+            gap: 10px;
+            width: 180px;
+            margin-top: 10px;
+        }
+
+        .btn-seta {
+            background-color: #0288D1;
+            color: white;
+            border: none;
+            font-size: 1.8rem;
+            font-weight: bold;
+            padding: 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 5px #01579B;
+        }
+
+        .btn-seta:active {
+            transform: translateY(4px);
+            box-shadow: 0 1px #01579B;
+        }
+
+        .seta-cima { grid-area: cima; }
+        .seta-baixo { grid-area: baixo; }
+        .seta-esquerda { grid-area: esq; }
+        .seta-direita { grid-area: dir; }
+
+        /* TELA DE FIM DE JOGO / RANKING / REGISTRO */
+        .painel-fim {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .input-nome {
+            font-size: 1.5rem;
+            padding: 10px;
+            border-radius: 10px;
+            border: 3px solid #0288D1;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            outline: none;
+        }
+
+        .certificado {
+            background: #FFF9C4;
+            border: 6px double #FBC02D;
+            border-radius: 15px;
+            padding: 30px;
+            width: 100%;
+            max-width: 650px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+
+        .certificado h3 { color: #F57F17; font-size: 1.8rem; margin-bottom: 15px; }
+        .certificado p { font-size: 1.3rem; margin: 10px 0; font-weight: bold; color: #333; }
+        .certificado .nome-aluno { color: #0288D1; font-size: 2rem; border-bottom: 3px dashed #0288D1; display: inline-block; padding: 0 15px; margin: 10px 0; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Portal da Cidadania Digital</h1>
-        <p>Aprenda a navegar com responsabilidade, segurança e respeito.</p>
+        <div class="header-titulos">
+            <h1>INTERNET SEGURA</h1>
+            <p>VAMOS APRENDER JOGANDO!</p>
+        </div>
+        <div class="placar-global">PONTOS: <span id="pontuacao-valor">0</span> ⭐</div>
     </header>
 
-    <main class="container">
-        <nav class="tabs-container">
-            <button class="tab-btn active" onclick="openTab(event, 'aba-info')">Conceitos Básicos</button>
-            <button class="tab-btn" onclick="openTab(event, 'aba-corretor')">Corretor Cidadão</button>
-            <button class="tab-btn" onclick="openTab(event, 'aba-caderno-digitar')">Digitar do Caderno</button>
-            <button class="tab-btn" onclick="openTab(event, 'aba-caderno-copiar')">Copiar e Corrigir</button>
-            <button class="tab-btn" onclick="openTab(event, 'aba-quiz')">Desafio</button>
-        </nav>
+    <div class="container">
+        
+        <!-- SELETOR DE ATIVIDADES (ABAS) -->
+        <div class="abas-container" id="menu-abas">
+            <!-- Gerado via Javascript -->
+        </div>
 
-        <section id="aba-info" class="tab-content active">
-            <h2>Pilares da Cidadania Digital</h2>
-            <p>Ser um cidadão digital significa usar a tecnologia de forma ética, segura e crítica.</p>
-            <ul class="dicas-list">
-                <li><strong>Segurança:</strong> Proteja suas senhas e dados pessoais.</li>
-                <li><strong>Respeito:</strong> Lembre-se de que do outro lado da tela existe um ser humano.</li>
-                <li><strong>Senso Crítico:</strong> Nem tudo na internet é verdade. Sempre verifique as fontes.</li>
-            </ul>
-        </section>
-
-        <section id="aba-corretor" class="tab-content">
-            <h2>Corretor de Texto Consciente</h2>
-            <p>Digite seu comentário ou postagem abaixo. O sistema irá analisar se o texto respeita as diretrizes de cidadania digital e sugerir correções para termos inadequados.</p>
-            
-            <textarea id="texto-usuario" placeholder="Digite seu texto aqui... (Exemplo para testar gatilhos: Esse político é um idiota, vi no zap que a vacina tem chip e meu CPF é 123.456.789-00)"></textarea>
-            
-            <button class="action-btn" onclick="corrigirTexto()">Analisar Texto</button>
-
-            <div id="resultado-correcao" class="resultado-box" style="display: none;">
-                <h3>Resultado da Análise:</h3>
-                <div id="texto-corrigido" class="texto-destaque"></div>
-                <div id="alertas-critica" class="alertas-container"></div>
-            </div>
-        </section>
-
-        <section id="aba-academico-digitar" class="tab-content" id="aba-caderno-digitar">
-            <h2>Atividade 1: Transcrever e Corrigir</h2>
-            <p>Leia o rascunho abaixo e <strong>digite do zero</strong> uma versão corrigida e segura no campo de texto.</p>
-            
-            <div class="simulacao-caderno">
-                <strong>[Rascunho no Caderno]</strong><br>
-                "Aquele prefeito é um imbecil completo! Vi no zap que ele vai fechar os hospitais amanhã. Quem quiser reclamar com ele, o CPF dele é 456.789.123-00. Repassem para todos!"
+        <!-- QUADRO DA ATIVIDADE ATIVA -->
+        <div class="card-atividade">
+            <div>
+                <div class="titulo-atividade" id="titulo-da-atividade">NOME DA ATIVIDADE</div>
+                <div class="contador-perguntas" id="contador-passos">PASSO 1 DE 10</div>
             </div>
 
-            <textarea id="texto-caderno-digitar" placeholder="Digite aqui a sua versão corrigida..."></textarea>
-            <button class="action-btn" onclick="avaliarAtividade('texto-caderno-digitar', 'resultado-caderno-d', 'nota-atividade-d', 'feedback-caderno-d')">Enviar Atividade</button>
+            <!-- CONTEÚDO DINÂMICO -->
+            <div id="conteudo-dinamico">
+                
+                <!-- JOGO PADRÃO (CERTO/ERRADO) -->
+                <div id="painel-jogo">
+                    <span id="emoji-cena" class="emoji-grande">💻</span>
+                    <div id="texto-pergunta" class="pergunta-texto">CARREGANDO...</div>
+                    <div class="botoes-container">
+                        <button class="btn btn-verde" id="btn-certo" onclick="responderPergunta(true)">👍 CERTO</button>
+                        <button class="btn btn-vermelho" id="btn-errado" onclick="responderPergunta(false)">👎 ERRADO</button>
+                    </div>
+                </div>
 
-            <div id="resultado-caderno-d" class="resultado-box" style="display: none;">
-                <h3>Resultado da Avaliação:</h3>
-                <div id="nota-atividade-d" class="nota-box"></div>
-                <div id="feedback-caderno-d"></div>
+                <!-- ATIVIDADE DE CÓPIA DE TEXTO / FRASES -->
+                <div id="painel-copia" class="area-copia" style="display: none;">
+                    <span id="emoji-copia" class="emoji-grande">✏️</span>
+                    <div class="texto-modelo" id="texto-para-copiar">TEXTO PARA COPIAR</div>
+                    <textarea class="campo-digitar" id="campo-escrita" placeholder="DIGITE IGUALZINHO AO MODELO ACIMA..." oninput="verificarCopia()"></textarea>
+                </div>
+
+                <!-- ATIVIDADE 11: ASSOCIAÇÃO (ARRASTE) -->
+                <div id="painel-associacao" class="painel-associacao" style="display: none;">
+                    <p style="font-weight: bold; color: #555;">ARRASTE O CARTÃO PARA A CAIXA CERTA!</p>
+                    <div class="zona-cartao">
+                        <div id="cartao-item" class="cartao-arrastavel" draggable="true" ondragstart="drag(event)">
+                            <span class="emoji-cartao" id="associar-emoji">❓</span>
+                            <div id="associar-texto">TEXTO DO CARTÃO</div>
+                        </div>
+                    </div>
+                    <div class="caixas-container">
+                        <div class="caixa-alvo caixa-segura" ondrop="drop(event, 'segura')" ondragover="allowDrop(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)">
+                            <span>😊</span>ATITUDE SEGURA
+                        </div>
+                        <div class="caixa-alvo caixa-perigosa" ondrop="drop(event, 'perigosa')" ondragover="allowDrop(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)">
+                            <span>⚠️</span>ATITUDE PERIGOSA
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LABIRINTOS (13, 14 e 15) -->
+                <div id="painel-labirinto" class="painel-labirinto" style="display: none;">
+                    <p style="font-weight: bold; color: #555;" id="instrucao-labirinto">LEVE O BONECO 🧑‍💻 ATÉ O ALVO USANDO AS SETAS!</p>
+                    
+                    <div class="grid-labirinto" id="labirinto-tabuleiro">
+                        <!-- Gerado dinamicamente -->
+                    </div>
+
+                    <div class="controles-labirinto">
+                        <button class="btn-seta seta-cima" onclick="moverJogador(-1, 0)">🔼</button>
+                        <button class="btn-seta seta-esquerda" onclick="moverJogador(0, -1)">◀️</button>
+                        <button class="btn-seta seta-direita" onclick="moverJogador(0, 1)">▶️</button>
+                        <button class="btn-seta seta-baixo" onclick="moverJogador(1, 0)">🔽</button>
+                    </div>
+                </div>
+
+                <!-- TELA FINAL DE REGISTRO E PONTUAÇÃO -->
+                <div id="painel-finalizacao" class="painel-fim" style="display: none;">
+                    <span class="emoji-grande">🏆</span>
+                    <h2>VOCÊ COMPLETOU TODAS AS ATIVIDADES!</h2>
+                    <p style="font-size: 1.3rem; margin-bottom: 10px;">DIGITE SEU NOME ABAIXO PARA PEGAR SEU CERTIFICADO:</p>
+                    <input type="text" id="nome-estudante" class="input-nome" placeholder="NOME DO ESTUDANTE" oninput="this.value = this.value.toUpperCase()">
+                    <button class="btn btn-verde" onclick="gerarCertificado()">GERAR CERTIFICADO 📜</button>
+
+                    <div id="caixa-certificado" class="certificado" style="display: none;">
+                        <h3>CERTIFICADO DE INTERNET SEGURA</h3>
+                        <p>PARABÉNS AO HERÓI DIGITAL:</p>
+                        <div class="nome-aluno" id="cert-nome-aluno">NOME DO ALUNO</div>
+                        <p>VOCÊ COMPLETOU AS REGRAS E FEZ UMA MARCA INCRÍVEL DE:</p>
+                        <p style="font-size: 2rem; color: #4CAF50;" id="cert-pontos-aluno">0 PONTOS ⭐</p>
+                        <p style="font-size: 1rem; margin-top: 15px; color: #757575;">MENSAGEM: VOCÊ É NOTA 10 NA WEB! 🖥️</p>
+                    </div>
+                </div>
+
             </div>
-        </section>
 
-        <section id="aba-caderno-copiar" class="tab-content">
-            <h2>Atividade 2: Copiar, Editar e Corrigir</h2>
-            <p>Use o botão abaixo para puxar o texto do rascunho diretamente para o editor. Depois, <strong>apague ou modifique</strong> os trechos que violam a cidadania digital antes de enviar.</p>
-            
-            <div class="simulacao-caderno">
-                <strong>[Texto Pesquisado/Rascunho]</strong><br>
-                <span id="texto-base-copia">"Aquele prefeito é um imbecil completo! Vi no zap que ele vai fechar os hospitais amanhã. Quem quiser reclamar com ele, o CPF dele é 456.789.123-00. Repassem para todos!"</span>
+            <!-- CONTROLE DE FEEDBACK E AVANÇO MANUAL -->
+            <div>
+                <div id="mensagem-feedback" class="feedback"></div>
+                <button class="btn btn-proximo" id="btn-avancar-manual" onclick="proximoPasso()" style="display: none;">PRÓXIMA PERGUNTA ➡️</button>
             </div>
+        </div>
 
-            <button class="action-btn secondary-btn" onclick="copiarTextoParaEditor()">📋 Copiar Rascunho para o Editor</button>
-
-            <textarea id="texto-caderno-copiar" placeholder="Clique no botão acima para carregar o texto e depois faça as alterações necessárias aqui..."></textarea>
-            
-            <button class="action-btn" onclick="avaliarAtividade('texto-caderno-copiar', 'resultado-caderno-c', 'nota-atividade-c', 'feedback-caderno-c')">Avaliar Correção</button>
-
-            <div id="resultado-caderno-c" class="resultado-box" style="display: none;">
-                <h3>Resultado da Avaliação:</h3>
-                <div id="nota-atividade-c" class="nota-box"></div>
-                <div id="feedback-caderno-c"></div>
-            </div>
-        </section>
-
-        <section id="aba-quiz" class="tab-content">
-            <h2>Teste seus Conhecimentos</h2>
-            <div class="quiz-item">
-                <p><strong>Pergunta:</strong> Você recebeu uma notícia alarmante num grupo de mensagens, mas sem ligação (link) para fontes confiáveis. O que fazer?</p>
-                <button class="quiz-btn" onclick="verificarQuiz(false, this)">Partilhar imediatamente para alertar os outros.</button>
-                <button class="quiz-btn" onclick="verificarQuiz(true, this)">Pesquisar em agências de checagem antes de repassar.</button>
-            </div>
-            <div id="feedback-quiz"></div>
-        </section>
-    </main>
+    </div>
 
     <script>
-        // Lógica de Alternância das Abas (Suporta IDs dinâmicos de forma correta)
-        function openTab(evt, tabId) {
-            const tabContents = document.getElementsByClassName("tab-content");
-            for (let i = 0; i < tabContents.length; i++) {
-                tabContents[i].classList.remove("active");
-            }
-            // Fallback manual para corrigir a duplicidade visual das abas de caderno
-            if(tabId === 'aba-caderno-digitar') {
-                document.getElementById('aba-academico-digitar').classList.add("active");
-            }
+        const bancoAtividades = {
+            1: { titulo: "ATIVIDADE 1 - CUIDADOS COM O COMPUTADOR", tipo: "jogo", perguntas: [
+                { texto: "DEIXAR O COPO DE ÁGUA PERTO DO COMPUTADOR?", correto: false, emoji: "🥛" },
+                { texto: "LIMPAR O COMPUTADOR COM UM PANO SECO?", correto: true, emoji: "🧹" },
+                { texto: "BATER FORTE NAS TECLAS COM O DEDO?", correto: false, emoji: "🔨" },
+                { texto: "DEIXAR OS FIOS DO COMPUTADOR CAÍDOS NO CHÃO?", correto: false, emoji: "🔌" },
+                { texto: "DESLIGAR O COMPUTADOR DO JEITO CERTO?", correto: true, emoji: "💻" },
+                { texto: "COMER BISCOITO EM CIMA DO TECLADO?", correto: false, emoji: "🍪" },
+                { texto: "USAR O COMPUTADOR COM AS MÃOS LIMPAS?", correto: true, emoji: "🧼" },
+                { texto: "SAIR CORRENDO PERTO DOS COMPUTADORES?", correto: false, emoji: "🏃" },
+                { texto: "FECHAR O NOTEBOOK COM MUITO CUIDADO?", correto: true, emoji: "💻" },
+                { texto: "COLOCAR LÁPIS OU CANETA DENTRO DAS ENTRADAS DO PC?", correto: false, emoji: "✏️" }
+            ]},
+            2: { titulo: "ATIVIDADE 2 - FALAR COM ADULTOS", tipo: "jogo", perguntas: [
+                { texto: "CHAMAR A PROFESSORA SE O MONITOR DESLIGAR?", correto: true, emoji: "🙋" },
+                { texto: "SE APARECER UM MONSTRO NA TELA, NÃO FALAR NADA?", correto: false, emoji: "🫣" },
+                { texto: "MOSTRAR PARA O PAPAI SE APARECER UM JOGO NOVO?", correto: true, emoji: "👨" },
+                { texto: "SE A TELA TRAVAR, CLICAR EM TUDO MUITO RÁPIDO?", correto: false, emoji: "⚡" },
+                { texto: "CONTAR PARA A MAMÃE SE ALGUÉM FOI MAU NA INTERNET?", correto: true, emoji: "👩" },
+                { texto: "ESCONDER DO PROFESSOR QUE O COMPUTADOR CAIU?", correto: false, emoji: "🤫" },
+                { texto: "PEDIR AJUDA PARA INSTALAR UM JOGO NOVO?", correto: true, emoji: "🎮" },
+                { texto: "TENTAR CONSERTAR OS FIOS SOLTOS SOZINHO?", correto: false, emoji: "🔌" },
+                { texto: "PERGUNTAR SE PODE USAR A INTERNET HOJE?", correto: true, emoji: "🗣️" },
+                { texto: "CHORAR SE O JOGO NÃO FUNCIONAR?", correto: false, emoji: "😢" }
+            ]},
+            3: { titulo: "ATIVIDADE 3 - SEGURANÇA E ESTRANHOS", tipo: "jogo", perguntas: [
+                { texto: "FALAR COM UM ESTRANHO QUE TE CHAMOU NO CHAT?", correto: false, emoji: "🛑" },
+                { texto: "CONTAR SEU NOME COMPLETO PARA QUEM NÃO CONHECE?", correto: false, emoji: "📛" },
+                { texto: "FALAR EM QUAL ESCOLA VOCÊ ESTUDA NO JOGO ONLINE?", correto: false, emoji: "🏫" },
+                { texto: "MOSTRAR SUA FOTO PARA QUALQUER PESSOA?", correto: false, emoji: "📸" },
+                { texto: "JOGAR APENAS COM AMIGOS QUE VOCÊ CONHECE NA VIDA REAL?", correto: true, emoji: "🤝" },
+                { texto: "DIZER ONDE VOCÊ MORA NA INTERNET?", correto: false, emoji: "🏠" },
+                { texto: "DIZER SEU NÚMERO DE TELEFONE NO CHAT DO JOGO?", correto: false, emoji: "📱" },
+                { texto: "MANDAR FOTO DA SUA CASA PARA UM AMIGO VIRTUAL?", correto: false, emoji: "🏡" },
+                { texto: "FECHAR A PÁGINA SE ALGUÉM PERGUNTAR O SEU NOME?", correto: true, emoji: "❌" },
+                { texto: "COMBINAR DE ENCONTRAR ALGUÉM QUE CONHECEU NO JOGO?", correto: false, emoji: "🚶" }
+            ]},
+            4: { titulo: "ATIVIDADE 4 - TEMPO DE TELA", tipo: "jogo", perguntas: [
+                { texto: "USAR O COMPUTADOR O DIA INTEIRO SEM PARAR?", correto: false, emoji: "⏰" },
+                { texto: "PARAR DE JOGAR QUANDO A MAMÃE MANDAR?", correto: true, emoji: "👩" },
+                { texto: "BRINCAR LÁ FORA NO QUINTAL TAMBÉM?", correto: true, emoji: "⚽" },
+                { texto: "JOGAR NO CELULAR ATÉ DE MADRUGADA?", correto: false, emoji: "🌙" },
+                { texto: "ALMOÇAR OLHANDO PARA O CELULAR?", correto: false, emoji: "🍽️" },
+                { texto: "USAR O COMPUTADOR SÓ NO HORÁRIO COMBINADO?", correto: true, emoji: "🕒" },
+                { texto: "PARAR DE JOGAR PARA IR DORMIR?", correto: true, emoji: "🛏️" },
+                { texto: "FAZER A LIÇÃO DE CASA ANTES DE LIGAR OS JOGOS?", correto: true, emoji: "📝" },
+                { texto: "JOGAR MESMO COM OS OLHOS ARDENDO E CANSADOS?", correto: false, emoji: "😭" },
+                { texto: "BRINCAR COM OS AMIGOS DE VERDADE?", correto: true, emoji: "🏃" }
+            ]},
+            5: { titulo: "ATIVIDADE 5 - POSTURA E SAÚDE", tipo: "jogo", perguntas: [
+                { texto: "SENTAR DIREITO E ENCOSTAR AS COSTAS NA CADEIRA?", correto: true, emoji: "🪑" },
+                { texto: "FICAR COM A TELA COLADA BEM PERTO DO SEU ROSTO?", correto: false, emoji: "👁️" },
+                { texto: "DOBRAR O PESCOÇO TODO PARA BAIXO PARA OLHAR A TELA?", correto: false, emoji: "🤳" },
+                { texto: "FAZER ALONGAMENTO SE JOGAR POR MUITO TEMPO?", correto: true, emoji: "🙆" },
+                { texto: "DEIXAR O COMPUTADOR EM UMA MESA NA ALTURA CERTA?", correto: true, emoji: "💻" },
+                { texto: "FICAR DEITADO DE MAU JEITO JOGANDO?", correto: false, emoji: "🛋️" },
+                { texto: "PISCAR OS OLHOS PARA NÃO FICAREM SECOS?", correto: true, emoji: "👀" },
+                { texto: "APAGAR TODAS AS LUZES DO QUARTO E JOGAR NO ESCURO?", correto: false, emoji: "💡" },
+                { texto: "FAZER PAUSAS PARA DESCANSAR O CORPO?", correto: true, emoji: "🚶" },
+                { texto: "JOGAR DEITADO NO CHÃO DE BARRIGA PARA BAIXO?", correto: false, emoji: "🧘" }
+            ]},
+            6: { titulo: "ATIVIDADE 6 - EDUCAÇÃO E RESPEITO", tipo: "jogo", perguntas: [
+                { texto: "FALAR PALAVRAS FEIAS NO CHAT DO JOGO?", correto: false, emoji: "🤬" },
+                { texto: "AJUDAR O AMIGO DA SALA QUE NÃO SABE USAR O MOUSE?", correto: true, emoji: "🤝" },
+                { texto: "RIR DO DESENHO DO OUTRO AMIGO NA TELA?", correto: false, emoji: "😢" },
+                { texto: "DIZER 'POR FAVOR' E 'OBRIGADO' NA INTERNET?", correto: true, emoji: "🙏" },
+                { texto: "MANDAR MENSAGENS REPETIDAS PARA IRRITAR?", correto: false, emoji: "💬" },
+                { texto: "RESPEITAR QUANDO O OUTRO JOGADOR GANHAR?", correto: true, emoji: "🏆" },
+                { texto: "CHAMAR OS OUTROS DE NOMES FEIOS SE VOCÊ PERDER?", correto: false, emoji: "😡" },
+                { texto: "COMPARTILHAR COISAS LEGAIS COM OS COLEGAS?", correto: true, emoji: "✨" },
+                { texto: "EXCLUIR UM AMIGO DO GRUPO SÓ DE PIRRAÇA?", correto: false, emoji: "❌" },
+                { texto: "SER UM BOM AMIGO TANTO FORA QUANTO DENTRO DO JOGO?", correto: true, emoji: "❤️" }
+            ]},
+            7: { titulo: "ATIVIDADE 7 - JOGOS E DOWNLOADS", tipo: "jogo", perguntas: [
+                { texto: "BAIXAR UM JOGO SÓ SE O ADULTO DEIXAR?", correto: true, emoji: "📥" },
+                { texto: "CLICAR EM UM BOTÃO PISCANDO QUE DIZ 'PRÊMIO'?", correto: false, emoji: "🎁" },
+                { texto: "COMPRAR ITENS DE JOGO SEM A MAMÃE SABER?", correto: false, emoji: "💳" },
+                { texto: "JOGAR JOGOS DE CRIANÇA GRANDE OU DE ADULTO?", correto: false, emoji: "🔞" },
+                { texto: "JOGAR SÓ JOGOS SEGUROS E ADEQUADOS PARA SUA IDADE?", correto: true, emoji: "🧸" },
+                { texto: "COMPARTILHAR SUA CONTA DO JOGO COM UM DESCONHECIDO?", correto: false, emoji: "🔑" },
+                { texto: "DESINSTALAR JOGOS SEM A AUTORIZAÇÃO DE UM ADULTO?", correto: false, emoji: "🗑️" },
+                { texto: "USAR JOGOS QUE AJUDAM A APRENDER LETRAS E NÚMEROS?", correto: true, emoji: "🅰️" },
+                { texto: "PASSAR A SUA SENHA DO JOGO PARA O SEU MELHOR AMIGO?", correto: false, emoji: "🔐" },
+                { texto: "AVISAR UM RESPONSÁVEL SE O JOGO PEDIR DINHEIRO?", correto: true, emoji: "💰" }
+            ]},
+            8: { titulo: "ATIVIDADE 8 - ENCONTRANDO PROBLEMAS", tipo: "jogo", perguntas: [
+                { texto: "SAIR DA PÁGINA SE VOCÊ VER ALGO ESTRANHO?", correto: true, emoji: "❌" },
+                { texto: "SE A TELA APAGAR, COMEÇAR A CHORAR?", correto: false, emoji: "😭" },
+                { texto: "CLICAR EM PROPAGANDAS COLORIDAS NO MEIO DA TELA?", correto: false, emoji: "📺" },
+                { texto: "DESLIGAR O MONITOR SE ELE TIVER CHEIRO DE QUEIMADO?", correto: true, emoji: "🔥" },
+                { texto: "SE PERDER O JOGO, BATER COM O MOUSE NA MESA?", correto: false, emoji: "🖱️" },
+                { texto: "USAR UN COMPUTADOR QUE ESTEJA COM OS FIOS MOSTRANDO?", correto: false, emoji: "⚠️" },
+                { texto: "PEDIR AJUDA IF O JOGUINHO ESTIVER MUITO DIFÍCIL?", correto: true, emoji: "🙋" },
+                { texto: "CLICAR EM LINKS QUE DIZEM 'BAIXE AGORA' SEM CONHECER?", correto: false, emoji: "🔗" },
+                { texto: "PRESTAR ATENÇÃO SE A BATERIA ESTÁ ACABANDO?", correto: true, emoji: "🔋" },
+                { texto: "TENTAR DESTRANCAR A TELA APERTANDO TODOS OS BOTÕES?", correto: false, emoji: "⌨️" }
+            ]},
+            9: { titulo: "ATIVIDADE 9 - REGRAS DO LABORATÓRIO", tipo: "jogo", perguntas: [
+                { texto: "ENTRAR CORRENDO E GRITANDO NO LABORATÓRIO?", correto: false, emoji: "🏃" },
+                { texto: "OUVIR COM ATENÇÃO AS INSTRUÇÕES DO PROFESSOR?", correto: true, emoji: "👂" },
+                { texto: "MEXER NO COMPUTADOR DO COLEGA SEM PERMISSÃO?", correto: false, emoji: "🖥️" },
+                { texto: "DEIXAR A CADEIRA ORGANIZADA AO SAIR DA SALA?", correto: true, emoji: "🪑" },
+                { texto: "LEVAR DOCE E CHICLETE PARA COMER NO TECLADO?", correto: false, emoji: "🍬" },
+                { texto: "LIGAR O COMPUTADOR ANTES DE O PROFESSOR AUTORIZAR?", correto: false, emoji: "🔌" },
+                { texto: "FALAR BAIXINHO PARA NÃO ATRAPALHAR OS OUTROS AMIGOS?", correto: true, emoji: "🤫" },
+                { texto: "SAIR DO LABORATÓRIO SEM SALVAR O TRABALHO?", correto: false, emoji: "💾" },
+                { texto: "CUIDAR BEM DO FONE DE OUVIDO?", correto: true, emoji: "🎧" },
+                { texto: "COLOCAR O FONE COM O VOLUME MUITO FORTE NO MÁXIMO?", correto: false, emoji: "🔊" }
+            ]},
+            10: { titulo: "ATIVIDADE 10 - TREINO DE TECLADO (PALAVRAS)", tipo: "copia", perguntas: [
+                { texto: "COMPUTADOR", emoji: "💻" }, { texto: "INTERNET", emoji: "🌐" },
+                { texto: "SEGURANÇA", emoji: "🛡️" }, { texto: "AJUDA", emoji: "🙋" },
+                { texto: "CUIDADO", emoji: "⚠️" }, { texto: "ESCOLA", emoji: "🏫" },
+                { texto: "MUITO BEM", emoji: "🌟" }, { texto: "AMIGO", emoji: "🤝" },
+                { texto: "TECLADO", emoji: "⌨️" }, { texto: "JOGO", emoji: "🎮" }
+            ]},
+            11: { titulo: "ATIVIDADE 11 - ASSOCIAR ATITUDES (ARRASTE)", tipo: "associacao", perguntas: [
+                { texto: "PEDIR AJUDA PARA ENTRAR EM UM SITE", tipoCorreto: "segura", emoji: "🙋" },
+                { texto: "MANDAR FOTO DA SUA CASA PARA ESTRANHOS", tipoCorreto: "perigosa", emoji: "🏠" },
+                { texto: "JOGAR JOGOS PERMITIDOS PARA SUA IDADE", tipoCorreto: "segura", emoji: "🧸" },
+                { texto: "CONTAR SUA SENHA SECRETA PARA COLEGAS", tipoCorreto: "perigosa", emoji: "🔐" },
+                { texto: "AVISAR EM CASO DE CONTEÚDO IMPRÓPRIO", tipoCorreto: "segura", emoji: "🗣️" },
+                { texto: "CLICAR EM PROPAGANDAS QUE PISCAM NA TELA", tipoCorreto: "perigosa", emoji: "📺" },
+                { texto: "USAR O COMPUTADOR SÓ NO TEMPO COMBINADO", tipoCorreto: "segura", emoji: "⏰" },
+                { texto: "COMBINAR DE ENCONTRAR UM AMIGO DO JOGO", tipoCorreto: "perigosa", emoji: "🚶" },
+                { texto: "SÓ FALAR COM PESSOAS CONHECIDAS REAIS", tipoCorreto: "segura", emoji: "🤝" },
+                { texto: "ABRIR LINKS E ENCARTES SEM CONHECER", tipoCorreto: "perigosa", emoji: "🔗" }
+            ]},
+            12: { titulo: "ATIVIDADE 12 - TREINO DE TECLADO (FRASES)", tipo: "copia", perguntas: [
+                { texto: "EU USO O COMPUTADOR COM AS MAOS LIMPAS", emoji: "🧼" },
+                { texto: "EU NAO FALO COM ESTRANHOS NA INTERNET", emoji: "🛑" },
+                { texto: "EU PECO AJUDA SE A TELA TRAVAR", emoji: "🙋" },
+                { texto: "EU COLOCO O FONE COM CUIDADO", emoji: "🎧" },
+                { texto: "EU DESLIGO O COMPUTADOR DO JEITO CERTO", emoji: "💻" },
+                { texto: "EU JOGO APENAS JOGOS DE CRIANCA", emoji: "🧸" },
+                { texto: "EU SENTO DIREITO NA MINHA CADEIRA", emoji: "🪑" },
+                { texto: "EU RESPEITO OS MEUS COLEGAS DE SALA", emoji: "🤝" },
+                { texto: "EU GUARDO MINHA SENHA SO PARA MIM", emoji: "🔐" },
+                { texto: "EU BRINCO FORA DA TELA TAMBEM", emoji: "⚽" }
+            ]},
+            13: { titulo: "ATIVIDADE 13 - LABIRINTO DAS PALAVRAS", tipo: "labirinto", perguntas: [
+                { palavra: "AJUDA", emoji: "🙋", paredes: ["1,1", "1,2", "2,1"], inimigosIniciais: [] },
+                { palavra: "CUIDADO", emoji: "⚠️", paredes: ["0,2", "1,0", "2,2"], inimigosIniciais: [] },
+                { palavra: "AMIGO", emoji: "🤝", paredes: ["1,1", "2,1", "2,2"], inimigosIniciais: [] },
+                { palavra: "ESCOLA", emoji: "🏫", paredes: ["0,1", "2,2", "3,1"], inimigosIniciais: [] },
+                { palavra: "SEGURANCA", emoji: "🛡️", paredes: ["1,2", "2,0", "2,1"], inimigosIniciais: [] }
+            ]},
+            14: { titulo: "ATIVIDADE 14 - LABIRINTO DE ATITUDES", tipo: "labirinto", perguntas: [
+                { palavra: "PEDIR AJUDA", emoji: "🙋", dif: "NÍVEL 1: MUITO FÁCIL", paredes: [], inimigosIniciais: [[2, 2]] },
+                { palavra: "FALAR COM PROFE", emoji: "👩‍🏫", dif: "NÍVEL 2: FÁCIL", paredes: ["1,1", "2,2"], inimigosIniciais: [[1, 0], [0, 3]] },
+                { palavra: "SÓ AMIGOS REAIS", emoji: "🤝", dif: "NÍVEL 3: MÉDIO", paredes: ["1,1", "2,2", "0,2"], inimigosIniciais: [[2, 1], [0, 3], [3, 0]] },
+                { palavra: "SITE SEGURO", emoji: "🛡️", dif: "NÍVEL 4: DIFÍCIL", paredes: ["0,1", "2,1", "2,2", "1,3"], inimigosIniciais: [[2, 0], [1, 2], [3, 0]] },
+                { palavra: "TEMPO CERTO", emoji: "⏰", dif: "NÍVEL 5: MESTRE", paredes: ["1,0", "1,1", "2,3"], inimigosIniciais: [[2, 0], [0, 3], [3, 1]] }
+            ]},
+            15: { titulo: "ATIVIDADE 15 - LABIRINTO DAS SENHAS SEGURAS", tipo: "labirinto", perguntas: [
+                { palavra: "SENHA FORTE", emoji: "🔑", dif: "NÍVEL 1", paredes: ["1,1"], inimigosIniciais: [[1, 2]] },
+                { palavra: "GUARDAR SENHA", emoji: "🔐", dif: "NÍVEL 2", paredes: ["0,2", "2,2"], inimigosIniciais: [[2, 0], [1, 3]] },
+                { palavra: "NUNCA DIZER", emoji: "🤫", dif: "NÍVEL 3", paredes: ["1,1", "2,1"], inimigosIniciais: [[0, 3], [3, 0]] },
+                { palavra: "SENHA SECRETA", emoji: "🕵️", dif: "NÍVEL 4", paredes: ["0,1", "2,2"], inimigosIniciais: [[2, 0], [1, 2], [3, 1]] },
+                { palavra: "SÓ MEU NOME NÃO", emoji: "❌", dif: "NÍVEL 5", paredes: ["1,0", "1,1", "2,3"], inimigosIniciais: [[2, 1], [0, 3], [3, 0]] }
+            ]}
+        };
 
-            const tabBtns = document.getElementsByClassName("tab-btn");
-            for (let i = 0; i < tabBtns.length; i++) {
-                tabBtns[i].classList.remove("active");
-            }
+        let atividadeAtual = 1;
+        let perguntaAtualIndex = 0;
+        let pontuacaoGlobal = 0;
 
-            const elementoAlvo = document.getElementById(tabId);
-            if(elementoAlvo) elementoAlvo.classList.add("active");
-            evt.currentTarget.classList.add("active");
+        let playerRow = 0;
+        let playerCol = 0;
+        let labirintoTravado = false;
+        let posInimigos = [];
+
+        function atualizarPlacar() {
+            document.getElementById("pontuacao-valor").innerText = pontuacaoGlobal;
         }
 
-        // Função para injetar o texto da atividade na caixa de texto
-        function copiarTextoParaEditor() {
-            const textoBase = document.getElementById("texto-base-copia").innerText;
-            document.getElementById("texto-caderno-copiar").value = textoBase;
+        function iniciarMenuAbas() {
+            const menu = document.getElementById("menu-abas");
+            menu.innerHTML = "";
+            for (let i = 1; i <= 15; i++) {
+                const btn = document.createElement("button");
+                btn.className = `aba-btn ${i === atividadeAtual ? 'ativa' : ''}`;
+                btn.innerText = `ABA ${i}`;
+                btn.onclick = () => mudarAtividade(i);
+                menu.appendChild(btn);
+            }
         }
 
-        // Lógica do Corretor de Texto Cidadão
-        function corrigirTexto() {
-            const textarea = document.getElementById("texto-usuario");
-            let texto = textarea.value;
-            const resultadoBox = document.getElementById("resultado-correcao");
-            const textoCorrigidoDiv = document.getElementById("texto-corrigido");
-            const alertasDiv = document.getElementById("alertas-critica");
-
-            alertasDiv.innerHTML = "";
-            if (texto.trim() === "") { alert("Por favor, digite algum texto para analisar."); return; }
-
-            let alertas = [];
-            const termosOfensivos = [/idiota/gi, /imbecil/gi, /lixo/gi];
-            let contemOfensa = false;
+        function mudarAtividade(numeroAtividade) {
+            atividadeAtual = numeroAtividade;
+            perguntaAtualIndex = 0;
+            iniciarMenuAbas();
             
-            termosOfensivos.forEach(termo => {
-                if (termo.test(texto)) {
-                    contemOfensa = true;
-                    texto = texto.replace(termo, "<span class='badge-reprovado'>[Termo Removido por Respeito]</span>");
+            const atividade = bancoAtividades[atividadeAtual];
+            document.getElementById("titulo-da-atividade").innerText = atividade.titulo;
+
+            document.getElementById("painel-jogo").style.display = "none";
+            document.getElementById("painel-copia").style.display = "none";
+            document.getElementById("painel-associacao").style.display = "none";
+            document.getElementById("painel-labirinto").style.display = "none";
+            document.getElementById("painel-finalizacao").style.display = "none";
+            document.getElementById("btn-avancar-manual").style.display = "none";
+            document.getElementById("mensagem-feedback").innerText = "";
+
+            if (atividade.tipo === "jogo") {
+                document.getElementById("painel-jogo").style.display = "block";
+                habilitarBotoesJogo(true);
+                carregarPerguntaJogo();
+            } else if (atividade.tipo === "copia") {
+                document.getElementById("painel-copia").style.display = "flex";
+                carregarPerguntaCopia();
+            } else if (atividade.tipo === "associacao") {
+                document.getElementById("painel-associacao").style.display = "flex";
+                carregarPerguntaAssociacao();
+            } else if (atividade.tipo === "labirinto") {
+                document.getElementById("painel-labirinto").style.display = "flex";
+                carregarPerguntaLabirinto();
+            }
+        }
+
+        /* JOGO CERTO/ERRADO */
+        function carregarPerguntaJogo() {
+            const pergunta = bancoAtividades[atividadeAtual].perguntas[perguntaAtualIndex];
+            document.getElementById("contador-passos").innerText = `PERGUNTA ${perguntaAtualIndex + 1} DE 10`;
+            document.getElementById("texto-pergunta").innerText = pergunta.texto;
+            document.getElementById("emoji-cena").innerText = pergunta.emoji;
+            document.getElementById("mensagem-feedback").innerText = "";
+            document.getElementById("btn-avancar-manual").style.display = "none";
+        }
+
+        function responderPergunta(respostaUsuario) {
+            const pergunta = bancoAtividades[atividadeAtual].perguntas[perguntaAtualIndex];
+            const feedbackDiv = document.getElementById("mensagem-feedback");
+
+            habilitarBotoesJogo(false);
+
+            if (respostaUsuario === pergunta.correto) {
+                feedbackDiv.innerText = "🤩 PARABÉNS! VOCÊ ACERTOU! (+10 PTS)";
+                feedbackDiv.className = "feedback acertou";
+                pontuacaoGlobal += 10;
+            } else {
+                feedbackDiv.innerText = "😢 CUIDADO! NÃO É O CERTO.";
+                feedbackDiv.className = "feedback errou";
+            }
+
+            atualizarPlacar();
+            document.getElementById("btn-avancar-manual").style.display = "block";
+        }
+
+        function habilitarBotoesJogo(status) {
+            document.getElementById("btn-certo").disabled = !status;
+            document.getElementById("btn-errado").disabled = !status;
+            document.getElementById("btn-certo").style.opacity = status ? "1" : "0.5";
+            document.getElementById("btn-errado").style.opacity = status ? "1" : "0.5";
+        }
+
+        /* CÓPIA DE TEXTO */
+        function carregarPerguntaCopia() {
+            const item = bancoAtividades[atividadeAtual].perguntas[perguntaAtualIndex];
+            document.getElementById("contador-passos").innerText = `PASSO ${perguntaAtualIndex + 1} DE 10`;
+            document.getElementById("texto-para-copiar").innerText = item.texto;
+            document.getElementById("emoji-copia").innerText = item.emoji;
+            document.getElementById("campo-escrita").value = "";
+            document.getElementById("campo-escrita").disabled = false;
+            document.getElementById("btn-avancar-manual").style.display = "none";
+            document.getElementById("mensagem-feedback").innerText = "";
+            document.getElementById("campo-escrita").focus();
+        }
+
+        function limparTexto(texto) {
+            return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase().trim();
+        }
+
+        function verificarCopia() {
+            const palavraCorreta = limparTexto(bancoAtividades[atividadeAtual].perguntas[perguntaAtualIndex].texto);
+            const digitado = limparTexto(document.getElementById("campo-escrita").value);
+            const feedbackDiv = document.getElementById("mensagem-feedback");
+
+            if (digitado === palavraCorreta) {
+                feedbackDiv.innerText = "🌟 EXCELENTE! ESCRITA CORRETA! (+15 PTS)";
+                feedbackDiv.className = "feedback acertou";
+                pontuacaoGlobal += 15;
+                atualizarPlacar();
+                document.getElementById("campo-escrita").disabled = true;
+                document.getElementById("btn-avancar-manual").style.display = "block";
+            } else {
+                feedbackDiv.innerText = "";
+            }
+        }
+
+        /* ASSOCIAÇÃO */
+        function carregarPerguntaAssociacao() {
+            const item = bancoAtividades[atividadeAtual].perguntas[perguntaAtualIndex];
+            document.getElementById("contador-passos").innerText = `CARTÃO ${perguntaAtualIndex + 1} DE 10`;
+            document.getElementById("associar-texto").innerText = item.texto;
+            document.getElementById("associar-emoji").innerText = item.emoji;
+            document.getElementById("mensagem-feedback").innerText = "";
+            document.getElementById("btn-avancar-manual").style.display = "none";
+            
+            const cartao = document.getElementById("cartao-item");
+            cartao.style.visibility = "visible";
+            cartao.style.opacity = "1";
+        }
+
+        function allowDrop(ev) { ev.preventDefault(); }
+        function dragEnter(ev) { ev.target.classList.add("dragover"); }
+        function dragLeave(ev) { ev.target.classList.remove("dragover"); }
+        function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
+
+        function drop(ev, caixaDestino) {
+            ev.preventDefault();
+            ev.target.classList.remove("dragover");
+            
+            const item = bancoAtividades[atividadeAtual].perguntas[perguntaAtualIndex];
+            const feedbackDiv = document.getElementById("mensagem-feedback");
+
+            if (caixaDestino === item.tipoCorreto) {
+                feedbackDiv.innerText = "🤩 MUITO BEM! COMBINAÇÃO CERTA! (+10 PTS)";
+                feedbackDiv.className = "feedback acertou";
+                pontuacaoGlobal += 10;
+                atualizarPlacar();
+                
+                const cartao = document.getElementById("cartao-item");
+                cartao.style.visibility = "hidden";
+
+                document.getElementById("btn-avancar-manual").style.display = "block";
+            } else {
+                feedbackDiv.innerText = "😢 CUIDADO! ESSE COMPORTAMENTO NÃO VAI NESSA CAIXA.";
+                feedbackDiv.className = "feedback errou";
+            }
+        }
+
+        /* LABIRINTOS (13, 14 e 15) */
+        function carregarPerguntaLabirinto() {
+            const mapa = bancoAtividades[atividadeAtual].perguntas[perguntaAtualIndex];
+            document.getElementById("contador-passos").innerText = `MAPA ${perguntaAtualIndex + 1} DE 5`;
+            document.getElementById("mensagem-feedback").innerText = "";
+            document.getElementById("btn-avancar-manual").style.display = "none";
+            
+            if (atividadeAtual === 14 || atividadeAtual === 15) {
+                document.getElementById("instrucao-labirinto").innerText = `${mapa.dif} - COLOQUE O BONECO NO CAMINHO CERTO E FUJA DOS VÍRUS!`;
+                posInimigos = [];
+                if (mapa.inimigosIniciais) {
+                    mapa.inimigosIniciais.forEach(pos => {
+                        posInimigos.push({ r: pos[0], c: pos[1] });
+                    });
                 }
-            });
-            if (contemOfensa) alertas.push("Evite insultos ou ataques pessoais. O debate digital saudável exige respeito mútuo.");
-
-            const termosFake = [/vi no zap/gi, /repasse para todos/gi, /compartilhe antes que apaguem/gi, /vacina tem chip/gi];
-            let contemGatilhoFake = false;
-            termosFake.forEach(termo => { if (termo.test(texto)) contemGatilhoFake = true; });
-            if (contemGatilhoFake) alertas.push("Atenção! O seu texto contém termos associados a boatos e desinformação (Fake News). Verifique sempre fontes oficiais.");
-
-            const regexCPF = /\d{3}\.\d{3}\.\d{3}-\d{2}|\d{11}/g;
-            if (regexCPF.test(texto)) {
-                texto = texto.replace(regexCPF, "<strong>[DADO PESSOAL PROTEGIDO]</strong>");
-                alertas.push("Alerta de Segurança! Detetámos a exposição de documentos pessoais (CPF). Nunca exponha dados sensíveis publicamente na internet.");
+            } else {
+                document.getElementById("instrucao-labirinto").innerText = "LEVE O BONECO 🧑‍💻 ATÉ A PALAVRA USANDO AS SETAS!";
+                posInimigos = [];
             }
 
-            textoCorrigidoDiv.innerHTML = texto;
-            if (alertas.length > 0) {
-                alertas.forEach(alerta => {
-                    const p = document.createElement("p");
-                    p.className = "alerta-item critico";
-                    p.innerText = "⚠️ " + alerta;
-                    alertasDiv.appendChild(p);
+            playerRow = 0;
+            playerCol = 0;
+            labirintoTravado = false;
+            desenharLabirinto();
+        }
+
+        function desenharLabirinto() {
+            const mapa = bancoAtividades[atividadeAtual].perguntas[perguntaAtualIndex];
+            const tabuleiro = document.getElementById("labirinto-tabuleiro");
+            tabuleiro.innerHTML = "";
+
+            for (let r = 0; r < 4; r++) {
+                for (let c = 0; c < 4; c++) {
+                    const celula = document.createElement("div");
+                    celula.className = "celula";
+                    celula.id = `cel-${r}-${c}`;
+
+                    const posStr = `${r},${c}`;
+                    const temInimigo = posInimigos.some(inimigo => inimigo.r === r && inimigo.c === c);
+
+                    if (r === playerRow && c === playerCol) {
+                        celula.innerText = "🧑‍💻"; 
+                    } else if (r === 3 && c === 3) {
+                        celula.className = "celula celula-destino";
+                        celula.innerHTML = `<span>${mapa.emoji}</span>${mapa.palavra}`;
+                    } else if (mapa.paredes.includes(posStr)) {
+                        celula.className = "celula celula-parede";
+                        celula.innerText = "🧱"; 
+                    } else if (temInimigo) {
+                        celula.className = "celula celula-perigosa";
+                        celula.innerText = "👾"; 
+                    }
+
+                    tabuleiro.appendChild(celula);
+                }
+            }
+        }
+
+        function moverInimigos() {
+            if ((atividadeAtual !== 14 && atividadeAtual !== 15) || labirintoTravado) return;
+
+            const mapa = bancoAtividades[atividadeAtual].perguntas[perguntaAtualIndex];
+            const direcoes = [{ r: -1, c: 0 }, { r: 1, c: 0 }, { r: 0, c: -1 }, { r: 0, c: 1 }];
+
+            posInimigos = posInimigos.map(inimigo => {
+                let vizinhosValidos = [];
+                direcoes.forEach(dir => {
+                    const novoR = inimigo.r + dir.r;
+                    const novoC = inimigo.c + dir.c;
+                    const posStr = `${novoR},${novoC}`;
+
+                    if (novoR >= 0 && novoR < 4 && novoC >= 0 && novoC < 4) {
+                        if (!mapa.paredes.includes(posStr) && !(novoR === 3 && novoC === 3)) {
+                            vizinhosValidos.push({ r: novoR, c: novoC });
+                        }
+                    }
                 });
-            } else {
-                const p = document.createElement("p");
-                p.style.color = "#48bb78";
-                p.innerText = "✨ Excelente! Nenhum problema óbvio de cidadania digital ou segurança foi detetado no seu texto.";
-                alertasDiv.appendChild(p);
-            }
-            resultadoBox.style.display = "block";
+
+                return vizinhosValidos.length > 0 ? vizinhosValidos[Math.floor(Math.random() * vizinhosValidos.length)] : inimigo;
+            });
         }
 
-        // Lógica unificada para avaliar as atividades de Cidadania Digital
-        function avaliarAtividade(idTextarea, idResultadoBox, idNotaBox, idFeedbackBox) {
-            const respostaUsuario = document.getElementById(idTextarea).value;
-            const resultadoBox = document.getElementById(idResultadoBox);
-            const notaBox = document.getElementById(idNotaBox);
-            const feedbackBox = document.getElementById(idFeedbackBox);
+        function verificarColisao() {
+            const colidiu = posInimigos.some(inimigo => inimigo.r === playerRow && inimigo.c === playerCol);
 
-            if (respostaUsuario.trim() === "") { alert("Por favor, garanta que o texto está preenchido antes de enviar."); return; }
-
-            let errosRestantes = 0;
-            let feedbacks = [];
-
-            const contemOfensa = /imbecil/gi.test(respostaUsuario);
-            const contemFake = /vi no zap|fechar os hospitais|repassem para todos/gi.test(respostaUsuario);
-            const contemCPF = /\d{3}\.\d{3}\.\d{3}-\d{2}|\d{11}/g.test(respostaUsuario);
-
-            if (contemOfensa) {
-                errosRestantes++;
-                feedbacks.push("❌ Você manteve a ofensa pessoal ('imbecil'). Remova ataques ofensivos.");
-            } else { feedbacks.push("✅ Muito bem! Você retirou a agressão verbal."); }
-
-            if (contemFake) {
-                errosRestantes++;
-                feedbacks.push("❌ Você manteve boatos ou pedidos de compartilhamento em massa ('vi no zap', 'repassem').");
-            } else { feedbacks.push("✅ Ótimo! Você limpou a desinformação sem provas."); }
-
-            if (contemCPF) {
-                errosRestantes++;
-                feedbacks.push("❌ Perigo! O número de CPF vazado continua visível no seu texto.");
-            } else { feedbacks.push("✅ Excelente! Você eliminou a exposição de dados privados."); }
-
-            let nota = 10 - (errosRestantes * 3.3);
-            nota = Math.max(0, Math.min(10, Math.round(nota)));
-
-            if (nota >= 7) {
-                notaBox.style.backgroundColor = "#c6f6d5";
-                notaBox.style.color = "#22543d";
-            } else {
-                notaBox.style.backgroundColor = "#fed7d7";
-                notaBox.style.color = "#742a2a";
+            if (colidiu) {
+                // Voltar ao início sem mexer nos pontos
+                playerRow = 0;
+                playerCol = 0;
+                
+                const feedbackDiv = document.getElementById("mensagem-feedback");
+                feedbackDiv.innerText = "O VÍRUS TE PEGOU! RETORNOU AO INÍCIO PARA TENTAR DE NOVO. 👀";
+                feedbackDiv.className = "feedback errou";
+                
+                const tabuleiro = document.getElementById("labirinto-tabuleiro");
+                tabuleiro.style.borderColor = "#D32F2F";
+                setTimeout(() => tabuleiro.style.borderColor = "#37474F", 400);
             }
-            notaBox.innerText = "Sua Nota: " + nota + " / 10";
+        }
+
+        function moverJogador(dRow, dCol) {
+            if (labirintoTravado) return;
+
+            const novoRow = playerRow + dRow;
+            const novoCol = playerCol + dCol;
+            const mapa = bancoAtividades[atividadeAtual].perguntas[perguntaAtualIndex];
+
+            if (novoRow >= 0 && novoRow < 4 && novoCol >= 0 && novoCol < 4) {
+                const destinoStr = `${novoRow},${novoCol}`;
+                
+                if (!mapa.paredes.includes(destinoStr)) {
+                    playerRow = novoRow;
+                    playerCol = novoCol;
+
+                    moverInimigos();
+                    verificarColisao();
+                    desenharLabirinto();
+
+                    if (playerRow === 3 && playerCol === 3 && !labirintoTravado) {
+                        labirintoTravado = true;
+                        const feedbackDiv = document.getElementById("mensagem-feedback");
+                        feedbackDiv.innerText = "🤩 INCRÍVEL! MAPA CONCLUÍDO! (+30 PTS)";
+                        feedbackDiv.className = "feedback acertou";
+                        pontuacaoGlobal += 30;
+                        atualizarPlacar();
+                        document.getElementById("btn-avancar-manual").style.display = "block";
+                    }
+                }
+            }
+        }
+
+        // CONTROLADOR DE SETAS FÍSICAS
+        window.addEventListener("keydown", function(e) {
+            const atividade = bancoAtividades[atividadeAtual];
+            if (!atividade || atividade.tipo !== "labirinto") return;
+
+            if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.key) > -1) {
+                e.preventDefault();
+            }
+
+            if (e.key === "ArrowUp" || e.key === "w" || e.key === "W") moverJogador(-1, 0);
+            else if (e.key === "ArrowDown" || e.key === "s" || e.key === "S") moverJogador(1, 0);
+            else if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") moverJogador(0, -1);
+            else if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") moverJogador(0, 1);
+        });
+
+        /* GLOBAL - AVANÇAR ETAPAS */
+        function proximoPasso() {
+            perguntaAtualIndex++;
+            const atividade = bancoAtividades[atividadeAtual];
+            const totalPassos = atividade.tipo === "labirinto" ? 5 : 10;
+
+            if (perguntaAtualIndex < totalPassos) {
+                if (atividade.tipo === "jogo") {
+                    habilitarBotoesJogo(true);
+                    carregarPerguntaJogo();
+                } else if (atividade.tipo === "copia") {
+                    carregarPerguntaCopia();
+                } else if (atividade.tipo === "associacao") {
+                    carregarPerguntaAssociacao();
+                } else if (atividade.tipo === "labirinto") {
+                    carregarPerguntaLabirinto();
+                }
+            } else {
+                if (atividadeAtual === 15) {
+                    abrirTelaFinalizacao();
+                } else {
+                    const feedbackDiv = document.getElementById("mensagem-feedback");
+                    feedbackDiv.innerText = "🏆 MUITO BEM! ESSA ATIVIDADE ACABOU. COLOQUE NA PRÓXIMA ABA!";
+                    feedbackDiv.className = "feedback acertou";
+                    document.getElementById("btn-avancar-manual").style.display = "none";
+                }
+            }
+        }
+
+        function abrirTelaFinalizacao() {
+            document.getElementById("titulo-da-atividade").innerText = "FIM DA JORNADA!";
+            document.getElementById("contador-passos").innerText = "CONCLUÍDO";
+            document.getElementById("painel-labirinto").style.display = "none";
+            document.getElementById("btn-avancar-manual").style.display = "none";
+            document.getElementById("mensagem-feedback").style.display = "none";
             
-            let htmlFeedback = "<p><strong>Análise corretiva do texto:</strong></p><ul class='dicas-list'>";
-            feedbacks.forEach(f => { htmlFeedback += "<li>" + f + "</li>"; });
-            htmlFeedback += "</ul>";
-            
-            if(nota === 10) {
-                htmlFeedback += "<br><p style='color: var(--success-color); font-weight: bold;'>✨ Perfeito! O texto foi completamente higienizado seguindo as boas práticas da cidadania digital.</p>";
-            } else {
-                htmlFeedback += "<br><p style='color: var(--warning-color); font-weight: bold;'>Modifique o seu texto e tente novamente até obter a nota máxima!</p>";
-            }
-
-            feedbackBox.innerHTML = htmlFeedback;
-            resultadoBox.style.display = "block";
+            document.getElementById("painel-finalizacao").style.display = "flex";
         }
 
-        // Lógica do Quiz
-        function verificarQuiz(isCorrect, elemento) {
-            const feedback = document.getElementById("feedback-quiz");
-            const botoes = elemento.parentNode.querySelectorAll('.quiz-btn');
-            botoes.forEach(btn => btn.style.background = "white");
-
-            if (isCorrect) {
-                elemento.style.background = "#c6f6d5";
-                feedback.innerHTML = "<span style='color: #2f855a;'>Correto!</span> A checagem de fatos impede a propagação de mentiras.";
-            } else {
-                elemento.style.background = "#fed7d7";
-                feedback.innerHTML = "<span style='color: #9b2c2c;'>Incorreto.</span> Repassar sem checar alimenta redes de desinformação.";
+        function gerarCertificado() {
+            const nome = document.getElementById("nome-estudante").value.trim();
+            if (nome === "") {
+                alert("POR FAVOR, DIGITE SEU NOME PARA ENTRAR NO CERTIFICADO!");
+                return;
             }
+            document.getElementById("cert-nome-aluno").innerText = nome;
+            document.getElementById("cert-pontos-aluno").innerText = `${pontuacaoGlobal} PONTOS ⭐`;
+            document.getElementById("caixa-certificado").style.display = "block";
         }
+
+        mudarAtividade(1);
     </script>
+
 </body>
 </html>
