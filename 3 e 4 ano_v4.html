@@ -200,7 +200,7 @@
             text-align: center;
         }
 
-        /* ESTILOS DA ATIVIDADE 11 - ASSOCIAÇÃO */
+        /* ESTILOS DE ASSOCIAÇÃO */
         .painel-associacao {
             display: flex;
             flex-direction: column;
@@ -265,6 +265,12 @@
         .caixa-segura.dragover { background-color: #C8E6C9; }
         .caixa-perigosa { border-color: #F44336; background-color: #FFEBEE; color: #C62828; }
         .caixa-perigosa.dragover { background-color: #FFCDD2; }
+        
+        .caixa-op-a { border-color: #0288D1; background-color: #E1F5FE; color: #01579B; }
+        .caixa-op-a.dragover { background-color: #B3E5FC; }
+        .caixa-op-b { border-color: #FF9800; background-color: #FFF3E0; color: #E65100; }
+        .caixa-op-b.dragover { background-color: #FFE0B2; }
+
         .caixa-alvo span { font-size: 2.5rem; margin-bottom: 5px; }
 
         /* ESTILOS DOS LABIRINTOS */
@@ -355,7 +361,7 @@
         .seta-esquerda { grid-area: esq; }
         .seta-direita { grid-area: dir; }
 
-        /* TELA DE FIM DE JOGO / RANKING / REGISTRO */
+        /* TELA DE FIM DE JOGO / CERTIFICADO */
         .painel-fim {
             display: flex;
             flex-direction: column;
@@ -428,29 +434,24 @@
                     </div>
                 </div>
 
-                <!-- ATIVIDADE DE CÓPIA DE TEXTO / FRASES -->
+                <!-- ATIVIDADE DE CÓPIA DE TEXTO / FRASES / DIGITAÇÃO -->
                 <div id="painel-copia" class="area-copia" style="display: none;">
                     <span id="emoji-copia" class="emoji-grande">✏️</span>
                     <div class="texto-modelo" id="texto-para-copiar">TEXTO PARA COPIAR</div>
                     <textarea class="campo-digitar" id="campo-escrita" placeholder="DIGITE IGUALZINHO AO MODELO ACIMA..." oninput="verificarCopia()"></textarea>
                 </div>
 
-                <!-- ATIVIDADE 11: ASSOCIAÇÃO (ARRASTE) -->
+                <!-- ASSOCIAÇÃO (ARRASTE) -->
                 <div id="painel-associacao" class="painel-associacao" style="display: none;">
-                    <p style="font-weight: bold; color: #555;">ARRASTE O CARTÃO PARA A CAIXA CERTA!</p>
+                    <p style="font-weight: bold; color: #555;" id="instrucao-associacao">ARRASTE O CARTÃO PARA A CAIXA CERTA!</p>
                     <div class="zona-cartao">
                         <div id="cartao-item" class="cartao-arrastavel" draggable="true" ondragstart="drag(event)">
                             <span class="emoji-cartao" id="associar-emoji">❓</span>
                             <div id="associar-texto">TEXTO DO CARTÃO</div>
                         </div>
                     </div>
-                    <div class="caixas-container">
-                        <div class="caixa-alvo caixa-segura" ondrop="drop(event, 'segura')" ondragover="allowDrop(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)">
-                            <span>😊</span>ATITUDE SEGURA
-                        </div>
-                        <div class="caixa-alvo caixa-perigosa" ondrop="drop(event, 'perigosa')" ondragover="allowDrop(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)">
-                            <span>⚠️</span>ATITUDE PERIGOSA
-                        </div>
+                    <div class="caixas-container" id="caixas-associacao-container">
+                        <!-- Gerado dinamicamente -->
                     </div>
                 </div>
 
@@ -617,16 +618,16 @@
                 { texto: "TECLADO", emoji: "⌨️" }, { texto: "JOGO", emoji: "🎮" }
             ]},
             11: { titulo: "ATIVIDADE 11 - ASSOCIAR ATITUDES (ARRASTE)", tipo: "associacao", perguntas: [
-                { texto: "PEDIR AJUDA PARA ENTRAR EM UM SITE", tipoCorreto: "segura", emoji: "🙋" },
-                { texto: "MANDAR FOTO DA SUA CASA PARA ESTRANHOS", tipoCorreto: "perigosa", emoji: "🏠" },
-                { texto: "JOGAR JOGOS PERMITIDOS PARA SUA IDADE", tipoCorreto: "segura", emoji: "🧸" },
-                { texto: "CONTAR SUA SENHA SECRETA PARA COLEGAS", tipoCorreto: "perigosa", emoji: "🔐" },
-                { texto: "AVISAR EM CASO DE CONTEÚDO IMPRÓPRIO", tipoCorreto: "segura", emoji: "🗣️" },
-                { texto: "CLICAR EM PROPAGANDAS QUE PISCAM NA TELA", tipoCorreto: "perigosa", emoji: "📺" },
-                { texto: "USAR O COMPUTADOR SÓ NO TEMPO COMBINADO", tipoCorreto: "segura", emoji: "⏰" },
-                { texto: "COMBINAR DE ENCONTRAR UM AMIGO DO JOGO", tipoCorreto: "perigosa", emoji: "🚶" },
-                { texto: "SÓ FALAR COM PESSOAS CONHECIDAS REAIS", tipoCorreto: "segura", emoji: "🤝" },
-                { texto: "ABRIR LINKS E ENCARTES SEM CONHECER", tipoCorreto: "perigosa", emoji: "🔗" }
+                { texto: "PEDIR AJUDA PARA ENTRAR EM UM SITE", tipoCorreto: "segura", emoji: "🙋", opA: "😊 ATITUDE SEGURA", opB: "⚠️ ATITUDE PERIGOSA", valA: "segura", valB: "perigosa" },
+                { texto: "MANDAR FOTO DA SUA CASA PARA ESTRANHOS", tipoCorreto: "perigosa", emoji: "🏠", opA: "😊 ATITUDE SEGURA", opB: "⚠️ ATITUDE PERIGOSA", valA: "segura", valB: "perigosa" },
+                { texto: "JOGAR JOGOS PERMITIDOS PARA SUA IDADE", tipoCorreto: "segura", emoji: "🧸", opA: "😊 ATITUDE SEGURA", opB: "⚠️ ATITUDE PERIGOSA", valA: "segura", valB: "perigosa" },
+                { texto: "CONTAR SUA SENHA SECRETA PARA COLEGAS", tipoCorreto: "perigosa", emoji: "🔐", opA: "😊 ATITUDE SEGURA", opB: "⚠️ ATITUDE PERIGOSA", valA: "segura", valB: "perigosa" },
+                { texto: "AVISAR EM CASO DE CONTEÚDO IMPRÓPRIO", tipoCorreto: "segura", emoji: "🗣️", opA: "😊 ATITUDE SEGURA", opB: "⚠️ ATITUDE PERIGOSA", valA: "segura", valB: "perigosa" },
+                { texto: "CLICAR EM PROPAGANDAS QUE PISCAM NA TELA", tipoCorreto: "perigosa", emoji: "📺", opA: "😊 ATITUDE SEGURA", opB: "⚠️ ATITUDE PERIGOSA", valA: "segura", valB: "perigosa" },
+                { texto: "USAR O COMPUTADOR SÓ NO TEMPO COMBINADO", tipoCorreto: "segura", emoji: "⏰", opA: "😊 ATITUDE SEGURA", opB: "⚠️ ATITUDE PERIGOSA", valA: "segura", valB: "perigosa" },
+                { texto: "COMBINAR DE ENCONTRAR UM AMIGO DO JOGO", tipoCorreto: "perigosa", emoji: "🚶", opA: "😊 ATITUDE SEGURA", opB: "⚠️ ATITUDE PERIGOSA", valA: "segura", valB: "perigosa" },
+                { texto: "SÓ FALAR COM PESSOAS CONHECIDAS REAIS", tipoCorreto: "segura", emoji: "🤝", opA: "😊 ATITUDE SEGURA", opB: "⚠️ ATITUDE PERIGOSA", valA: "segura", valB: "perigosa" },
+                { texto: "ABRIR LINKS E ENCARTES SEM CONHECER", tipoCorreto: "perigosa", emoji: "🔗", opA: "😊 ATITUDE SEGURA", opB: "⚠️ ATITUDE PERIGOSA", valA: "segura", valB: "perigosa" }
             ]},
             12: { titulo: "ATIVIDADE 12 - TREINO DE TECLADO (FRASES)", tipo: "copia", perguntas: [
                 { texto: "EU USO O COMPUTADOR COM AS MAOS LIMPAS", emoji: "🧼" },
@@ -660,6 +661,30 @@
                 { palavra: "NUNCA DIZER", emoji: "🤫", dif: "NÍVEL 3", paredes: ["1,1", "2,1"], inimigosIniciais: [[0, 3], [3, 0]] },
                 { palavra: "SENHA SECRETA", emoji: "🕵️", dif: "NÍVEL 4", paredes: ["0,1", "2,2"], inimigosIniciais: [[2, 0], [1, 2], [3, 1]] },
                 { palavra: "SÓ MEU NOME NÃO", emoji: "❌", dif: "NÍVEL 5", paredes: ["1,0", "1,1", "2,3"], inimigosIniciais: [[2, 1], [0, 3], [3, 0]] }
+            ]},
+            16: { titulo: "ATIVIDADE 16 - IDENTIFICAR E DIGITAR TECNOLOGIAS DIGITAIS", tipo: "copia", perguntas: [
+                { texto: "COMPUTADOR", emoji: "💻" },
+                { texto: "CELULAR", emoji: "📱" },
+                { texto: "TABLET", emoji: "📲" },
+                { texto: "NOTEBOOK", emoji: "💻" },
+                { texto: "TECLADO", emoji: "⌨️" },
+                { texto: "MOUSE", emoji: "🖱️" },
+                { texto: "MONITOR", emoji: "🖥️" },
+                { texto: "FONE DE OUVIDO", emoji: "🎧" },
+                { texto: "ROTEADOR", emoji: "📡" },
+                { texto: "IMPRESSORA", emoji: "🖨️" }
+            ]},
+            17: { titulo: "ATIVIDADE 17 - PARA QUE SERVE CADA TECNOLOGIA?", tipo: "associacao", perguntas: [
+                { texto: "SERVE PARA DIGITAR LETRAS E NÚMEROS NO COMPUTADOR", tipoCorreto: "teclado", emoji: "⌨️", opA: "⌨️ TECLADO", opB: "🖱️ MOUSE", valA: "teclado", valB: "mouse" },
+                { texto: "SERVE PARA MOVER A SETINHA E CLICAR NA TELA", tipoCorreto: "mouse", emoji: "🖱️", opA: "⌨️ TECLADO", opB: "🖱️ MOUSE", valA: "teclado", valB: "mouse" },
+                { texto: "SERVE PARA MOSTRAR AS IMAGENS, FOTOS E VÍDEOS", tipoCorreto: "monitor", emoji: "🖥️", opA: "🖥️ MONITOR / TELA", opB: "🎧 FONE DE OUVIDO", valA: "monitor", valB: "fone" },
+                { texto: "SERVE PARA OUVIR O SOM SEM ATRAPALHAR OS COLEGAS", tipoCorreto: "fone", emoji: "🎧", opA: "🖥️ MONITOR / TELA", opB: "🎧 FONE DE OUVIDO", valA: "monitor", valB: "fone" },
+                { texto: "SERVE PARA PASSAR A INTERNET SEM FIO PELA CASA OU ESCOLA", tipoCorreto: "roteador", emoji: "📡", opA: "📡 ROTEADOR WI-FI", opB: "🖨️ IMPRESSORA", valA: "roteador", valB: "impressora" },
+                { texto: "SERVE PARA PASSAR DESENHOS E TAREFAS DA TELA PARA O PAPEL", tipoCorreto: "impressora", emoji: "🖨️", opA: "📡 ROTEADOR WI-FI", opB: "🖨️ IMPRESSORA", valA: "roteador", valB: "impressora" },
+                { texto: "COMPUTADOR PORTÁTIL QUE PODEMOS LEVAR NA MOCHILA", tipoCorreto: "notebook", emoji: "💻", opA: "💻 NOTEBOOK", opB: "📱 CELULAR", valA: "notebook", valB: "celular" },
+                { texto: "APARELHO MÓVEL PARA FAZER LIGAÇÕES E MENSAGENS", tipoCorreto: "celular", emoji: "📱", opA: "💻 NOTEBOOK", opB: "📱 CELULAR", valA: "notebook", valB: "celular" },
+                { texto: "TELA GRANDE QUE PODEMOS TOCAR COM O DEDO PARA JOGAR", tipoCorreto: "tablet", emoji: "📲", opA: "📲 TABLET", opB: "⌨️ TECLADO", valA: "tablet", valB: "teclado" },
+                { texto: "MÁQUINA PRINCIPAL PARA ESTUDAR E JOGAR NO LABORATÓRIO", tipoCorreto: "pc", emoji: "🖥️", opA: "💻 COMPUTADOR / PC", opB: "🖨️ IMPRESSORA", valA: "pc", valB: "impressora" }
             ]}
         };
 
@@ -679,7 +704,8 @@
         function iniciarMenuAbas() {
             const menu = document.getElementById("menu-abas");
             menu.innerHTML = "";
-            for (let i = 1; i <= 15; i++) {
+            const totalAtividades = Object.keys(bancoAtividades).length;
+            for (let i = 1; i <= totalAtividades; i++) {
                 const btn = document.createElement("button");
                 btn.className = `aba-btn ${i === atividadeAtual ? 'ativa' : ''}`;
                 btn.innerText = `ABA ${i}`;
@@ -799,6 +825,22 @@
             document.getElementById("mensagem-feedback").innerText = "";
             document.getElementById("btn-avancar-manual").style.display = "none";
             
+            const containerCaixas = document.getElementById("caixas-associacao-container");
+            containerCaixas.innerHTML = "";
+
+            // Monta as caixas dinamicamente baseadas na pergunta
+            const classeCaixaA = (atividadeAtual === 11) ? "caixa-segura" : "caixa-op-a";
+            const classeCaixaB = (atividadeAtual === 11) ? "caixa-perigosa" : "caixa-op-b";
+
+            containerCaixas.innerHTML = `
+                <div class="caixa-alvo ${classeCaixaA}" ondrop="drop(event, '${item.valA}')" ondragover="allowDrop(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)">
+                    ${item.opA}
+                </div>
+                <div class="caixa-alvo ${classeCaixaB}" ondrop="drop(event, '${item.valB}')" ondragover="allowDrop(event)" ondragenter="dragEnter(event)" ondragleave="dragLeave(event)">
+                    ${item.opB}
+                </div>
+            `;
+
             const cartao = document.getElementById("cartao-item");
             cartao.style.visibility = "visible";
             cartao.style.opacity = "1";
@@ -827,7 +869,7 @@
 
                 document.getElementById("btn-avancar-manual").style.display = "block";
             } else {
-                feedbackDiv.innerText = "😢 CUIDADO! ESSE COMPORTAMENTO NÃO VAI NESSA CAIXA.";
+                feedbackDiv.innerText = "😢 CUIDADO! ESSE COMPORTAMENTO/FUNÇÃO NÃO É DESSA CAIXA.";
                 feedbackDiv.className = "feedback errou";
             }
         }
@@ -918,7 +960,6 @@
             const colidiu = posInimigos.some(inimigo => inimigo.r === playerRow && inimigo.c === playerCol);
 
             if (colidiu) {
-                // Voltar ao início sem mexer nos pontos
                 playerRow = 0;
                 playerCol = 0;
                 
@@ -983,6 +1024,7 @@
             perguntaAtualIndex++;
             const atividade = bancoAtividades[atividadeAtual];
             const totalPassos = atividade.tipo === "labirinto" ? 5 : 10;
+            const totalAtividades = Object.keys(bancoAtividades).length;
 
             if (perguntaAtualIndex < totalPassos) {
                 if (atividade.tipo === "jogo") {
@@ -996,7 +1038,7 @@
                     carregarPerguntaLabirinto();
                 }
             } else {
-                if (atividadeAtual === 15) {
+                if (atividadeAtual === totalAtividades) {
                     abrirTelaFinalizacao();
                 } else {
                     const feedbackDiv = document.getElementById("mensagem-feedback");
@@ -1010,6 +1052,9 @@
         function abrirTelaFinalizacao() {
             document.getElementById("titulo-da-atividade").innerText = "FIM DA JORNADA!";
             document.getElementById("contador-passos").innerText = "CONCLUÍDO";
+            document.getElementById("painel-jogo").style.display = "none";
+            document.getElementById("painel-copia").style.display = "none";
+            document.getElementById("painel-associacao").style.display = "none";
             document.getElementById("painel-labirinto").style.display = "none";
             document.getElementById("btn-avancar-manual").style.display = "none";
             document.getElementById("mensagem-feedback").style.display = "none";
