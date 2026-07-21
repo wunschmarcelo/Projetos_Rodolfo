@@ -3,8 +3,727 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ESPAÇO DIGITAL INTERATIVO - 1º ANO (FIXO)</title>
+    <title>ESPAÇO DIGITAL INTERATIVO - 2º ANO</title>
+    <style><!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESPAÇO DIGITAL INTERATIVO - 1º ANO (TEXTOS)</title>
     <style>
+        /* --- ESTILOS GERAIS COGNITIVOS E VISUAIS --- */
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+            background-color: #f0fdf4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            background-color: #4338ca;
+            color: white;
+            width: 100%;
+            text-align: center;
+            padding: 15px 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        header h1 { margin: 0; font-size: 26px; text-transform: uppercase; }
+        header p { margin: 5px 0 0 0; font-size: 15px; opacity: 0.9; text-transform: uppercase; font-weight: bold; }
+
+        /* --- SISTEMA DE ABAS LIBERADAS --- */
+        .tabs-container {
+            width: 95%;
+            max-width: 1000px;
+            margin-top: 20px;
+        }
+
+        .tabs-menu {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: -2px;
+        }
+
+        .tab-btn {
+            background-color: #e0e7ff;
+            border: 3px solid #b4c6fc;
+            border-bottom: none;
+            padding: 12px 16px;
+            font-size: 13px;
+            font-weight: bold;
+            font-family: inherit;
+            color: #3730a3;
+            cursor: pointer;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            transition: 0.2s;
+            text-transform: uppercase;
+        }
+
+        .tab-btn:hover { background-color: #c7d2fe; }
+
+        .tab-btn.active {
+            background-color: white;
+            border-color: #4338ca;
+            color: #4338ca;
+            padding-bottom: 14px;
+            z-index: 2;
+        }
+
+        .tab-content {
+            background-color: white;
+            border: 4px solid #4338ca;
+            border-radius: 0 12px 12px 12px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            display: none;
+            min-height: 400px;
+        }
+
+        .tab-content.active { display: block; }
+
+        /* --- DESIGN ADAPTADO DAS ATIVIDADES --- */
+        .game-title { font-size: 24px; margin-top: 0; text-align: center; text-transform: uppercase; color: #1e1b4b; }
+        .game-desc { text-align: center; font-size: 16px; color: #4b5563; margin-bottom: 25px; text-transform: uppercase; font-weight: bold; }
+        .feedback-box { text-align: center; font-size: 22px; font-weight: bold; margin-top: 25px; min-height: 40px; text-transform: uppercase; }
+        .btn-group { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 10px; }
+
+        .main-card { 
+            background-color: #f9fafb; 
+            border: 4px dashed #4338ca; 
+            border-radius: 20px; 
+            padding: 20px; 
+            font-size: 24px; 
+            font-weight: bold; 
+            text-align: center; 
+            max-width: 500px; 
+            margin: 0 auto 20px auto; 
+            text-transform: uppercase;
+        }
+
+        .big-emoji { font-size: 85px; display: block; margin-bottom: 12px; }
+
+        .input-copia {
+            display: block;
+            width: 85%;
+            max-width: 450px;
+            margin: 20px auto;
+            padding: 15px;
+            font-size: 22px;
+            font-family: inherit;
+            text-transform: uppercase;
+            border: 4px solid #b4c6fc;
+            border-radius: 12px;
+            text-align: center;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+        .input-copia:focus {
+            outline: none;
+            border-color: #4338ca;
+            background-color: #eff6ff;
+        }
+
+        /* Campo adaptado para pequenos parágrafos */
+        .textarea-copia {
+            display: block;
+            width: 90%;
+            max-width: 550px;
+            margin: 20px auto;
+            padding: 15px;
+            font-size: 18px;
+            font-family: inherit;
+            text-transform: uppercase;
+            border: 4px solid #b4c6fc;
+            border-radius: 12px;
+            text-align: left;
+            font-weight: bold;
+            resize: none;
+            height: 100px;
+        }
+        .textarea-copia:focus {
+            outline: none;
+            border-color: #4338ca;
+            background-color: #eff6ff;
+        }
+
+        .btn-game { 
+            font-size: 18px; 
+            font-weight: bold; 
+            padding: 16px 28px; 
+            border: none; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            color: white; 
+            font-family: inherit; 
+            text-transform: uppercase; 
+            box-shadow: 0 5px 0 rgba(0,0,0,0.15); 
+        }
+        .btn-game:active { transform: translateY(3px); box-shadow: none; }
+        
+        .btn-blue { background-color: #2563eb; }
+        .btn-amber { background-color: #d97706; }
+        .btn-purple { background-color: #9333ea; }
+        .btn-pink { background-color: #db2777; }
+        .btn-green { background-color: #16a34a; }
+        .btn-red { background-color: #dc2626; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🌟 ESPAÇO DIGITAL INTERATIVO 🌟</h1>
+        <p>2º ANO - EEB RODOLFO ZIPPERER</p>
+    </header>
+
+    <div class="tabs-container">
+        <div class="tabs-menu" id="menu-abas">
+            <button class="tab-btn active" id="btn-armazenamento" onclick="openTab(event, 'armazenamento')">💾 ONDE GUARDA?</button>
+            <button class="tab-btn" id="btn-transmissao" onclick="openTab(event, 'transmissao')">🔌 COMO VIAJA?</button>
+            <button class="tab-btn" id="btn-tiposdado" onclick="openTab(event, 'tiposdado')">🔢 LETRA OU NÚMERO?</button>
+            <button class="tab-btn" id="btn-seguranca" onclick="openTab(event, 'seguranca')">🕵️‍♂️ DETETIVE DIGITAL</button>
+            <button class="tab-btn" id="btn-atitudes" onclick="openTab(event, 'atitudes')">🟢 SEMÁFORO VIRTUAL</button>
+            <button class="tab-btn" id="btn-copia" onclick="openTab(event, 'copia')">✍️ COPIA JOGUINHO</button>
+            <button class="tab-btn" id="btn-copiapalavras" onclick="openTab(event, 'copiapalavras')">🔤 COPIA PALAVRAS</button>
+            <button class="tab-btn" id="btn-copiatextos" onclick="openTab(event, 'copiatextos')">📖 COPIA TEXTOS</button>
+            <button class="tab-btn" id="btn-correcao" onclick="openTab(event, 'correcao')">✏️ CORREÇÃO DIGITAL</button>
+            <button class="tab-btn" id="btn-edigital" onclick="openTab(event, 'edigital')">⚡ É DIGITAL?</button>
+            <button class="tab-btn" id="btn-funcoes" onclick="openTab(event, 'funcoes')">🛠️ PARA QUE SERVE?</button>
+            <button class="tab-btn" id="btn-digitatec" onclick="openTab(event, 'digitatec')">⌨️ DIGITE A TECNOLOGIA</button>
+        </div>
+
+        <div id="armazenamento" class="tab-content active">
+            <h2 class="game-title" style="color: #2563eb;">ONDE GUARDA?</h2>
+            <p class="game-desc">OLHE O DESENHO! ISSO FICA NO MUNDO REAL OU NO COMPUTADOR?</p>
+            <div class="main-card" id="card-armazenamento">...</div>
+            <div class="btn-group">
+                <button class="btn-game btn-amber" onclick="jogos.armazenamento.verificar('real')">📦 MUNDO REAL / PAPEL</button>
+                <button class="btn-game btn-blue" onclick="jogos.armazenamento.verificar('digital')">💻 COMPUTADOR / DIGITAL</button>
+            </div>
+            <div class="feedback-box" id="fb-armazenamento"></div>
+        </div>
+
+        <div id="transmissao" class="tab-content">
+            <h2 class="game-title" style="color: #d97706;">COMO A MENSAGEM VIAJA?</h2>
+            <p class="game-desc">COMO ESTA INFORMAÇÃO É ENVIADA PARA OUTRA PESSOA?</p>
+            <div class="main-card" id="card-transmissao">...</div>
+            <div class="btn-group">
+                <button class="btn-game btn-purple" onclick="jogos.transmissao.verificar('falar')">🗣️ FALANDO OU PAPEL</button>
+                <button class="btn-game btn-amber" onclick="jogos.transmissao.verificar('computador')">🌐 WI-FI OU CABOS</button>
+            </div>
+            <div class="feedback-box" id="fb-transmissao"></div>
+        </div>
+
+        <div id="tiposdado" class="tab-content">
+            <h2 class="game-title" style="color: #ea580c;">LETRA OU NÚMERO?</h2>
+            <p class="game-desc">OLHE PARA O CARD ABAIXO. O QUE TEM NELE?</p>
+            <div class="main-card" id="card-tiposdado" style="font-size: 55px; padding: 20px; color: #1e3a8a;">...</div>
+            <div class="btn-group">
+                <button class="btn-game btn-pink" onclick="jogos.tiposdado.verificar('texto')">🔤 É LETRA / TEXTO</button>
+                <button class="btn-game btn-blue" onclick="jogos.tiposdado.verificar('numero')">🔢 É NÚMERO</button>
+            </div>
+            <div class="feedback-box" id="fb-tiposdado"></div>
+        </div>
+
+        <div id="seguranca" class="tab-content">
+            <h2 class="game-title" style="color: #0891b2;">DETETIVES DA INTERNET</h2>
+            <p class="game-desc">PODE MOSTRAR PARA TODOS OU É SEGREDO?</p>
+            <div class="main-card" id="card-seguranca">...</div>
+            <div class="btn-group">
+                <button class="btn-game btn-green" onclick="jogos.seguranca.verificar('publico')">🟢 MOSTRAR / PÚBLICO</button>
+                <button class="btn-game btn-red" onclick="jogos.seguranca.verificar('secreto')">🔴 SEGREDO / PROIBIDO</button>
+            </div>
+            <div class="feedback-box" id="fb-seguranca"></div>
+        </div>
+
+        <div id="atitudes" class="tab-content">
+            <h2 class="game-title" style="color: #16a34a;">SEMÁFORO DE ATITUDES</h2>
+            <p class="game-desc">OLHE O DESENHO! ESSA ATITUDE É LEGAL OU PERIGOSA?</p>
+            <div class="main-card" id="card-atitudes">...</div>
+            <div class="btn-group">
+                <button class="btn-game btn-green" onclick="jogos.atitudes.verificar('segura')">🟢 ATITUDE LEGAL</button>
+                <button class="btn-game btn-red" onclick="jogos.atitudes.verificar('perigosa')">🔴 ATITUDE PERIGOSA</button>
+            </div>
+            <div class="feedback-box" id="fb-atitudes"></div>
+        </div>
+
+        <div id="copia" class="tab-content">
+            <h2 class="game-title" style="color: #9333ea;">✍️ COPIA DO JOGUINHO</h2>
+            <p class="game-desc">DIGITE AS LETRINHAS IGUALZINHO NO CAMPO ABAIXO!</p>
+            <div class="main-card" id="texto-alvo-copia" style="background-color: #faf5ff; border-color: #9333ea; font-size: 32px; color: #6b21a8;">...</div>
+            <input type="text" class="input-copia" id="input-aluno-copia" placeholder="CLIQUE AQUI E DIGITE..." oninput="jogos.copia.checarDigitacao()">
+            <div class="feedback-box" id="fb-copia"></div>
+        </div>
+
+        <div id="copiapalavras" class="tab-content">
+            <h2 class="game-title" style="color: #2563eb;">🔤 COPIA PALAVRAS</h2>
+            <p class="game-desc">OLHE A PALAVRA AZUL E DIGITE LETRA POR LETRA!</p>
+            <div class="main-card" id="palavra-alvo-copia" style="font-size: 42px; background-color: #f0fdfa; border-color: #2563eb; color: #1e3a8a; letter-spacing: 3px;">...</div>
+            <input type="text" class="input-copia" id="input-aluno-palavra" placeholder="DIGITE AQUI..." oninput="jogos.copiapalavras.checarDigitacao()">
+            <div class="feedback-box" id="fb-copiapalavras"></div>
+        </div>
+
+        <div id="copiatextos" class="tab-content">
+            <h2 class="game-title" style="color: #059669;">📖 COPIA TEXTOS CURTOS</h2>
+            <p class="game-desc">OLHE O TEXTO EM CAIXA ALTA E DIGITE ELE IGUALZINHO EMBAIXO!</p>
+            <div class="main-card" id="texto-longo-alvo" style="font-size: 18px; text-align: left; background-color: #f0fdf4; border-color: #059669; color: #065f46; line-height: 1.5; padding: 18px;">...</div>
+            <textarea class="textarea-copia" id="input-aluno-texto" placeholder="CLIQUE E DIGITE O TEXTO AQUI..." oninput="jogos.copiatextos.checarDigitacao()"></textarea>
+            <div class="feedback-box" id="fb-copiatextos"></div>
+        </div>
+
+        <div id="correcao" class="tab-content">
+            <h2 class="game-title" style="color: #db2777;">✏️ CORREÇÃO DIGITAL</h2>
+            <p class="game-desc">A PALAVRA DO CARD ESTÁ ERRADA! CLIQUE NA PALAVRA CERTA:</p>
+            <div class="main-card" id="palavra-errada" style="color: #dc2626; font-size: 38px; background-color: #fff1f2; border-color: #db2777; letter-spacing: 2px;">...</div>
+            <div class="btn-group" id="opcoes-correcao"></div>
+            <div class="feedback-box" id="fb-correcao"></div>
+        </div>
+
+        <div id="edigital" class="tab-content">
+            <h2 class="game-title" style="color: #0284c7;">⚡ É DIGITAL OU NÃO?</h2>
+            <p class="game-desc">OBSERVE O OBJETO! ELE É UMA TECNOLOGIA DIGITAL?</p>
+            <div class="main-card" id="card-edigital">...</div>
+            <div class="btn-group">
+                <button class="btn-game btn-blue" onclick="jogos.edigital.verificar('digital')">⚡ É DIGITAL</button>
+                <button class="btn-game btn-amber" onclick="jogos.edigital.verificar('comum')">📦 NÃO É DIGITAL</button>
+            </div>
+            <div class="feedback-box" id="fb-edigital"></div>
+        </div>
+
+        <div id="funcoes" class="tab-content">
+            <h2 class="game-title" style="color: #7c3aed;">🛠️ PARA QUE SERVE A TECNOLOGIA?</h2>
+            <p class="game-desc">OBSERVE A TECNOLOGIA E CLIQUE NA SUA FUNÇÃO CERTA!</p>
+            <div class="main-card" id="card-funcoes">...</div>
+            <div class="btn-group" id="opcoes-funcoes"></div>
+            <div class="feedback-box" id="fb-funcoes"></div>
+        </div>
+
+        <div id="digitatec" class="tab-content">
+            <h2 class="game-title" style="color: #0d9488;">⌨️ DIGITE O NOME DA TECNOLOGIA</h2>
+            <p class="game-desc">OLHE O DESENHO E DIGITE O NOME DA TECNOLOGIA EMBAIXO!</p>
+            <div class="main-card" id="card-digitatec" style="background-color: #f0fdfa; border-color: #0d9488; color: #0f766e;">...</div>
+            <input type="text" class="input-copia" id="input-aluno-digitatec" placeholder="CLIQUE AQUI E DIGITE..." oninput="jogos.digitatec.checarDigitacao()">
+            <div class="feedback-box" id="fb-digitatec"></div>
+        </div>
+    </div>
+
+    <script>
+        function openTab(evt, tabId) {
+            const contents = document.querySelectorAll(".tab-content");
+            contents.forEach(content => content.classList.remove("active"));
+
+            const buttons = document.querySelectorAll(".tab-btn");
+            buttons.forEach(btn => btn.classList.remove("active"));
+
+            document.getElementById(tabId).classList.add("active");
+            document.getElementById('btn-' + tabId).classList.add("active");
+            
+            if(jogos[tabId]) jogos[tabId].iniciar();
+        }
+
+        const jogos = {
+            // JOGO 1: ARMAZENAMENTO (10 PERGUNTAS)
+            armazenamento: {
+                lista: [
+                    { t: "<span class='big-emoji'>📚</span>LIVRO DE PAPEL", tipo: "real" },
+                    { t: "<span class='big-emoji'>📱</span>FOTO NO CELULAR", tipo: "digital" },
+                    { t: "<span class='big-emoji'>📦</span>CAIXA DA SALA", tipo: "real" },
+                    { t: "<span class='big-emoji'>🖥️</span>JOGO NO PC", tipo: "digital" },
+                    { t: "<span class='big-emoji'>📝</span>CADERNO DE DESENHO", tipo: "real" },
+                    { t: "<span class='big-emoji'>🎬</span>VÍDEO NO YOUTUBE", tipo: "digital" },
+                    { t: "<span class='big-emoji'>📰</span>RECONTO EM PAPEL", tipo: "real" },
+                    { t: "<span class='big-emoji'>🎶</span>MÚSICA NO TABLET", tipo: "digital" },
+                    { t: "<span class='big-emoji'>✉️</span>CARTA EM ENVELOPE", tipo: "real" },
+                    { t: "<span class='big-emoji'>🎨</span>FOTO NO INSTAGRAM", tipo: "digital" }
+                ],
+                atual: null,
+                iniciar() {
+                    document.getElementById('fb-armazenamento').textContent = "";
+                    this.atual = this.lista[Math.floor(Math.random() * this.lista.length)];
+                    document.getElementById('card-armazenamento').innerHTML = this.atual.t;
+                },
+                verificar(escolha) {
+                    const fb = document.getElementById('fb-armazenamento');
+                    if (escolha === this.atual.tipo) {
+                        fb.style.color = "green"; fb.textContent = "PARABÉNS! VOCÊ ACERTOU! 🌟";
+                        setTimeout(() => this.iniciar(), 1500);
+                    } else {
+                        fb.style.color = "red"; fb.textContent = "TENTE DE NOVO! OLHE BEM O DESENHO! 🤔";
+                    }
+                }
+            },
+
+            // JOGO 2: TRANSMISSÃO (10 PERGUNTAS)
+            transmissao: {
+                lista: [
+                    { t: "<span class='big-emoji'>🗣️</span>CONVERSA NO PÁTIO", tipo: "falar" },
+                    { t: "<span class='big-emoji'>🌐</span>SINAL DE WI-FI", tipo: "computador" },
+                    { t: "<span class='big-emoji'>✉️</span>CARTA DE PAPEL", tipo: "falar" },
+                    { t: "<span class='big-emoji'>📨</span>MENSAGEM NO ZAP", tipo: "computador" },
+                    { t: "<span class='big-emoji'>📢</span>GRITO DO AMIGO", tipo: "falar" },
+                    { t: "<span class='big-emoji'>🔌</span>CABO DE REDE AZUL", tipo: "computador" },
+                    { t: "<span class='big-emoji'>👋</span>SINAL COM A MÃO", tipo: "falar" },
+                    { t: "<span class='big-emoji'>📡</span>SINAL DE SATÉLITE", tipo: "computador" },
+                    { t: "<span class='big-emoji'>📄</span>BILHETE NA AGENDA", tipo: "falar" },
+                    { t: "<span class='big-emoji'>📧</span>E-MAIL NO GMAIL", tipo: "computador" }
+                ],
+                atual: null,
+                iniciar() {
+                    document.getElementById('fb-transmissao').textContent = "";
+                    this.atual = this.lista[Math.floor(Math.random() * this.lista.length)];
+                    document.getElementById('card-transmissao').innerHTML = this.atual.t;
+                },
+                verificar(escolha) {
+                    const fb = document.getElementById('fb-transmissao');
+                    if (escolha === this.atual.tipo) {
+                        fb.style.color = "green"; fb.textContent = "MUITO BEM! ESTÁ CERTINHO! 🚀";
+                        setTimeout(() => this.iniciar(), 1500);
+                    } else {
+                        fb.style.color = "red"; fb.textContent = "VEJA O DESENHO E TENTE OUTRA VEZ! 🤔";
+                    }
+                }
+            },
+
+            // JOGO 3: LETRA OU NÚMERO (10 PERGUNTAS)
+            tiposdado: {
+                lista: [
+                    { valor: "7", tipo: "numero" },
+                    { valor: "BOLA", tipo: "texto" },
+                    { valor: "4", tipo: "numero" },
+                    { valor: "CASA", tipo: "texto" },
+                    { valor: "1", tipo: "numero" },
+                    { valor: "PATO", tipo: "texto" },
+                    { valor: "9", tipo: "numero" },
+                    { valor: "DADO", tipo: "texto" },
+                    { valor: "3", tipo: "numero" },
+                    { valor: "GATO", tipo: "texto" }
+                ],
+                atual: null,
+                iniciar() {
+                    document.getElementById('fb-tiposdado').textContent = "";
+                    this.atual = this.lista[Math.floor(Math.random() * this.lista.length)];
+                    document.getElementById('card-tiposdado').textContent = this.atual.valor;
+                },
+                verificar(escolha) {
+                    const fb = document.getElementById('fb-tiposdado');
+                    if (escolha === this.atual.tipo) {
+                        fb.style.color = "green"; fb.textContent = "CORRETO! VOCÊ É DEMAIS! 💎";
+                        setTimeout(() => this.iniciar(), 1200);
+                    } else {
+                        fb.style.color = "red"; fb.textContent = "OLHE COM ATENÇÃO! SÃO LETRAS OU NÚMEROS? 👀";
+                    }
+                }
+            },
+
+            // JOGO 4: DETETIVE DIGITAL (10 PERGUNTAS)
+            seguranca: {
+                lista: [
+                    { t: "<span class='big-emoji'>🔑</span>SENHA DO TABLET", tipo: "secreto" },
+                    { t: "<span class='big-emoji'>🎨</span>SEU DESENHO", tipo: "publico" },
+                    { t: "<span class='big-emoji'>🏠</span>SUA CASA", tipo: "secreto" },
+                    { t: "<span class='big-emoji'>🍎</span>FRUTA FAVORITA", tipo: "publico" },
+                    { t: "<span class='big-emoji'>📞</span>TELEFONE DA MÃE", tipo: "secreto" },
+                    { t: "<span class='big-emoji'>🐱</span>NOME DO GATO", tipo: "publico" },
+                    { t: "<span class='big-emoji'>💳</span>CARTÃO DO PAPAI", tipo: "secreto" },
+                    { t: "<span class='big-emoji'>🦖</span>BRINQUEDO QUE GOSTA", tipo: "publico" },
+                    { t: "<span class='big-emoji'>🎂</span>DIA DO ANIVERSÁRIO", tipo: "secreto" },
+                    { t: "<span class='big-emoji'>☀️</span>COR DO SEU BONÉ", tipo: "publico" }
+                ],
+                atual: null,
+                iniciar() {
+                    document.getElementById('fb-seguranca').textContent = "";
+                    this.atual = this.lista[Math.floor(Math.random() * this.lista.length)];
+                    document.getElementById('card-seguranca').innerHTML = this.atual.t;
+                },
+                verificar(escolha) {
+                    const fb = document.getElementById('fb-seguranca');
+                    if (escolha === this.atual.tipo) {
+                        fb.style.color = "green"; fb.textContent = "MUITO BEM! DETETIVE SEGURO! 🕵️‍♂️";
+                        setTimeout(() => this.iniciar(), 1500);
+                    } else {
+                        fb.style.color = "red"; fb.textContent = "CUIDADO! ISSO PODE MOSTRAR OU É SEGREDO? 🤔";
+                    }
+                }
+            },
+
+            // JOGO 5: ATITUDES SEGURAS (10 PERGUNTAS)
+            atitudes: {
+                lista: [
+                    { t: "<span class='big-emoji'>👨‍🏫</span>PERTO DO PROFESSOR", tipo: "segura" },
+                    { t: "<span class='big-emoji'>🎁</span>CLICAR EM BRINQUEDO GRÁTIS", tipo: "perigosa" },
+                    { t: "<span class='big-emoji'>🙋‍♂️</span>PEDIR AJUDA SE A TELA ASSUSTAR", tipo: "segura" },
+                    { t: "<span class='big-emoji'>👤</span>FALAR COM ESTRANHO", tipo: "perigosa" },
+                    { t: "<span class='big-emoji'>⏰</span>USAR O COMPUTADOR NA HORA CERTA", tipo: "segura" },
+                    { t: "<span class='big-emoji'>🗣️</span>XINGAR NO CHAT DO JOGUINHO", tipo: "perigosa" },
+                    { t: "<span class='big-emoji'>💻</span>CUIDAR BEM DO MONITOR", tipo: "segura" },
+                    { t: "<span class='big-emoji'>🔋</span>PUXAR FIOS DA TOMADA", tipo: "perigosa" },
+                    { t: "<span class='big-emoji'>🧼</span>ESTAR COM AS MÃOS LIMPAS", tipo: "segura" },
+                    { t: "<span class='big-emoji'>🥤</span>BEBER SUCO EM CIMA DO PC", tipo: "perigosa" }
+                ],
+                atual: null,
+                iniciar() {
+                    document.getElementById('fb-atitudes').textContent = "";
+                    this.atual = this.lista[Math.floor(Math.random() * this.lista.length)];
+                    document.getElementById('card-atitudes').innerHTML = this.atual.t;
+                },
+                verificar(escolha) {
+                    const fb = document.getElementById('fb-atitudes');
+                    if (escolha === this.atual.tipo) {
+                        fb.style.color = "green"; fb.textContent = "MUITO BEM! MANDOU BEM! 🟢";
+                        setTimeout(() => this.iniciar(), 1500);
+                    } else {
+                        fb.style.color = "red"; fb.textContent = "CUIDADO! ESSA ATITUDE É BOA OU PERIGOSA? 🔴";
+                    }
+                }
+            },
+
+            // JOGO 6: COPIA JOGUINHO (10 PERGUNTAS)
+            copia: {
+                lista: ["NET", "LOG", "TELA", "CHIP", "WEB", "LINK", "APP", "CLICK", "MOUSE", "SITE"],
+                atual: "",
+                iniciar() {
+                    const input = document.getElementById('input-aluno-copia');
+                    const fb = document.getElementById('fb-copia');
+                    input.value = ""; fb.textContent = ""; fb.style.color = "purple";
+                    this.atual = this.lista[Math.floor(Math.random() * this.lista.length)];
+                    document.getElementById('texto-alvo-copia').textContent = this.atual;
+                },
+                checarDigitacao() {
+                    const digitado = document.getElementById('input-aluno-copia').value.toUpperCase();
+                    const fb = document.getElementById('fb-copia');
+                    if (digitado === this.atual) {
+                        fb.style.color = "green"; fb.textContent = "PERFEITO! PALAVRA IGUALZINHA! ⭐";
+                        setTimeout(() => this.iniciar(), 1500);
+                    } else if (this.atual.startsWith(digitado)) {
+                        fb.style.color = "#d97706"; fb.textContent = "ISSO! CONTINUE... ✍️";
+                    } else {
+                        fb.style.color = "red"; fb.textContent = "ARRUME AS LETRINHAS PARA FICAR IGUAL! 🤓";
+                    }
+                }
+            },
+
+            // JOGO 7: COPIA PALAVRAS (10 PERGUNTAS)
+            copiapalavras: {
+                lista: ["SENHA", "DADO", "REDE", "FOTO", "JOGO", "SINAL", "CABO", "MENU", "FONE", "PASTA"],
+                atual: "",
+                iniciar() {
+                    const input = document.getElementById('input-aluno-palavra');
+                    const fb = document.getElementById('fb-copiapalavras');
+                    input.value = ""; fb.textContent = ""; fb.style.color = "blue";
+                    this.atual = this.lista[Math.floor(Math.random() * this.lista.length)];
+                    document.getElementById('palavra-alvo-copia').textContent = this.atual;
+                },
+                checarDigitacao() {
+                    const digitado = document.getElementById('input-aluno-palavra').value.toUpperCase();
+                    const fb = document.getElementById('fb-copiapalavras');
+                    if (digitado === this.atual) {
+                        fb.style.color = "green"; fb.textContent = "MUITO BEM! DIGITOU CERTINHO! ⌨️";
+                        setTimeout(() => this.iniciar(), 1500);
+                    } else if (this.atual.startsWith(digitado)) {
+                        fb.style.color = "#d97706"; fb.textContent = "LETRINHA POR LETRINHA... ✨";
+                    } else {
+                        fb.style.color = "red"; fb.textContent = "OLHE PARA AS LETRAS E REESCREVA! 🔎";
+                    }
+                }
+            },
+
+            // JOGO 8: COPIA DE TEXTOS CURTOS (5 PERGUNTAS)
+            copiatextos: {
+                lista: [
+                    "O COMPUTADOR AJUDA A ESTUDAR E A JOGAR.",
+                    "A SENHA É UM SEGREDO QUE PROTEGE AS FOTOS.",
+                    "A INTERNET CONECTA PESSOAS DO MUNDO TODO.",
+                    "O MOUSE MOVIMENTA A SETINHA NA NOSSA TELA.",
+                    "O WI-FI ENVIA A MENSAGEM DO CELULAR PELO AR."
+                ],
+                atual: "",
+                iniciar() {
+                    const tx = document.getElementById('input-aluno-texto');
+                    const fb = document.getElementById('fb-copiatextos');
+                    tx.value = ""; fb.textContent = ""; fb.style.color = "#059669";
+                    this.atual = this.lista[Math.floor(Math.random() * this.lista.length)];
+                    document.getElementById('texto-longo-alvo').textContent = this.atual;
+                },
+                checarDigitacao() {
+                    const digitado = document.getElementById('input-aluno-texto').value.toUpperCase();
+                    const fb = document.getElementById('fb-copiatextos');
+                    
+                    if (digitado === this.atual) {
+                        fb.style.color = "green"; fb.textContent = "EXCELENTE! TEXTO INTEIRO COPIADO COM SUCESSO! 🏆";
+                        setTimeout(() => this.iniciar(), 2500);
+                    } else if (this.atual.startsWith(digitado)) {
+                        fb.style.color = "#d97706"; fb.textContent = "MUITO BEM! FIQUE ATENTO AOS ESPAÇOS... 📝";
+                    } else {
+                        fb.style.color = "red"; fb.textContent = "UMA LETRINHA FICOU DIFERENTE. DÊ UMA OLHADA! 🔎";
+                    }
+                }
+            },
+
+            // JOGO 9: CORREÇÃO DIGITAL SÍLABAS (10 PERGUNTAS)
+            correcao: {
+                lista: [
+                    { errada: "SENA", certa: "SENHA", opcoes: ["SENHA", "CENA"] },
+                    { errada: "SELULAR", certa: "CELULAR", opcoes: ["CELULAR", "ZELULAR"] },
+                    { errada: "ZOGO", certa: "JOGO", opcoes: ["JOGO", "FOGO"] },
+                    { errada: "NETI", certa: "NET", opcoes: ["NET", "NETI"] },
+                    { errada: "MAUCI", certa: "MOUSE", opcoes: ["MOUSE", "MAUCI"] },
+                    { errada: "XIP", certa: "CHIP", opcoes: ["CHIP", "XIP"] },
+                    { errada: "REDI", certa: "REDE", opcoes: ["REDE", "REDI"] },
+                    { errada: "KAZA", certa: "CASA", opcoes: ["CASA", "KAZA"] },
+                    { errada: "PATOO", certa: "PATO", opcoes: ["PATO", "PATOO"] },
+                    { errada: "SAITI", certa: "SITE", opcoes: ["SITE", "SAITI"] }
+                ],
+                atual: null,
+                iniciar() {
+                    document.getElementById('fb-correcao').textContent = "";
+                    this.atual = this.lista[Math.floor(Math.random() * this.lista.length)];
+                    document.getElementById('palavra-errada').textContent = this.atual.errada;
+                    const container = document.getElementById('opcoes-correcao');
+                    container.innerHTML = "";
+                    this.atual.opcoes.forEach(palavra => {
+                        const btn = document.createElement('button');
+                        btn.classList.add('btn-game', 'btn-purple');
+                        btn.textContent = palavra;
+                        btn.onclick = () => this.verificar(palavra);
+                        container.appendChild(btn);
+                    });
+                },
+                verificar(palavra) {
+                    const fb = document.getElementById('fb-correcao');
+                    if (palavra === this.atual.certa) {
+                        fb.style.color = "green"; fb.textContent = "🎉 PARABÉNS! VOCÊ CORRIGIU A PALAVRA COM SUCESSO! 🏆";
+                        setTimeout(() => this.iniciar(), 2000);
+                    } else {
+                        fb.style.color = "red"; fb.textContent = "TENTE OUTRA PALAVRA... 👀";
+                    }
+                }
+            },
+
+            // JOGO 10: É DIGITAL OU NÃO? (10 PERGUNTAS)
+            edigital: {
+                lista: [
+                    { t: "<span class='big-emoji'>🖥️</span>COMPUTADOR", tipo: "digital" },
+                    { t: "<span class='big-emoji'>✏️</span>LÁPIS DE COR", tipo: "comum" },
+                    { t: "<span class='big-emoji'>📱</span>CELULAR SMARTPHONE", tipo: "digital" },
+                    { t: "<span class='big-emoji'>📖</span>LIVRO DE PAPEL", tipo: "comum" },
+                    { t: "<span class='big-emoji'>⌚</span>RELÓGIO SMART", tipo: "digital" },
+                    { t: "<span class='big-emoji'>✂️</span>TESOURA DE ESCOLA", tipo: "comum" },
+                    { t: "<span class='big-emoji'>📺</span>TELEVISÃO SMART", tipo: "digital" },
+                    { t: "<span class='big-emoji'>🎨</span>PINCEL E TINTA", tipo: "comum" },
+                    { t: "<span class='big-emoji'>🎮</span>CONTROLE DE JOGO", tipo: "digital" },
+                    { t: "<span class='big-emoji'>🧹</span>VASSOURA DA SALA", tipo: "comum" }
+                ],
+                atual: null,
+                iniciar() {
+                    document.getElementById('fb-edigital').textContent = "";
+                    this.atual = this.lista[Math.floor(Math.random() * this.lista.length)];
+                    document.getElementById('card-edigital').innerHTML = this.atual.t;
+                },
+                verificar(escolha) {
+                    const fb = document.getElementById('fb-edigital');
+                    if (escolha === this.atual.tipo) {
+                        fb.style.color = "green"; fb.textContent = "MUITO BEM! VOCÊ OBSERVOU CERTINHO! 🌟";
+                        setTimeout(() => this.iniciar(), 1500);
+                    } else {
+                        fb.style.color = "red"; fb.textContent = "OLHE BEM! ELE USA TELA OU ENERGIA? 🤔";
+                    }
+                }
+            },
+
+            // JOGO 11: PARA QUE SERVE? (10 PERGUNTAS)
+            funcoes: {
+                lista: [
+                    { t: "<span class='big-emoji'>📷</span>CÂMERA DIGITAL", certa: "TIRAR FOTOS", opcoes: ["TIRAR FOTOS", "LAVAR ROUPA"] },
+                    { t: "<span class='big-emoji'>🎧</span>FONE DE OUVIDO", certa: "OUVIR MÚSICA", opcoes: ["OUVIR MÚSICA", "DESENHAR"] },
+                    { t: "<span class='big-emoji'>🗺️</span>GPS DIGITAL", certa: "ACHAR O CAMINHO", opcoes: ["ACHAR O CAMINHO", "COMER PIPOCA"] },
+                    { t: "<span class='big-emoji'>⏰</span>ALARME DO CELULAR", certa: "ACORDAR NO HORÁRIO", opcoes: ["ACORDAR NO HORÁRIO", "PINTAR O CABELO"] },
+                    { t: "<span class='big-emoji'>💬</span>APLICATIVO DE CHAT", certa: "ENVIAR MENSAGENS", opcoes: ["ENVIAR MENSAGENS", "CORTAR PAPEL"] },
+                    { t: "<span class='big-emoji'>🧮</span>CALCULADORA DIGITAL", certa: "FAZER CONTAS", opcoes: ["FAZER CONTAS", "DORMIR CEDO"] },
+                    { t: "<span class='big-emoji'>💻</span>COMPUTADOR", certa: "ESTUDAR E JOGAR", opcoes: ["ESTUDAR E JOGAR", "LAVAR A LOUÇA"] },
+                    { t: "<span class='big-emoji'>🎤</span>MICROFONE DIGITAL", certa: "GRAVAR A VOZ", opcoes: ["GRAVAR A VOZ", "VARRER A CASA"] },
+                    { t: "<span class='big-emoji'>💡</span>LÂMPADA SMART", certa: "ILUMINAR A SALA", opcoes: ["ILUMINAR A SALA", "ESCUTAR MÚSICA"] },
+                    { t: "<span class='big-emoji'>🎮</span>VIDEO GAME", certa: "JOGAR E DIVERTIR", opcoes: ["JOGAR E DIVERTIR", "COZINHAR ARROZ"] }
+                ],
+                atual: null,
+                iniciar() {
+                    document.getElementById('fb-funcoes').textContent = "";
+                    this.atual = this.lista[Math.floor(Math.random() * this.lista.length)];
+                    document.getElementById('card-funcoes').innerHTML = this.atual.t;
+                    
+                    const container = document.getElementById('opcoes-funcoes');
+                    container.innerHTML = "";
+                    this.atual.opcoes.forEach(opcao => {
+                        const btn = document.createElement('button');
+                        btn.classList.add('btn-game', 'btn-purple');
+                        btn.textContent = opcao;
+                        btn.onclick = () => this.verificar(opcao);
+                        container.appendChild(btn);
+                    });
+                },
+                verificar(escolha) {
+                    const fb = document.getElementById('fb-funcoes');
+                    if (escolha === this.atual.certa) {
+                        fb.style.color = "green"; fb.textContent = "EXCELENTE! ESSA É A FUNÇÃO DESSA TECNOLOGIA! 🚀";
+                        setTimeout(() => this.iniciar(), 1800);
+                    } else {
+                        fb.style.color = "red"; fb.textContent = "PENSE MAIS UM POUCO! PARA QUE ELA SERVE? 🧐";
+                    }
+                }
+            },
+
+            // JOGO 12: DIGITE O NOME DA TECNOLOGIA (10 PERGUNTAS)
+            digitatec: {
+                lista: [
+                    { emoji: "📱", nome: "CELULAR" },
+                    { emoji: "💻", nome: "NOTEBOOK" },
+                    { emoji: "🖥️", nome: "MONITOR" },
+                    { emoji: "🖱️", nome: "MOUSE" },
+                    { emoji: "⌨️", nome: "TECLADO" },
+                    { emoji: "📺", nome: "TELEVISAO" },
+                    { emoji: "🎧", nome: "FONE" },
+                    { emoji: "📷", nome: "CAMERA" },
+                    { emoji: "📻", nome: "RADIO" },
+                    { emoji: "🎮", nome: "GAME" }
+                ],
+                atual: null,
+                iniciar() {
+                    const input = document.getElementById('input-aluno-digitatec');
+                    const fb = document.getElementById('fb-digitatec');
+                    input.value = ""; fb.textContent = ""; fb.style.color = "#0d9488";
+                    
+                    this.atual = this.lista[Math.floor(Math.random() * this.lista.length)];
+                    document.getElementById('card-digitatec').innerHTML = 
+                        `<span class='big-emoji'>${this.atual.emoji}</span>${this.atual.nome}`;
+                },
+                checarDigitacao() {
+                    const digitado = document.getElementById('input-aluno-digitatec').value.toUpperCase().trim();
+                    const fb = document.getElementById('fb-digitatec');
+                    
+                    if (digitado === this.atual.nome) {
+                        fb.style.color = "green"; 
+                        fb.textContent = "SENSACIONAL! DIGITOU O NOME CERTINHO! 🏆";
+                        setTimeout(() => this.iniciar(), 1800);
+                    } else if (this.atual.nome.startsWith(digitado)) {
+                        fb.style.color = "#d97706"; 
+                        fb.textContent = "ISSO MESMO! CONTINUE DIGITANDO... ⌨️";
+                    } else {
+                        fb.style.color = "red"; 
+                        fb.textContent = "OLHE AS LETRINHAS E CORRIJA! 🔎";
+                    }
+                }
+            }
+        };
+
+        window.onload = () => {
+            jogos.armazenamento.iniciar();
+        };
+    </script>
+</body>
+</html>
         /* --- ESTILOS GERAIS COGNITIVOS E VISUAIS --- */
         body {
             font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
