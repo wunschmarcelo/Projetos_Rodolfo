@@ -278,7 +278,7 @@
 
         <div id="edigital" class="tab-content">
             <h2 class="game-title" style="color: #0284c7;">⚡ É DIGITAL OU NÃO?</h2>
-            <p class="game-desc">OBSERVE O OBJETO! ELE É UMA TECNOLOGIA DIGITAL?</p>
+            <p class="game-desc" id="desc-edigital">OBSERVE O OBJETO! ELE É UMA TECNOLOGIA DIGITAL?</p>
             <div class="main-card" id="card-edigital">...</div>
             <div class="btn-group">
                 <button class="btn-game btn-blue" onclick="jogos.edigital.verificar('digital')">⚡ É DIGITAL</button>
@@ -289,7 +289,7 @@
 
         <div id="funcoes" class="tab-content">
             <h2 class="game-title" style="color: #7c3aed;">🛠️ PARA QUE SERVE A TECNOLOGIA?</h2>
-            <p class="game-desc">OBSERVE A TECNOLOGIA E CLIQUE NA SUA FUNÇÃO CERTA!</p>
+            <p class="game-desc" id="desc-funcoes">OBSERVE A TECNOLOGIA E CLIQUE NA SUA FUNÇÃO CERTA!</p>
             <div class="main-card" id="card-funcoes">...</div>
             <div class="btn-group" id="opcoes-funcoes"></div>
             <div class="feedback-box" id="fb-funcoes"></div>
@@ -297,7 +297,7 @@
 
         <div id="digitatec" class="tab-content">
             <h2 class="game-title" style="color: #0d9488;">⌨️ DIGITE O NOME DA TECNOLOGIA</h2>
-            <p class="game-desc">OLHE O DESENHO E DIGITE O NOME DA TECNOLOGIA EMBAIXO!</p>
+            <p class="game-desc" id="desc-digitatec">OLHE O DESENHO E DIGITE O NOME DA TECNOLOGIA EMBAIXO!</p>
             <div class="main-card" id="card-digitatec" style="background-color: #f0fdfa; border-color: #0d9488; color: #0f766e;">...</div>
             <input type="text" class="input-copia" id="input-aluno-digitatec" placeholder="CLIQUE AQUI E DIGITE..." oninput="jogos.digitatec.checarDigitacao()">
             <div class="feedback-box" id="fb-digitatec"></div>
@@ -596,13 +596,13 @@
                 }
             },
 
-            // JOGO 10: É DIGITAL OU NÃO? (10 PERGUNTAS)
+            // JOGO 10: É DIGITAL OU NÃO? (10 PERGUNTAS FIXAS)
             edigital: {
                 lista: [
                     { t: "<span class='big-emoji'>📱</span>SMARTPHONE", tipo: "digital" },
-                    { t: "<span class='big-emoji'>📓</span>CADERNO", tipo: "comum" },
+                    { t: "<span class='big-emoji'>📓</span>CADERNO DE PAPEL", tipo: "comum" },
                     { t: "<span class='big-emoji'>📟</span>TABLET", tipo: "digital" },
-                    { t: "<span class='big-emoji'>✏️</span>LÁPIS", tipo: "comum" },
+                    { t: "<span class='big-emoji'>✏️</span>LÁPIS DE COR", tipo: "comum" },
                     { t: "<span class='big-emoji'>💻</span>COMPUTADOR", tipo: "digital" },
                     { t: "<span class='big-emoji'>🪑</span>CADEIRA DE MADEIRA", tipo: "comum" },
                     { t: "<span class='big-emoji'>⌚</span>RELÓGIO DIGITAL", tipo: "digital" },
@@ -610,40 +610,62 @@
                     { t: "<span class='big-emoji'>🎮</span>VIDEOGAME", tipo: "digital" },
                     { t: "<span class='big-emoji'>🚗</span>CARRINHO DE PLÁSTICO", tipo: "comum" }
                 ],
-                atual: null,
+                index: 0,
                 iniciar() {
+                    this.index = 0;
+                    this.carregar();
+                },
+                carregar() {
                     document.getElementById('fb-edigital').textContent = "";
-                    this.atual = this.lista[Math.floor(Math.random() * this.lista.length)];
-                    document.getElementById('card-edigital').innerHTML = this.atual.t;
+                    document.getElementById('desc-edigital').textContent = `ATIVIDADE ${this.index + 1} DE 10 - ELE É UMA TECNOLOGIA DIGITAL?`;
+                    document.getElementById('card-edigital').innerHTML = this.lista[this.index].t;
                 },
                 verificar(escolha) {
                     const fb = document.getElementById('fb-edigital');
-                    if (escolha === this.atual.tipo) {
-                        fb.style.color = "green"; fb.textContent = "ISSO AI! VOCÊ ACERTOU! ⚡";
-                        setTimeout(() => this.iniciar(), 1500);
+                    if (escolha === this.lista[this.index].tipo) {
+                        fb.style.color = "green"; fb.textContent = "ISSO AÍ! VOCÊ ACERTOU! ⚡";
+                        setTimeout(() => {
+                            this.index++;
+                            if (this.index >= this.lista.length) {
+                                fb.textContent = "🎉 PARABÉNS! VOCÊ COMPLETOU AS 10 ATIVIDADES! 🏆";
+                                setTimeout(() => this.iniciar(), 2500);
+                            } else {
+                                this.carregar();
+                            }
+                        }, 1200);
                     } else {
                         fb.style.color = "red"; fb.textContent = "OPS! OBSERVE BEM SE PRECISA DE ENERGIA OU TELA! 🤔";
                     }
                 }
             },
 
-            // JOGO 11: PARA QUE SERVE A TECNOLOGIA? (5 PERGUNTAS)
+            // JOGO 11: PARA QUE SERVE A TECNOLOGIA? (10 PERGUNTAS FIXAS)
             funcoes: {
                 lista: [
                     { t: "<span class='big-emoji'>💻</span>COMPUTADOR", certa: "ESTUDAR E JOGAR", opcoes: ["ESTUDAR E JOGAR", "LAVAR ROUPA"] },
                     { t: "<span class='big-emoji'>🎧</span>FONE DE OUVIDO", certa: "OUVIR SOM", opcoes: ["OUVIR SOM", "TIRAR FOTOS"] },
                     { t: "<span class='big-emoji'>🖨️</span>IMPRESSORA", certa: "IMPRIMIR NO PAPEL", opcoes: ["IMPRIMIR NO PAPEL", "COZINHAR COMIDA"] },
                     { t: "<span class='big-emoji'>📷</span>CÂMERA DIGITAL", certa: "TIRAR FOTOS", opcoes: ["TIRAR FOTOS", "TOCAR MÚSICA"] },
-                    { t: "<span class='big-emoji'>⌨️</span>TECLADO", certa: "DIGITAR TEXTOS", opcoes: ["DIGITAR TEXTOS", "DESENHAR TELA"] }
+                    { t: "<span class='big-emoji'>⌨️</span>TECLADO", certa: "DIGITAR TEXTOS", opcoes: ["DIGITAR TEXTOS", "DESENHAR TELA"] },
+                    { t: "<span class='big-emoji'>📱</span>CELULAR", certa: "FAZER LIGAÇÃO", opcoes: ["FAZER LIGAÇÃO", "LAVAR LOUÇA"] },
+                    { t: "<span class='big-emoji'>🖱️</span>MOUSE", certa: "MOVER A SETINHA", opcoes: ["MOVER A SETINHA", "TIRAR FOTO"] },
+                    { t: "<span class='big-emoji'>📺</span>TELEVISÃO", certa: "ASSISTIR DESENHOS", opcoes: ["ASSISTIR DESENHOS", "VARRER A CASA"] },
+                    { t: "<span class='big-emoji'>🎮</span>CONTROLE DE GAME", certa: "JOGAR VIDEOGAME", opcoes: ["JOGAR VIDEOGAME", "ESCUTAR MÚSICA"] },
+                    { t: "<span class='big-emoji'>🔊</span>CAIXA DE SOM", certa: "TOCAR MÚSICA", opcoes: ["TOCAR MÚSICA", "DIGITAR LETRAS"] }
                 ],
-                atual: null,
+                index: 0,
                 iniciar() {
+                    this.index = 0;
+                    this.carregar();
+                },
+                carregar() {
                     document.getElementById('fb-funcoes').textContent = "";
-                    this.atual = this.lista[Math.floor(Math.random() * this.lista.length)];
-                    document.getElementById('card-funcoes').innerHTML = this.atual.t;
+                    document.getElementById('desc-funcoes').textContent = `ATIVIDADE ${this.index + 1} DE 10 - CLIQUE NA FUNÇÃO CERTA!`;
+                    const atual = this.lista[this.index];
+                    document.getElementById('card-funcoes').innerHTML = atual.t;
                     const container = document.getElementById('opcoes-funcoes');
                     container.innerHTML = "";
-                    this.atual.opcoes.forEach(opcao => {
+                    atual.opcoes.forEach(opcao => {
                         const btn = document.createElement('button');
                         btn.classList.add('btn-game', 'btn-purple');
                         btn.textContent = opcao;
@@ -653,16 +675,24 @@
                 },
                 verificar(escolha) {
                     const fb = document.getElementById('fb-funcoes');
-                    if (escolha === this.atual.certa) {
+                    if (escolha === this.lista[this.index].certa) {
                         fb.style.color = "green"; fb.textContent = "MUITO BEM! FUNÇÃO CORRETA! 🛠️";
-                        setTimeout(() => this.iniciar(), 1500);
+                        setTimeout(() => {
+                            this.index++;
+                            if (this.index >= this.lista.length) {
+                                fb.textContent = "🎉 PARABÉNS! VOCÊ COMPLETOU AS 10 ATIVIDADES! 🏆";
+                                setTimeout(() => this.iniciar(), 2500);
+                            } else {
+                                this.carregar();
+                            }
+                        }, 1200);
                     } else {
-                        fb.style.color = "red"; fb.textContent = "PENSE BEM... PARA QUE SERVEM ESSES EQUIPAMENTOS? 🤔";
+                        fb.style.color = "red"; fb.textContent = "PENSE BEM... PARA QUE SERVE ESSE EQUIPAMENTO? 🤔";
                     }
                 }
             },
 
-            // JOGO 12: DIGITE A TECNOLOGIA (10 PERGUNTAS)
+            // JOGO 12: DIGITE A TECNOLOGIA (10 PERGUNTAS FIXAS)
             digitatec: {
                 lista: [
                     { t: "<span class='big-emoji'>📱</span>CELULAR", palavra: "CELULAR" },
@@ -676,21 +706,37 @@
                     { t: "<span class='big-emoji'>💾</span>CHIP", palavra: "CHIP" },
                     { t: "<span class='big-emoji'>📺</span>TELA", palavra: "TELA" }
                 ],
-                atual: null,
+                index: 0,
                 iniciar() {
+                    this.index = 0;
+                    this.carregar();
+                },
+                carregar() {
                     const input = document.getElementById('input-aluno-digitatec');
                     const fb = document.getElementById('fb-digitatec');
-                    input.value = ""; fb.textContent = ""; fb.style.color = "#0d9488";
-                    this.atual = this.lista[Math.floor(Math.random() * this.lista.length)];
-                    document.getElementById('card-digitatec').innerHTML = this.atual.t;
+                    input.value = ""; 
+                    fb.textContent = ""; 
+                    fb.style.color = "#0d9488";
+                    document.getElementById('desc-digitatec').textContent = `ATIVIDADE ${this.index + 1} DE 10 - DIGITE O NOME ABAIXO!`;
+                    document.getElementById('card-digitatec').innerHTML = this.lista[this.index].t;
                 },
                 checarDigitacao() {
                     const digitado = document.getElementById('input-aluno-digitatec').value.toUpperCase();
                     const fb = document.getElementById('fb-digitatec');
-                    if (digitado === this.atual.palavra) {
-                        fb.style.color = "green"; fb.textContent = "SHOW! VOCÊ DIGITOU O NOME DA TECNOLOGIA! ⌨️✨";
-                        setTimeout(() => this.iniciar(), 1500);
-                    } else if (this.atual.palavra.startsWith(digitado)) {
+                    const palavraAlvo = this.lista[this.index].palavra;
+
+                    if (digitado === palavraAlvo) {
+                        fb.style.color = "green"; fb.textContent = "SHOW! VOCÊ DIGITOU CERTINHO! ⌨️✨";
+                        setTimeout(() => {
+                            this.index++;
+                            if (this.index >= this.lista.length) {
+                                fb.textContent = "🎉 PARABÉNS! VOCÊ DIGITOU TODAS AS 10 PALAVRAS! 🏆";
+                                setTimeout(() => this.iniciar(), 2500);
+                            } else {
+                                this.carregar();
+                            }
+                        }, 1200);
+                    } else if (palavraAlvo.startsWith(digitado)) {
                         fb.style.color = "#d97706"; fb.textContent = "CONTINUE DIGITANDO... 📝";
                     } else {
                         fb.style.color = "red"; fb.textContent = "CONFERE AS LETRINHAS NOVAMENTE! 🔎";
