@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html LANG="PT-BR">
+<head>
+    <meta CHARSET="UTF-8">
+    <meta NAME="VIEWPORT" CONTENT="WIDTH=DEVICE-WIDTH, INITIAL-SCALE=1.0">
+    <title>OFICINA DE TECNOLOGIA E CIDADANIA DIGITAL</title>
+    <style>
+        :root {
+            --PRIMARY-COLOR: #4F46E5;
+            --SECONDARY-COLOR: #0284C7;
+            --SUCCESS-COLOR: #16A34A;
+            --DANGER-COLOR: #DC2626;
+            --BG-COLOR: #F1F5F9;
+            --CARD-BG: #FFFFFF;
+            --TEXT-COLOR: #0F172A;
+            --BORDER-COLOR: #CBD5E1;
+            --DISABLED-COLOR: #94A3B8;
+        }
+
+        * {
+            BOX-SIZING: BORDER-BOX;
+            MARGIN: 0;
+            PADDING: 0;
+            FONT-FAMILY: 'SEGOE UI', TAHOMA, GENEVA, VERDANA, SANS-SERIF;
+            TEXT-TRANSFORM: UPPERCASE;
+        }
+
+        BODY {
+            BACKGROUND-COLOR: VAR(--BG-COLOR);
+            COLOR: VAR(--TEXT-COLOR);
+            DISPLAY: FLEX;
+            JUSTIFY-CONTENT: CENTER;
+            PADDING: 2REM 1REM;
+            LINE-HEIGHT: 1.5;
+        }
+
+        .CONTAINER {
+            WIDTH: 100%;
+            MAX-WIDTH: 850PX;
+            BACKGROUND-COLOR: VAR(--CARD-BG);
+            BORDER-RADIUS: 12PX;
+            BOX-SHADOW: 0 10PX 15PX -3PX RGBA(0, 0, 0, 0.1);
+            PADDING: 2REM;
+        }
+
+        HEADER {
+            MARGIN-BOTTOM: 2REM;
+            TEXT-ALIGN: CENTER;
+        }
+
+        HEADER H1 {
+            COLOR: VAR(--PRIMARY-COLOR);
+            FONT-SIZE: 1.8REM;
+            MARGIN-BOTTOM: 0.5REM;
+        }
+
+        HEADER P {
+            COLOR: #64748B;
+        }
+
+        /* BARRA DE PROGRESSO */
+        .PROGRESS-CONTAINER {
+            WIDTH: 100%;
+            BACKGROUND-COLOR: #E2E8F0;
+            BORDER-RADIUS: 8PX;
+            HEIGHT: 10PX;
+            MARGIN-BOTTOM: 1.5REM;
+            OVERFLOW: HIDDEN;
+        }
+
+        .PROGRESS-BAR {
+            HEIGHT: 100%;
+            WIDTH: 0%;
+            BACKGROUND-COLOR: VAR(--PRIMARY-COLOR);
+            TRANSITION: WIDTH 0.4S EASE;
+        }
+
+        /* NAVEGAÇÃO EM ABAS */
+        .TABS-NAV {
+            DISPLAY: FLEX;
+            GAP: 0.5REM;
+            BORDER-BOTTOM: 2PX SOLID VAR(--BORDER-COLOR);
+            MARGIN-BOTTOM: 1.5REM;
+            OVERFLOW-X: AUTO;
+        }
+
+        .TAB-BTN {
+            PADDING: 0.75REM 1REM;
+            BORDER: NONE;
+            BACKGROUND: NONE;
+            FONT-SIZE: 0.95REM;
+            FONT-WEIGHT: 600;
+            COLOR: VAR(--DISABLED-COLOR);
+            CURSOR: NOT-ALLOWED;
+            BORDER-BOTTOM: 3PX SOLID TRANSPARENT;
+            TRANSITION: ALL 0.3S EASE;
+            WHITE-SPACE: NOWRAP;
+        }
+
+        .TAB-BTN.UNLOCKED {
+            COLOR: VAR(--TEXT-COLOR);
+            CURSOR: POINTER;
+        }
+
+        .TAB-BTN.ACTIVE {
+            COLOR: VAR(--PRIMARY-COLOR);
+            BORDER-BOTTOM-COLOR: VAR(--PRIMARY-COLOR);
+        }
+
+        .TAB-BTN.COMPLETED {
+            COLOR: VAR(--SUCCESS-COLOR);
+        }
+
+        /* CONTEÚDO DAS ABAS */
+        .TAB-CONTENT {
+            DISPLAY: NONE;
+        }
+
+        .TAB-CONTENT.ACTIVE {
+            DISPLAY: BLOCK;
+            ANIMATION: FADEIN 0.4S EASE;
+        }
+
+        @KEYFRAMES FADEIN {
+            FROM { OPACITY: 0; TRANSFORM: TRANSLATEY(5PX); }
+            TO { OPACITY: 1; TRANSFORM: TRANSLATEY(0); }
+        }
+
+        .ACTIVITY-BOX {
+            BACKGROUND-COLOR: #F8FAFC;
+            BORDER: 1PX SOLID VAR(--BORDER-COLOR);
+            PADDING: 1.5REM;
+            BORDER-RADIUS: 8PX;
+            MARGIN-TOP: 1REM;
+            MARGIN-BOTTOM: 1REM;
+        }
+
+        .TAG-THEME {
+            DISPLAY: INLINE-BLOCK;
+            PADDING: 0.25REM 0.5REM;
+            BORDER-RADIUS: 4PX;
+            FONT-SIZE: 0.8REM;
+            FONT-WEIGHT: BOLD;
+            TEXT-TRANSFORM: UPPERCASE;
+            MARGIN-BOTTOM: 0.5REM;
+        }
+
+        .TAG-SEGURANCA { BACKGROUND-COLOR: #E0F2FE; COLOR: #0369A1; }
+        .TAG-NEPRE { BACKGROUND-COLOR: #FCE7F3; COLOR: #BE185D; }
+        .TAG-FOLCLORE { BACKGROUND-COLOR: #FEF3C7; COLOR: #B45309; }
+        .TAG-PANFLETO { BACKGROUND-COLOR: #DCFCE7; COLOR: #15803D; }
+
+        /* LISTA DE TEXTOS */
+        .TEXT-CARD-LIST {
+            DISPLAY: FLEX;
+            FLEX-DIRECTION: COLUMN;
+            GAP: 1REM;
+            MARGIN-BOTTOM: 1.5REM;
+        }
+
+        .TEXT-CARD {
+            BACKGROUND-COLOR: #FFFFFF;
+            BORDER-LEFT: 4PX SOLID VAR(--PRIMARY-COLOR);
+            BORDER-TOP: 1PX SOLID VAR(--BORDER-COLOR);
+            BORDER-RIGHT: 1PX SOLID VAR(--BORDER-COLOR);
+            BORDER-BOTTOM: 1PX SOLID VAR(--BORDER-COLOR);
+            PADDING: 1REM;
+            BORDER-RADIUS: 0 6PX 6PX 0;
+        }
+
+        .TEXT-CARD.NEPRE-CARD { BORDER-LEFT-COLOR: #BE185D; }
+        .TEXT-CARD.FOLCLORE-CARD { BORDER-LEFT-COLOR: #B45309; }
+
+        .TEXT-CARD H4 {
+            COLOR: VAR(--PRIMARY-COLOR);
+            MARGIN-BOTTOM: 0.25REM;
+            FONT-SIZE: 0.95REM;
+        }
+
+        .TEXT-CARD.NEPRE-CARD H4 { COLOR: #BE185D; }
+        .TEXT-CARD.FOLCLORE-CARD H4 { COLOR: #B45309; }
+
+        .TEXT-CARD P {
+            FONT-SIZE: 0.9REM;
+            COLOR: #334155;
+            USER-SELECT: NONE;
+        }
+
+        /* ELEMENTOS DE FORMULÁRIO */
+        TEXTAREA, INPUT[TYPE="TEXT"], SELECT {
+            WIDTH: 100%;
+            PADDING: 0.75REM;
+            BORDER: 1PX SOLID VAR(--BORDER-COLOR);
+            BORDER-RADIUS: 6PX;
+            MARGIN-TOP: 0.5REM;
+            FONT-SIZE: 0.95REM;
+            TEXT-TRANSFORM: UPPERCASE;
+            BACKGROUND-COLOR: #FFFFFF;
+        }
+
+        TEXTAREA {
+            RESIZE: VERTICAL;
+            MIN-HEIGHT: 80PX;
+        }
+
+        /* PREVIEW DO PANFLETO DIGITAL */
+        .PANFLETO-PREVIEW-CONTAINER {
+            MARGIN-TOP: 1.5REM;
+            PADDING: 1.5REM;
+            BORDER: 2PX DASHED VAR(--PRIMARY-COLOR);
+            BORDER-RADIUS: 12PX;
+            BACKGROUND-COLOR: #FFFFFF;
+            TEXT-ALIGN: CENTER;
+            TRANSITION: ALL 0.3S EASE;
+        }
+
+        .PANFLETO-CARD {
+            BORDER-RADIUS: 8PX;
+            PADDING: 2REM;
+            COLOR: #FFFFFF;
+            BOX-SHADOW: 0 4PX 10PX RGBA(0, 0, 0, 0.15);
+        }
+
+        .PANFLETO-CARD.THEME-1 { BACKGROUND: LINEAR-GRADIENT(135DEG, #4F46E5, #0284C7); }
+        .PANFLETO-CARD.THEME-2 { BACKGROUND: LINEAR-GRADIENT(135DEG, #BE185D, #9333EA); }
+        .PANFLETO-CARD.THEME-3 { BACKGROUND: LINEAR-GRADIENT(135DEG, #B45309, #15803D); }
+
+        .PANFLETO-CARD H2 {
+            FONT-SIZE: 1.6REM;
+            MARGIN-BOTTOM: 1REM;
+            TEXT-TRANSFORM: UPPERCASE;
+        }
+
+        .PANFLETO-CARD P {
+            FONT-SIZE: 1.1REM;
+            LINE-HEIGHT: 1.6;
+            BACKGROUND: RGBA(255, 255, 255, 0.15);
+            PADDING: 1REM;
+            BORDER-RADIUS: 6PX;
+        }
+
+        /* BOTÕES E FEEDBACK */
+        .ACTIONS {
+            MARGIN-TOP: 1.5REM;
+            DISPLAY: FLEX;
+            JUSTIFY-CONTENT: SPACE-BETWEEN;
+            ALIGN-ITEMS: CENTER;
+            FLEX-WRAP: WRAP;
+            GAP: 1REM;
+        }
+
+        .BTN {
+            BACKGROUND-COLOR: VAR(--PRIMARY-COLOR);
+            COLOR: WHITE;
+            BORDER: NONE;
+            PADDING: 0.75REM 1.5REM;
+            BORDER-RADIUS: 6PX;
+            FONT-SIZE: 1REM;
+            FONT-WEIGHT: 600;
+            CURSOR: POINTER;
+            TRANSITION: OPACITY 0.2S;
+        }
+
+        .BTN:HOVER {
+            OPACITY: 0.9;
+        }
+
+        .FEEDBACK {
+            FONT-WEIGHT: 600;
+            FONT-SIZE: 0.95REM;
+        }
+
+        .FEEDBACK.CORRECT { COLOR: VAR(--SUCCESS-COLOR); }
+        .FEEDBACK.INCORRECT { COLOR: VAR(--DANGER-COLOR); }
+    </style>
+</head>
+<body>
+
+    <div CLASS="CONTAINER">
+        <header>
+            <h1>OFICINA DE TECNOLOGIA E CIDADANIA DIGITAL</h1>
+            <p>CONCLUA CADA ETAPA SEQUENCIALMENTE PARA AVANÇAR NA TRILHA.</p>
+        </header>
+
+        <div CLASS="PROGRESS-CONTAINER">
+            <div CLASS="PROGRESS-BAR" ID="PROGRESS-BAR"></div>
+        </div>
+
+        <!-- NAVEGAÇÃO DAS ABAS -->
+        <nav CLASS="TABS-NAV">
+            <button CLASS="TAB-BTN ACTIVE UNLOCKED" DATA-TAB="1" ID="TAB-BTN-1">1. CIDADANIA DIGITAL</button>
+            <button CLASS="TAB-BTN" DATA-TAB="2" ID="TAB-BTN-2">2. NEPRE (MARIA DA PENHA)</button>
+            <button CLASS="TAB-BTN" DATA-TAB="3" ID="TAB-BTN-3">3. FOLCLORE BRASILEIRO</button>
+            <button CLASS="TAB-BTN" DATA-TAB="4" ID="TAB-BTN-4">4. PANFLETO DIGITAL</button>
+        </nav>
+
+        <!-- ABA 1: CIDADANIA DIGITAL -->
+        <div CLASS="TAB-CONTENT ACTIVE" ID="TAB-1">
+            <span CLASS="TAG-THEME TAG-SEGURANCA">CIDADANIA DIGITAL, SEGURANÇA E RESPEITO</span>
+            <h2>MÓDULO 1: O QUE É CIDADANIA DIGITAL?</h2>
+            <p STYLE="MARGIN-BOTTOM: 1REM;">LEIA O TEXTO DE APOIO, DIGITE O TRECHO DE VALIDAÇÃO E FAÇA A PESQUISA NA INTERNET PARA RESPONDER ÀS 5 PERGUNTAS.</p>
+
+            <div CLASS="TEXT-CARD-LIST">
+                <div CLASS="TEXT-CARD">
+                    <h4>TEXTO INFORMATIVO: CONCEITO DE CIDADANIA DIGITAL</h4>
+                    <p>CIDADANIA DIGITAL É O CONJUNTO DE REGRAS DE COMPORTAMENTO, RESPEITO E SEGURANÇA QUE DEVEMOS SEGUIR AO USAR A INTERNET. ASSIM COMO NO MUNDO REAL, SER UM BOM CIDADÃO DIGITAL SIGNIFICA USAR A TECNOLOGIA COM RESPONSABILIDADE, COMBATER A VIOLÊNCIA ONLINE, RESPEITAR AS OUTRAS PESSOAS E PROTEGER NOSSOS DADOS PESSOAIS.</p>
+                </div>
+                <div CLASS="TEXT-CARD">
+                    <h4>TRECHO PARA DIGITAÇÃO (CÓPIA):</h4>
+                    <p ID="TARGET-TEXT-CIDADANIA">CIDADANIA DIGITAL E O USO CONSCIENTE, SEGURO E RESPEITOSO DA INTERNET E DA TECNOLOGIA.</p>
+                </div>
+            </div>
+
+            <!-- ATIVIDADE 1.1: DIGITAÇÃO -->
+            <div CLASS="ACTIVITY-BOX">
+                <h3>1. PRÁTICA DE DIGITAÇÃO DE TEXTO</h3>
+                <label FOR="SEGURANCA-Q1"><strong>DIGITE O TRECHO PARA DIGITAÇÃO EXATAMENTE COMO MOSTRADO ACIMA:</strong></label>
+                <textarea ID="SEGURANCA-Q1" PLACEHOLDER="DIGITE O TRECHO SOBRE CIDADANIA DIGITAL..."></textarea>
+            </div>
+
+            <!-- 5 QUESTÕES DE PESQUISA ORIENTADA NA INTERNET -->
+            <div CLASS="ACTIVITY-BOX">
+                <h3>2. PESQUISA NA INTERNET: CONCEITO</h3>
+                <p>PESQUISE NA INTERNET: ALÉM DE SE DIVERTIR, USAR A INTERNET COM RESPEITO E RESPONSABILIDADE É CHAMADO DE QUÊ?</p>
+                <input TYPE="TEXT" ID="SEGURANCA-Q2" PLACEHOLDER="DIGITE AQUI A SUA RESPOSTA...">
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>3. PESQUISA NA INTERNET: OFENSAS ONLINE</h3>
+                <p>PESQUISE NA INTERNET: QUAL É O NOME DADO A OFENSAS, MENTIRAS OU PROVOCAÇÕES FEITAS CONTRA ALGUÉM NA INTERNET?</p>
+                <input TYPE="TEXT" ID="SEGURANCA-Q3" PLACEHOLDER="DIGITE AQUI A SUA RESPOSTA...">
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>4. PESQUISA NA INTERNET: SEGURANÇA DE SENHAS</h3>
+                <p>PESQUISE NA INTERNET OU RESPONDA: DEVE-SE COMPARTILHAR SENHAS PESSOAIS COM AMIGOS OU MANTER EM SEGREDO?</p>
+                <input TYPE="TEXT" ID="SEGURANCA-Q4" PLACEHOLDER="DIGITE AQUI A SUA RESPOSTA...">
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>5. PESQUISA NA INTERNET: PROTEÇÃO DE DADOS</h3>
+                <p>PESQUISE NA INTERNET OU RESPONDA: É SEGURO PUBLICAR ENDEREÇO E NÚMERO DE TELEFONE EM REDES SOCIAIS ABERTAS? (SIM OU NÃO)</p>
+                <input TYPE="TEXT" ID="SEGURANCA-Q5" PLACEHOLDER="DIGITE AQUI A SUA RESPOSTA...">
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>6. PESQUISA NA INTERNET: COMBATE AO CYBERBULLYING</h3>
+                <p>PESQUISE NA INTERNET: AO PRESENCIAR UM CYBERBULLYING OU MENSAGEM OFENSIVA, O QUE DEVEMOS FAZER COM O CONTEÚDO? (DENUNCIAR OU COMPARTILHAR?)</p>
+                <input TYPE="TEXT" ID="SEGURANCA-Q6" PLACEHOLDER="DIGITE AQUI A SUA RESPOSTA...">
+            </div>
+
+            <div CLASS="ACTIONS">
+                <span CLASS="FEEDBACK" ID="FEEDBACK-1"></span>
+                <button CLASS="BTN" ONCLICK="VALIDARABA1()">VALIDAR MÓDULO 1</button>
+            </div>
+        </div>
+
+        <!-- ABA 2: NEPRE - LEI MARIA DA PENHA -->
+        <div CLASS="TAB-CONTENT" ID="TAB-2">
+            <span CLASS="TAG-THEME TAG-NEPRE">NEPRE: DIA DA LEI MARIA DA PENHA</span>
+            <h2>MÓDULO 2: LEI MARIA DA PENHA (DIGITAÇÃO E INTERPRETAÇÃO)</h2>
+            <p STYLE="MARGIN-BOTTOM: 1REM;">PRATIQUE A DIGITAÇÃO DO TEXTO GERAL ABAIXO E, EM SEGUIDA, RELEIA OS 5 TEXTOS TEMÁTICOS PARA RESPONDER ÀS QUESTÕES DE INTERPRETAÇÃO.</p>
+
+            <!-- TEXTO GERAL DE DIGITAÇÃO -->
+            <div CLASS="TEXT-CARD-LIST">
+                <div CLASS="TEXT-CARD NEPRE-CARD">
+                    <h4>TEXTO GERAL DE DIGITAÇÃO: CONSCIENTIZAÇÃO E RESPEITO</h4>
+                    <p ID="TARGET-TEXT-NEPRE-GERAL">A LEI MARIA DA PENHA E UMA IMPORTANTE CONQUISTA PARA GARANTIR A SEGURANCA E O RESPEITO AS MULHERES EM NOSSO PAIS.</p>
+                </div>
+            </div>
+
+            <!-- ATIVIDADE 2.1: DIGITAÇÃO DO TEXTO GERAL -->
+            <div CLASS="ACTIVITY-BOX">
+                <h3>1. PRÁTICA DE DIGITAÇÃO DO TEXTO GERAL</h3>
+                <label FOR="NEPRE-Q1"><strong>DIGITE O TEXTO GERAL EXATAMENTE COMO MOSTRADO ACIMA:</strong></label>
+                <textarea ID="NEPRE-Q1" PLACEHOLDER="DIGITE O TEXTO GERAL SOBRE A LEI MARIA DA PENHA AQUI..."></textarea>
+            </div>
+
+            <!-- BLAT DE 5 TEXTOS APENAS PARA INTERPRETAÇÃO -->
+            <h3 STYLE="MARGIN-TOP: 1.5REM; MARGIN-BOTTOM: 0.5REM; COLOR: #BE185D;">TEXTOS PARA LEITURA E INTERPRETAÇÃO:</h3>
+            
+            <div CLASS="TEXT-CARD-LIST">
+                <div CLASS="TEXT-CARD NEPRE-CARD">
+                    <h4>TEXTO 1: ORIGEM DA LEI</h4>
+                    <p>A LEI MARIA DA PENHA FOI CRIADA PARA PROTEGER AS MULHERES CONTRA A VIOLÊNCIA DOMÉSTICA E FAMILIAR NO BRASIL.</p>
+                </div>
+                <div CLASS="ACTIVITY-BOX">
+                    <h3>2. INTERPRETAÇÃO DO TEXTO 1</h3>
+                    <p>DE ACORDO COM O TEXTO 1, QUAL FOI O OBJETIVO PRINCIPAL PARA A CRIAÇÃO DA LEI MARIA DA PENHA?</p>
+                    <input TYPE="TEXT" ID="NEPRE-Q2" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
+                </div>
+
+                <div CLASS="TEXT-CARD NEPRE-CARD">
+                    <h4>TEXTO 2: FORMAS DE VIOLÊNCIA</h4>
+                    <p>A VIOLÊNCIA DOMÉSTICA NÃO É APENAS FÍSICA. ELA TAMBÉM PODE SER PSICOLÓGICA, PATRIMONIAL, MORAL E SEXUAL.</p>
+                </div>
+                <div CLASS="ACTIVITY-BOX">
+                    <h3>3. INTERPRETAÇÃO DO TEXTO 2</h3>
+                    <p>CONFORME O TEXTO 2, QUAIS SÃO AS OUTRAS FORMAS DE VIOLÊNCIA ALÉM DA VIOLÊNCIA FÍSICA?</p>
+                    <input TYPE="TEXT" ID="NEPRE-Q3" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
+                </div>
+
+                <div CLASS="TEXT-CARD NEPRE-CARD">
+                    <h4>TEXTO 3: MEDIDAS PROTETIVAS</h4>
+                    <p>A LEGISLAÇÃO PREVÊ MEDIDAS PROTETIVAS DE URGÊNCIA PARA AFASTAR O AGRESSOR E GARANTIR A SEGURANÇA DA VÍTIMA.</p>
+                </div>
+                <div CLASS="ACTIVITY-BOX">
+                    <h3>4. INTERPRETAÇÃO DO TEXTO 3</h3>
+                    <p>SEGUNDO O TEXTO 3, O QUE A LEGISLAÇÃO PREVÊ PARA AFASTAR O AGRESSOR E GARANTIR A SEGURANÇA DA VÍTIMA?</p>
+                    <input TYPE="TEXT" ID="NEPRE-Q4" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
+                </div>
+
+                <div CLASS="TEXT-CARD NEPRE-CARD">
+                    <h4>TEXTO 4: CANAL DE ATENDIMENTO</h4>
+                    <p>O LIGUE 180 É UM SERVIÇO GRATUITO E CONFIDENCIAL QUE RECEBE DENÚNCIAS E ORIENTA AS MULHERES.</p>
+                </div>
+                <div CLASS="ACTIVITY-BOX">
+                    <h3>5. INTERPRETAÇÃO DO TEXTO 4</h3>
+                    <p>DE ACORDO COM O TEXTO 4, QUAL É O NÚMERO DO TELEFONE GRATUITO E CONFIDENCIAL PARA DENÚNCIAS?</p>
+                    <input TYPE="TEXT" ID="NEPRE-Q5" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
+                </div>
+
+                <div CLASS="TEXT-CARD NEPRE-CARD">
+                    <h4>TEXTO 5: DIREITO DE TODAS</h4>
+                    <p>GARANTIR O RESPEITO, A DIGNIDADE E A IGUALDADE DE DIREITOS DAS MULHERES É UM DEVER DE TODA A SOCIEDADE.</p>
+                </div>
+                <div CLASS="ACTIVITY-BOX">
+                    <h3>6. INTERPRETAÇÃO DO TEXTO 5</h3>
+                    <p>CONFORME O TEXTO 5, DE QUEM É O DEVER DE GARANTIR O RESPEITO E A IGUALDADE DE DIREITOS DAS MULHERES?</p>
+                    <input TYPE="TEXT" ID="NEPRE-Q6" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
+                </div>
+            </div>
+
+            <div CLASS="ACTIONS">
+                <span CLASS="FEEDBACK" ID="FEEDBACK-2"></span>
+                <button CLASS="BTN" ONCLICK="VALIDARABA2()">VALIDAR MÓDULO 2</button>
+            </div>
+        </div>
+
+        <!-- ABA 3: FOLCLORE BRASILEIRO (5 ATIVIDADES) -->
+        <div CLASS="TAB-CONTENT" ID="TAB-3">
+            <span CLASS="TAG-THEME TAG-FOLCLORE">PLANEJAMENTO INTEGRADO: FOLCLORE BRASILEIRO</span>
+            <h2>MÓDULO 3: FOLCLORE BRASILEIRO (5 ATIVIDADES)</h2>
+            <p STYLE="MARGIN-BOTTOM: 1REM;">REALIZE AS ATIVIDADES DE DIGITAÇÃO E PESQUISA ORIENTADA SOBRE O FOLCLORE BRASILEIRO.</p>
+
+            <!-- ATIVIDADE 3.1: PESQUISA CURUPIRA -->
+            <div CLASS="ACTIVITY-BOX">
+                <h3>1. PESQUISA NA INTERNET: PROTETOR DAS MATAS</h3>
+                <p>PESQUISE NA INTERNET: QUAL PERSONAGEM DO FOLCLORE TEM OS PÉS VOLTADOS PARA TRÁS E PROTEGE AS MATAS?</p>
+                <input TYPE="TEXT" ID="FOLCLORE-Q1" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
+            </div>
+
+            <!-- ATIVIDADE 3.2: DIGITAÇÃO SACI -->
+            <div CLASS="ACTIVITY-BOX">
+                <h3>2. DIGITAÇÃO E LEITURA: SACI-PERERÊ</h3>
+                <div CLASS="TEXT-CARD FOLCLORE-CARD" STYLE="MARGIN: 0.5REM 0;">
+                    <h4>TEXTO DE APOIO:</h4>
+                    <p ID="TARGET-TEXT-SACI">O SACI-PERERE E UM MENINO TRAVESSO DE UMA PERNA SO QUE USA UM GORRO VERMELHO MAGICO.</p>
+                </div>
+                <label FOR="FOLCLORE-Q2"><strong>DIGITE A FRASE ACIMA EXATAMENTE IGUAL:</strong></label>
+                <textarea ID="FOLCLORE-Q2" PLACEHOLDER="DIGITE A FRASE SOBRE O SACI..."></textarea>
+            </div>
+
+            <!-- ATIVIDADE 3.3: PESQUISA BOTO -->
+            <div CLASS="ACTIVITY-BOX">
+                <h3>3. PESQUISA NA INTERNET: BOTO COR-DE-ROSA</h3>
+                <p>PESQUISE NA INTERNET: EM QUAL REGIÃO DO BRASIL A LENDA DO BOTO COR-DE-ROSA É MAIS POPULAR?</p>
+                <input TYPE="TEXT" ID="FOLCLORE-Q3" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
+            </div>
+
+            <!-- ATIVIDADE 3.4: DIGITAÇÃO IARA -->
+            <div CLASS="ACTIVITY-BOX">
+                <h3>4. DIGITAÇÃO E LEITURA: IARA</h3>
+                <div CLASS="TEXT-CARD FOLCLORE-CARD" STYLE="MARGIN: 0.5REM 0;">
+                    <h4>TEXTO DE APOIO:</h4>
+                    <p ID="TARGET-TEXT-IARA">A IARA E UMA SEREIA QUE VIVE NOS RIOS E ENCANTA A TODOS COM O SEU LINDO CANTO.</p>
+                </div>
+                <label FOR="FOLCLORE-Q4"><strong>DIGITE A FRASE ACIMA EXATAMENTE IGUAL:</strong></label>
+                <textarea ID="FOLCLORE-Q4" PLACEHOLDER="DIGITE A FRASE SOBRE A IARA..."></textarea>
+            </div>
+
+            <!-- ATIVIDADE 3.5: PESQUISA MULA SEM CABEÇA -->
+            <div CLASS="ACTIVITY-BOX">
+                <h3>5. PESQUISA NA INTERNET: MULA SEM CABEÇA</h3>
+                <p>PESQUISE NA INTERNET: O QUE A MULA SEM CABEÇA SOLTA NO LUGAR ONDE DEVERIA ESTAR A SUA CABEÇA?</p>
+                <input TYPE="TEXT" ID="FOLCLORE-Q5" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
+            </div>
+
+            <div CLASS="ACTIONS">
+                <span CLASS="FEEDBACK" ID="FEEDBACK-3"></span>
+                <button CLASS="BTN" ONCLICK="VALIDARABA3()">VALIDAR MÓDULO 3</button>
+            </div>
+        </div>
+
+        <!-- ABA 4: PANFLETO DIGITAL -->
+        <div CLASS="TAB-CONTENT" ID="TAB-4">
+            <span CLASS="TAG-THEME TAG-PANFLETO">PROJETO PRÁTICO: CRIAÇÃO DE PANFLETO DIGITAL</span>
+            <h2>MÓDULO 4: MONTE SEU PANFLETO DIGITAL DE CONSCIENTIZAÇÃO</h2>
+            <p STYLE="MARGIN-BOTTOM: 1REM;">ESCOLHA UM DOS 3 TEMAS ESTUDADOS, ESCREVA SEU TÍTULO E SUA MENSAGEM PARA CRIAR UM PANFLETO EDUCATIVO.</p>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>1. ESCOLHA O TEMA DO SEU PANFLETO</h3>
+                <select ID="PANFLETO-TEMA" ONCHANGE="ATUALIZARPANFLETO()">
+                    <OPTION VALUE="1">1. CIDADANIA DIGITAL E SEGURANÇA ONLINE</OPTION>
+                    <OPTION VALUE="2">2. NEPRE: RESPEITO ÀS MULHERES (LEI MARIA DA PENHA)</OPTION>
+                    <OPTION VALUE="3">3. VALORIZAÇÃO DO FOLCLORE BRASILEIRO</OPTION>
+                </select>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>2. TÍTULO DO PANFLETO (CABEÇALHO)</h3>
+                <label FOR="PANFLETO-TITULO"><strong>DIGITE UM TÍTULO LLAMATIVO PARA SEU PANFLETO:</strong></label>
+                <input TYPE="TEXT" ID="PANFLETO-TITULO" PLACEHOLDER="EX: INTERNET SEGURA PARA TODOS" ONINPUT="ATUALIZARPANFLETO()">
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>3. MENSAGEM PRINCIPAL (CONSCIENTIZAÇÃO)</h3>
+                <label FOR="PANFLETO-MENSAGEM"><strong>DIGITE UMA FRASE OU MENSAGEM DE CONSCIENTIZAÇÃO SOBRE O TEMA:</strong></label>
+                <textarea ID="PANFLETO-MENSAGEM" PLACEHOLDER="EX: RESPEITO E SEGURANÇA DEVEM VIR EM PRIMEIRA LUGAR!" ONINPUT="ATUALIZARPANFLETO()"></textarea>
+            </div>
+
+            <h3 STYLE="MARGIN-TOP: 1.5REM; MARGIN-BOTTOM: 0.5REM; COLOR: #15803D;">PRÉ-VIZUALIZAÇÃO DO SEU PANFLETO:</h3>
+            <div CLASS="PANFLETO-PREVIEW-CONTAINER">
+                <div CLASS="PANFLETO-CARD THEME-1" ID="PANFLETO-CARD-PREVIEW">
+                    <h2 ID="PREVIEW-TITULO">TÍTULO DO PANFLETO</h2>
+                    <p ID="PREVIEW-MENSAGEM">SUA MENSAGEM DE CONSCIENTIZAÇÃO APARECERÁ AQUI CONFORME VOCÊ DIGITA.</p>
+                </div>
+            </div>
+
+            <div CLASS="ACTIONS">
+                <span CLASS="FEEDBACK" ID="FEEDBACK-4"></span>
+                <button CLASS="BTN" ONCLICK="VALIDARABA4()">VALIDAR E FINALIZAR PANFLETO</button>
+                    <button class="BTN" style="background:#15803D" onclick="salvarPDF()">SALVAR EM PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const TOTALTABS = 4;
+        const UNLOCKEDTABS = { 1: true, 2: false, 3: false, 4: false };
+
+        function cleanText(text) {
+            return text
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "") // Remove acentos
+                .replace(/[^\w\s]/gi, "")       // Remove pontuações
+                .trim()
+                .toUpperCase();
+        }
+
+        function UPDATEPROGRESS() {
+            let completed = 0;
+            for (let i = 1; i <= TOTALTABS; i++) {
+                if (document.getElementById(`TAB-BTN-${i}`).classList.contains('COMPLETED')) {
+                    completed++;
+                }
+            }
+            const percentage = (completed / TOTALTABS) * 100;
+            document.getElementById('PROGRESS-BAR').style.width = `${percentage}%`;
+        }
+
+        function SWITCHTAB(TABNUMBER) {
+            if (!UNLOCKEDTABS[TABNUMBER]) return;
+
+            document.querySelectorAll('.TAB-BTN').forEach(btn => btn.classList.remove('ACTIVE'));
+            document.getElementById(`TAB-BTN-${TABNUMBER}`).classList.add('ACTIVE');
+
+            document.querySelectorAll('.TAB-CONTENT').forEach(content => content.classList.remove('ACTIVE'));
+            document.getElementById(`TAB-${TABNUMBER}`).classList.add('ACTIVE');
+        }
+
+        document.querySelectorAll('.TAB-BTN').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const TABNUMBER = parseInt(btn.getAttribute('DATA-TAB'));
+                SWITCHTAB(TABNUMBER);
+            });
+        });
+
+        function UNLOCKTAB(TABNUMBER) {
+            UNLOCKEDTABS[TABNUMBER] = true;
+            const btn = document.getElementById(`TAB-BTN-${TABNUMBER}`);
+            btn.classList.add('UNLOCKED');
+        }
+
+        // VALIDAÇÃO ABA 1: CIDADANIA DIGITAL E SEGURANÇA
+        function VALIDARABA1() {
+            const TARGET1 = cleanText(document.getElementById('TARGET-TEXT-CIDADANIA').textContent);
+            const Q1 = cleanText(document.getElementById('SEGURANCA-Q1').value);
+            const Q2 = cleanText(document.getElementById('SEGURANCA-Q2').value);
+            const Q3 = cleanText(document.getElementById('SEGURANCA-Q3').value);
+            const Q4 = cleanText(document.getElementById('SEGURANCA-Q4').value);
+            const Q5 = cleanText(document.getElementById('SEGURANCA-Q5').value);
+            const Q6 = cleanText(document.getElementById('SEGURANCA-Q6').value);
+
+            const FEEDBACK = document.getElementById('FEEDBACK-1');
+
+            if (Q1 !== TARGET1) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 1: VERIFIQUE SE DIGITOU O TRECHO EXATAMENTE IGUAL AO EXEMPLO.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (!Q2.includes('CIDADANIA') && !Q2.includes('DIGITAL')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 2: PESQUISE OU RELEIA O TEXTO DE APOIO DESTA ABA.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (!Q3.includes('CYBERBULLYING') && !Q3.includes('BULLYING')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 3: REALIZE A PESQUISA SOBRE OFENSAS NO MEIO VIRTUAL.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (!Q4.includes('SEGREDO') && !Q4.includes('NAO') && !Q4.includes('PRIVADA')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 4: RELEIA A QUESTÃO SOBRE COMPARTILHAR SENHAS.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (!Q5.includes('NAO')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 5: PENSE SOBRE OS RISCOS DE PUBLICAR DADOS PESSOAIS.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (!Q6.includes('DENUNCIAR') && !Q6.includes('BLOQUEAR') && !Q6.includes('AVISAR')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 6: RELEIA AS OPÇÕES DE ATITUDE DIANTE DO CYBERBULLYING.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            FEEDBACK.textContent = "CORRETO! MÓDULO DE CIDADANIA DIGITAL CONCLUÍDO. LIBERANDO MÓDULO NEPRE...";
+            FEEDBACK.className = "FEEDBACK CORRECT";
+            document.getElementById('TAB-BTN-1').classList.add('COMPLETED');
+            UPDATEPROGRESS();
+            UNLOCKTAB(2);
+            setTimeout(() => SWITCHTAB(2), 1200);
+        }
+
+        // VALIDAÇÃO ABA 2: NEPRE (MARIA DA PENHA)
+        function VALIDARABA2() {
+            const TARGETGERAL = cleanText(document.getElementById('TARGET-TEXT-NEPRE-GERAL').textContent);
+            const Q1 = cleanText(document.getElementById('NEPRE-Q1').value);
+            const Q2 = cleanText(document.getElementById('NEPRE-Q2').value);
+            const Q3 = cleanText(document.getElementById('NEPRE-Q3').value);
+            const Q4 = cleanText(document.getElementById('NEPRE-Q4').value);
+            const Q5 = cleanText(document.getElementById('NEPRE-Q5').value);
+            const Q6 = cleanText(document.getElementById('NEPRE-Q6').value);
+
+            const FEEDBACK = document.getElementById('FEEDBACK-2');
+
+            if (Q1 !== TARGETGERAL) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 1: VERIFIQUE SUA DIGITAÇÃO DO TEXTO GERAL.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (!Q2.includes('PROTEGER') && !Q2.includes('MULHER') && !Q2.includes('DOMESTICA')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 2: RELEIA ATENTAMENTE O TEXTO 1.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (!Q3.includes('PSICOLOGICA') && !Q3.includes('PATRIMONIAL') && !Q3.includes('MORAL') && !Q3.includes('SEXUAL')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 3: RELEIA O TEXTO 2 E QUAIS SÃO OS OUTROS TIPOS DE VIOLÊNCIA.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (!Q4.includes('MEDIDA') && !Q4.includes('PROTETIVA') && !Q4.includes('URGENCIA')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 4: CONSULTE O TEXTO 3 SOBRE AS MEDIDAS DE SEGURANÇA.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (!Q5.includes('180')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 5: VERIFIQUE O NÚMERO INDICADO NO TEXTO 4.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (!Q6.includes('SOCIEDADE') && !Q6.includes('TODOS') && !Q6.includes('DEVER')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 6: CONSULTE O TEXTO 5 ACIMA.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            FEEDBACK.textContent = "EXCELENTE! MÓDULO NEPRE CONCLUÍDO. LIBERANDO FOLCLORE BRASILEIRO...";
+            FEEDBACK.className = "FEEDBACK CORRECT";
+            document.getElementById('TAB-BTN-2').classList.add('COMPLETED');
+            UPDATEPROGRESS();
+            UNLOCKTAB(3);
+            setTimeout(() => SWITCHTAB(3), 1200);
+        }
+
+        // VALIDAÇÃO ABA 3: FOLCLORE BRASILEIRO (5 ATIVIDADES)
+        function VALIDARABA3() {
+            const Q1 = cleanText(document.getElementById('FOLCLORE-Q1').value);
+            const Q2 = cleanText(document.getElementById('FOLCLORE-Q2').value);
+            const TARGETQ2 = cleanText(document.getElementById('TARGET-TEXT-SACI').textContent);
+            const Q3 = cleanText(document.getElementById('FOLCLORE-Q3').value);
+            const Q4 = cleanText(document.getElementById('FOLCLORE-Q4').value);
+            const TARGETQ4 = cleanText(document.getElementById('TARGET-TEXT-IARA').textContent);
+            const Q5 = cleanText(document.getElementById('FOLCLORE-Q5').value);
+
+            const FEEDBACK = document.getElementById('FEEDBACK-3');
+
+            if (!Q1.includes('CURUPIRA')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 1: FAÇA A PESQUISA SOBRE O PROTETOR DAS MATAS COM PÉS PARA TRÁS.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+            if (Q2 !== TARGETQ2) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 2: VERIFIQUE SE DIGITOU A FRASE DO SACI CORRETAMENTE.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+            if (!Q3.includes('NORTE') && !Q3.includes('AMAZ')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 3: REALIZE A PESQUISA SOBRE A REGIÃO DA LENDA DO BOTO.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+            if (Q4 !== TARGETQ4) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 4: VERIFIQUE SE DIGITOU A FRASE DA IARA CORRETAMENTE.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+            if (!Q5.includes('FOGO') && !Q5.includes('CHAMA')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 5: FAÇA A PESQUISA SOBRE O QUE SAI DO PESCOÇO DA MULA.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            FEEDBACK.textContent = "EXCELENTE! MÓDULO DE FOLCLORE CONCLUÍDO. LIBERANDO CRIAÇÃO DO PANFLETO DIGITAL...";
+            FEEDBACK.className = "FEEDBACK CORRECT";
+            document.getElementById('TAB-BTN-3').classList.add('COMPLETED');
+            UPDATEPROGRESS();
+            UNLOCKTAB(4);
+            setTimeout(() => SWITCHTAB(4), 1200);
+        }
+
+        // LÓGICA E VALIDAÇÃO DA ABA 4: PANFLETO DIGITAL
+        function ATUALIZARPANFLETO() {
+            const temaVal = document.getElementById('PANFLETO-TEMA').value;
+            const tituloVal = document.getElementById('PANFLETO-TITULO').value.trim();
+            const mensagemVal = document.getElementById('PANFLETO-MENSAGEM').value.trim();
+
+            const cardPreview = document.getElementById('PANFLETO-CARD-PREVIEW');
+            const previewTitulo = document.getElementById('PREVIEW-TITULO');
+            const previewMensagem = document.getElementById('PREVIEW-MENSAGEM');
+
+            // Atualiza classe visual do tema
+            cardPreview.className = `PANFLETO-CARD THEME-${temaVal}`;
+
+            // Atualiza textos
+            previewTitulo.textContent = tituloVal !== "" ? tituloVal : "TÍTULO DO PANFLETO";
+            previewMensagem.textContent = mensagemVal !== "" ? mensagemVal : "SUA MENSAGEM DE CONSCIENTIZAÇÃO APARECERÁ AQUI CONFORME VOCÊ DIGITA.";
+        }
+
+        function VALIDARABA4() {
+            const tituloVal = document.getElementById('PANFLETO-TITULO').value.trim();
+            const mensagemVal = document.getElementById('PANFLETO-MENSAGEM').value.trim();
+            const FEEDBACK = document.getElementById('FEEDBACK-4');
+
+            if (tituloVal.length < 5) {
+                FEEDBACK.textContent = "ATENÇÃO: ESCREVA UM TÍTULO VÁLIDO PARA SEU PANFLETO (MÍNIMO 5 CARACTERES).";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (mensagemVal.length < 15) {
+                FEEDBACK.textContent = "ATENÇÃO: ELABORE UMA MENSAGEM MAIS COMPLETA PARA SEU PANFLETO (MÍNIMO 15 CARACTERES).";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            FEEDBACK.textContent = "PARABÉNS! VOCÊ CRIOU SEU PANFLETO DIGITAL E CONCLUIU TODA A TRILHA DA OFICINA COM SUCESSO!";
+            FEEDBACK.className = "FEEDBACK CORRECT";
+            document.getElementById('TAB-BTN-4').classList.add('COMPLETED');
+            UPDATEPROGRESS();
+        }
+    </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+function salvarPDF(){const e=document.getElementById("PANFLETO-CARD-PREVIEW");const t=(document.getElementById("PANFLETO-TITULO").value.trim()||"panfleto").replace(/[^\w\s-]/g,"").replace(/\s+/g,"_");const r=document.createElement("div");r.style.background="#fff";r.style.padding="20px";const c=e.cloneNode(true);const f=document.createElement("div");f.style.marginTop="20px";f.style.textAlign="center";f.style.color="#444";f.textContent="Gerado em: "+new Date().toLocaleString("pt-BR");r.appendChild(c);r.appendChild(f);document.body.appendChild(r);html2pdf().set({margin:10,filename:t+".pdf",image:{type:"jpeg",quality:1},html2canvas:{scale:3},jsPDF:{unit:"mm",format:"a4",orientation:"portrait"}}).from(r).save().then(()=>r.remove());}
+</script>
+</body>
+</html>
