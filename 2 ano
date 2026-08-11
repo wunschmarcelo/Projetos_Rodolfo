@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html LANG="PT-BR">
+<head>
+    <meta CHARSET="UTF-8">
+    <meta NAME="VIEWPORT" CONTENT="WIDTH=DEVICE-WIDTH, INITIAL-SCALE=1.0">
+    <title>OFICINA DIGITAL - 2º ANO</title>
+    <style>
+        :root {
+            --PRIMARY-COLOR: #4F46E5;
+            --SECONDARY-COLOR: #0284C7;
+            --SUCCESS-COLOR: #16A34A;
+            --DANGER-COLOR: #DC2626;
+            --BG-COLOR: #F1F5F9;
+            --CARD-BG: #FFFFFF;
+            --TEXT-COLOR: #0F172A;
+            --BORDER-COLOR: #CBD5E1;
+            --DISABLED-COLOR: #94A3B8;
+        }
+
+        * {
+            BOX-SIZING: BORDER-BOX;
+            MARGIN: 0;
+            PADDING: 0;
+            FONT-FAMILY: 'SEGOE UI', TAHOMA, GENEVA, VERDANA, SANS-SERIF;
+            TEXT-TRANSFORM: UPPERCASE;
+        }
+
+        BODY {
+            BACKGROUND-COLOR: VAR(--BG-COLOR);
+            COLOR: VAR(--TEXT-COLOR);
+            DISPLAY: FLEX;
+            JUSTIFY-CONTENT: CENTER;
+            PADDING: 1.5REM 1REM;
+            LINE-HEIGHT: 1.5;
+        }
+
+        .CONTAINER {
+            WIDTH: 100%;
+            MAX-WIDTH: 850PX;
+            BACKGROUND-COLOR: VAR(--CARD-BG);
+            BORDER-RADIUS: 12PX;
+            BOX-SHADOW: 0 10PX 15PX -3PX RGBA(0, 0, 0, 0.1);
+            PADDING: 1.5REM;
+        }
+
+        HEADER {
+            MARGIN-BOTTOM: 1.5REM;
+            TEXT-ALIGN: CENTER;
+        }
+
+        HEADER H1 {
+            COLOR: VAR(--PRIMARY-COLOR);
+            FONT-SIZE: 1.6REM;
+            MARGIN-BOTTOM: 0.5REM;
+        }
+
+        HEADER P {
+            COLOR: #64748B;
+            FONT-SIZE: 1REM;
+            FONT-WEIGHT: BOLD;
+        }
+
+        /* BARRA DE PROGRESSO */
+        .PROGRESS-CONTAINER {
+            WIDTH: 100%;
+            BACKGROUND-COLOR: #E2E8F0;
+            BORDER-RADIUS: 8PX;
+            HEIGHT: 12PX;
+            MARGIN-BOTTOM: 1.5REM;
+            OVERFLOW: HIDDEN;
+        }
+
+        .PROGRESS-BAR {
+            HEIGHT: 100%;
+            WIDTH: 0%;
+            BACKGROUND-COLOR: VAR(--PRIMARY-COLOR);
+            TRANSITION: WIDTH 0.4S EASE;
+        }
+
+        /* NAVEGAÇÃO EM 5 ABAS */
+        .TABS-NAV {
+            DISPLAY: FLEX;
+            GAP: 0.5REM;
+            BORDER-BOTTOM: 2PX SOLID VAR(--BORDER-COLOR);
+            MARGIN-BOTTOM: 1.5REM;
+            OVERFLOW-X: AUTO;
+        }
+
+        .TAB-BTN {
+            PADDING: 0.75REM 1REM;
+            BORDER: NONE;
+            BACKGROUND: NONE;
+            FONT-SIZE: 0.95REM;
+            FONT-WEIGHT: 700;
+            COLOR: VAR(--DISABLED-COLOR);
+            CURSOR: NOT-ALLOWED;
+            BORDER-BOTTOM: 3PX SOLID TRANSPARENT;
+            TRANSITION: ALL 0.3S EASE;
+            WHITE-SPACE: NOWRAP;
+        }
+
+        .TAB-BTN.UNLOCKED {
+            COLOR: VAR(--TEXT-COLOR);
+            CURSOR: POINTER;
+        }
+
+        .TAB-BTN.ACTIVE {
+            COLOR: VAR(--PRIMARY-COLOR);
+            BORDER-BOTTOM-COLOR: VAR(--PRIMARY-COLOR);
+        }
+
+        .TAB-BTN.COMPLETED {
+            COLOR: VAR(--SUCCESS-COLOR);
+        }
+
+        /* CONTEÚDO DAS ABAS */
+        .TAB-CONTENT {
+            DISPLAY: NONE;
+        }
+
+        .TAB-CONTENT.ACTIVE {
+            DISPLAY: BLOCK;
+            ANIMATION: FADEIN 0.4S EASE;
+        }
+
+        @KEYFRAMES FADEIN {
+            FROM { OPACITY: 0; TRANSFORM: TRANSLATEY(5PX); }
+            TO { OPACITY: 1; TRANSFORM: TRANSLATEY(0); }
+        }
+
+        .ACTIVITY-BOX {
+            BACKGROUND-COLOR: #F8FAFC;
+            BORDER: 2PX SOLID VAR(--BORDER-COLOR);
+            PADDING: 1.2REM;
+            BORDER-RADIUS: 10PX;
+            MARGIN-TOP: 1REM;
+            MARGIN-BOTTOM: 1REM;
+        }
+
+        .TAG-THEME {
+            DISPLAY: INLINE-BLOCK;
+            PADDING: 0.3REM 0.6REM;
+            BORDER-RADIUS: 6PX;
+            FONT-SIZE: 0.85REM;
+            FONT-WEIGHT: BOLD;
+            TEXT-TRANSFORM: UPPERCASE;
+            MARGIN-BOTTOM: 0.5REM;
+        }
+
+        .TAG-SEGURANCA { BACKGROUND-COLOR: #E0F2FE; COLOR: #0369A1; }
+        .TAG-NEPRE { BACKGROUND-COLOR: #FCE7F3; COLOR: #BE185D; }
+        .TAG-FOLCLORE { BACKGROUND-COLOR: #FEF3C7; COLOR: #B45309; }
+        .TAG-REVISAO { BACKGROUND-COLOR: #DCFCE7; COLOR: #15803D; }
+        .TAG-AGRUPA { BACKGROUND-COLOR: #F3E8FF; COLOR: #7E22CE; }
+
+        .TEXT-CARD-LIST {
+            DISPLAY: FLEX;
+            FLEX-DIRECTION: COLUMN;
+            GAP: 1REM;
+            MARGIN-BOTTOM: 1.2REM;
+        }
+
+        .TEXT-CARD {
+            BACKGROUND-COLOR: #FFFFFF;
+            BORDER-LEFT: 6PX SOLID VAR(--PRIMARY-COLOR);
+            BORDER-TOP: 1PX SOLID VAR(--BORDER-COLOR);
+            BORDER-RIGHT: 1PX SOLID VAR(--BORDER-COLOR);
+            BORDER-BOTTOM: 1PX SOLID VAR(--BORDER-COLOR);
+            PADDING: 1REM;
+            BORDER-RADIUS: 0 8PX 8PX 0;
+        }
+
+        .TEXT-CARD.NEPRE-CARD { BORDER-LEFT-COLOR: #BE185D; }
+        .TEXT-CARD.FOLCLORE-CARD { BORDER-LEFT-COLOR: #B45309; }
+        .TEXT-CARD.REVISAO-CARD { BORDER-LEFT-COLOR: #15803D; }
+        .TEXT-CARD.AGRUPA-CARD { BORDER-LEFT-COLOR: #7E22CE; }
+
+        .TEXT-CARD H4 {
+            COLOR: VAR(--PRIMARY-COLOR);
+            MARGIN-BOTTOM: 0.3REM;
+            FONT-SIZE: 1REM;
+        }
+
+        .TEXT-CARD.NEPRE-CARD H4 { COLOR: #BE185D; }
+        .TEXT-CARD.FOLCLORE-CARD H4 { COLOR: #B45309; }
+        .TEXT-CARD.REVISAO-CARD H4 { COLOR: #15803D; }
+        .TEXT-CARD.AGRUPA-CARD H4 { COLOR: #7E22CE; }
+
+        .TEXT-CARD P {
+            FONT-SIZE: 1REM;
+            COLOR: #1E293B;
+            FONT-WEIGHT: 600;
+            LINE-HEIGHT: 1.6;
+        }
+
+        TEXTAREA, INPUT[TYPE="TEXT"], SELECT {
+            WIDTH: 100%;
+            PADDING: 0.8REM;
+            BORDER: 2PX SOLID VAR(--BORDER-COLOR);
+            BORDER-RADIUS: 8PX;
+            MARGIN-TOP: 0.5REM;
+            FONT-SIZE: 1REM;
+            FONT-WEIGHT: BOLD;
+            TEXT-TRANSFORM: UPPERCASE;
+            BACKGROUND-COLOR: #FFFFFF;
+        }
+
+        TEXTAREA {
+            RESIZE: VERTICAL;
+            MIN-HEIGHT: 60PX;
+        }
+
+        /* ESTILOS PARA CAÇA-PALAVRAS INTERATIVO */
+        .WORD-GRID {
+            DISPLAY: GRID;
+            GRID-TEMPLATE-COLUMNS: REPEAT(8, 1FR);
+            GAP: 5PX;
+            MAX-WIDTH: 360PX;
+            MARGIN: 1REM AUTO;
+        }
+
+        .WORD-CELL {
+            BACKGROUND: #FFFFFF;
+            BORDER: 2PX SOLID VAR(--PRIMARY-COLOR);
+            BORDER-RADIUS: 6PX;
+            TEXT-ALIGN: CENTER;
+            FONT-SIZE: 1.2REM;
+            FONT-WEIGHT: BOLD;
+            PADDING: 0.5REM 0;
+            CURSOR: POINTER;
+            USER-SELECT: NONE;
+            TRANSITION: BACKGROUND 0.2S;
+        }
+
+        .WORD-CELL.FOUND {
+            BACKGROUND: #22C55E;
+            COLOR: #FFFFFF;
+            BORDER-COLOR: #16A34A;
+        }
+
+        .WORD-BANK {
+            DISPLAY: FLEX;
+            JUSTIFY-CONTENT: CENTER;
+            GAP: 1REM;
+            FLEX-WRAP: WRAP;
+            MARGIN-TOP: 0.5REM;
+            FONT-WEIGHT: BOLD;
+        }
+
+        .WORD-ITEM {
+            BACKGROUND: #E0E7FF;
+            PADDING: 0.3REM 0.6REM;
+            BORDER-RADIUS: 6PX;
+            COLOR: #3730A3;
+        }
+
+        .WORD-ITEM.DONE {
+            BACKGROUND: #DCFCE7;
+            COLOR: #15803D;
+            TEXT-DECORATION: LINE-THROUGH;
+        }
+
+        /* CRUZADINHA ADAPTADA */
+        .CROSSWORD-ITEM {
+            MARGIN-BOTTOM: 1REM;
+            BACKGROUND: #FFFFFF;
+            PADDING: 0.8REM;
+            BORDER-RADIUS: 8PX;
+            BORDER: 1PX SOLID VAR(--BORDER-COLOR);
+        }
+
+        .CROSSWORD-ITEM LABEL {
+            FONT-WEIGHT: BOLD;
+            DISPLAY: BLOCK;
+            MARGIN-BOTTOM: 0.3REM;
+        }
+
+        .ACTIONS {
+            MARGIN-TOP: 1.5REM;
+            DISPLAY: FLEX;
+            JUSTIFY-CONTENT: SPACE-BETWEEN;
+            ALIGN-ITEMS: CENTER;
+            FLEX-WRAP: WRAP;
+            GAP: 1REM;
+        }
+
+        .BTN {
+            BACKGROUND-COLOR: VAR(--PRIMARY-COLOR);
+            COLOR: WHITE;
+            BORDER: NONE;
+            PADDING: 0.8REM 1.5REM;
+            BORDER-RADIUS: 8PX;
+            FONT-SIZE: 1REM;
+            FONT-WEIGHT: BOLD;
+            CURSOR: POINTER;
+        }
+
+        .BTN:HOVER {
+            OPACITY: 0.9;
+        }
+
+        .FEEDBACK {
+            FONT-WEIGHT: BOLD;
+            FONT-SIZE: 1REM;
+        }
+
+        .FEEDBACK.CORRECT { COLOR: VAR(--SUCCESS-COLOR); }
+        .FEEDBACK.INCORRECT { COLOR: VAR(--DANGER-COLOR); }
+    </style>
+</head>
+<body>
+
+    <div CLASS="CONTAINER">
+        <header>
+            <h1>🎈 OFICINA DIGITAL DA TURMA! 🎈</h1>
+            <p>FAÇA CADA ETAPA COM ATENÇÃO PARA AVANÇAR.</p>
+        </header>
+
+        <div CLASS="PROGRESS-CONTAINER">
+            <div CLASS="PROGRESS-BAR" ID="PROGRESS-BAR"></div>
+        </div>
+
+        <!-- NAVEGAÇÃO EM 5 ABAS -->
+        <nav CLASS="TABS-NAV">
+            <button CLASS="TAB-BTN ACTIVE UNLOCKED" DATA-TAB="1" ID="TAB-BTN-1">1. 🌐 USAR A INTERNET</button>
+            <button CLASS="TAB-BTN" DATA-TAB="2" ID="TAB-BTN-2">2. ❤️ RESPEITO E AMIZADE</button>
+            <button CLASS="TAB-BTN" DATA-TAB="3" ID="TAB-BTN-3">3. 🌳 NOSSO FOLCLORE</button>
+            <button CLASS="TAB-BTN" DATA-TAB="4" ID="TAB-BTN-4">4. 🏆 SUPER REVISÃO</button>
+            <button CLASS="TAB-BTN" DATA-TAB="5" ID="TAB-BTN-5">5. 📦 AGRUPAMENTO E CALENDÁRIO NEPRE</button>
+        </nav>
+
+        <!-- ABA 1: CIDADANIA DIGITAL -->
+        <div CLASS="TAB-CONTENT ACTIVE" ID="TAB-1">
+            <span CLASS="TAG-THEME TAG-SEGURANCA">CIDADANIA DIGITAL E SEGURANÇA</span>
+            <h2>MÓDULO 1: SER UM BOM AMIGO NA INTERNET</h2>
+            
+            <div CLASS="TEXT-CARD-LIST">
+                <div CLASS="TEXT-CARD">
+                    <h4>📖 TEXTO DE LEITURA:</h4>
+                    <p>USAR A INTERNET COM RESPEITO SIGNIFICA TRATAR TODOS COM CARINHO, NÃO DIZER PALAVRAS FEIAS E PROTEGER NOSSOS SEGREDOS.</p>
+                </div>
+                <div CLASS="TEXT-CARD">
+                    <h4>⌨️ COPIE A FRASE ABAIXO:</h4>
+                    <p ID="TARGET-TEXT-CIDADANIA">EU SOU UM BOM AMIGO NA INTERNET.</p>
+                </div>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>1. ⌨️ PRÁTICA DE DIGITAÇÃO</h3>
+                <label FOR="SEGURANCA-Q1"><strong>DIGITE A FRASE IGUALZINHA AO EXEMPLO ACIMA:</strong></label>
+                <textarea ID="SEGURANCA-Q1" PLACEHOLDER="DIGITE AQUI..."></textarea>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>2. 🔍 CAÇA-PALAVRAS DA INTERNET SEGURA</h3>
+                <p>ENCONTRE E CLIQUE NAS 3 PALAVRAS MÁGICAS NO QUADRO ABAIXO:</p>
+                
+                <div CLASS="WORD-BANK">
+                    <span CLASS="WORD-ITEM" ID="WB-AMOR">💖 AMOR</span>
+                    <span CLASS="WORD-ITEM" ID="WB-RESPEITO">🤝 RESPEITO</span>
+                    <span CLASS="WORD-ITEM" ID="WB-SENHA">🔒 SENHA</span>
+                </div>
+
+                <div CLASS="WORD-GRID" ID="GRID-CIDADANIA">
+                    <!-- MONTAGEM VIA JS -->
+                </div>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>3. 🤝 COMO DEVEMOS TRATAR OS COLEGAS NA INTERNET?</h3>
+                <select ID="SEGURANCA-Q2">
+                    <OPTION VALUE="">-- ESCOLHA A RESPOSTA COM A FIGURA --</OPTION>
+                    <OPTION VALUE="RESPEITO">🤝 COM RESPEITO E CARINHO</OPTION>
+                    <OPTION VALUE="BRIGAS">😡 COM BRIGAS E PROVOCAÇÕES</OPTION>
+                </select>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>4. 🔒 PODEMOS CONTAR NOSSAS SENHAS PARA OS AMIGOS?</h3>
+                <select ID="SEGURANCA-Q3">
+                    <OPTION VALUE="">-- ESCOLHA A RESPOSTA COM A FIGURA --</OPTION>
+                    <OPTION VALUE="NAO">🛑 NÃO! SENHA É UM SEGREDO</OPTION>
+                    <OPTION VALUE="SIM">✅ SIM! PODE CONTAR PRA TODOS</OPTION>
+                </select>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>5. 🚨 SE VOCÊ VIR ALGUÉM SENDO TRATADO MAL NA INTERNET, O QUE FAZER?</h3>
+                <select ID="SEGURANCA-Q4">
+                    <OPTION VALUE="">-- ESCOLHA A RESPOSTA COM A FIGURA --</OPTION>
+                    <OPTION VALUE="AVISAR">📢 AVISAR UM ADULTO OU PROFESSOR</OPTION>
+                    <OPTION VALUE="RIR">😆 RIR E COMPARTILHAR</OPTION>
+                </select>
+            </div>
+
+            <div CLASS="ACTIONS">
+                <span CLASS="FEEDBACK" ID="FEEDBACK-1"></span>
+                <button CLASS="BTN" ONCLICK="VALIDARABA1()">VALIDAR MÓDULO 1</button>
+            </div>
+        </div>
+
+        <!-- ABA 2: RESPEITO ÀS MULHERES -->
+        <div CLASS="TAB-CONTENT" ID="TAB-2">
+            <span CLASS="TAG-THEME TAG-NEPRE">RESPEITO E PROTEÇÃO</span>
+            <h2>MÓDULO 2: RESPEITO E A LEI MARIA DA PENHA</h2>
+
+            <div CLASS="TEXT-CARD-LIST">
+                <div CLASS="TEXT-CARD NEPRE-CARD">
+                    <h4>⌨️ COPIE A FRASE ABAIXO:</h4>
+                    <p ID="TARGET-TEXT-NEPRE-GERAL">TODAS AS MULHERES MERECEM RESPEITO E AMOR.</p>
+                </div>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>1. ⌨️ PRÁTICA DE DIGITAÇÃO</h3>
+                <label FOR="NEPRE-Q1"><strong>DIGITE A FRASE EXATAMENTE IGUAL ACIMA:</strong></label>
+                <textarea ID="NEPRE-Q1" PLACEHOLDER="DIGITE AQUI..."></textarea>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>2. ✏️ CRUZADINHA DO RESPEITO</h3>
+                <p>COMPLETE AS PALAVRAS DA CRUZADINHA COM AS PALAVRAS DO QUADRO:</p>
+                <p STYLE="MARGIN-BOTTOM:0.8REM; COLOR:#BE185D; FONT-WEIGHT:BOLD;">BANCO DE PALAVRAS: [ AMOR - LEI - PROTECAO ]</p>
+
+                <div CLASS="CROSSWORD-ITEM">
+                    <label FOR="CROSS-1">1. 📜 REGRA QUE AJUDA A PROTEGER AS PESSOAS (3 LETRAS):</label>
+                    <input TYPE="TEXT" ID="CROSS-1" PLACEHOLDER="DIGITE AQUI..." MAXLENGTH="3">
+                </div>
+
+                <div CLASS="CROSSWORD-ITEM">
+                    <label FOR="CROSS-2">2. ❤️ SENTIMENTO BONS QUE DEVEMOS TER POR TODOS (4 LETRAS):</label>
+                    <input TYPE="TEXT" ID="CROSS-2" PLACEHOLDER="DIGITE AQUI..." MAXLENGTH="4">
+                </div>
+
+                <div CLASS="CROSSWORD-ITEM">
+                    <label FOR="CROSS-3">3. 🛡️ CUIDADO PARA MANTER A PESSOA SEGURA (8 LETRAS):</label>
+                    <input TYPE="TEXT" ID="CROSS-3" PLACEHOLDER="DIGITE AQUI..." MAXLENGTH="8">
+                </div>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>3. 🛡️ PARA QUE FOI CRIADA A LEI MARIA DA PENHA?</h3>
+                <select ID="NEPRE-Q2">
+                    <OPTION VALUE="">-- ESCOLHA A RESPOSTA COM A FIGURA --</OPTION>
+                    <OPTION VALUE="PROTEGER">👩‍👧 PARA PROTEGER AS MULHERES</OPTION>
+                    <OPTION VALUE="BRINCAR">🎉 PARA FAZER FESTAS</OPTION>
+                </select>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>4. 🤝 DE QUEM É O DEVER DE RESPEITAR AS MULHERES?</h3>
+                <select ID="NEPRE-Q3">
+                    <OPTION VALUE="">-- ESCOLHA A RESPOSTA COM A FIGURA --</OPTION>
+                    <OPTION VALUE="TODOS">🌍 DE TODAS AS PESSOAS</OPTION>
+                    <OPTION VALUE="NINGUEM">❌ DE NINGUÉM</OPTION>
+                </select>
+            </div>
+
+            <div CLASS="ACTIONS">
+                <span CLASS="FEEDBACK" ID="FEEDBACK-2"></span>
+                <button CLASS="BTN" ONCLICK="VALIDARABA2()">VALIDAR MÓDULO 2</button>
+            </div>
+        </div>
+
+        <!-- ABA 3: FOLCLORE BRASILEIRO -->
+        <div CLASS="TAB-CONTENT" ID="TAB-3">
+            <span CLASS="TAG-THEME TAG-FOLCLORE">NOSSA CULTURA</span>
+            <h2>MÓDULO 3: PERSONAGENS DO FOLCLORE BRASILEIRO</h2>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>1. 🦶 QUEM TEM OS PÉS VOLTADOS PARA TRÁS E PROTEGE A FLORESTA?</h3>
+                <select ID="FOLCLORE-Q1">
+                    <OPTION VALUE="">-- ESCOLHA O PERSONAGEM COM A FIGURA --</OPTION>
+                    <OPTION VALUE="CURUPIRA">🧑‍🦰 CURUPIRA (O PROTETOR DAS ÁRVORES)</OPTION>
+                    <OPTION VALUE="SACI">🧢 SACI-PERERÊ (MENINO DE UMA PERNA SÓ)</OPTION>
+                </select>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>2. ⌨️ DIGITAÇÃO SOBRE O SACI:</h3>
+                <div CLASS="TEXT-CARD FOLCLORE-CARD" STYLE="MARGIN: 0.5REM 0;">
+                    <p ID="TARGET-TEXT-SACI">O SACI USA UM GORRO VERMELHO.</p>
+                </div>
+                <label FOR="FOLCLORE-Q2"><strong>DIGITE A FRASE ACIMA:</strong></label>
+                <textarea ID="FOLCLORE-Q2" PLACEHOLDER="DIGITE AQUI..."></textarea>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>3. 🔍 CAÇA-PALAVRAS DO FOLCLORE</h3>
+                <p>ENCONTRE OS 3 PERSONAGENS NO QUADRO:</p>
+                
+                <div CLASS="WORD-BANK">
+                    <span CLASS="WORD-ITEM" ID="WB-SACI">🧢 SACI</span>
+                    <span CLASS="WORD-ITEM" ID="WB-IARA">🧜‍♀️ IARA</span>
+                    <span CLASS="WORD-ITEM" ID="WB-BOTO">🐬 BOTO</span>
+                </div>
+
+                <div CLASS="WORD-GRID" ID="GRID-FOLCLORE">
+                    <!-- MONTAGEM VIA JS -->
+                </div>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>4. ⌨️ DIGITAÇÃO SOBRE A IARA:</h3>
+                <div CLASS="TEXT-CARD FOLCLORE-CARD" STYLE="MARGIN: 0.5REM 0;">
+                    <p ID="TARGET-TEXT-IARA">A IARA E UMA SEREIA DO RIO.</p>
+                </div>
+                <label FOR="FOLCLORE-Q4"><strong>DIGITE A FRASE ACIMA:</strong></label>
+                <textarea ID="FOLCLORE-Q4" PLACEHOLDER="DIGITE AQUI..."></textarea>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>5. 🔥 O QUE A MULA SEM CABEÇA SOLTA NO LUGAR DA CABEÇA?</h3>
+                <select ID="FOLCLORE-Q5">
+                    <OPTION VALUE="">-- ESCOLHA A RESPOSTA COM A FIGURA --</OPTION>
+                    <OPTION VALUE="FOGO">🔥 FOGO E CHAMAS</OPTION>
+                    <OPTION VALUE="AGUA">💧 ÁGUA DOCE</OPTION>
+                </select>
+            </div>
+
+            <div CLASS="ACTIONS">
+                <span CLASS="FEEDBACK" ID="FEEDBACK-3"></span>
+                <button CLASS="BTN" ONCLICK="VALIDARABA3()">VALIDAR MÓDULO 3</button>
+            </div>
+        </div>
+
+        <!-- ABA 4: SUPER REVISÃO -->
+        <div CLASS="TAB-CONTENT" ID="TAB-4">
+            <span CLASS="TAG-THEME TAG-REVISAO">SUPER DESAFIO FINAL</span>
+            <h2>MÓDULO 4: REVISANDO TUDO O QUE APRENDEMOS!</h2>
+            <p STYLE="MARGIN-BOTTOM: 1REM;">MOSTRE QUE VOCÊ FICOU FERA RESPONDENDO ÀS 10 ATIVIDADES ABAIXO!</p>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>1. ⌨️ DIGITAÇÃO DA TURMA</h3>
+                <div class="TEXT-CARD REVISAO-CARD" style="margin-bottom:0.5rem;">
+                    <p ID="TARGET-TEXT-REV">RESPEITO E CARINHO NA INTERNET E NA VIDA.</p>
+                </div>
+                <label FOR="REV-Q1"><strong>DIGITE A FRASE ACIMA IGUALZINHO:</strong></label>
+                <textarea ID="REV-Q1" PLACEHOLDER="DIGITE AQUI..."></textarea>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>2. 🌐 O QUE SIGNIFICA ESTE SÍMBOLO DA INTERNET? 🔒</h3>
+                <select ID="REV-Q2">
+                    <OPTION VALUE="">-- ESCOLHA A RESPOSTA --</OPTION>
+                    <OPTION VALUE="SENHA">🔒 SENHA SEGURA E PRIVADA</OPTION>
+                    <OPTION VALUE="JOGO">🎮 JOGO LIBERADO PARA TODOS</OPTION>
+                </select>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>3. 🔍 CAÇA-PALAVRAS DA AMIZADE</h3>
+                <p>CLIQUE NAS 2 PALAVRAS MÁGICAS NO QUADRO:</p>
+
+                <div CLASS="WORD-BANK">
+                    <span CLASS="WORD-ITEM" ID="WB-AMIGO">👦 AMIGO</span>
+                    <span CLASS="WORD-ITEM" ID="WB-UNIAO">🤝 UNIAO</span>
+                </div>
+
+                <div CLASS="WORD-GRID" ID="GRID-REVISAO">
+                    <!-- MONTAGEM VIA JS -->
+                </div>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>4. ❓ VERDADEIRO OU FALSO: PODE DIZER MENTIRAS SOBRE OS COLEGAS NA INTERNET?</h3>
+                <select ID="REV-Q4">
+                    <OPTION VALUE="">-- ESCOLHA A RESPOSTA --</OPTION>
+                    <OPTION VALUE="FALSO">❌ FALSO! DEVEMOS DIZER APENAS A VERDADE</OPTION>
+                    <OPTION VALUE="VERDADEIRO">✅ VERDADEIRO! PODE DIZER QUALQUER COISA</OPTION>
+                </select>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>5. ✏️ MINI CRUZADINHA DOS PERSONAGENS</h3>
+                <p>COMPLETE COM OS NOMES DOS PERSONAGENS:</p>
+                <p STYLE="MARGIN-BOTTOM:0.8REM; COLOR:#15803D; FONT-WEIGHT:BOLD;">BANCO DE PALAVRAS: [ SACI - IARA ]</p>
+
+                <div CLASS="CROSSWORD-ITEM">
+                    <label FOR="CROSS-REV-1">1. 🧢 MENINO TRAVESSO DE UMA PERNA SÓ (4 LETRAS):</label>
+                    <input TYPE="TEXT" ID="CROSS-REV-1" PLACEHOLDER="DIGITE AQUI..." MAXLENGTH="4">
+                </div>
+
+                <div CLASS="CROSSWORD-ITEM">
+                    <label FOR="CROSS-REV-2">2. 🧜‍♀️ SEREIA QUE VIVE NOS RIOS (4 LETRAS):</label>
+                    <input TYPE="TEXT" ID="CROSS-REV-2" PLACEHOLDER="DIGITE AQUI..." MAXLENGTH="4">
+                </div>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>6. ❤️ O QUE DEVEMOS OFERECER A TODAS AS MULHERES?</h3>
+                <select ID="REV-Q6">
+                    <OPTION VALUE="">-- ESCOLHA A RESPOSTA COM A FIGURA --</OPTION>
+                    <OPTION VALUE="RESPEITO">👑 RESPEITO, AMOR E IGUALDADE</OPTION>
+                    <OPTION VALUE="DESRESPEITO">😡 FALTA DE CUIDADO E BRIGAS</OPTION>
+                </select>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>7. 🌳 QUEM PROTEGE OS ANIMAIS E AS ÁRVORES COM SEUS PÉS PARA TRÁS?</h3>
+                <select ID="REV-Q7">
+                    <OPTION VALUE="">-- ESCOLHA O PERSONAGEM --</OPTION>
+                    <OPTION VALUE="CURUPIRA">🧑‍🦰 CURUPIRA</OPTION>
+                    <OPTION VALUE="BOTO">🐬 BOTO COR-DE-ROSA</OPTION>
+                </select>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>8. 📜 VERDADEIRO OU FALSO: A LEI MARIA DA PENHA PROTEGE AS MULHERES DA VIOLÊNCIA?</h3>
+                <select ID="REV-Q8">
+                    <OPTION VALUE="">-- ESCOLHA A RESPOSTA --</OPTION>
+                    <OPTION VALUE="VERDADEIRO">✅ VERDADEIRO! ELA PROTEGE AS MULHERES</OPTION>
+                    <OPTION VALUE="FALSO">❌ FALSO! ELA NÃO PROTEGE NINGUÉM</OPTION>
+                </select>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>9. 📱 O QUE FAZER SE UM ESTRANHO TE MANDAR MENSAGEM NA INTERNET?</h3>
+                <select ID="REV-Q9">
+                    <OPTION VALUE="">-- ESCOLHA A ATITUDE CORRETA --</OPTION>
+                    <OPTION VALUE="ADULTO">👨‍👩‍👧 MOSTRAR IMEDIATAMENTE PARA UM ADULTO</OPTION>
+                    <OPTION VALUE="CONVERSAR">🗣️ CONVERSAR E CONTAR ONDE VOCÊ MORA</OPTION>
+                </select>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>10. 🐬 O BOTO COR-DE-ROSA É UM ANIMAL QUE VIVE EM QUAL LUGAR?</h3>
+                <select ID="REV-Q10">
+                    <OPTION VALUE="">-- ESCOLHA A RESPOSTA --</OPTION>
+                    <OPTION VALUE="RIO">🌊 NOS RIOS DA AMAMZÔNIA</OPTION>
+                    <OPTION VALUE="DESERTO">🏜️ NO DESERTO SECO</OPTION>
+                </select>
+            </div>
+
+            <div CLASS="ACTIONS">
+                <span CLASS="FEEDBACK" ID="FEEDBACK-4"></span>
+                <button CLASS="BTN" ONCLICK="VALIDARABA4()">VALIDAR MÓDULO 4</button>
+            </div>
+        </div>
+
+        <!-- ABA 5: AGRUPAMENTO DE OBJETOS E CALENDÁRIO NEPRE (NOVA ABA) -->
+        <div CLASS="TAB-CONTENT" ID="TAB-5">
+            <span CLASS="TAG-THEME TAG-AGRUPA">CLASSIFICAÇÃO E PREVENÇÃO</span>
+            <h2>MÓDULO 5: AGRUPAMENTO DE OBJETOS E CALENDÁRIO NEPRE</h2>
+            <p STYLE="MARGIN-BOTTOM: 1REM;">CLASSIFIQUE OS OBJETOS E APRENDA SOBRE AS DATAS ESPECIAIS DA NOSSA ESCOLA!</p>
+
+            <div CLASS="TEXT-CARD-LIST">
+                <div CLASS="TEXT-CARD AGRUPA-CARD">
+                    <h4>⌨️ DIGITAÇÃO DA PAZ E RESPEITO:</h4>
+                    <p ID="TARGET-TEXT-AGRUPA">CUIDAR DA NOSSA ESCOLA E DOS AMIGOS E DEVER DE TODOS.</p>
+                </div>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>1. ⌨️ PRÁTICA DE DIGITAÇÃO</h3>
+                <label FOR="AGRUPA-Q1"><strong>DIGITE A FRASE ACIMA IGUALZINHA:</strong></label>
+                <textarea ID="AGRUPA-Q1" PLACEHOLDER="DIGITE AQUI..."></textarea>
+            </div>
+
+            <!-- PARTE A: AGRUPAMENTO DE OBJETOS POR CARACTERÍSTICAS -->
+            <h3 STYLE="MARGIN-TOP:1.5REM; MARGIN-BOTTOM:0.5REM; COLOR:#7E22CE;">📦 AGRUPAMENTO DE OBJETOS:</h3>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>2. ✏️ EM QUAL GRUPO FAZ PARTE O LAPIS ✏️ E A BORRACHA 🧽?</h3>
+                <select ID="AGRUPA-Q2">
+                    <OPTION VALUE="">-- ESCOLHA O GRUPO CORRETO --</OPTION>
+                    <OPTION VALUE="ESCOLAR">📚 GRUPO DOS MATERIAIS ESCOLARES</OPTION>
+                    <OPTION VALUE="BRINQUEDOS">🧸 GRUPO DOS BRINQUEDOS</OPTION>
+                </select>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>3. 🪥 EM QUAL GRUPO FAZ PARTE O SABONETE 🧼 E A ESCOVA DE DENTES 🪥?</h3>
+                <select ID="AGRUPA-Q3">
+                    <OPTION VALUE="">-- ESCOLHA O GRUPO CORRETO --</OPTION>
+                    <OPTION VALUE="HIGIENE">🧼 GRUPO DE HIGIENE PESSOAL</OPTION>
+                    <OPTION VALUE="ALIMENTOS">🍎 GRUPO DOS ALIMENTOS</OPTION>
+                </select>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>4. ⚽ EM QUAL GRUPO FAZ PARTE A BOLA ⚽ E A BONECA 🪆?</h3>
+                <select ID="AGRUPA-Q4">
+                    <OPTION VALUE="">-- ESCOLHA O GRUPO CORRETO --</OPTION>
+                    <OPTION VALUE="BRINQUEDOS">🧸 GRUPO DOS BRINQUEDOS</OPTION>
+                    <OPTION VALUE="FERRAMENTAS">🔨 GRUPO DAS FERRAMENTAS</OPTION>
+                </select>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>5. 🔒 O QUE ESTES OBJETOS TÊM EM COMUM: ESCUDO 🛡️, CADEADO 🔒 E CAPACETE 🪖?</h3>
+                <select ID="AGRUPA-Q5">
+                    <OPTION VALUE="">-- ESCOLHA A CARACTERÍSTICA DO GRUPO --</OPTION>
+                    <OPTION VALUE="SEGURANCA">🛡️ CARACTERÍSTICA: OBJETOS DE PROTEÇÃO E SEGURANÇA</OPTION>
+                    <OPTION VALUE="COMIDA">🍔 CARACTERÍSTICA: COISAS DE COMER</OPTION>
+                </select>
+            </div>
+
+            <!-- PARTE B: CALENDÁRIO NEPRE (PREVENÇÃO E CONSCIENTIZAÇÃO) -->
+            <h3 STYLE="MARGIN-TOP:1.5REM; MARGIN-BOTTOM:0.5REM; COLOR:#BE185D;">📅 CALENDÁRIO NEPRE DO MÊS:</h3>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>6. 💜 O MÊS DE AGOSTO É CONHECIDO NO CALENDÁRIO NEPRE COMO "AGOSTO LILÁS". QUAL É O TEMA PRINCIPAL?</h3>
+                <select ID="AGRUPA-Q6">
+                    <OPTION VALUE="">-- ESCOLHA A RESPOSTA --</OPTION>
+                    <OPTION VALUE="RESPEITO_MULHER">💜 RESPEITO ÀS MULHERES E COMBATE À VIOLÊNCIA</OPTION>
+                    <OPTION VALUE="FESTA_PIJAMA">🍕 DIA DA FESTA DO PIJAMA</OPTION>
+                </select>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>7. 🛑 NO CALENDÁRIO NEPRE, O QUE A ESCOLA TRABALHA PARA COMBATER O BULLYING?</h3>
+                <select ID="AGRUPA-Q7">
+                    <OPTION VALUE="">-- ESCOLHA A ATITUDE CORRETA --</OPTION>
+                    <OPTION VALUE="CULTURA_PAZ">🕊️ CULTURA DE PAZ, RESPEITO E ACOLHIMENTO</OPTION>
+                    <OPTION VALUE="INCENTIVAR_BRIGA">🥊 INCENTIVAR BRIGAS NO RECREIO</OPTION>
+                </select>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>8. 🔍 CAÇA-PALAVRAS DO NEPRE</h3>
+                <p>ENCONTRE AS 2 PALAVRAS DO CALENDÁRIO NEPRE NO QUADRO ABAIXO:</p>
+
+                <div CLASS="WORD-BANK">
+                    <span CLASS="WORD-ITEM" ID="WB-PAZ">🕊️ PAZ</span>
+                    <span CLASS="WORD-ITEM" ID="WB-AMIZADE">🤝 AMIZADE</span>
+                </div>
+
+                <div CLASS="WORD-GRID" ID="GRID-NEPRE">
+                    <!-- MONTAGEM VIA JS -->
+                </div>
+            </div>
+
+            <div CLASS="ACTIONS">
+                <span CLASS="FEEDBACK" ID="FEEDBACK-5"></span>
+                <button CLASS="BTN" ONCLICK="VALIDARABA5()">FINALIZAR TODA A OFICINA! 🎉</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const TOTALTABS = 5;
+        const UNLOCKEDTABS = { 1: true, 2: false, 3: false, 4: false, 5: false };
+
+        function cleanText(text) {
+            return text
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .replace(/[^\w\s]/gi, "")
+                .trim()
+                .toUpperCase();
+        }
+
+        function UPDATEPROGRESS() {
+            let completed = 0;
+            for (let i = 1; i <= TOTALTABS; i++) {
+                if (document.getElementById(`TAB-BTN-${i}`).classList.contains('COMPLETED')) {
+                    completed++;
+                }
+            }
+            const percentage = (completed / TOTALTABS) * 100;
+            document.getElementById('PROGRESS-BAR').style.width = `${percentage}%`;
+        }
+
+        function SWITCHTAB(TABNUMBER) {
+            if (!UNLOCKEDTABS[TABNUMBER]) return;
+
+            document.querySelectorAll('.TAB-BTN').forEach(btn => btn.classList.remove('ACTIVE'));
+            document.getElementById(`TAB-BTN-${TABNUMBER}`).classList.add('ACTIVE');
+
+            document.querySelectorAll('.TAB-CONTENT').forEach(content => content.classList.remove('ACTIVE'));
+            document.getElementById(`TAB-${TABNUMBER}`).classList.add('ACTIVE');
+        }
+
+        document.querySelectorAll('.TAB-BTN').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const TABNUMBER = parseInt(btn.getAttribute('DATA-TAB'));
+                SWITCHTAB(TABNUMBER);
+            });
+        });
+
+        function UNLOCKTAB(TABNUMBER) {
+            UNLOCKEDTABS[TABNUMBER] = true;
+            const btn = document.getElementById(`TAB-BTN-${TABNUMBER}`);
+            btn.classList.add('UNLOCKED');
+        }
+
+        // GRADES DE CAÇA-PALAVRAS
+        const gridCidadaniaData = [
+            ['A', 'M', 'O', 'R', 'X', 'Y', 'Z', 'W'],
+            ['B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
+            ['R', 'E', 'S', 'P', 'E', 'I', 'T', 'O'],
+            ['J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q'],
+            ['S', 'E', 'N', 'H', 'A', 'R', 'S', 'T']
+        ];
+
+        const gridFolcloreData = [
+            ['S', 'A', 'C', 'I', 'X', 'Y', 'Z', 'W'],
+            ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'],
+            ['I', 'A', 'R', 'A', 'J', 'K', 'L', 'M'],
+            ['N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U'],
+            ['B', 'O', 'T', 'O', 'V', 'W', 'X', 'Y']
+        ];
+
+        const gridRevisaoData = [
+            ['A', 'M', 'I', 'G', 'O', 'X', 'Y', 'Z'],
+            ['B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
+            ['U', 'N', 'I', 'A', 'O', 'J', 'K', 'L'],
+            ['M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T'],
+            ['U', 'V', 'W', 'X', 'Y', 'Z', 'A', 'B']
+        ];
+
+        const gridNepreData = [
+            ['P', 'A', 'Z', 'X', 'Y', 'Z', 'W', 'V'],
+            ['B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
+            ['A', 'M', 'I', 'Z', 'A', 'D', 'E', 'J'],
+            ['K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R'],
+            ['S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+        ];
+
+        const foundWordsCidadania = new Set();
+        const foundWordsFolclore = new Set();
+        const foundWordsRevisao = new Set();
+        const foundWordsNepre = new Set();
+
+        function renderGrid(containerId, gridData, foundSet, targetWords) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            gridData.forEach((row, rIdx) => {
+                row.forEach((char, cIdx) => {
+                    const cell = document.createElement('div');
+                    cell.className = 'WORD-CELL';
+                    cell.textContent = char;
+                    cell.dataset.row = rIdx;
+                    cell.dataset.char = char;
+                    
+                    cell.addEventListener('click', () => {
+                        cell.classList.toggle('FOUND');
+                        checkWordSearch(containerId, gridData, foundSet, targetWords);
+                    });
+                    
+                    container.appendChild(cell);
+                });
+            });
+        }
+
+        function checkWordSearch(containerId, gridData, foundSet, targetWords) {
+            targetWords.forEach(wordObj => {
+                let isWordFound = true;
+                for (let c = wordObj.startCol; c <= wordObj.endCol; c++) {
+                    const cells = document.querySelectorAll(`#${containerId} .WORD-CELL`);
+                    const cellIndex = wordObj.row * 8 + c;
+                    if (!cells[cellIndex].classList.contains('FOUND')) {
+                        isWordFound = false;
+                        break;
+                    }
+                }
+
+                if (isWordFound) {
+                    foundSet.add(wordObj.name);
+                    const wbItem = document.getElementById(`WB-${wordObj.name}`);
+                    if (wbItem) wbItem.classList.add('DONE');
+                }
+            });
+        }
+
+        // INICIALIZAR CAÇA-PALAVRAS
+        renderGrid('GRID-CIDADANIA', gridCidadaniaData, foundWordsCidadania, [
+            { name: 'AMOR', row: 0, startCol: 0, endCol: 3 },
+            { name: 'RESPEITO', row: 2, startCol: 0, endCol: 6 },
+            { name: 'SENHA', row: 4, startCol: 0, endCol: 4 }
+        ]);
+
+        renderGrid('GRID-FOLCLORE', gridFolcloreData, foundWordsFolclore, [
+            { name: 'SACI', row: 0, startCol: 0, endCol: 3 },
+            { name: 'IARA', row: 2, startCol: 0, endCol: 3 },
+            { name: 'BOTO', row: 4, startCol: 0, endCol: 3 }
+        ]);
+
+        renderGrid('GRID-REVISAO', gridRevisaoData, foundWordsRevisao, [
+            { name: 'AMIGO', row: 0, startCol: 0, endCol: 4 },
+            { name: 'UNIAO', row: 2, startCol: 0, endCol: 4 }
+        ]);
+
+        renderGrid('GRID-NEPRE', gridNepreData, foundWordsNepre, [
+            { name: 'PAZ', row: 0, startCol: 0, endCol: 2 },
+            { name: 'AMIZADE', row: 2, startCol: 0, endCol: 6 }
+        ]);
+
+        // VALIDAÇÃO ABA 1
+        function VALIDARABA1() {
+            const TARGET1 = cleanText(document.getElementById('TARGET-TEXT-CIDADANIA').textContent);
+            const Q1 = cleanText(document.getElementById('SEGURANCA-Q1').value);
+            const Q2 = document.getElementById('SEGURANCA-Q2').value;
+            const Q3 = document.getElementById('SEGURANCA-Q3').value;
+            const Q4 = document.getElementById('SEGURANCA-Q4').value;
+
+            const FEEDBACK = document.getElementById('FEEDBACK-1');
+
+            if (Q1 !== TARGET1) {
+                FEEDBACK.textContent = "ATENÇÃO NA DIGITAÇÃO DA QUESTÃO 1: VERIFIQUE SE DIGITOU IGUALZINHO!";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (foundWordsCidadania.size < 3) {
+                FEEDBACK.textContent = "ENCONTRE AS 3 PALAVRAS NO CAÇA-PALAVRAS PARA AVANÇAR!";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (Q2 !== "RESPEITO" || Q3 !== "NAO" || Q4 !== "AVISAR") {
+                FEEDBACK.textContent = "VERIFIQUE AS SUAS RESPOSTAS E TENTE NOVAMENTE!";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            FEEDBACK.textContent = "MUITO BEM! MÓDULO 1 CONCLUÍDO! LIBERANDO MÓDULO 2...";
+            FEEDBACK.className = "FEEDBACK CORRECT";
+            document.getElementById('TAB-BTN-1').classList.add('COMPLETED');
+            UPDATEPROGRESS();
+            UNLOCKTAB(2);
+            setTimeout(() => SWITCHTAB(2), 1200);
+        }
+
+        // VALIDAÇÃO ABA 2
+        function VALIDARABA2() {
+            const TARGETGERAL = cleanText(document.getElementById('TARGET-TEXT-NEPRE-GERAL').textContent);
+            const Q1 = cleanText(document.getElementById('NEPRE-Q1').value);
+            const C1 = cleanText(document.getElementById('CROSS-1').value);
+            const C2 = cleanText(document.getElementById('CROSS-2').value);
+            const C3 = cleanText(document.getElementById('CROSS-3').value);
+            const Q2 = document.getElementById('NEPRE-Q2').value;
+            const Q3 = document.getElementById('NEPRE-Q3').value;
+
+            const FEEDBACK = document.getElementById('FEEDBACK-2');
+
+            if (Q1 !== TARGETGERAL) {
+                FEEDBACK.textContent = "ATENÇÃO NA DIGITAÇÃO DA QUESTÃO 1: VERIFIQUE SE DIGITOU IGUALZINHO!";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (C1 !== "LEI" || C2 !== "AMOR" || (C3 !== "PROTECAO" && C3 !== "PROTEÇÃO")) {
+                FEEDBACK.textContent = "VERIFIQUE AS PALAVRAS DA CRUZADINHA!";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (Q2 !== "PROTEGER" || Q3 !== "TODOS") {
+                FEEDBACK.textContent = "VERIFIQUE AS SUAS RESPOSTAS E TENTE NOVAMENTE!";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            FEEDBACK.textContent = "EXCELENTE! MÓDULO 2 CONCLUÍDO! LIBERANDO MÓDULO 3...";
+            FEEDBACK.className = "FEEDBACK CORRECT";
+            document.getElementById('TAB-BTN-2').classList.add('COMPLETED');
+            UPDATEPROGRESS();
+            UNLOCKTAB(3);
+            setTimeout(() => SWITCHTAB(3), 1200);
+        }
+
+        // VALIDAÇÃO ABA 3
+        function VALIDARABA3() {
+            const Q1 = document.getElementById('FOLCLORE-Q1').value;
+            const Q2 = cleanText(document.getElementById('FOLCLORE-Q2').value);
+            const TARGETQ2 = cleanText(document.getElementById('TARGET-TEXT-SACI').textContent);
+            const Q4 = cleanText(document.getElementById('FOLCLORE-Q4').value);
+            const TARGETQ4 = cleanText(document.getElementById('TARGET-TEXT-IARA').textContent);
+            const Q5 = document.getElementById('FOLCLORE-Q5').value;
+
+            const FEEDBACK = document.getElementById('FEEDBACK-3');
+
+            if (Q1 !== "CURUPIRA" || Q5 !== "FOGO") {
+                FEEDBACK.textContent = "VERIFIQUE SUAS RESPOSTAS SOBRE OS PERSONAGENS!";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (foundWordsFolclore.size < 3) {
+                FEEDBACK.textContent = "ENCONTRE OS 3 PERSONAGENS NO CAÇA-PALAVRAS!";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (Q2 !== TARGETQ2 || Q4 !== TARGETQ4) {
+                FEEDBACK.textContent = "ATENÇÃO NAS FRASES DE DIGITAÇÃO! CONFIRA SE ESTÃO IGUAIS.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            FEEDBACK.textContent = "ARRASTOU! MÓDULO DE FOLCLORE CONCLUÍDO! LIBERANDO SUPER REVISÃO...";
+            FEEDBACK.className = "FEEDBACK CORRECT";
+            document.getElementById('TAB-BTN-3').classList.add('COMPLETED');
+            UPDATEPROGRESS();
+            UNLOCKTAB(4);
+            setTimeout(() => SWITCHTAB(4), 1200);
+        }
+
+        // VALIDAÇÃO ABA 4
+        function VALIDARABA4() {
+            const TARGETREV = cleanText(document.getElementById('TARGET-TEXT-REV').textContent);
+            const Q1 = cleanText(document.getElementById('REV-Q1').value);
+            const Q2 = document.getElementById('REV-Q2').value;
+            const Q4 = document.getElementById('REV-Q4').value;
+            const CREV1 = cleanText(document.getElementById('CROSS-REV-1').value);
+            const CREV2 = cleanText(document.getElementById('CROSS-REV-2').value);
+            const Q6 = document.getElementById('REV-Q6').value;
+            const Q7 = document.getElementById('REV-Q7').value;
+            const Q8 = document.getElementById('REV-Q8').value;
+            const Q9 = document.getElementById('REV-Q9').value;
+            const Q10 = document.getElementById('REV-Q10').value;
+
+            const FEEDBACK = document.getElementById('FEEDBACK-4');
+
+            if (Q1 !== TARGETREV) {
+                FEEDBACK.textContent = "ATENÇÃO NA DIGITAÇÃO DA QUESTÃO 1: CONFIRA A FRASE!";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (Q2 !== "SENHA") {
+                FEEDBACK.textContent = "CONFIRA A QUESTÃO 2 SOBRE O SÍMBOLO DA INTERNET!";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (foundWordsRevisao.size < 2) {
+                FEEDBACK.textContent = "ENCONTRE AS 2 PALAVRAS NO CAÇA-PALAVRAS DA QUESTÃO 3!";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (Q4 !== "FALSO") {
+                FEEDBACK.textContent = "CONFIRA A QUESTÃO 4 (VERDADEIRO OU FALSO)!";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (CREV1 !== "SACI" || CREV2 !== "IARA") {
+                FEEDBACK.textContent = "CONFIRA OS NOMES NA CRUZADINHA DA QUESTÃO 5!";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (Q6 !== "RESPEITO" || Q7 !== "CURUPIRA" || Q8 !== "VERDADEIRO" || Q9 !== "ADULTO" || Q10 !== "RIO") {
+                FEEDBACK.textContent = "REVISE SUAS RESPOSTAS DAS QUESTÕES 6 A 10!";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            FEEDBACK.textContent = "PARABÉNS! MÓDULO 4 CONCLUÍDO! LIBERANDO AGRUPAMENTO E NEPRE...";
+            FEEDBACK.className = "FEEDBACK CORRECT";
+            document.getElementById('TAB-BTN-4').classList.add('COMPLETED');
+            UPDATEPROGRESS();
+            UNLOCKTAB(5);
+            setTimeout(() => SWITCHTAB(5), 1200);
+        }
+
+        // VALIDAÇÃO ABA 5: AGRUPAMENTO E NEPRE
+        function VALIDARABA5() {
+            const TARGETAGRUPA = cleanText(document.getElementById('TARGET-TEXT-AGRUPA').textContent);
+            const Q1 = cleanText(document.getElementById('AGRUPA-Q1').value);
+            const Q2 = document.getElementById('AGRUPA-Q2').value;
+            const Q3 = document.getElementById('AGRUPA-Q3').value;
+            const Q4 = document.getElementById('AGRUPA-Q4').value;
+            const Q5 = document.getElementById('AGRUPA-Q5').value;
+            const Q6 = document.getElementById('AGRUPA-Q6').value;
+            const Q7 = document.getElementById('AGRUPA-Q7').value;
+
+            const FEEDBACK = document.getElementById('FEEDBACK-5');
+
+            if (Q1 !== TARGETAGRUPA) {
+                FEEDBACK.textContent = "ATENÇÃO NA DIGITAÇÃO DA QUESTÃO 1: VERIFIQUE SE DIGITOU IGUALZINHO!";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (Q2 !== "ESCOLAR" || Q3 !== "HIGIENE" || Q4 !== "BRINQUEDOS" || Q5 !== "SEGURANCA") {
+                FEEDBACK.textContent = "VERIFIQUE SUAS RESPOSTAS DE AGRUPAMENTO DE OBJETOS!";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (Q6 !== "RESPEITO_MULHER" || Q7 !== "CULTURA_PAZ") {
+                FEEDBACK.textContent = "CONFIRA SUAS RESPOSTAS SOBRE O CALENDÁRIO NEPRE!";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (foundWordsNepre.size < 2) {
+                FEEDBACK.textContent = "ENCONTRE AS 2 PALAVRAS NO CAÇA-PALAVRAS DA QUESTÃO 8!";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            FEEDBACK.textContent = "PARABÉNS! VOCÊ COMPLETOU TODAS AS ATIVIDADES DA OFICINA DIGITAL COM SUCESSO! 🎉";
+            FEEDBACK.className = "FEEDBACK CORRECT";
+            document.getElementById('TAB-BTN-5').classList.add('COMPLETED');
+            UPDATEPROGRESS();
+        }
+    </script>
+</body>
+</html>
