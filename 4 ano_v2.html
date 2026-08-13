@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html LANG="PT-BR">
+<head>
+    <meta CHARSET="UTF-8">
+    <meta NAME="VIEWPORT" CONTENT="WIDTH=DEVICE-WIDTH, INITIAL-SCALE=1.0">
+    <title>OFICINA DIGITAL - JOGOS E CÓPIA DE TEXTOS CURTOS</title>
+    <style>
+        :root {
+            --PRIMARY-COLOR: #4F46E5;
+            --SECONDARY-COLOR: #0284C7;
+            --SUCCESS-COLOR: #16A34A;
+            --DANGER-COLOR: #DC2626;
+            --BG-COLOR: #F0F9FF;
+            --CARD-BG: #FFFFFF;
+            --TEXT-COLOR: #0F172A;
+            --BORDER-COLOR: #CBD5E1;
+            --DISABLED-COLOR: #94A3B8;
+        }
+
+        * {
+            BOX-SIZING: BORDER-BOX;
+            MARGIN: 0;
+            PADDING: 0;
+            FONT-FAMILY: 'SEGOE UI', TAHOMA, GENEVA, VERDANA, SANS-SERIF;
+            TEXT-TRANSFORM: UPPERCASE;
+        }
+
+        BODY {
+            BACKGROUND-COLOR: VAR(--BG-COLOR);
+            COLOR: VAR(--TEXT-COLOR);
+            DISPLAY: FLEX;
+            JUSTIFY-CONTENT: CENTER;
+            PADDING: 1.5REM 0.5REM;
+            LINE-HEIGHT: 1.5;
+        }
+
+        .CONTAINER {
+            WIDTH: 100%;
+            MAX-WIDTH: 850PX;
+            BACKGROUND-COLOR: VAR(--CARD-BG);
+            BORDER-RADIUS: 16PX;
+            BOX-SHADOW: 0 10PX 25PX RGBA(0, 0, 0, 0.1);
+            PADDING: 1.5REM;
+        }
+
+        HEADER {
+            MARGIN-BOTTOM: 1.5REM;
+            TEXT-ALIGN: CENTER;
+        }
+
+        HEADER H1 {
+            COLOR: VAR(--PRIMARY-COLOR);
+            FONT-SIZE: 1.5REM;
+            MARGIN-BOTTOM: 0.5REM;
+            DISPLAY: FLEX;
+            ALIGN-ITEMS: CENTER;
+            JUSTIFY-CONTENT: CENTER;
+            GAP: 0.5REM;
+        }
+
+        /* BOTÃO DE ÁUDIO GLOBAL */
+        .BTN-AUDIO {
+            BACKGROUND-COLOR: #FACC15;
+            COLOR: #0F172A;
+            BORDER: NONE;
+            PADDING: 0.5REM 1REM;
+            BORDER-RADIUS: 50PX;
+            FONT-WEIGHT: BOLD;
+            FONT-SIZE: 0.85REM;
+            CURSOR: POINTER;
+            DISPLAY: INLINE-FLEX;
+            ALIGN-ITEMS: CENTER;
+            GAP: 0.4REM;
+            BOX-SHADOW: 0 4PX 6PX RGBA(0,0,0,0.1);
+            TRANSITION: TRANSFORM 0.1S, BACKGROUND-COLOR 0.2S;
+            MARGIN-BOTTOM: 0.5REM;
+        }
+
+        .BTN-AUDIO:HOVER {
+            BACKGROUND-COLOR: #EAB308;
+            TRANSFORM: SCALE(1.03);
+        }
+
+        /* BARRA DE PROGRESSO */
+        .PROGRESS-CONTAINER {
+            WIDTH: 100%;
+            BACKGROUND-COLOR: #E2E8F0;
+            BORDER-RADIUS: 10PX;
+            HEIGHT: 14PX;
+            MARGIN-BOTTOM: 1.5REM;
+            OVERFLOW: HIDDEN;
+        }
+
+        .PROGRESS-BAR {
+            HEIGHT: 100%;
+            WIDTH: 0%;
+            BACKGROUND: LINEAR-GRADIENT(90DEG, #4F46E5, #0284C7);
+            TRANSITION: WIDTH 0.4S EASE;
+        }
+
+        /* NAVEGAÇÃO EM ABAS */
+        .TABS-NAV {
+            DISPLAY: FLEX;
+            GAP: 0.5REM;
+            BORDER-BOTTOM: 3PX SOLID VAR(--BORDER-COLOR);
+            MARGIN-BOTTOM: 1.5REM;
+            OVERFLOW-X: AUTO;
+            PADDING-BOTTOM: 0.5REM;
+        }
+
+        .TAB-BTN {
+            PADDING: 0.75REM 1REM;
+            BORDER: NONE;
+            BACKGROUND: #E2E8F0;
+            BORDER-RADIUS: 10PX;
+            FONT-SIZE: 0.85REM;
+            FONT-WEIGHT: 800;
+            COLOR: VAR(--DISABLED-COLOR);
+            CURSOR: NOT-ALLOWED;
+            TRANSITION: ALL 0.3S EASE;
+            WHITE-SPACE: NOWRAP;
+            DISPLAY: FLEX;
+            ALIGN-ITEMS: CENTER;
+            GAP: 0.4REM;
+        }
+
+        .TAB-BTN.UNLOCKED {
+            COLOR: VAR(--TEXT-COLOR);
+            BACKGROUND: #F1F5F9;
+            CURSOR: POINTER;
+        }
+
+        .TAB-BTN.ACTIVE {
+            COLOR: #FFFFFF;
+            BACKGROUND-COLOR: VAR(--PRIMARY-COLOR);
+        }
+
+        .TAB-BTN.COMPLETED {
+            BACKGROUND-COLOR: #DCFCE7;
+            COLOR: VAR(--SUCCESS-COLOR);
+            BORDER: 2PX SOLID VAR(--SUCCESS-COLOR);
+        }
+
+        /* CONTEÚDO DAS ABAS */
+        .TAB-CONTENT {
+            DISPLAY: NONE;
+        }
+
+        .TAB-CONTENT.ACTIVE {
+            DISPLAY: BLOCK;
+            ANIMATION: FADEIN 0.4S EASE;
+        }
+
+        @KEYFRAMES FADEIN {
+            FROM { OPACITY: 0; TRANSFORM: TRANSLATEY(5PX); }
+            TO { OPACITY: 1; TRANSFORM: TRANSLATEY(0); }
+        }
+
+        .ACTIVITY-BOX {
+            BACKGROUND-COLOR: #F8FAFC;
+            BORDER: 2PX SOLID VAR(--BORDER-COLOR);
+            PADDING: 1.2REM;
+            BORDER-RADIUS: 12PX;
+            MARGIN-TOP: 1REM;
+            MARGIN-BOTTOM: 1REM;
+        }
+
+        .ACTIVITY-BOX H3 {
+            DISPLAY: FLEX;
+            ALIGN-ITEMS: CENTER;
+            JUSTIFY-CONTENT: SPACE-BETWEEN;
+            FONT-SIZE: 1REM;
+            MARGIN-BOTTOM: 0.75REM;
+        }
+
+        /* OPÇÕES VISUAIS DE RESPOSTA */
+        .OPTIONS-GRID {
+            DISPLAY: GRID;
+            GRID-TEMPLATE-COLUMNS: REPEAT(AUTO-FIT, MINMAX(130PX, 1FR));
+            GAP: 0.8REM;
+            MARGIN-TOP: 0.75REM;
+        }
+
+        .OPTION-CARD {
+            BACKGROUND: #FFFFFF;
+            BORDER: 3PX SOLID VAR(--BORDER-COLOR);
+            BORDER-RADIUS: 12PX;
+            PADDING: 0.8REM 0.4REM;
+            TEXT-ALIGN: CENTER;
+            CURSOR: POINTER;
+            TRANSITION: ALL 0.2S EASE;
+            USER-SELECT: NONE;
+            DISPLAY: FLEX;
+            FLEX-DIRECTION: COLUMN;
+            ALIGN-ITEMS: CENTER;
+            JUSTIFY-CONTENT: CENTER;
+            GAP: 0.4REM;
+        }
+
+        .OPTION-CARD .EMOJI {
+            FONT-SIZE: 2.2REM;
+        }
+
+        .OPTION-CARD .LABEL {
+            FONT-WEIGHT: 800;
+            FONT-SIZE: 0.85REM;
+        }
+
+        .OPTION-CARD:HOVER {
+            BORDER-COLOR: VAR(--PRIMARY-COLOR);
+            TRANSFORM: TRANSLATEY(-3PX);
+        }
+
+        .OPTION-CARD.SELECTED {
+            BORDER-COLOR: VAR(--PRIMARY-COLOR);
+            BACKGROUND-COLOR: #EEF2FF;
+            BOX-SHADOW: 0 0 0 3PX RGBA(79, 70, 229, 0.3);
+        }
+
+        /* COMPONENTE DE CÓPIA DE TEXTOS CURTOS */
+        .COPY-CONTAINER {
+            DISPLAY: FLEX;
+            FLEX-DIRECTION: COLUMN;
+            ALIGN-ITEMS: CENTER;
+            GAP: 0.8REM;
+            MARGIN-TOP: 0.8REM;
+            BACKGROUND: #FFFFFF;
+            PADDING: 1REM;
+            BORDER-RADIUS: 10PX;
+            BORDER: 2PX DASHED VAR(--SECONDARY-COLOR);
+        }
+
+        .TARGET-WORD-BOX {
+            DISPLAY: FLEX;
+            FLEX-DIRECTION: COLUMN;
+            ALIGN-ITEMS: CENTER;
+            GAP: 0.5REM;
+            WIDTH: 100%;
+        }
+
+        .TARGET-WORD {
+            FONT-SIZE: 1.4REM;
+            FONT-WEIGHT: 900;
+            LETTER-SPACING: 2PX;
+            COLOR: VAR(--PRIMARY-COLOR);
+            BACKGROUND: #EEF2FF;
+            PADDING: 0.6REM 1.2REM;
+            BORDER-RADIUS: 8PX;
+            BORDER: 2PX SOLID VAR(--PRIMARY-COLOR);
+            TEXT-ALIGN: CENTER;
+            WIDTH: 100%;
+        }
+
+        .COPY-TEXTAREA {
+            WIDTH: 100%;
+            MIN-HEIGHT: 60PX;
+            PADDING: 0.6REM 1REM;
+            FONT-SIZE: 1.2REM;
+            FONT-WEIGHT: BOLD;
+            TEXT-ALIGN: CENTER;
+            LETTER-SPACING: 2PX;
+            BORDER: 3PX SOLID VAR(--BORDER-COLOR);
+            BORDER-RADIUS: 10PX;
+            OUTLINE: NONE;
+            TEXT-TRANSFORM: UPPERCASE;
+            BACKGROUND-COLOR: #FAFAFA;
+            RESIZE: NONE;
+        }
+
+        .COPY-TEXTAREA:FOCUS {
+            BORDER-COLOR: VAR(--PRIMARY-COLOR);
+            BACKGROUND-COLOR: #FFFFFF;
+        }
+
+        .TAG-THEME {
+            DISPLAY: INLINE-BLOCK;
+            PADDING: 0.3REM 0.8REM;
+            BORDER-RADIUS: 20PX;
+            FONT-SIZE: 0.8REM;
+            FONT-WEIGHT: BOLD;
+            MARGIN-BOTTOM: 0.75REM;
+        }
+
+        .TAG-SEGURANCA { BACKGROUND-COLOR: #E0F2FE; COLOR: #0369A1; }
+        .TAG-FOLCLORE { BACKGROUND-COLOR: #FEF3C7; COLOR: #B45309; }
+        .TAG-VERIFICACAO { BACKGROUND-COLOR: #F3E8FF; COLOR: #7E22CE; }
+        .TAG-4ANO { BACKGROUND-COLOR: #FFEDD5; COLOR: #C2410C; }
+        .TAG-IA { BACKGROUND-COLOR: #E0E7FF; COLOR: #3730A3; }
+        .TAG-PANFLETO { BACKGROUND-COLOR: #DCFCE7; COLOR: #15803D; }
+
+        /* PREVIEW DO PANFLETO DIGITAL */
+        .PANFLETO-PREVIEW-CONTAINER {
+            MARGIN-TOP: 1.5REM;
+            PADDING: 1.5REM;
+            BORDER: 3PX DASHED VAR(--PRIMARY-COLOR);
+            BORDER-RADIUS: 16PX;
+            BACKGROUND-COLOR: #FFFFFF;
+            TEXT-ALIGN: CENTER;
+        }
+
+        .PANFLETO-CARD {
+            BORDER-RADIUS: 12PX;
+            PADDING: 2REM 1REM;
+            COLOR: #FFFFFF;
+            BOX-SHADOW: 0 8PX 15PX RGBA(0, 0, 0, 0.15);
+            DISPLAY: FLEX;
+            FLEX-DIRECTION: COLUMN;
+            ALIGN-ITEMS: CENTER;
+            GAP: 1REM;
+        }
+
+        .PANFLETO-CARD.THEME-1 { BACKGROUND: LINEAR-GRADIENT(135DEG, #4F46E5, #0284C7); }
+        .PANFLETO-CARD.THEME-2 { BACKGROUND: LINEAR-GRADIENT(135DEG, #B45309, #15803D); }
+        .PANFLETO-CARD.THEME-3 { BACKGROUND: LINEAR-GRADIENT(135DEG, #7E22CE, #DC2626); }
+
+        .PANFLETO-CARD .BIG-EMOJI {
+            FONT-SIZE: 4REM;
+        }
+
+        .PANFLETO-CARD H2 {
+            FONT-SIZE: 1.4REM;
+        }
+
+        /* BOTÕES E FEEDBACK */
+        .ACTIONS {
+            MARGIN-TOP: 1.5REM;
+            DISPLAY: FLEX;
+            JUSTIFY-CONTENT: SPACE-BETWEEN;
+            ALIGN-ITEMS: CENTER;
+            FLEX-WRAP: WRAP;
+            GAP: 1REM;
+        }
+
+        .BTN {
+            BACKGROUND-COLOR: VAR(--PRIMARY-COLOR);
+            COLOR: WHITE;
+            BORDER: NONE;
+            PADDING: 0.9REM 1.6REM;
+            BORDER-RADIUS: 10PX;
+            FONT-SIZE: 1REM;
+            FONT-WEIGHT: 800;
+            CURSOR: POINTER;
+            TRANSITION: ALL 0.2S;
+            DISPLAY: FLEX;
+            ALIGN-ITEMS: CENTER;
+            GAP: 0.5REM;
+        }
+
+        .BTN:HOVER {
+            TRANSFORM: SCALE(1.02);
+            OPACITY: 0.95;
+        }
+
+        .FEEDBACK {
+            FONT-WEIGHT: 800;
+            FONT-SIZE: 0.95REM;
+            PADDING: 0.5REM;
+            BORDER-RADIUS: 8PX;
+        }
+
+        .FEEDBACK.CORRECT { COLOR: VAR(--SUCCESS-COLOR); BACKGROUND-COLOR: #DCFCE7; }
+        .FEEDBACK.INCORRECT { COLOR: VAR(--DANGER-COLOR); BACKGROUND-COLOR: #FEE2E2; }
+    </style>
+</head>
+<body>
+
+    <div CLASS="CONTAINER">
+        <header>
+            <h1>🎮 OFICINA DIGITAL: JOGOS & CÓPIA DE TEXTOS</h1>
+            <p STYLE="FONT-WEIGHT: BOLD; COLOR: #475569; MARGIN-TOP: 0.3REM;">OUÇA OS TEXTOS E ESCREVA A FRASE EXATAMENTE IGUAL NO QUADRO!</p>
+        </header>
+
+        <div CLASS="PROGRESS-CONTAINER">
+            <div CLASS="PROGRESS-BAR" ID="PROGRESS-BAR"></div>
+        </div>
+
+        <!-- NAVEGAÇÃO DAS ABAS -->
+        <nav CLASS="TABS-NAV">
+            <button CLASS="TAB-BTN ACTIVE UNLOCKED" DATA-TAB="1" ID="TAB-BTN-1">1. 🌐 SEGURANÇA</button>
+            <button CLASS="TAB-BTN UNLOCKED" DATA-TAB="2" ID="TAB-BTN-2">2. 🌳 FOLCLORE</button>
+            <button CLASS="TAB-BTN UNLOCKED" DATA-TAB="3" ID="TAB-BTN-3">3. 🔍 VERDADE OU MENTIRA</button>
+            <button CLASS="TAB-BTN UNLOCKED" DATA-TAB="4" ID="TAB-BTN-4">4. 🧮 JOGOS & TELAS</button>
+            <button CLASS="TAB-BTN UNLOCKED" DATA-TAB="5" ID="TAB-BTN-5">5. 🤖 PESQUISA COM IA</button>
+            <button CLASS="TAB-BTN" DATA-TAB="6" ID="TAB-BTN-6">6. 🎨 MEU CARTAZ</button>
+        </nav>
+
+        <!-- ABA 1: CIDADANIA DIGITAL -->
+        <div CLASS="TAB-CONTENT ACTIVE" ID="TAB-1">
+            <span CLASS="TAG-THEME TAG-SEGURANCA">MÓDULO 1: SEGURANÇA E RESPEITO</span>
+            <button CLASS="BTN-AUDIO" ONCLICK="FALAR('Módulo 1: Segurança na Internet. Clique no som e depois copie a frase no quadro!')">🔊 OUVIR EXPLICAÇÃO</button>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>1. TRATAR AS PESSOAS COM RESPEITO NA INTERNET É LEGAL?
+                    <button CLASS="BTN-AUDIO" ONCLICK="FALAR('Tratar as pessoas com respeito na internet é algo legal ou algo ruim?')">🔊 OUVIR</button>
+                </h3>
+                <div CLASS="OPTIONS-GRID" DATA-QUESTION="M1-Q1">
+                    <div CLASS="OPTION-CARD" DATA-VALUE="BOM" ONCLICK="SELECIONAROPCAO(THIS)">
+                        <span CLASS="EMOJI">👍</span>
+                        <span CLASS="LABEL">É LEGAL E CERTO</span>
+                    </div>
+                    <div CLASS="OPTION-CARD" DATA-VALUE="RUIM" ONCLICK="SELECIONAROPCAO(THIS)">
+                        <span CLASS="EMOJI">👎</span>
+                        <span CLASS="LABEL">É RUIM E ERRADO</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ATIVIDADE DE CÓPIA DE FRASE CURTA -->
+            <div CLASS="ACTIVITY-BOX">
+                <h3>2. ✏️ COPIE O PEQUENO TEXTO ABAIXO:
+                    <button CLASS="BTN-AUDIO" ONCLICK="FALAR('Copie o texto: A PAZ É BOA!')">🔊 OUVIR INSTRUÇÃO</button>
+                </h3>
+                <div CLASS="COPY-CONTAINER">
+                    <div CLASS="TARGET-WORD-BOX">
+                        <span CLASS="TARGET-WORD" ID="WORD-TARGET-1">A PAZ É BOA</span>
+                        <button CLASS="BTN-AUDIO" ONCLICK="FALAR('Texto para copiar: A PAZ É BOA')">🔊 OUVIR TEXTO</button>
+                    </div>
+                    <textarea CLASS="COPY-TEXTAREA" ID="COPY-INPUT-1" PLACEHOLDER="DIGITE O TEXTO AQUI..." ONINPUT="UPPERINPUT(THIS)"></textarea>
+                </div>
+            </div>
+
+            <div CLASS="ACTIONS">
+                <span CLASS="FEEDBACK" ID="FEEDBACK-1"></span>
+                <button CLASS="BTN" ONCLICK="VALIDARABA1()">CONFERIR RESPOSTAS 🚀</button>
+            </div>
+        </div>
+
+        <!-- ABA 2: FOLCLORE BRASILEIRO -->
+        <div CLASS="TAB-CONTENT" ID="TAB-2">
+            <span CLASS="TAG-THEME TAG-FOLCLORE">MÓDULO 2: FOLCLORE BRASILEIRO</span>
+            <button CLASS="BTN-AUDIO" ONCLICK="FALAR('Módulo 2: Folclore Brasileiro. Escolha o personagem e copie a frase do Saci!')">🔊 OUVIR EXPLICAÇÃO</button>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>1. QUEM USA UM GORRO VERMELHO E PULA EM UMA PERNA SÓ?
+                    <button CLASS="BTN-AUDIO" ONCLICK="FALAR('Quem é o menino levado de touca vermelha que pula em uma perna só?')">🔊 OUVIR</button>
+                </h3>
+                <div CLASS="OPTIONS-GRID" DATA-QUESTION="M2-Q1">
+                    <div CLASS="OPTION-CARD" DATA-VALUE="SACI" ONCLICK="SELECIONAROPCAO(THIS)">
+                        <span CLASS="EMOJI">🌪️</span>
+                        <span CLASS="LABEL">SACI</span>
+                    </div>
+                    <div CLASS="OPTION-CARD" DATA-VALUE="BOTO" ONCLICK="SELECIONAROPCAO(THIS)">
+                        <span CLASS="EMOJI">🐬</span>
+                        <span CLASS="LABEL">BOTO</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ATIVIDADE DE CÓPIA DE FRASE CURTA -->
+            <div CLASS="ACTIVITY-BOX">
+                <h3>2. ✏️ COPIE O PEQUENO TEXTO SOBRE O PERSONAGEM:
+                    <button CLASS="BTN-AUDIO" ONCLICK="FALAR('Copie o texto: O SACI PULA MUITO!')">🔊 OUVIR INSTRUÇÃO</button>
+                </h3>
+                <div CLASS="COPY-CONTAINER">
+                    <div CLASS="TARGET-WORD-BOX">
+                        <span CLASS="TARGET-WORD" ID="WORD-TARGET-2">O SACI PULA MUITO</span>
+                        <button CLASS="BTN-AUDIO" ONCLICK="FALAR('Texto para copiar: O SACI PULA MUITO')">🔊 OUVIR TEXTO</button>
+                    </div>
+                    <textarea CLASS="COPY-TEXTAREA" ID="COPY-INPUT-2" PLACEHOLDER="DIGITE O TEXTO AQUI..." ONINPUT="UPPERINPUT(THIS)"></textarea>
+                </div>
+            </div>
+
+            <div CLASS="ACTIONS">
+                <span CLASS="FEEDBACK" ID="FEEDBACK-2"></span>
+                <button CLASS="BTN" ONCLICK="VALIDARABA2()">CONFERIR RESPOSTAS 🚀</button>
+            </div>
+        </div>
+
+        <!-- ABA 3: CHECAGEM DE INFORMAÇÕES -->
+        <div CLASS="TAB-CONTENT" ID="TAB-3">
+            <span CLASS="TAG-THEME TAG-VERIFICACAO">MÓDULO 3: VERDADE OU MENTIRA</span>
+            <button CLASS="BTN-AUDIO" ONCLICK="FALAR('Módulo 3: Aprenda a buscar a verdade e copie a frase no quadro!')">🔊 OUVIR EXPLICAÇÃO</button>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>1. SE ENCONTRAR UMA NOTÍCIA ESTRANHA, DEVE MOSTRAR A UM ADULTO?
+                    <button CLASS="BTN-AUDIO" ONCLICK="FALAR('Se você encontrar algo estranho na internet, deve mostrar para os pais ou professores?')">🔊 OUVIR</button>
+                </h3>
+                <div CLASS="OPTIONS-GRID" DATA-QUESTION="M3-Q1">
+                    <div CLASS="OPTION-CARD" DATA-VALUE="SIM" ONCLICK="SELECIONAROPCAO(THIS)">
+                        <span CLASS="EMOJI">✅</span>
+                        <span CLASS="LABEL">SIM! É O CERTO</span>
+                    </div>
+                    <div CLASS="OPTION-CARD" DATA-VALUE="NAO" ONCLICK="SELECIONAROPCAO(THIS)">
+                        <span CLASS="EMOJI">❌</span>
+                        <span CLASS="LABEL">NÃO! GUARDAR SÓ PRA MIM</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ATIVIDADE DE CÓPIA DE FRASE CURTA -->
+            <div CLASS="ACTIVITY-BOX">
+                <h3>2. ✏️ COPIE O PEQUENO TEXTO ABAIXO:
+                    <button CLASS="BTN-AUDIO" ONCLICK="FALAR('Copie o texto: DIZER A VERDADE É BOM!')">🔊 OUVIR INSTRUÇÃO</button>
+                </h3>
+                <div CLASS="COPY-CONTAINER">
+                    <div CLASS="TARGET-WORD-BOX">
+                        <span CLASS="TARGET-WORD" ID="WORD-TARGET-3">DIZER A VERDADE É BOM</span>
+                        <button CLASS="BTN-AUDIO" ONCLICK="FALAR('Texto para copiar: DIZER A VERDADE É BOM')">🔊 OUVIR TEXTO</button>
+                    </div>
+                    <textarea CLASS="COPY-TEXTAREA" ID="COPY-INPUT-3" PLACEHOLDER="DIGITE O TEXTO AQUI..." ONINPUT="UPPERINPUT(THIS)"></textarea>
+                </div>
+            </div>
+
+            <div CLASS="ACTIONS">
+                <span CLASS="FEEDBACK" ID="FEEDBACK-3"></span>
+                <button CLASS="BTN" ONCLICK="VALIDARABA3()">CONFERIR RESPOSTAS 🚀</button>
+            </div>
+        </div>
+
+        <!-- ABA 4: ATIVIDADES LÓGICO-MATEMÁTICAS -->
+        <div CLASS="TAB-CONTENT" ID="TAB-4">
+            <span CLASS="TAG-THEME TAG-4ANO">MÓDULO 4: DESAFIOS E JOGOS</span>
+            <button CLASS="BTN-AUDIO" ONCLICK="FALAR('Módulo 4: Conte os objetos e depois copie a frase no quadro!')">🔊 OUVIR EXPLICAÇÃO</button>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>1. QUANTOS COMPUTADORES VOCÊ VÊ ABAIXO? 💻 💻 💻
+                    <button CLASS="BTN-AUDIO" ONCLICK="FALAR('Conte os computadores na tela: um, dois, três. Quantos computadores você contou?')">🔊 OUVIR</button>
+                </h3>
+                <div CLASS="OPTIONS-GRID" DATA-QUESTION="M4-Q1">
+                    <div CLASS="OPTION-CARD" DATA-VALUE="3" ONCLICK="SELECIONAROPCAO(THIS)">
+                        <span CLASS="EMOJI">3️⃣</span>
+                        <span CLASS="LABEL">TRÊS COMPUTADORES</span>
+                    </div>
+                    <div CLASS="OPTION-CARD" DATA-VALUE="5" ONCLICK="SELECIONAROPCAO(THIS)">
+                        <span CLASS="EMOJI">5️⃣</span>
+                        <span CLASS="LABEL">CINCO COMPUTADORES</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ATIVIDADE DE CÓPIA DE FRASE CURTA -->
+            <div CLASS="ACTIVITY-BOX">
+                <h3>2. ✏️ COPIE O PEQUENO TEXTO ABAIXO:
+                    <button CLASS="BTN-AUDIO" ONCLICK="FALAR('Copie o texto: EU GOSTO DE JOGAR!')">🔊 OUVIR INSTRUÇÃO</button>
+                </h3>
+                <div CLASS="COPY-CONTAINER">
+                    <div CLASS="TARGET-WORD-BOX">
+                        <span CLASS="TARGET-WORD" ID="WORD-TARGET-4">EU GOSTO DE JOGAR</span>
+                        <button CLASS="BTN-AUDIO" ONCLICK="FALAR('Texto para copiar: EU GOSTO DE JOGAR')">🔊 OUVIR TEXTO</button>
+                    </div>
+                    <textarea CLASS="COPY-TEXTAREA" ID="COPY-INPUT-4" PLACEHOLDER="DIGITE O TEXTO AQUI..." ONINPUT="UPPERINPUT(THIS)"></textarea>
+                </div>
+            </div>
+
+            <div CLASS="ACTIONS">
+                <span CLASS="FEEDBACK" ID="FEEDBACK-4"></span>
+                <button CLASS="BTN" ONCLICK="VALIDARABA4()">CONFERIR RESPOSTAS 🚀</button>
+            </div>
+        </div>
+
+        <!-- ABA 5: PESQUISA COM INTELIGÊNCIA ARTIFICIAL -->
+        <div CLASS="TAB-CONTENT" ID="TAB-5">
+            <span CLASS="TAG-THEME TAG-IA">MÓDULO 5: INTELIGÊNCIA ARTIFICIAL</span>
+            <button CLASS="BTN-AUDIO" ONCLICK="FALAR('Módulo 5: Aprenda sobre o robô amigo e copie o texto final!')">🔊 OUVIR EXPLICAÇÃO</button>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>1. COMO PODEMOS FAZER PERGUNTAS PARA O ROBÔ DE IA?
+                    <button CLASS="BTN-AUDIO" ONCLICK="FALAR('Podemos conversar com o robô de IA usando a nossa voz pelo microfone?')">🔊 OUVIR</button>
+                </h3>
+                <div CLASS="OPTIONS-GRID" DATA-QUESTION="M5-Q1">
+                    <div CLASS="OPTION-CARD" DATA-VALUE="VOZ" ONCLICK="SELECIONAROPCAO(THIS)">
+                        <span CLASS="EMOJI">🎙️</span>
+                        <span CLASS="LABEL">FALANDO NO MICROFONE</span>
+                    </div>
+                    <div CLASS="OPTION-CARD" DATA-VALUE="SILENCIO" ONCLICK="SELECIONAROPCAO(THIS)">
+                        <span CLASS="EMOJI">🙈</span>
+                        <span CLASS="LABEL">FICANDO EM SILÊNCIO</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ATIVIDADE DE CÓPIA DE FRASE CURTA -->
+            <div CLASS="ACTIVITY-BOX">
+                <h3>2. ✏️ COPIE O PEQUENO TEXTO ABAIXO:
+                    <button CLASS="BTN-AUDIO" ONCLICK="FALAR('Copie o texto: O ROBO É MEU AMIGO!')">🔊 OUVIR INSTRUÇÃO</button>
+                </h3>
+                <div CLASS="COPY-CONTAINER">
+                    <div CLASS="TARGET-WORD-BOX">
+                        <span CLASS="TARGET-WORD" ID="WORD-TARGET-5">O ROBO É MEU AMIGO</span>
+                        <button CLASS="BTN-AUDIO" ONCLICK="FALAR('Texto para copiar: O ROBO É MEU AMIGO')">🔊 OUVIR TEXTO</button>
+                    </div>
+                    <textarea CLASS="COPY-TEXTAREA" ID="COPY-INPUT-5" PLACEHOLDER="DIGITE O TEXTO AQUI..." ONINPUT="UPPERINPUT(THIS)"></textarea>
+                </div>
+            </div>
+
+            <div CLASS="ACTIONS">
+                <span CLASS="FEEDBACK" ID="FEEDBACK-5"></span>
+                <button CLASS="BTN" ONCLICK="VALIDARABA5()">CONFERIR RESPOSTAS 🚀</button>
+            </div>
+        </div>
+
+        <!-- ABA 6: MEU CARTAZ DIGITAL -->
+        <div CLASS="TAB-CONTENT" ID="TAB-6">
+            <span CLASS="TAG-THEME TAG-PANFLETO">MÓDULO 6: MONTE SEU CARTAZ VISUAL</span>
+            <button CLASS="BTN-AUDIO" ONCLICK="FALAR('Módulo 6: Escolha um desenho, uma frase e veja o seu cartaz pronto!')">🔊 OUVIR EXPLICAÇÃO</button>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>1. ESCOLHA O SÍMBOLO PRINCIPAL DO SEU CARTAZ:
+                    <button CLASS="BTN-AUDIO" ONCLICK="FALAR('Clique na figura que você quer ver no seu cartaz!')">🔊 OUVIR</button>
+                </h3>
+                <div CLASS="OPTIONS-GRID" ID="GRID-EMOJI-PANFLETO">
+                    <div CLASS="OPTION-CARD SELECTED" DATA-EMOJI="🛡️" ONCLICK="SELECIONAREMOJI(THIS)">
+                        <span CLASS="EMOJI">🛡️</span>
+                        <span CLASS="LABEL">PROTEÇÃO</span>
+                    </div>
+                    <div CLASS="OPTION-CARD" DATA-EMOJI="🌳" ONCLICK="SELECIONAREMOJI(THIS)">
+                        <span CLASS="EMOJI">🌳</span>
+                        <span CLASS="LABEL">NATUREZA</span>
+                    </div>
+                    <div CLASS="OPTION-CARD" DATA-EMOJI="🤖" ONCLICK="SELECIONAREMOJI(THIS)">
+                        <span CLASS="EMOJI">🤖</span>
+                        <span CLASS="LABEL">ROBÔ IA</span>
+                    </div>
+                </div>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>2. ESCOLHA A MENSAGEM DO SEU CARTAZ:
+                    <button CLASS="BTN-AUDIO" ONCLICK="FALAR('Escolha a frase principal do seu cartaz!')">🔊 OUVIR</button>
+                </h3>
+                <div CLASS="OPTIONS-GRID" ID="GRID-TEMA-PANFLETO">
+                    <div CLASS="OPTION-CARD SELECTED" DATA-THEME="THEME-1" DATA-TEXT="RESPEITO NA INTERNET!" ONCLICK="SELECIONARTEMA(THIS)">
+                        <span CLASS="EMOJI">💙</span>
+                        <span CLASS="LABEL">RESPEITO NA REDE</span>
+                    </div>
+                    <div CLASS="OPTION-CARD" DATA-THEME="THEME-2" DATA-TEXT="CUIDAR DA NATUREZA!" ONCLICK="SELECIONARTEMA(THIS)">
+                        <span CLASS="EMOJI">💚</span>
+                        <span CLASS="LABEL">CUIDAR DA FLORESTA</span>
+                    </div>
+                    <div CLASS="OPTION-CARD" DATA-THEME="THEME-3" DATA-TEXT="APRENDA COM A IA!" ONCLICK="SELECIONARTEMA(THIS)">
+                        <span CLASS="EMOJI">🤖</span>
+                        <span CLASS="LABEL">APRENDER COM A IA</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3 STYLE="MARGIN-TOP: 1.5REM; MARGIN-BOTTOM: 0.5REM; COLOR: #15803D; DISPLAY: FLEX; ALIGN-ITEMS: CENTER; GAP: 0.5REM;">
+                🖼️ PRÉ-VISUALIZAÇÃO DO SEU CARTAZ:
+                <button CLASS="BTN-AUDIO" ONCLICK="OUVIRCARTAZ()">🔊 OUVIR MEU CARTAZ</button>
+            </h3>
+            
+            <div CLASS="PANFLETO-PREVIEW-CONTAINER">
+                <div CLASS="PANFLETO-CARD THEME-1" ID="PANFLETO-CARD-PREVIEW">
+                    <span CLASS="BIG-EMOJI" ID="PREVIEW-EMOJI">🛡️</span>
+                    <h2 ID="PREVIEW-TITULO">RESPEITO NA INTERNET!</h2>
+                </div>
+            </div>
+
+            <div CLASS="ACTIONS">
+                <span CLASS="FEEDBACK" ID="FEEDBACK-6"></span>
+                <button CLASS="BTN" ONCLICK="VALIDARABA6()">FINALIZAR MEU CARTAZ 🎨</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const TOTALTABS = 6;
+        const UNLOCKEDTABS = { 1: true, 2: true, 3: true, 4: true, 5: true, 6: false };
+
+        // CONVERTER PARA MAIÚSCULAS AUTOMATICAMENTE
+        function UPPERINPUT(EL) {
+            EL.value = EL.value.toUpperCase();
+        }
+
+        // REMOVE ESPAÇOS EXTRAS PARA FACILITAR A COMPARAÇÃO DE TEXTO
+        function NORMALIZAR(TEXTO) {
+            return TEXTO.trim().replace(/\s+/g, ' ').toUpperCase();
+        }
+
+        // SÍNTESE DE VOZ (ÁUDIO)
+        function FALAR(TEXTO) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const UTTERANCE = new SpeechSynthesisUtterance(TEXTO);
+                UTTERANCE.LANG = 'pt-BR';
+                UTTERANCE.RATE = 0.92;
+                window.speechSynthesis.speak(UTTERANCE);
+            }
+        }
+
+        // SELEÇÃO DE CARDS
+        function SELECIONAROPCAO(ELEMENT) {
+            const PARENT = ELEMENT.parentElement;
+            PARENT.querySelectorAll('.OPTION-CARD').forEach(card => card.classList.remove('SELECTED'));
+            ELEMENT.classList.add('SELECTED');
+
+            const labelText = ELEMENT.querySelector('.LABEL').innerText;
+            FALAR(labelText);
+        }
+
+        function OBTENSERESPOSTA(QUESTION_ID) {
+            const container = document.querySelector(`[DATA-QUESTION="${QUESTION_ID}"]`);
+            if (!container) return null;
+            const selected = container.querySelector('.OPTION-CARD.SELECTED');
+            return selected ? selected.getAttribute('DATA-VALUE') : null;
+        }
+
+        function UPDATEPROGRESS() {
+            let completed = 0;
+            for (let i = 1; i <= TOTALTABS; i++) {
+                if (document.getElementById(`TAB-BTN-${i}`).classList.contains('COMPLETED')) {
+                    completed++;
+                }
+            }
+            const percentage = (completed / TOTALTABS) * 100;
+            document.getElementById('PROGRESS-BAR').style.width = `${percentage}%`;
+        }
+
+        function SWITCHTAB(TABNUMBER) {
+            if (!UNLOCKEDTABS[TABNUMBER]) return;
+
+            document.querySelectorAll('.TAB-BTN').forEach(btn => btn.classList.remove('ACTIVE'));
+            document.getElementById(`TAB-BTN-${TABNUMBER}`).classList.add('ACTIVE');
+
+            document.querySelectorAll('.TAB-CONTENT').forEach(content => content.classList.remove('ACTIVE'));
+            document.getElementById(`TAB-${TABNUMBER}`).classList.add('ACTIVE');
+        }
+
+        document.querySelectorAll('.TAB-BTN').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const TABNUMBER = parseInt(btn.getAttribute('DATA-TAB'));
+                SWITCHTAB(TABNUMBER);
+            });
+        });
+
+        function UNLOCKTAB(TABNUMBER) {
+            UNLOCKEDTABS[TABNUMBER] = true;
+            const btn = document.getElementById(`TAB-BTN-${TABNUMBER}`);
+            btn.classList.add('UNLOCKED');
+        }
+
+        /* --- VALIDAÇÕES DE CÓPIA DE TEXTOS E JOGOS --- */
+
+        function VALIDARABA1() {
+            const Q1 = OBTENSERESPOSTA('M1-Q1');
+            const C1 = NORMALIZAR(document.getElementById('COPY-INPUT-1').value);
+            const TARGET1 = NORMALIZAR(document.getElementById('WORD-TARGET-1').innerText);
+            const FEEDBACK = document.getElementById('FEEDBACK-1');
+
+            if (!Q1) {
+                FEEDBACK.textContent = "ESCOLHA UMA RESPOSTA NA PERGUNTA 1! 👆";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                FALAR("Escolha uma resposta na pergunta 1!");
+                return;
+            }
+
+            if (C1 !== TARGET1) {
+                FEEDBACK.textContent = `COPIE O TEXTO "${TARGET1}" CORRETAMENTE! ✏️`;
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                FALAR(`Escreva o texto igual ao modelo no quadro!`);
+                return;
+            }
+
+            if (Q1 === 'BOM' && C1 === TARGET1) {
+                FEEDBACK.textContent = "PARABÉNS! TEXTO COPIADO E RESPOSTA CORRETA! 🎉";
+                FEEDBACK.className = "FEEDBACK CORRECT";
+                FALAR("Parabéns! Você acertou a resposta e copiou o texto perfeitamente!");
+                document.getElementById('TAB-BTN-1').classList.add('COMPLETED');
+                UPDATEPROGRESS();
+                setTimeout(() => SWITCHTAB(2), 1500);
+            }
+        }
+
+        function VALIDARABA2() {
+            const Q1 = OBTENSERESPOSTA('M2-Q1');
+            const C2 = NORMALIZAR(document.getElementById('COPY-INPUT-2').value);
+            const TARGET2 = NORMALIZAR(document.getElementById('WORD-TARGET-2').innerText);
+            const FEEDBACK = document.getElementById('FEEDBACK-2');
+
+            if (!Q1) {
+                FEEDBACK.textContent = "ESCOLHA O PERSONAGEM NA PERGUNTA 1! 🌳";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                FALAR("Escolha uma figura na pergunta 1!");
+                return;
+            }
+
+            if (C2 !== TARGET2) {
+                FEEDBACK.textContent = `COPIE O TEXTO "${TARGET2}" CORRETAMENTE! ✏️`;
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                FALAR(`Escreva a frase igual ao modelo!`);
+                return;
+            }
+
+            if (Q1 === 'SACI' && C2 === TARGET2) {
+                FEEDBACK.textContent = "MUITO BEM! VOCÊ ESCREVEU A FRASE DO SACI! 🌟";
+                FEEDBACK.className = "FEEDBACK CORRECT";
+                FALAR("Muito bem! Você acertou o personagem e escreveu a frase perfeitamente!");
+                document.getElementById('TAB-BTN-2').classList.add('COMPLETED');
+                UPDATEPROGRESS();
+                setTimeout(() => SWITCHTAB(3), 1500);
+            }
+        }
+
+        function VALIDARABA3() {
+            const Q1 = OBTENSERESPOSTA('M3-Q1');
+            const C3 = NORMALIZAR(document.getElementById('COPY-INPUT-3').value);
+            const TARGET3 = NORMALIZAR(document.getElementById('WORD-TARGET-3').innerText);
+            const FEEDBACK = document.getElementById('FEEDBACK-3');
+
+            if (!Q1) {
+                FEEDBACK.textContent = "SELECIONE SE É SIM OU NÃO! 🔍";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                FALAR("Escolha uma opção na pergunta 1!");
+                return;
+            }
+
+            if (C3 !== TARGET3) {
+                FEEDBACK.textContent = `COPIE O TEXTO "${TARGET3}" CORRETAMENTE! ✏️`;
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                FALAR(`Escreva o texto igual ao modelo!`);
+                return;
+            }
+
+            if (Q1 === 'SIM' && C3 === TARGET3) {
+                FEEDBACK.textContent = "EXCELENTE! TEXTO COPIADO COM SUCESSO! ⭐";
+                FEEDBACK.className = "FEEDBACK CORRECT";
+                FALAR("Excelente! Você escolheu a opção certa e escreveu a frase toda!");
+                document.getElementById('TAB-BTN-3').classList.add('COMPLETED');
+                UPDATEPROGRESS();
+                setTimeout(() => SWITCHTAB(4), 1500);
+            }
+        }
+
+        function VALIDARABA4() {
+            const Q1 = OBTENSERESPOSTA('M4-Q1');
+            const C4 = NORMALIZAR(document.getElementById('COPY-INPUT-4').value);
+            const TARGET4 = NORMALIZAR(document.getElementById('WORD-TARGET-4').innerText);
+            const FEEDBACK = document.getElementById('FEEDBACK-4');
+
+            if (!Q1) {
+                FEEDBACK.textContent = "CONTE OS COMPUTADORES E SELECIONE! 🧮";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                FALAR("Selecione a quantidade certa de computadores!");
+                return;
+            }
+
+            if (C4 !== TARGET4) {
+                FEEDBACK.textContent = `COPIE O TEXTO "${TARGET4}" CORRETAMENTE! ✏️`;
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                FALAR(`Escreva o texto igual ao modelo!`);
+                return;
+            }
+
+            if (Q1 === '3' && C4 === TARGET4) {
+                FEEDBACK.textContent = "PARABÉNS! VOCÊ CONTOU CERTO E ESCREVEU A FRASE! ⚽";
+                FEEDBACK.className = "FEEDBACK CORRECT";
+                FALAR("Parabéns! Você contou três computadores e escreveu a frase!");
+                document.getElementById('TAB-BTN-4').classList.add('COMPLETED');
+                UPDATEPROGRESS();
+                setTimeout(() => SWITCHTAB(5), 1500);
+            }
+        }
+
+        function VALIDARABA5() {
+            const Q1 = OBTENSERESPOSTA('M5-Q1');
+            const C5 = NORMALIZAR(document.getElementById('COPY-INPUT-5').value);
+            const TARGET5 = NORMALIZAR(document.getElementById('WORD-TARGET-5').innerText);
+            const FEEDBACK = document.getElementById('FEEDBACK-5');
+
+            if (!Q1) {
+                FEEDBACK.textContent = "ESCOLHA UMA RESPOSTA SOBRE O ROBÔ! 🤖";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                FALAR("Escolha uma resposta para a pergunta do robô.");
+                return;
+            }
+
+            if (C5 !== TARGET5) {
+                FEEDBACK.textContent = `COPIE O TEXTO "${TARGET5}" CORRETAMENTE! ✏️`;
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                FALAR(`Escreva a frase igual ao modelo!`);
+                return;
+            }
+
+            if (Q1 === 'VOZ' && C5 === TARGET5) {
+                FEEDBACK.textContent = "ÓTIMO TRABALHO! LIBERANDO SEU CARTAZ VISUAL! 🎨";
+                FEEDBACK.className = "FEEDBACK CORRECT";
+                FALAR("Ótimo trabalho! Você aprendeu a pesquisar por voz e escreveu o texto do robô amigo! Agora vamos criar seu cartaz!");
+                document.getElementById('TAB-BTN-5').classList.add('COMPLETED');
+                UPDATEPROGRESS();
+                UNLOCKTAB(6);
+                setTimeout(() => SWITCHTAB(6), 1500);
+            }
+        }
+
+        // MONTAGEM DO CARTAZ VISUAL (ABA 6)
+        let selectedEmoji = '🛡️';
+        let selectedTheme = 'THEME-1';
+        let selectedText = 'RESPEITO NA INTERNET!';
+
+        function SELECIONAREMOJI(EL) {
+            document.querySelectorAll('#GRID-EMOJI-PANFLETO .OPTION-CARD').forEach(card => card.classList.remove('SELECTED'));
+            EL.classList.add('SELECTED');
+            selectedEmoji = EL.getAttribute('DATA-EMOJI');
+            ATUALIZARCARTAZ();
+            FALAR("Símbolo escolhido!");
+        }
+
+        function SELECIONARTEMA(EL) {
+            document.querySelectorAll('#GRID-TEMA-PANFLETO .OPTION-CARD').forEach(card => card.classList.remove('SELECTED'));
+            EL.classList.add('SELECTED');
+            selectedTheme = EL.getAttribute('DATA-THEME');
+            selectedText = EL.getAttribute('DATA-TEXT');
+            ATUALIZARCARTAZ();
+            FALAR(selectedText);
+        }
+
+        function ATUALIZARCARTAZ() {
+            const previewCard = document.getElementById('PANFLETO-CARD-PREVIEW');
+            previewCard.className = `PANFLETO-CARD ${selectedTheme}`;
+            document.getElementById('PREVIEW-EMOJI').textContent = selectedEmoji;
+            document.getElementById('PREVIEW-TITULO').textContent = selectedText;
+        }
+
+        function OUVIRCARTAZ() {
+            FALAR(`O seu cartaz diz: ${selectedText}`);
+        }
+
+        function VALIDARABA6() {
+            const FEEDBACK = document.getElementById('FEEDBACK-6');
+            FEEDBACK.textContent = "PARABÉNS! VOCÊ CONCLUIU TODA A OFICINA E APRENDEU A COPIAR TEXTOS! 🏆";
+            FEEDBACK.className = "FEEDBACK CORRECT";
+            FALAR(`Parabéns! Você concluiu toda a oficina, respondeu os jogos, copiou todas as frases e criou um cartaz lindo!`);
+            document.getElementById('TAB-BTN-6').classList.add('COMPLETED');
+            UPDATEPROGRESS();
+        }
+    </script>
+</body>
+</html>
