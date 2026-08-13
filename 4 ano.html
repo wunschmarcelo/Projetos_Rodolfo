@@ -88,7 +88,7 @@
             PADDING: 0.75REM 1REM;
             BORDER: NONE;
             BACKGROUND: NONE;
-            FONT-SIZE: 0.95REM;
+            FONT-SIZE: 0.85REM;
             FONT-WEIGHT: 600;
             COLOR: VAR(--DISABLED-COLOR);
             CURSOR: NOT-ALLOWED;
@@ -146,8 +146,10 @@
         }
 
         .TAG-SEGURANCA { BACKGROUND-COLOR: #E0F2FE; COLOR: #0369A1; }
-        .TAG-NEPRE { BACKGROUND-COLOR: #FCE7F3; COLOR: #BE185D; }
         .TAG-FOLCLORE { BACKGROUND-COLOR: #FEF3C7; COLOR: #B45309; }
+        .TAG-VERIFICACAO { BACKGROUND-COLOR: #F3E8FF; COLOR: #7E22CE; }
+        .TAG-4ANO { BACKGROUND-COLOR: #FFEDD5; COLOR: #C2410C; }
+        .TAG-IA { BACKGROUND-COLOR: #E0E7FF; COLOR: #3730A3; }
         .TAG-PANFLETO { BACKGROUND-COLOR: #DCFCE7; COLOR: #15803D; }
 
         /* LISTA DE TEXTOS */
@@ -168,8 +170,10 @@
             BORDER-RADIUS: 0 6PX 6PX 0;
         }
 
-        .TEXT-CARD.NEPRE-CARD { BORDER-LEFT-COLOR: #BE185D; }
         .TEXT-CARD.FOLCLORE-CARD { BORDER-LEFT-COLOR: #B45309; }
+        .TEXT-CARD.VERIFICACAO-CARD { BORDER-LEFT-COLOR: #7E22CE; }
+        .TEXT-CARD.QUARTOANO-CARD { BORDER-LEFT-COLOR: #C2410C; }
+        .TEXT-CARD.IA-CARD { BORDER-LEFT-COLOR: #3730A3; }
 
         .TEXT-CARD H4 {
             COLOR: VAR(--PRIMARY-COLOR);
@@ -177,8 +181,10 @@
             FONT-SIZE: 0.95REM;
         }
 
-        .TEXT-CARD.NEPRE-CARD H4 { COLOR: #BE185D; }
         .TEXT-CARD.FOLCLORE-CARD H4 { COLOR: #B45309; }
+        .TEXT-CARD.VERIFICACAO-CARD H4 { COLOR: #7E22CE; }
+        .TEXT-CARD.QUARTOANO-CARD H4 { COLOR: #C2410C; }
+        .TEXT-CARD.IA-CARD H4 { COLOR: #3730A3; }
 
         .TEXT-CARD P {
             FONT-SIZE: 0.9REM;
@@ -222,8 +228,10 @@
         }
 
         .PANFLETO-CARD.THEME-1 { BACKGROUND: LINEAR-GRADIENT(135DEG, #4F46E5, #0284C7); }
-        .PANFLETO-CARD.THEME-2 { BACKGROUND: LINEAR-GRADIENT(135DEG, #BE185D, #9333EA); }
-        .PANFLETO-CARD.THEME-3 { BACKGROUND: LINEAR-GRADIENT(135DEG, #B45309, #15803D); }
+        .PANFLETO-CARD.THEME-2 { BACKGROUND: LINEAR-GRADIENT(135DEG, #B45309, #15803D); }
+        .PANFLETO-CARD.THEME-3 { BACKGROUND: LINEAR-GRADIENT(135DEG, #7E22CE, #DC2626); }
+        .PANFLETO-CARD.THEME-4 { BACKGROUND: LINEAR-GRADIENT(135DEG, #C2410C, #D97706); }
+        .PANFLETO-CARD.THEME-5 { BACKGROUND: LINEAR-GRADIENT(135DEG, #3730A3, #0284C7); }
 
         .PANFLETO-CARD H2 {
             FONT-SIZE: 1.6REM;
@@ -286,12 +294,14 @@
             <div CLASS="PROGRESS-BAR" ID="PROGRESS-BAR"></div>
         </div>
 
-        <!-- NAVEGAÇÃO DAS ABAS -->
+        <!-- NAVEGAÇÃO DAS ABAS (MÓDULOS 1 A 5 LIBERADOS) -->
         <nav CLASS="TABS-NAV">
             <button CLASS="TAB-BTN ACTIVE UNLOCKED" DATA-TAB="1" ID="TAB-BTN-1">1. CIDADANIA DIGITAL</button>
-            <button CLASS="TAB-BTN" DATA-TAB="2" ID="TAB-BTN-2">2. NEPRE (MARIA DA PENHA)</button>
-            <button CLASS="TAB-BTN" DATA-TAB="3" ID="TAB-BTN-3">3. FOLCLORE BRASILEIRO</button>
-            <button CLASS="TAB-BTN" DATA-TAB="4" ID="TAB-BTN-4">4. PANFLETO DIGITAL</button>
+            <button CLASS="TAB-BTN UNLOCKED" DATA-TAB="2" ID="TAB-BTN-2">2. FOLCLORE BRASILEIRO</button>
+            <button CLASS="TAB-BTN UNLOCKED" DATA-TAB="3" ID="TAB-BTN-3">3. CHECAGEM DE INFORMAÇÕES</button>
+            <button CLASS="TAB-BTN UNLOCKED" DATA-TAB="4" ID="TAB-BTN-4">4. ATIVIDADES 4º ANO</button>
+            <button CLASS="TAB-BTN UNLOCKED" DATA-TAB="5" ID="TAB-BTN-5">5. PESQUISA COM IA</button>
+            <button CLASS="TAB-BTN" DATA-TAB="6" ID="TAB-BTN-6">6. PANFLETO DIGITAL</button>
         </nav>
 
         <!-- ABA 1: CIDADANIA DIGITAL -->
@@ -311,14 +321,12 @@
                 </div>
             </div>
 
-            <!-- ATIVIDADE 1.1: DIGITAÇÃO -->
             <div CLASS="ACTIVITY-BOX">
                 <h3>1. PRÁTICA DE DIGITAÇÃO DE TEXTO</h3>
                 <label FOR="SEGURANCA-Q1"><strong>DIGITE O TRECHO PARA DIGITAÇÃO EXATAMENTE COMO MOSTRADO ACIMA:</strong></label>
                 <textarea ID="SEGURANCA-Q1" PLACEHOLDER="DIGITE O TRECHO SOBRE CIDADANIA DIGITAL..."></textarea>
             </div>
 
-            <!-- 5 QUESTÕES DE PESQUISA ORIENTADA NA INTERNET -->
             <div CLASS="ACTIVITY-BOX">
                 <h3>2. PESQUISA NA INTERNET: CONCEITO</h3>
                 <p>PESQUISE NA INTERNET: ALÉM DE SE DIVERTIR, USAR A INTERNET COM RESPEITO E RESPONSABILIDADE É CHAMADO DE QUÊ?</p>
@@ -355,102 +363,18 @@
             </div>
         </div>
 
-        <!-- ABA 2: NEPRE - LEI MARIA DA PENHA -->
+        <!-- ABA 2: FOLCLORE BRASILEIRO -->
         <div CLASS="TAB-CONTENT" ID="TAB-2">
-            <span CLASS="TAG-THEME TAG-NEPRE">NEPRE: DIA DA LEI MARIA DA PENHA</span>
-            <h2>MÓDULO 2: LEI MARIA DA PENHA (DIGITAÇÃO E INTERPRETAÇÃO)</h2>
-            <p STYLE="MARGIN-BOTTOM: 1REM;">PRATIQUE A DIGITAÇÃO DO TEXTO GERAL ABAIXO E, EM SEGUIDA, RELEIA OS 5 TEXTOS TEMÁTICOS PARA RESPONDER ÀS QUESTÕES DE INTERPRETAÇÃO.</p>
-
-            <!-- TEXTO GERAL DE DIGITAÇÃO -->
-            <div CLASS="TEXT-CARD-LIST">
-                <div CLASS="TEXT-CARD NEPRE-CARD">
-                    <h4>TEXTO GERAL DE DIGITAÇÃO: CONSCIENTIZAÇÃO E RESPEITO</h4>
-                    <p ID="TARGET-TEXT-NEPRE-GERAL">A LEI MARIA DA PENHA E UMA IMPORTANTE CONQUISTA PARA GARANTIR A SEGURANCA E O RESPEITO AS MULHERES EM NOSSO PAIS.</p>
-                </div>
-            </div>
-
-            <!-- ATIVIDADE 2.1: DIGITAÇÃO DO TEXTO GERAL -->
-            <div CLASS="ACTIVITY-BOX">
-                <h3>1. PRÁTICA DE DIGITAÇÃO DO TEXTO GERAL</h3>
-                <label FOR="NEPRE-Q1"><strong>DIGITE O TEXTO GERAL EXATAMENTE COMO MOSTRADO ACIMA:</strong></label>
-                <textarea ID="NEPRE-Q1" PLACEHOLDER="DIGITE O TEXTO GERAL SOBRE A LEI MARIA DA PENHA AQUI..."></textarea>
-            </div>
-
-            <!-- BLAT DE 5 TEXTOS APENAS PARA INTERPRETAÇÃO -->
-            <h3 STYLE="MARGIN-TOP: 1.5REM; MARGIN-BOTTOM: 0.5REM; COLOR: #BE185D;">TEXTOS PARA LEITURA E INTERPRETAÇÃO:</h3>
-            
-            <div CLASS="TEXT-CARD-LIST">
-                <div CLASS="TEXT-CARD NEPRE-CARD">
-                    <h4>TEXTO 1: ORIGEM DA LEI</h4>
-                    <p>A LEI MARIA DA PENHA FOI CRIADA PARA PROTEGER AS MULHERES CONTRA A VIOLÊNCIA DOMÉSTICA E FAMILIAR NO BRASIL.</p>
-                </div>
-                <div CLASS="ACTIVITY-BOX">
-                    <h3>2. INTERPRETAÇÃO DO TEXTO 1</h3>
-                    <p>DE ACORDO COM O TEXTO 1, QUAL FOI O OBJETIVO PRINCIPAL PARA A CRIAÇÃO DA LEI MARIA DA PENHA?</p>
-                    <input TYPE="TEXT" ID="NEPRE-Q2" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
-                </div>
-
-                <div CLASS="TEXT-CARD NEPRE-CARD">
-                    <h4>TEXTO 2: FORMAS DE VIOLÊNCIA</h4>
-                    <p>A VIOLÊNCIA DOMÉSTICA NÃO É APENAS FÍSICA. ELA TAMBÉM PODE SER PSICOLÓGICA, PATRIMONIAL, MORAL E SEXUAL.</p>
-                </div>
-                <div CLASS="ACTIVITY-BOX">
-                    <h3>3. INTERPRETAÇÃO DO TEXTO 2</h3>
-                    <p>CONFORME O TEXTO 2, QUAIS SÃO AS OUTRAS FORMAS DE VIOLÊNCIA ALÉM DA VIOLÊNCIA FÍSICA?</p>
-                    <input TYPE="TEXT" ID="NEPRE-Q3" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
-                </div>
-
-                <div CLASS="TEXT-CARD NEPRE-CARD">
-                    <h4>TEXTO 3: MEDIDAS PROTETIVAS</h4>
-                    <p>A LEGISLAÇÃO PREVÊ MEDIDAS PROTETIVAS DE URGÊNCIA PARA AFASTAR O AGRESSOR E GARANTIR A SEGURANÇA DA VÍTIMA.</p>
-                </div>
-                <div CLASS="ACTIVITY-BOX">
-                    <h3>4. INTERPRETAÇÃO DO TEXTO 3</h3>
-                    <p>SEGUNDO O TEXTO 3, O QUE A LEGISLAÇÃO PREVÊ PARA AFASTAR O AGRESSOR E GARANTIR A SEGURANÇA DA VÍTIMA?</p>
-                    <input TYPE="TEXT" ID="NEPRE-Q4" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
-                </div>
-
-                <div CLASS="TEXT-CARD NEPRE-CARD">
-                    <h4>TEXTO 4: CANAL DE ATENDIMENTO</h4>
-                    <p>O LIGUE 180 É UM SERVIÇO GRATUITO E CONFIDENCIAL QUE RECEBE DENÚNCIAS E ORIENTA AS MULHERES.</p>
-                </div>
-                <div CLASS="ACTIVITY-BOX">
-                    <h3>5. INTERPRETAÇÃO DO TEXTO 4</h3>
-                    <p>DE ACORDO COM O TEXTO 4, QUAL É O NÚMERO DO TELEFONE GRATUITO E CONFIDENCIAL PARA DENÚNCIAS?</p>
-                    <input TYPE="TEXT" ID="NEPRE-Q5" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
-                </div>
-
-                <div CLASS="TEXT-CARD NEPRE-CARD">
-                    <h4>TEXTO 5: DIREITO DE TODAS</h4>
-                    <p>GARANTIR O RESPEITO, A DIGNIDADE E A IGUALDADE DE DIREITOS DAS MULHERES É UM DEVER DE TODA A SOCIEDADE.</p>
-                </div>
-                <div CLASS="ACTIVITY-BOX">
-                    <h3>6. INTERPRETAÇÃO DO TEXTO 5</h3>
-                    <p>CONFORME O TEXTO 5, DE QUEM É O DEVER DE GARANTIR O RESPEITO E A IGUALDADE DE DIREITOS DAS MULHERES?</p>
-                    <input TYPE="TEXT" ID="NEPRE-Q6" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
-                </div>
-            </div>
-
-            <div CLASS="ACTIONS">
-                <span CLASS="FEEDBACK" ID="FEEDBACK-2"></span>
-                <button CLASS="BTN" ONCLICK="VALIDARABA2()">VALIDAR MÓDULO 2</button>
-            </div>
-        </div>
-
-        <!-- ABA 3: FOLCLORE BRASILEIRO (5 ATIVIDADES) -->
-        <div CLASS="TAB-CONTENT" ID="TAB-3">
             <span CLASS="TAG-THEME TAG-FOLCLORE">PLANEJAMENTO INTEGRADO: FOLCLORE BRASILEIRO</span>
-            <h2>MÓDULO 3: FOLCLORE BRASILEIRO (5 ATIVIDADES)</h2>
-            <p STYLE="MARGIN-BOTTOM: 1REM;">REALIZE AS ATIVIDADES DE DIGITAÇÃO E PESQUISA ORIENTADA SOBRE O FOLCLORE BRASILEIRO.</p>
+            <h2>MÓDULO 2: FOLCLORE BRASILEIRO (LENDAS, MITOS E COSTUMES)</h2>
+            <p STYLE="MARGIN-BOTTOM: 1REM;">REALIZE AS 12 ATIVIDADES DE DIGITAÇÃO, LEITURA E PESQUISA ORIENTADA SOBRE O FOLCLORE BRASILEIRO.</p>
 
-            <!-- ATIVIDADE 3.1: PESQUISA CURUPIRA -->
             <div CLASS="ACTIVITY-BOX">
                 <h3>1. PESQUISA NA INTERNET: PROTETOR DAS MATAS</h3>
                 <p>PESQUISE NA INTERNET: QUAL PERSONAGEM DO FOLCLORE TEM OS PÉS VOLTADOS PARA TRÁS E PROTEGE AS MATAS?</p>
                 <input TYPE="TEXT" ID="FOLCLORE-Q1" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
             </div>
 
-            <!-- ATIVIDADE 3.2: DIGITAÇÃO SACI -->
             <div CLASS="ACTIVITY-BOX">
                 <h3>2. DIGITAÇÃO E LEITURA: SACI-PERERÊ</h3>
                 <div CLASS="TEXT-CARD FOLCLORE-CARD" STYLE="MARGIN: 0.5REM 0;">
@@ -461,14 +385,12 @@
                 <textarea ID="FOLCLORE-Q2" PLACEHOLDER="DIGITE A FRASE SOBRE O SACI..."></textarea>
             </div>
 
-            <!-- ATIVIDADE 3.3: PESQUISA BOTO -->
             <div CLASS="ACTIVITY-BOX">
                 <h3>3. PESQUISA NA INTERNET: BOTO COR-DE-ROSA</h3>
                 <p>PESQUISE NA INTERNET: EM QUAL REGIÃO DO BRASIL A LENDA DO BOTO COR-DE-ROSA É MAIS POPULAR?</p>
                 <input TYPE="TEXT" ID="FOLCLORE-Q3" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
             </div>
 
-            <!-- ATIVIDADE 3.4: DIGITAÇÃO IARA -->
             <div CLASS="ACTIVITY-BOX">
                 <h3>4. DIGITAÇÃO E LEITURA: IARA</h3>
                 <div CLASS="TEXT-CARD FOLCLORE-CARD" STYLE="MARGIN: 0.5REM 0;">
@@ -479,11 +401,119 @@
                 <textarea ID="FOLCLORE-Q4" PLACEHOLDER="DIGITE A FRASE SOBRE A IARA..."></textarea>
             </div>
 
-            <!-- ATIVIDADE 3.5: PESQUISA MULA SEM CABEÇA -->
             <div CLASS="ACTIVITY-BOX">
                 <h3>5. PESQUISA NA INTERNET: MULA SEM CABEÇA</h3>
                 <p>PESQUISE NA INTERNET: O QUE A MULA SEM CABEÇA SOLTA NO LUGAR ONDE DEVERIA ESTAR A SUA CABEÇA?</p>
                 <input TYPE="TEXT" ID="FOLCLORE-Q5" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>6. PESQUISA NA INTERNET: OBJETOS PERDIDOS</h3>
+                <p>PESQUISE NA INTERNET: QUAL PERSONAGEM DO FOLCLORE DA REGIÃO SUL É FAMOSO POR AJUDAR A ENCONTRAR OBJETOS PERDIDOS QUANDO SE ACENDE UMA VELA PARA ELE?</p>
+                <input TYPE="TEXT" ID="FOLCLORE-Q6" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>7. DIGITAÇÃO E LEITURA: BOITATÁ</h3>
+                <div CLASS="TEXT-CARD FOLCLORE-CARD" STYLE="MARGIN: 0.5REM 0;">
+                    <h4>TEXTO DE APOIO:</h4>
+                    <p ID="TARGET-TEXT-BOITATA">O BOITATA E UMA COBRA DE FOGO QUE PROTEGE OS CAMPOS CONTRA AQUELES QUE QUEIMAM A NATUREZA.</p>
+                </div>
+                <label FOR="FOLCLORE-Q7"><strong>DIGITE A FRASE ACIMA EXATAMENTE IGUAL:</strong></label>
+                <textarea ID="FOLCLORE-Q7" PLACEHOLDER="DIGITE A FRASE SOBRE O BOITATÁ..."></textarea>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>8. PESQUISA NA INTERNET: DIA DO FOLCLORE</h3>
+                <p>PESQUISE NA INTERNET: EM QUAL DIA E MÊS É COMEMORADO O DIA DO FOLCLORE NO BRASIL? (EX: 22 DE AGOSTO)</p>
+                <input TYPE="TEXT" ID="FOLCLORE-Q8" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>9. PESQUISA NA INTERNET: LENDA DO LOBISOMEM</h3>
+                <p>PESQUISE NA INTERNET: EM QUAL NOITE DE LUA CHEIA DIZ A LENDA QUE O HOMEM SE TRANSFORMA EM LOBISOMEM?</p>
+                <input TYPE="TEXT" ID="FOLCLORE-Q9" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>10. DIGITAÇÃO E LEITURA: CAIPORA</h3>
+                <div CLASS="TEXT-CARD FOLCLORE-CARD" STYLE="MARGIN: 0.5REM 0;">
+                    <h4>TEXTO DE APOIO:</h4>
+                    <p ID="TARGET-TEXT-CAIPORA">A CAIPORA MONTA EM UM PORCO DO MATO E DEFENDE OS ANIMAIS CONTRA OS CAÇADORES.</p>
+                </div>
+                <label FOR="FOLCLORE-Q10"><strong>DIGITE A FRASE ACIMA EXATAMENTE IGUAL:</strong></label>
+                <textarea ID="FOLCLORE-Q10" PLACEHOLDER="DIGITE A FRASE SOBRE A CAIPORA..."></textarea>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>11. PESQUISA NA INTERNET: MANIFESTAÇÕES CULTURAIS</h3>
+                <p>PESQUISE NA INTERNET: A MANTRA "O RATO ROEU A ROUPA DO REI DE ROMA" É UM EXEMPLO DE QUAL BRINCADEIRA FOLCLÓRICA DE PALAVRAS?</p>
+                <input TYPE="TEXT" ID="FOLCLORE-Q11" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>12. PESQUISA NA INTERNET: LENDA DA VITÓRIA-RÉGIA</h3>
+                <p>PESQUISE NA INTERNET: SEGUNDO A LENDA AMAZÔNICA, A VITÓRIA-RÉGIA É UMA PLANTA QUE NASCEU DA TRANSFORMAÇÃO DE UMA ÍNDIA QUE SE APAIXONOU POR QUAL ASTRO DO CÉU?</p>
+                <input TYPE="TEXT" ID="FOLCLORE-Q12" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
+            </div>
+
+            <div CLASS="ACTIONS">
+                <span CLASS="FEEDBACK" ID="FEEDBACK-2"></span>
+                <button CLASS="BTN" ONCLICK="VALIDARABA2()">VALIDAR MÓDULO 2</button>
+            </div>
+        </div>
+
+        <!-- ABA 3: CHECAGEM DE INFORMAÇÕES -->
+        <div CLASS="TAB-CONTENT" ID="TAB-3">
+            <span CLASS="TAG-THEME TAG-VERIFICACAO">COMBATE ÀS FAKE NEWS E CHECAGEM DE FATOS</span>
+            <h2>MÓDULO 3: CHECAGEM DE INFORMAÇÕES E FAKE NEWS</h2>
+            <p STYLE="MARGIN-BOTTOM: 1REM;">APRENDA A IDENTIFICAR NOTÍCIAS FALSAS, VERIFICAR A FONTE E DIGITAR O TEXTO ORIENTADOR.</p>
+
+            <div CLASS="TEXT-CARD-LIST">
+                <div CLASS="TEXT-CARD VERIFICACAO-CARD">
+                    <h4>TEXTO INFORMATIVO: COMO SABER SE UMA INFORMAÇÃO É VERÍDICA?</h4>
+                    <p>NEM TUDO QUE VEMOS NA INTERNET É VERDADE. PARA SABER SE UMA INFORMAÇÃO É REAL: 1) CONFIRA A FONTE E O SITE; 2) PROCURE A MESMA NOTÍCIA EM OUTROS VEÍCULOS CONFIÁVEIS; 3) DESCONFIE DE TÍTULOS EXAGERADOS OU SENSACIONALISTAS; 4) NÃO COMPARTILHE NOTÍCIAS SEM ANTES VERIFICAR SE SÃO VERDADEIRAS.</p>
+                </div>
+                <div CLASS="TEXT-CARD VERIFICACAO-CARD">
+                    <h4>TRECHO PARA DIGITAÇÃO (CÓPIA):</h4>
+                    <p ID="TARGET-TEXT-VERIFICACAO">DEVO CHECAR A FONTE DA NOTICIA E NUNCA COMPARTILHAR INFORMACOES FALSAS OU DUVIDOSAS.</p>
+                </div>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>1. PRÁTICA DE DIGITAÇÃO DE TEXTO</h3>
+                <label FOR="VERIFICACAO-Q1"><strong>DIGITE O TRECHO SOBRE CHECAGEM DE INFORMAÇÃO EXATAMENTE COMO MOSTRADO ACIMA:</strong></label>
+                <textarea ID="VERIFICACAO-Q1" PLACEHOLDER="DIGITE O TRECHO AQUI..."></textarea>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>2. PESQUISA NA INTERNET: TERMO TÉCNICO</h3>
+                <p>PESQUISE NA INTERNET: QUAL É O TERMO EM INGLÊS MUITO USADO PARA SE REFERIR A NOTÍCIAS FALSAS ESPALHADAS NA INTERNET?</p>
+                <input TYPE="TEXT" ID="VERIFICACAO-Q2" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>3. PESQUISA OU INTERPRETAÇÃO: COMPARTILHAMENTO</h3>
+                <p>ANTES DE ENVIAR UMA NOTÍCIA PARA AMIGOS OU GRUPOS, O QUE DEVEMOS FAZER COM ELA? (COMPARTILHAR IMEDIATAMENTE OU VERIFICAR SE É VERDADE?)</p>
+                <input TYPE="TEXT" ID="VERIFICACAO-Q3" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>4. PESQUISA OU INTERPRETAÇÃO: TÍTULOS SENSACIONALISTAS</h3>
+                <p>NOTÍCIAS FALSAS COSTUMAM USAR TÍTULOS EXAGERADOS COM LETRAS MAIÚSCULAS E PEDIDOS DE "REPASSE PARA TODOS". ISSO É SINAL DE NOTÍCIA CONFIÁVEL OU SUSPEITA?</p>
+                <input TYPE="TEXT" ID="VERIFICACAO-Q4" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>5. PESQUISA NA INTERNET: AGÊNCIAS DE CHECAGEM</h3>
+                <p>PESQUISE NA INTERNET: QUAL É O NOME DADO ÀS ORGANIZAÇÕES ESPECIALIZADAS EM VERIFICAR SE UMA NOTÍCIA É VERDADEIRA OU FALSA? (EX: AGÊNCIAS DE CHECAGEM OU FACT-CHECKING)</p>
+                <input TYPE="TEXT" ID="VERIFICACAO-Q5" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>6. REFLEXÃO E DIGITAÇÃO: IMPACTO</h3>
+                <p>REPASSAR INFORMAÇÕES FALSAS PODE CAUSAR PÂNICO E PREJUDICAR PESSOAS. DIANTE DISSO, COMPARTILHAR FAKE NEWS É ALGO BOM OU RUIM?</p>
+                <input TYPE="TEXT" ID="VERIFICACAO-Q6" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
             </div>
 
             <div CLASS="ACTIONS">
@@ -492,31 +522,158 @@
             </div>
         </div>
 
-        <!-- ABA 4: PANFLETO DIGITAL -->
+        <!-- ABA 4: ATIVIDADES PARA 4º ANO -->
         <div CLASS="TAB-CONTENT" ID="TAB-4">
+            <span CLASS="TAG-THEME TAG-4ANO">ATIVIDADES PEDAGÓGICAS - 4º ANO DO ENSINO FUNDAMENTAL</span>
+            <h2>MÓDULO 4: DESAFIOS DE LÍNGUA PORTUGUESA E MATEMÁTICA DIGITAL</h2>
+            <p STYLE="MARGIN-BOTTOM: 1REM;">DESENVOLVA SUAS HABILIDADES DE LEITURA, ORTOGRAFIA, CÁLCULO E USO SAUDÁVEL DA TECNOLOGIA.</p>
+
+            <div CLASS="TEXT-CARD-LIST">
+                <div CLASS="TEXT-CARD QUARTOANO-CARD">
+                    <h4>TEXTO DE APOIO: O USO SAUDÁVEL DE TELAS</h4>
+                    <p>USAR O COMPUTADOR E O CELULAR É MUITO LEGAL PARA APRENDER E JOGAR. PORÉM, PASSAR MUITAS HORAS FRENTE ÀS TELAS PODE FAZER MAL PARA A VISÃO, O SONO E A POSTURA. DEVERMOS INTERCALAR O TEMPO DE TELA COM BRINCADEIRAS AO AR LIVRE, LEITURA DE LIVROS E CONVERSAS COM A FAMÍLIA.</p>
+                </div>
+                <div CLASS="TEXT-CARD QUARTOANO-CARD">
+                    <h4>TRECHO PARA DIGITAÇÃO (CÓPIA):</h4>
+                    <p ID="TARGET-TEXT-4ANO">DEVO EQUILIBRAR O TEMPO DE TELA COM BRINCADEIRAS AO AR LIVRE E ESTUDOS.</p>
+                </div>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>1. PRÁTICA DE DIGITAÇÃO DE TEXTO</h3>
+                <label FOR="ANO4-Q1"><strong>DIGITE O TRECHO SOBRE USO SAUDÁVEL DE TELAS EXATAMENTE COMO MOSTRADO ACIMA:</strong></label>
+                <textarea ID="ANO4-Q1" PLACEHOLDER="DIGITE O TRECHO AQUI..."></textarea>
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>2. INTERPRETAÇÃO DE TEXTO</h3>
+                <p>DE ACORDO COM O TEXTO ACIMA, O QUE DEVEMOS FAZER PARA EVITAR PASSAR TEMPO DEMAIS NA FRENTE DAS TELAS? (EX: BRINCAR AO AR LIVRE, LER LIVROS...)</p>
+                <input TYPE="TEXT" ID="ANO4-Q2" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>3. ORTOGRAFIA E CORREÇÃO DE PALAVRAS</h3>
+                <p>QUAL É A FORMA CORRETA DA PALAVRA RELACIONADA À INTERNET? ("CONECTADO" OU "CONECTATO"?)</p>
+                <input TYPE="TEXT" ID="ANO4-Q3" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>4. DESAFIO DE MATEMÁTICA DIGITAL</h3>
+                <p>LUCAS PASSA 2 HORAS POR DIA NO COMPUTADOR ESTUDANDO E 1 HORA JOGANDO. QUANTAS HORAS ELE PASSA NO TOTAL EM FRENTE AO COMPUTADOR EM 1 DIA?</p>
+                <input TYPE="TEXT" ID="ANO4-Q4" PLACEHOLDER="DIGITE APENAS O NÚMERO OU A RESPOSTA COMPLETA...">
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>5. CÁLCULO DE TEMPO SEMANAL</h3>
+                <p>SE LUCAS USA O COMPUTADOR POR 3 HORAS EM 1 DIA, QUANTAS HORAS ELE USARÁ EM 5 DIAS DA SEMANA? (DICA: 3 MULTIPLICADO POR 5)</p>
+                <input TYPE="TEXT" ID="ANO4-Q5" PLACEHOLDER="DIGITE O RESULTADO DA MULTIPLICAÇÃO...">
+            </div>
+
+            <div CLASS="ACTIVITY-BOX">
+                <h3>6. NETIQUETA (BOAS MANEIRAS ONLINE)</h3>
+                <p>ESCREVER UM TEXTO INTEIRO EM LETRAS MAIÚSCULAS NA INTERNET SIGNIFICA QUE A PESSOA ESTÁ "GRITANDO". ISSO É CONSIDERADO UMA ATITUDE EDUCADA OU INADEQUADA?</p>
+                <input TYPE="TEXT" ID="ANO4-Q6" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
+            </div>
+
+            <div CLASS="ACTIONS">
+                <span CLASS="FEEDBACK" ID="FEEDBACK-4"></span>
+                <button CLASS="BTN" ONCLICK="VALIDARABA4()">VALIDAR MÓDULO 4</button>
+            </div>
+        </div>
+
+        <!-- ABA 5: PESQUISA USANDO IA (NOVA ABA) -->
+        <div CLASS="TAB-CONTENT" ID="TAB-5">
+            <span CLASS="TAG-THEME TAG-IA">LETRAMENTO DIGITAL & INTELIGÊNCIA ARTIFICIAL</span>
+            <h2>MÓDULO 5: APRENDENDO A PESQUISAR COM INTELIGÊNCIA ARTIFICIAL</h2>
+            <p STYLE="MARGIN-BOTTOM: 1REM;">A INTELIGÊNCIA ARTIFICIAL (IA) É UMA FERRAMENTA PODEROSA PARA APRENDER E APERFEIÇOAR SEUS ESTUDOS. APRENDA A FAZER PERGUNTAS CERTAS (PROMPTS) E A VERIFICAR AS RESPOSTAS!</p>
+
+            <div CLASS="TEXT-CARD-LIST">
+                <div CLASS="TEXT-CARD IA-CARD">
+                    <h4>TEXTO DE APOIO: COMO USAR A IA COMO ASSISTENTE DE ESTUDOS?</h4>
+                    <p>A INTELIGÊNCIA ARTIFICIAL FUNCIONA COMO UM ASSISTENTE VIRTUAL. PARA OBTER BOAS RESPOSTAS, VOCÊ DEVE DAR COMANDOS CLAROS E ESPECÍFICOS CHAMADOS DE "PROMPTS". LEMBRE-SE: A IA AJUDA A EXPLICAR CONCEITOS E DAR IDEIAS, MAS NÃO DEVE FAZER SUA TAREFA DE CASA NO SEU LUGAR. ALÉM DISSO, A IA PODE COMETER ERROS, POR ISSO É FUNDAMENTAL SEMPRE CONFERIR AS RESPOSTAS EM LIVROS OU SITES CONFIÁVEIS.</p>
+                </div>
+                <div CLASS="TEXT-CARD IA-CARD">
+                    <h4>TRECHO PARA DIGITAÇÃO (CÓPIA):</h4>
+                    <p ID="TARGET-TEXT-IA">A IA E UMA FERRAMENTA PARA ME AJUDAR A APRENDER MAS DEVO CONFERIR SE AS RESPOSTAS ESTAO CERTAS.</p>
+                </div>
+            </div>
+
+            <!-- ATIVIDADE 5.1: DIGITAÇÃO DE CONCEITO -->
+            <div CLASS="ACTIVITY-BOX">
+                <h3>1. PRÁTICA DE DIGITAÇÃO DE TEXTO</h3>
+                <label FOR="IA-Q1"><strong>DIGITE O TRECHO SOBRE O USO DA IA EXATAMENTE COMO MOSTRADO ACIMA:</strong></label>
+                <textarea ID="IA-Q1" PLACEHOLDER="DIGITE O TRECHO SOBRE IA AQUI..."></textarea>
+            </div>
+
+            <!-- ATIVIDADE 5.2: CONCEITO DE PROMPT -->
+            <div CLASS="ACTIVITY-BOX">
+                <h3>2. VOCABULÁRIO DIGITAL: PROMPT</h3>
+                <p>QUAL É O NOME DADO À PERGUNTA OU INSTRUÇÃO DETALHADA QUE ESCREVEMOS PARA UMA INTELIGÊNCIA ARTIFICIAL RESPONDER?</p>
+                <input TYPE="TEXT" ID="IA-Q2" PLACEHOLDER="DIGITE A SUA RESPOSTA (DICA: PROMPT)...">
+            </div>
+
+            <!-- ATIVIDADE 5.3: CONSTRUÇÃO DE UM BOM PROMPT -->
+            <div CLASS="ACTIVITY-BOX">
+                <h3>3. PRÁTICA DE PROMPT (COMO PERGUNTAR À IA)</h3>
+                <p>SE VOCÊ QUISER QUE A IA TE AJUDE A ENTENDER O QUE É A FOTOSSÍNTESE DE FORMA SIMPLES, QUAL PERGUNTA É MAIS DETALHADA E ADEQUADA?</p>
+                <p STYLE="FONT-SIZE: 0.85REM; COLOR: #475569; MARGIN-TOP: 0.25REM;">OPÇÃO A: "FOTOSSÍNTESE"<br>OPÇÃO B: "EXPLIQUE O QUE É FOTOSSÍNTESE PARA UMA CRIANÇA DO 4º ANO COM EXEMPLOS SIMPLES."</p>
+                <input TYPE="TEXT" ID="IA-Q3" PLACEHOLDER="DIGITE A OPÇÃO A OU B...">
+            </div>
+
+            <!-- ATIVIDADE 5.4: VERIFICAÇÃO DE RESPOSTAS (ALUCINAÇÃO) -->
+            <div CLASS="ACTIVITY-BOX">
+                <h3>4. CHECAGEM DAS RESPOSTAS DA IA</h3>
+                <p>A INTELIGÊNCIA ARTIFICIAL PODE ÀS VEZES MENTIR OU INVENTAR INFORMAÇÕES FALSAS COM APARÊNCIA DE VERDADE. O QUE DEVEMOS FAZER APÓS RECEBER UMA RESPOSTA DA IA? (ACEITAR SEM CONFERIR OU VERIFICAR EM LIVROS E SITES CONFIÁVEIS?)</p>
+                <input TYPE="TEXT" ID="IA-Q4" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
+            </div>
+
+            <!-- ATIVIDADE 5.5: ÉTICA E USO ESCOLAR -->
+            <div CLASS="ACTIVITY-BOX">
+                <h3>5. USO ÉTICO DA IA NA ESCOLA</h3>
+                <p>PEDIR PARA A IA ESCREVER UM TRABALHO INTEIRO E ENTREGAR COMO SE FOSSE SEU É UMA ATITUDE CORRETA OU INCORRETA?</p>
+                <input TYPE="TEXT" ID="IA-Q5" PLACEHOLDER="DIGITE A SUA RESPOSTA...">
+            </div>
+
+            <!-- ATIVIDADE 5.6: SIMULAÇÃO DE PESQUISA -->
+            <div CLASS="ACTIVITY-BOX">
+                <h3>6. ELABORE SEU PRÓPRIO PROMPT DE PESQUISA</h3>
+                <p>ESCREVA ABAIXO UMA PERGUNTA COMPLETA (PROMPT) QUE VOCÊ FARIA PARA UMA IA SOBRE SEU ANIMAL OU ASSUNTO FAVORITO:</p>
+                <input TYPE="TEXT" ID="IA-Q6" PLACEHOLDER="EX: EXPLIQUE DE FORMA DIVERTIDA COMO AS ABELHAS PRODUZEM MEL...">
+            </div>
+
+            <div CLASS="ACTIONS">
+                <span CLASS="FEEDBACK" ID="FEEDBACK-5"></span>
+                <button CLASS="BTN" ONCLICK="VALIDARABA5()">VALIDAR MÓDULO 5</button>
+            </div>
+        </div>
+
+        <!-- ABA 6: PANFLETO DIGITAL -->
+        <div CLASS="TAB-CONTENT" ID="TAB-6">
             <span CLASS="TAG-THEME TAG-PANFLETO">PROJETO PRÁTICO: CRIAÇÃO DE PANFLETO DIGITAL</span>
-            <h2>MÓDULO 4: MONTE SEU PANFLETO DIGITAL DE CONSCIENTIZAÇÃO</h2>
-            <p STYLE="MARGIN-BOTTOM: 1REM;">ESCOLHA UM DOS 3 TEMAS ESTUDADOS, ESCREVA SEU TÍTULO E SUA MENSAGEM PARA CRIAR UM PANFLETO EDUCATIVO.</p>
+            <h2>MÓDULO 6: MONTE SEU PANFLETO DIGITAL DE CONSCIENTIZAÇÃO</h2>
+            <p STYLE="MARGIN-BOTTOM: 1REM;">ESCOLHA UM DOS TEMAS ESTUDADOS, ESCREVA SEU TÍTULO E SUA MENSAGEM PARA CRIAR UM PANFLETO EDUCATIVO.</p>
 
             <div CLASS="ACTIVITY-BOX">
                 <h3>1. ESCOLHA O TEMA DO SEU PANFLETO</h3>
                 <select ID="PANFLETO-TEMA" ONCHANGE="ATUALIZARPANFLETO()">
                     <OPTION VALUE="1">1. CIDADANIA DIGITAL E SEGURANÇA ONLINE</OPTION>
-                    <OPTION VALUE="2">2. NEPRE: RESPEITO ÀS MULHERES (LEI MARIA DA PENHA)</OPTION>
-                    <OPTION VALUE="3">3. VALORIZAÇÃO DO FOLCLORE BRASILEIRO</OPTION>
+                    <OPTION VALUE="2">2. VALORIZAÇÃO DO FOLCLORE BRASILEIRO</OPTION>
+                    <OPTION VALUE="3">3. COMBATE ÀS FAKE NEWS E CHECAGEM DE FATOS</OPTION>
+                    <OPTION VALUE="4">4. USO CONSCIENTE E SAUDÁVEL DE TELAS (4º ANO)</OPTION>
+                    <OPTION VALUE="5">5. USO RESPONSÁVEL E ÉTICO DA INTELIGÊNCIA ARTIFICIAL</OPTION>
                 </select>
             </div>
 
             <div CLASS="ACTIVITY-BOX">
                 <h3>2. TÍTULO DO PANFLETO (CABEÇALHO)</h3>
-                <label FOR="PANFLETO-TITULO"><strong>DIGITE UM TÍTULO LLAMATIVO PARA SEU PANFLETO:</strong></label>
-                <input TYPE="TEXT" ID="PANFLETO-TITULO" PLACEHOLDER="EX: INTERNET SEGURA PARA TODOS" ONINPUT="ATUALIZARPANFLETO()">
+                <label FOR="PANFLETO-TITULO"><strong>DIGITE UM TÍTULO CHAMATIVO PARA SEU PANFLETO:</strong></label>
+                <input TYPE="TEXT" ID="PANFLETO-TITULO" PLACEHOLDER="EX: USE A INTELIGÊNCIA ARTIFICIAL COM SABEDORIA!" ONINPUT="ATUALIZARPANFLETO()">
             </div>
 
             <div CLASS="ACTIVITY-BOX">
                 <h3>3. MENSAGEM PRINCIPAL (CONSCIENTIZAÇÃO)</h3>
                 <label FOR="PANFLETO-MENSAGEM"><strong>DIGITE UMA FRASE OU MENSAGEM DE CONSCIENTIZAÇÃO SOBRE O TEMA:</strong></label>
-                <textarea ID="PANFLETO-MENSAGEM" PLACEHOLDER="EX: RESPEITO E SEGURANÇA DEVEM VIR EM PRIMEIRA LUGAR!" ONINPUT="ATUALIZARPANFLETO()"></textarea>
+                <textarea ID="PANFLETO-MENSAGEM" PLACEHOLDER="EX: A IA É UMA ÓTIMA ASSISTENTE DE ESTUDOS! LEMBRE-SE DE SEMPRE VERIFICAR AS RESPOSTAS." ONINPUT="ATUALIZARPANFLETO()"></textarea>
             </div>
 
             <h3 STYLE="MARGIN-TOP: 1.5REM; MARGIN-BOTTOM: 0.5REM; COLOR: #15803D;">PRÉ-VIZUALIZAÇÃO DO SEU PANFLETO:</h3>
@@ -528,16 +685,16 @@
             </div>
 
             <div CLASS="ACTIONS">
-                <span CLASS="FEEDBACK" ID="FEEDBACK-4"></span>
-                <button CLASS="BTN" ONCLICK="VALIDARABA4()">VALIDAR E FINALIZAR PANFLETO</button>
-                    <button class="BTN" style="background:#15803D" onclick="salvarPDF()">SALVAR EM PDF</button>
+                <span CLASS="FEEDBACK" ID="FEEDBACK-6"></span>
+                <button CLASS="BTN" ONCLICK="VALIDARABA6()">VALIDAR E FINALIZAR PANFLETO</button>
             </div>
         </div>
     </div>
 
     <script>
-        const TOTALTABS = 4;
-        const UNLOCKEDTABS = { 1: true, 2: false, 3: false, 4: false };
+        const TOTALTABS = 6;
+        // MÓDULOS 1 A 5 LIBERADOS INICIALMENTE
+        const UNLOCKEDTABS = { 1: true, 2: true, 3: true, 4: true, 5: true, 6: false };
 
         function cleanText(text) {
             return text
@@ -630,72 +787,15 @@
                 return;
             }
 
-            FEEDBACK.textContent = "CORRETO! MÓDULO DE CIDADANIA DIGITAL CONCLUÍDO. LIBERANDO MÓDULO NEPRE...";
+            FEEDBACK.textContent = "CORRETO! MÓDULO DE CIDADANIA DIGITAL CONCLUÍDO.";
             FEEDBACK.className = "FEEDBACK CORRECT";
             document.getElementById('TAB-BTN-1').classList.add('COMPLETED');
             UPDATEPROGRESS();
-            UNLOCKTAB(2);
             setTimeout(() => SWITCHTAB(2), 1200);
         }
 
-        // VALIDAÇÃO ABA 2: NEPRE (MARIA DA PENHA)
+        // VALIDAÇÃO ABA 2: FOLCLORE BRASILEIRO
         function VALIDARABA2() {
-            const TARGETGERAL = cleanText(document.getElementById('TARGET-TEXT-NEPRE-GERAL').textContent);
-            const Q1 = cleanText(document.getElementById('NEPRE-Q1').value);
-            const Q2 = cleanText(document.getElementById('NEPRE-Q2').value);
-            const Q3 = cleanText(document.getElementById('NEPRE-Q3').value);
-            const Q4 = cleanText(document.getElementById('NEPRE-Q4').value);
-            const Q5 = cleanText(document.getElementById('NEPRE-Q5').value);
-            const Q6 = cleanText(document.getElementById('NEPRE-Q6').value);
-
-            const FEEDBACK = document.getElementById('FEEDBACK-2');
-
-            if (Q1 !== TARGETGERAL) {
-                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 1: VERIFIQUE SUA DIGITAÇÃO DO TEXTO GERAL.";
-                FEEDBACK.className = "FEEDBACK INCORRECT";
-                return;
-            }
-
-            if (!Q2.includes('PROTEGER') && !Q2.includes('MULHER') && !Q2.includes('DOMESTICA')) {
-                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 2: RELEIA ATENTAMENTE O TEXTO 1.";
-                FEEDBACK.className = "FEEDBACK INCORRECT";
-                return;
-            }
-
-            if (!Q3.includes('PSICOLOGICA') && !Q3.includes('PATRIMONIAL') && !Q3.includes('MORAL') && !Q3.includes('SEXUAL')) {
-                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 3: RELEIA O TEXTO 2 E QUAIS SÃO OS OUTROS TIPOS DE VIOLÊNCIA.";
-                FEEDBACK.className = "FEEDBACK INCORRECT";
-                return;
-            }
-
-            if (!Q4.includes('MEDIDA') && !Q4.includes('PROTETIVA') && !Q4.includes('URGENCIA')) {
-                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 4: CONSULTE O TEXTO 3 SOBRE AS MEDIDAS DE SEGURANÇA.";
-                FEEDBACK.className = "FEEDBACK INCORRECT";
-                return;
-            }
-
-            if (!Q5.includes('180')) {
-                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 5: VERIFIQUE O NÚMERO INDICADO NO TEXTO 4.";
-                FEEDBACK.className = "FEEDBACK INCORRECT";
-                return;
-            }
-
-            if (!Q6.includes('SOCIEDADE') && !Q6.includes('TODOS') && !Q6.includes('DEVER')) {
-                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 6: CONSULTE O TEXTO 5 ACIMA.";
-                FEEDBACK.className = "FEEDBACK INCORRECT";
-                return;
-            }
-
-            FEEDBACK.textContent = "EXCELENTE! MÓDULO NEPRE CONCLUÍDO. LIBERANDO FOLCLORE BRASILEIRO...";
-            FEEDBACK.className = "FEEDBACK CORRECT";
-            document.getElementById('TAB-BTN-2').classList.add('COMPLETED');
-            UPDATEPROGRESS();
-            UNLOCKTAB(3);
-            setTimeout(() => SWITCHTAB(3), 1200);
-        }
-
-        // VALIDAÇÃO ABA 3: FOLCLORE BRASILEIRO (5 ATIVIDADES)
-        function VALIDARABA3() {
             const Q1 = cleanText(document.getElementById('FOLCLORE-Q1').value);
             const Q2 = cleanText(document.getElementById('FOLCLORE-Q2').value);
             const TARGETQ2 = cleanText(document.getElementById('TARGET-TEXT-SACI').textContent);
@@ -703,8 +803,17 @@
             const Q4 = cleanText(document.getElementById('FOLCLORE-Q4').value);
             const TARGETQ4 = cleanText(document.getElementById('TARGET-TEXT-IARA').textContent);
             const Q5 = cleanText(document.getElementById('FOLCLORE-Q5').value);
+            const Q6 = cleanText(document.getElementById('FOLCLORE-Q6').value);
+            const Q7 = cleanText(document.getElementById('FOLCLORE-Q7').value);
+            const TARGETQ7 = cleanText(document.getElementById('TARGET-TEXT-BOITATA').textContent);
+            const Q8 = cleanText(document.getElementById('FOLCLORE-Q8').value);
+            const Q9 = cleanText(document.getElementById('FOLCLORE-Q9').value);
+            const Q10 = cleanText(document.getElementById('FOLCLORE-Q10').value);
+            const TARGETQ10 = cleanText(document.getElementById('TARGET-TEXT-CAIPORA').textContent);
+            const Q11 = cleanText(document.getElementById('FOLCLORE-Q11').value);
+            const Q12 = cleanText(document.getElementById('FOLCLORE-Q12').value);
 
-            const FEEDBACK = document.getElementById('FEEDBACK-3');
+            const FEEDBACK = document.getElementById('FEEDBACK-2');
 
             if (!Q1.includes('CURUPIRA')) {
                 FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 1: FAÇA A PESQUISA SOBRE O PROTETOR DAS MATAS COM PÉS PARA TRÁS.";
@@ -731,16 +840,216 @@
                 FEEDBACK.className = "FEEDBACK INCORRECT";
                 return;
             }
+            if (!Q6.includes('NEGRINHO') && !Q6.includes('PASTORAIO')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 6: PESQUISE QUAL PERSONAGEM AJUDA A ENCONTRAR COISAS PERDIDAS.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+            if (Q7 !== TARGETQ7) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 7: VERIFIQUE SE DIGITOU A FRASE DO BOITATÁ CORRETAMENTE.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+            if (!Q8.includes('22') || (!Q8.includes('AGOSTO') && !Q8.includes('08'))) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 8: PESQUISE A DATA EXATA DO DIA DO FOLCLORE (22 DE AGOSTO).";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+            if (!Q9.includes('SEXTA') && !Q9.includes('FEIRA')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 9: PESQUISE EM QUAL DIA DA SEMANA O LOBISOMEM SE TRANSFORMA (SEXTA-FEIRA).";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+            if (Q10 !== TARGETQ10) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 10: VERIFIQUE SE DIGITOU A FRASE DA CAIPORA CORRETAMENTE.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+            if (!Q11.includes('TRAVA') && !Q11.includes('LINGUA')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 11: PESQUISE QUAL O NOME DESSA BRINCADEIRA DE PALAVRAS (TRAVA-LÍNGUAS).";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+            if (!Q12.includes('LUA') && !Q12.includes('JACI')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 12: PESQUISE POR QUAL ASTRO DO CÉU A ÍNDIA SE APAIXONOU (LUA).";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
 
-            FEEDBACK.textContent = "EXCELENTE! MÓDULO DE FOLCLORE CONCLUÍDO. LIBERANDO CRIAÇÃO DO PANFLETO DIGITAL...";
+            FEEDBACK.textContent = "EXCELENTE! MÓDULO DE FOLCLORE CONCLUÍDO.";
+            FEEDBACK.className = "FEEDBACK CORRECT";
+            document.getElementById('TAB-BTN-2').classList.add('COMPLETED');
+            UPDATEPROGRESS();
+            setTimeout(() => SWITCHTAB(3), 1200);
+        }
+
+        // VALIDAÇÃO ABA 3: CHECAGEM DE INFORMAÇÕES
+        function VALIDARABA3() {
+            const Q1 = cleanText(document.getElementById('VERIFICACAO-Q1').value);
+            const TARGETQ1 = cleanText(document.getElementById('TARGET-TEXT-VERIFICACAO').textContent);
+            const Q2 = cleanText(document.getElementById('VERIFICACAO-Q2').value);
+            const Q3 = cleanText(document.getElementById('VERIFICACAO-Q3').value);
+            const Q4 = cleanText(document.getElementById('VERIFICACAO-Q4').value);
+            const Q5 = cleanText(document.getElementById('VERIFICACAO-Q5').value);
+            const Q6 = cleanText(document.getElementById('VERIFICACAO-Q6').value);
+
+            const FEEDBACK = document.getElementById('FEEDBACK-3');
+
+            if (Q1 !== TARGETQ1) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 1: VERIFIQUE SE DIGITOU A FRASE DE VERIFICAÇÃO EXATAMENTE IGUAL.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (!Q2.includes('FAKE') && !Q2.includes('NEWS')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 2: DIGITE O TERMO EM INGLÊS PARA NOTÍCIAS FALSAS (FAKE NEWS).";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (!Q3.includes('VERIFICAR') && !Q3.includes('CHECAR') && !Q3.includes('CONFIRMAR')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 3: RELEIA O QUE FAZER ANTES DE COMPARTILHAR UMA NOTÍCIA.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (!Q4.includes('SUSPEITA') && !Q4.includes('FALSA') && !Q4.includes('DUVIDOSA')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 4: TÍTULOS EXAGERADOS SÃO SINAIS DE NOTÍCIA SUSPEITA.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (!Q5.includes('CHECAGEM') && !Q5.includes('FACT') && !Q5.includes('VERIFICACAO')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 5: PESQUISE O NOME DAS AGÊNCIAS DE CHECAGEM DE FATOS.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (!Q6.includes('RUIM') && !Q6.includes('ERRADO') && !Q6.includes('PREJUDICIAL')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 6: COMPARTILHAR FAKE NEWS É ALGO RUIM E PREJUDICIAL.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            FEEDBACK.textContent = "MUITO BEM! MÓDULO DE CHECAGEM CONCLUÍDO.";
             FEEDBACK.className = "FEEDBACK CORRECT";
             document.getElementById('TAB-BTN-3').classList.add('COMPLETED');
             UPDATEPROGRESS();
-            UNLOCKTAB(4);
             setTimeout(() => SWITCHTAB(4), 1200);
         }
 
-        // LÓGICA E VALIDAÇÃO DA ABA 4: PANFLETO DIGITAL
+        // VALIDAÇÃO ABA 4: ATIVIDADES 4º ANO
+        function VALIDARABA4() {
+            const Q1 = cleanText(document.getElementById('ANO4-Q1').value);
+            const TARGETQ1 = cleanText(document.getElementById('TARGET-TEXT-4ANO').textContent);
+            const Q2 = cleanText(document.getElementById('ANO4-Q2').value);
+            const Q3 = cleanText(document.getElementById('ANO4-Q3').value);
+            const Q4 = cleanText(document.getElementById('ANO4-Q4').value);
+            const Q5 = cleanText(document.getElementById('ANO4-Q5').value);
+            const Q6 = cleanText(document.getElementById('ANO4-Q6').value);
+
+            const FEEDBACK = document.getElementById('FEEDBACK-4');
+
+            if (Q1 !== TARGETQ1) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 1: VERIFIQUE SE DIGITOU A FRASE DO 4º ANO EXATAMENTE IGUAL.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (!Q2.includes('LIVRO') && !Q2.includes('BRINCAR') && !Q2.includes('AR LIVRE') && !Q2.includes('FAMILIA')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 2: RELEIA O TEXTO DE APOIO SOBRE USO SAUDÁVEL DE TELAS.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (!Q3.includes('CONECTADO')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 3: DIGITE A FORMA CORRETA DA PALAVRA (CONECTADO).";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (!Q4.includes('3')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 4: SOMANDO 2 HORAS DE ESTUDO + 1 HORA DE JOGO, QUAL É O TOTAL?";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (!Q5.includes('15')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 5: MULTIPLIQUE 3 HORAS POR 5 DIAS DA SEMANA (3 X 5).";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (!Q6.includes('INADEQUADA') && !Q6.includes('INCORRETA') && !Q6.includes('RUIM') && !Q6.includes('DESELEGANTE') && !Q6.includes('ERRADO')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 6: RELEIA O TEXTO SOBRE ESCREVER EM LETRAS MAIÚSCULAS.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            FEEDBACK.textContent = "PARABÉNS! MÓDULO DO 4º ANO CONCLUÍDO.";
+            FEEDBACK.className = "FEEDBACK CORRECT";
+            document.getElementById('TAB-BTN-4').classList.add('COMPLETED');
+            UPDATEPROGRESS();
+            setTimeout(() => SWITCHTAB(5), 1200);
+        }
+
+        // VALIDAÇÃO ABA 5: PESQUISA COM IA
+        function VALIDARABA5() {
+            const Q1 = cleanText(document.getElementById('IA-Q1').value);
+            const TARGETQ1 = cleanText(document.getElementById('TARGET-TEXT-IA').textContent);
+            const Q2 = cleanText(document.getElementById('IA-Q2').value);
+            const Q3 = cleanText(document.getElementById('IA-Q3').value);
+            const Q4 = cleanText(document.getElementById('IA-Q4').value);
+            const Q5 = cleanText(document.getElementById('IA-Q5').value);
+            const Q6 = cleanText(document.getElementById('IA-Q6').value);
+
+            const FEEDBACK = document.getElementById('FEEDBACK-5');
+
+            if (Q1 !== TARGETQ1) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 1: VERIFIQUE SE DIGITOU A FRASE SOBRE IA EXATAMENTE IGUAL.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (!Q2.includes('PROMPT')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 2: DIGITE A PALAVRA CORRETA PARA O COMANDO DADO À IA (PROMPT).";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (!Q3.includes('B') && !Q3.includes('OPCAO B')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 3: A OPÇÃO B É MAIS DETALHADA E ADEQUADA PARA UM PROMPT.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (!Q4.includes('VERIFICAR') && !Q4.includes('CHECAR') && !Q4.includes('CONFERIR') && !Q4.includes('LIVRO') && !Q4.includes('SITE')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 4: RELEIA O QUE FAZER COM AS RESPOSTAS FORNECIDAS PELA IA.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (!Q5.includes('INCORRETA') && !Q5.includes('ERRADA') && !Q5.includes('NAO') && !Q5.includes('RUIM')) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 5: COPIAR TRABALHO DA IA SEM ESTUDAR É UMA ATITUDE INCORRETA.";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            if (Q6.length < 10) {
+                FEEDBACK.textContent = "ATENÇÃO NA QUESTÃO 6: ESCREVA UM PROMPT MAIS DETALHADO (MÍNIMO 10 CARACTERES).";
+                FEEDBACK.className = "FEEDBACK INCORRECT";
+                return;
+            }
+
+            FEEDBACK.textContent = "EXCELENTE! MÓDULO DE IA CONCLUÍDO. LIBERANDO A CRIAÇÃO DO PANFLETO DIGITAL...";
+            FEEDBACK.className = "FEEDBACK CORRECT";
+            document.getElementById('TAB-BTN-5').classList.add('COMPLETED');
+            UPDATEPROGRESS();
+            UNLOCKTAB(6);
+            setTimeout(() => SWITCHTAB(6), 1200);
+        }
+
+        // LÓGICA E VALIDAÇÃO DA ABA 6: PANFLETO DIGITAL
         function ATUALIZARPANFLETO() {
             const temaVal = document.getElementById('PANFLETO-TEMA').value;
             const tituloVal = document.getElementById('PANFLETO-TITULO').value.trim();
@@ -758,10 +1067,10 @@
             previewMensagem.textContent = mensagemVal !== "" ? mensagemVal : "SUA MENSAGEM DE CONSCIENTIZAÇÃO APARECERÁ AQUI CONFORME VOCÊ DIGITA.";
         }
 
-        function VALIDARABA4() {
+        function VALIDARABA6() {
             const tituloVal = document.getElementById('PANFLETO-TITULO').value.trim();
             const mensagemVal = document.getElementById('PANFLETO-MENSAGEM').value.trim();
-            const FEEDBACK = document.getElementById('FEEDBACK-4');
+            const FEEDBACK = document.getElementById('FEEDBACK-6');
 
             if (tituloVal.length < 5) {
                 FEEDBACK.textContent = "ATENÇÃO: ESCREVA UM TÍTULO VÁLIDO PARA SEU PANFLETO (MÍNIMO 5 CARACTERES).";
@@ -777,13 +1086,9 @@
 
             FEEDBACK.textContent = "PARABÉNS! VOCÊ CRIOU SEU PANFLETO DIGITAL E CONCLUIU TODA A TRILHA DA OFICINA COM SUCESSO!";
             FEEDBACK.className = "FEEDBACK CORRECT";
-            document.getElementById('TAB-BTN-4').classList.add('COMPLETED');
+            document.getElementById('TAB-BTN-6').classList.add('COMPLETED');
             UPDATEPROGRESS();
         }
     </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-<script>
-function salvarPDF(){const e=document.getElementById("PANFLETO-CARD-PREVIEW");const t=(document.getElementById("PANFLETO-TITULO").value.trim()||"panfleto").replace(/[^\w\s-]/g,"").replace(/\s+/g,"_");const r=document.createElement("div");r.style.background="#fff";r.style.padding="20px";const c=e.cloneNode(true);const f=document.createElement("div");f.style.marginTop="20px";f.style.textAlign="center";f.style.color="#444";f.textContent="Gerado em: "+new Date().toLocaleString("pt-BR");r.appendChild(c);r.appendChild(f);document.body.appendChild(r);html2pdf().set({margin:10,filename:t+".pdf",image:{type:"jpeg",quality:1},html2canvas:{scale:3},jsPDF:{unit:"mm",format:"a4",orientation:"portrait"}}).from(r).save().then(()=>r.remove());}
-</script>
 </body>
 </html>
