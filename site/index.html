@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FOLCLORE BRASILEIRO</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <div class="logo">🎓 2º ANO</div>
+        <div class="score-box">PONTUAÇÃO: <span id="score">0</span></div>
+        <nav class="menu">
+          <a href="#folclore">FOLCLORE</a>
+          <a href="#cartaz">CARTAZ</a>
+        </nav>
+      </header>
+
+      <section class="hero">
+        <div class="hero-text">
+          <p class="eyebrow">AULA DIVERTIDA E INTERATIVA</p>
+          <h1>FOLCLORE BRASILEIRO</h1>
+          <p>
+            VAMOS CONHECER AS LENDAS, BRINCAR COM AS PALAVRAS E APRENDER
+            SOBRE A CULTURA DO NOSSO PAÍS!
+          </p>
+          <div class="hero-badges">
+            <span>📚 LEITURA</span>
+            <span>🧠 MEMÓRIA</span>
+            <span>🎨 CRIATIVIDADE</span>
+          </div>
+        </div>
+
+        <div class="hero-illustration" aria-label="ILUSTRAÇÃO DE FOLCLORE">
+          <div class="glow"></div>
+          <div class="character">🧙</div>
+          <div class="mini-card card-1">🌲</div>
+          <div class="mini-card card-2">💧</div>
+          <div class="mini-card card-3">🦊</div>
+        </div>
+      </section>
+
+      <main>
+        <section id="folclore" class="folclore-section">
+          <div class="section-heading">
+            <p class="eyebrow accent">FOLCLORE BRASILEIRO</p>
+            <h2>ATIVIDADES DO FOLCLORE</h2>
+          </div>
+
+          <div class="tab-buttons" role="tablist" aria-label="ATIVIDADES DE FOLCLORE">
+            <button class="tab-btn active" data-tab="lendas" role="tab" aria-selected="true">LENDAS</button>
+            <button class="tab-btn" data-tab="trava" role="tab" aria-selected="false">TRAVA-LÍNGUAS</button>
+            <button class="tab-btn" data-tab="textos" role="tab" aria-selected="false">TEXTOS</button>
+            <button class="tab-btn" data-tab="cartaz" role="tab" aria-selected="false">CARTAZ</button>
+          </div>
+
+          <div class="tab-panel active" id="lendas" role="tabpanel">
+            <div class="legend-grid">
+              <article class="card legend-card">
+                <h3>CHARADA 1</h3>
+                <div class="legend-art" aria-label="CHARADA DO SACI PERERÊ">
+                  <p style="font-size: 1.1em; line-height: 1.6; color: #333; font-weight: bold;">SOU UM MENINO QUE PULA E TENHO SÓ UMA PERNA. FUMO UM CACHIMBO E GOSTO DE BAGUNÇAR TUDO.</p>
+                </div>
+                <p>QUEM SOU EU?</p>
+                <div class="options">
+                  <button class="answer-btn" data-correct="true" data-score="5">SACI PERERÊ</button>
+                  <button class="answer-btn" data-score="5">BOITATÁ</button>
+                  <button class="answer-btn" data-score="5">IARA</button>
+                </div>
+              </article>
+
+              <article class="card legend-card">
+                <h3>CHARADA 2</h3>
+                <div class="legend-art" aria-label="CHARADA DO CURUPIRA">
+                  <p style="font-size: 1.1em; line-height: 1.6; color: #333; font-weight: bold;">TENHO CABELOS VERMELHOS E CUIDO DA FLORESTA. PROTEJO OS ANIMAIS E PUNÇO QUEM DESTRÓI.</p>
+                </div>
+                <p>QUEM SOU EU?</p>
+                <div class="options">
+                  <button class="answer-btn" data-correct="true" data-score="5">CURUPIRA</button>
+                  <button class="answer-btn" data-score="5">CAIPORA</button>
+                  <button class="answer-btn" data-score="5">LUA</button>
+                </div>
+              </article>
+
+              <article class="card legend-card">
+                <h3>CHARADA 3</h3>
+                <div class="legend-art" aria-label="CHARADA DA IARA">
+                  <p style="font-size: 1.1em; line-height: 1.6; color: #333; font-weight: bold;">SOU UMA BELA CRIATURA COM CAUDA DE PEIXE. VIVO NAS ÁGUAS DO RIO E GOSTO DE CANTAR.</p>
+                </div>
+                <p>QUEM SOU EU?</p>
+                <div class="options">
+                  <button class="answer-btn" data-score="5">BOTO</button>
+                  <button class="answer-btn" data-correct="true" data-score="5">IARA</button>
+                  <button class="answer-btn" data-score="5">GATO</button>
+                </div>
+              </article>
+
+              <article class="card legend-card">
+                <h3>CHARADA 4</h3>
+                <div class="legend-art" aria-label="CHARADA DO BOITATÁ">
+                  <p style="font-size: 1.1em; line-height: 1.6; color: #333; font-weight: bold;">SOU UMA GRANDE SERPENTE QUE BRILHA COM FOGO. CUIDO DAS FLORESTAS E PROTEJO AS ÁRVORES.</p>
+                </div>
+                <p>QUEM SOU EU?</p>
+                <div class="options">
+                  <button class="answer-btn" data-score="5">COSTUREIRA</button>
+                  <button class="answer-btn" data-correct="true" data-score="5">BOITATÁ</button>
+                  <button class="answer-btn" data-score="5">SAPO</button>
+                </div>
+              </article>
+
+              <article class="card legend-card">
+                <h3>CHARADA 5</h3>
+                <div class="legend-art" aria-label="CHARADA DO BOTO">
+                  <p style="font-size: 1.1em; line-height: 1.6; color: #333; font-weight: bold;">SOU UM GOLFINHO ROSA QUE VIVE NOS RIOS DA AMAZÔNIA. POSSO VIRAR HOMEM E SAIR DA ÁGUA.</p>
+                </div>
+                <p>QUEM SOU EU?</p>
+                <div class="options">
+                  <button class="answer-btn" data-score="5">MULA SEM CABEÇA</button>
+                  <button class="answer-btn" data-correct="true" data-score="5">BOTO</button>
+                  <button class="answer-btn" data-score="5">CURIOSA</button>
+                </div>
+              </article>
+
+              <article class="card legend-card">
+                <h3>CHARADA 6</h3>
+                <div class="legend-art" aria-label="CHARADA DA CUCA">
+                  <p style="font-size: 1.1em; line-height: 1.6; color: #333; font-weight: bold;">SOU UMA CRIATURA QUE LUTA COM UMA COBRA. APAREÇO PARA ASSUSTAR AS CRIANÇAS DESOBEDIENTES.</p>
+                </div>
+                <p>QUEM SOU EU?</p>
+                <div class="options">
+                  <button class="answer-btn" data-correct="true" data-score="5">CUCA</button>
+                  <button class="answer-btn" data-score="5">BOITATÁ</button>
+                  <button class="answer-btn" data-score="5">SACI</button>
+                </div>
+              </article>
+
+              <article class="card legend-card">
+                <h3>CHARADA 7</h3>
+                <div class="legend-art" aria-label="CHARADA DA CAIPORA">
+                  <p style="font-size: 1.1em; line-height: 1.6; color: #333; font-weight: bold;">SOU O PEQUENO PROTETOR DA FLORESTA. TENHO PODERES MÁGICOS E PUÇO CAÇADORES MAUS.</p>
+                </div>
+                <p>QUEM SOU EU?</p>
+                <div class="options">
+                  <button class="answer-btn" data-score="5">LUA</button>
+                  <button class="answer-btn" data-correct="true" data-score="5">CAIPORA</button>
+                  <button class="answer-btn" data-score="5">GATO</button>
+                </div>
+              </article>
+
+              <article class="card legend-card">
+                <h3>CHARADA 8</h3>
+                <div class="legend-art" aria-label="CHARADA DA MULA SEM CABEÇA">
+                  <p style="font-size: 1.1em; line-height: 1.6; color: #333; font-weight: bold;">SOU UM ANIMAL QUE NÃO TENHO CABEÇA. SAIO À NOITE SOLTANDO FOGO E FAZENDO BARULHO.</p>
+                </div>
+                <p>QUEM SOU EU?</p>
+                <div class="options">
+                  <button class="answer-btn" data-score="5">IARA</button>
+                  <button class="answer-btn" data-correct="true" data-score="5">MULA SEM CABEÇA</button>
+                  <button class="answer-btn" data-score="5">CURUPIRA</button>
+                </div>
+              </article>
+
+              <article class="card legend-card">
+                <h3>CHARADA 9</h3>
+                <div class="legend-art" aria-label="CHARADA DO LOBISOMEM">
+                  <p style="font-size: 1.1em; line-height: 1.6; color: #333; font-weight: bold;">DURANTE O DIA SOU HOMEM, MAS À NOITE EU VIRO UM LOBO. SAIO PELA RUA ASSUSTANDO PESSOAS.</p>
+                </div>
+                <p>QUEM SOU EU?</p>
+                <div class="options">
+                  <button class="answer-btn" data-score="5">BOITATÁ</button>
+                  <button class="answer-btn" data-correct="true" data-score="5">LOBISOMEM</button>
+                  <button class="answer-btn" data-score="5">BOTO</button>
+                </div>
+              </article>
+
+              <article class="card legend-card">
+                <h3>CHARADA 10</h3>
+                <div class="legend-art" aria-label="CHARADA DO NEGRINHO DO PASTOREIO">
+                  <p style="font-size: 1.1em; line-height: 1.6; color: #333; font-weight: bold;">SOU UM MENINO QUE TRABALHA NOS CAMPOS COM O GADO. TOCO VIOLÃO E AJUDO A GUARDAR O REBANHO.</p>
+                </div>
+                <p>QUEM SOU EU?</p>
+                <div class="options">
+                  <button class="answer-btn" data-score="5">SACI</button>
+                  <button class="answer-btn" data-correct="true" data-score="5">NEGRINHO DO PASTOREIO</button>
+                  <button class="answer-btn" data-score="5">IARA</button>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="tab-panel" id="trava" role="tabpanel">
+            <div class="trava-grid">
+              <article class="card trava-card">
+                <h3>TRAVA-LÍNGUA 1</h3>
+                <div class="trava-box">O SACI SACA O SAPO E O SAPO SACA O SACI.</div>
+                <input type="text" class="copy-input" data-answer="o saci saca o sapo e o sapo saca o saci" placeholder="COPIE O TRAVA-LÍNGUA" />
+                <button class="check-copy btn-secondary" data-score="5">VERIFICAR</button>
+              </article>
+
+              <article class="card trava-card">
+                <h3>TRAVA-LÍNGUA 2</h3>
+                <div class="trava-box">TROUXE TUDO PARA O TIO TICO, TICO TREMIA.</div>
+                <input type="text" class="copy-input" data-answer="trouxe tudo para o tio tico, tico tremia." placeholder="COPIE O TRAVA-LÍNGUA" />
+                <button class="check-copy btn-secondary" data-score="5">VERIFICAR</button>
+              </article>
+
+              <article class="card trava-card">
+                <h3>TRAVA-LÍNGUA 3</h3>
+                <div class="trava-box">CURIOSA CORUJA CURIOSA, CURA A CURIOSIDADE.</div>
+                <input type="text" class="copy-input" data-answer="curiosa coruja curiosa, cura a curiosidade." placeholder="COPIE O TRAVA-LÍNGUA" />
+                <button class="check-copy btn-secondary" data-score="5">VERIFICAR</button>
+              </article>
+
+              <article class="card trava-card">
+                <h3>TRAVA-LÍNGUA 4</h3>
+                <div class="trava-box">O PATO PATETA E O PATO PATA.</div>
+                <input type="text" class="copy-input" data-answer="o pato pateta e o pato pata." placeholder="COPIE O TRAVA-LÍNGUA" />
+                <button class="check-copy btn-secondary" data-score="5">VERIFICAR</button>
+              </article>
+
+              <article class="card trava-card">
+                <h3>TRAVA-LÍNGUA 5</h3>
+                <div class="trava-box">SABIA A SABIÁ QUE A SABIÁ SABIÁ.</div>
+                <input type="text" class="copy-input" data-answer="sabia a sabiá que a sabiá sabia." placeholder="COPIE O TRAVA-LÍNGUA" />
+                <button class="check-copy btn-secondary" data-score="5">VERIFICAR</button>
+              </article>
+            </div>
+          </div>
+
+          <div class="tab-panel" id="textos" role="tabpanel">
+            <div class="text-grid">
+              <article class="card text-card">
+                <h3>TEXTO 1</h3>
+                <p>O SACI É UM PERSONAGEM BRASILEIRO. ELE TEM UMA PERNA SÓ E GOSTA DE BRINCAR COM AS PESSOAS.</p>
+                <input type="text" class="copy-input" data-answer="o saci é um personagem brasileiro. ele tem uma perna só e gosta de brincar com as pessoas." placeholder="COPIE O TEXTO" />
+                <button class="check-copy btn-secondary" data-score="5">VERIFICAR</button>
+              </article>
+
+              <article class="card text-card">
+                <h3>TEXTO 2</h3>
+                <p>A IARA É UMA MULHER DO RIO. ELA É MUITO BONITA E FAZ AS PESSOAS ESCUTAREM SUA VOZ.</p>
+                <input type="text" class="copy-input" data-answer="a iara é uma mulher do rio. ela é muito bonita e faz as pessoas escutarem sua voz." placeholder="COPIE O TEXTO" />
+                <button class="check-copy btn-secondary" data-score="5">VERIFICAR</button>
+              </article>
+
+              <article class="card text-card">
+                <h3>TEXTO 3</h3>
+                <p>O CURUPIRA É UM GUARDIÃO DA FLORESTA. ELE PROTEGE AS ÁRVORES E OS ANIMAIS.</p>
+                <input type="text" class="copy-input" data-answer="o curupira é um guardião da floresta. ele protege as árvores e os animais." placeholder="COPIE O TEXTO" />
+                <button class="check-copy btn-secondary" data-score="5">VERIFICAR</button>
+              </article>
+
+              <article class="card text-card">
+                <h3>TEXTO 4</h3>
+                <p>O BOITATÁ É UMA LENDA QUE TEM FOGO. ELE CUIDA DAS ÁRVORES E DA NATUREZA.</p>
+                <input type="text" class="copy-input" data-answer="o boitatá é uma lenda que tem fogo. ele cuida das árvores e da natureza." placeholder="COPIE O TEXTO" />
+                <button class="check-copy btn-secondary" data-score="5">VERIFICAR</button>
+              </article>
+
+              <article class="card text-card">
+                <h3>TEXTO 5</h3>
+                <p>O FOLCLORE BRASILEIRO ENSINA SOBRE A HISTÓRIA, AS TRADIÇÕES E A CULTURA DO BRASIL.</p>
+                <input type="text" class="copy-input" data-answer="o folclore brasileiro ensina sobre a história, as tradições e a cultura do brasil." placeholder="COPIE O TEXTO" />
+                <button class="check-copy btn-secondary" data-score="5">VERIFICAR</button>
+              </article>
+            </div>
+          </div>
+
+          <div class="tab-panel" id="cartaz" role="tabpanel">
+            <div class="mini-card-panel poster-guide">
+              <h3>CARTAZ DIGITAL DO FOLCLORE BRASILEIRO</h3>
+
+              <div class="poster-form">
+                <label class="field-group">
+                  <span>TÍTULO DO CARTAZ</span>
+                  <input id="posterTitle" type="text" value="FOLCLORE BRASILEIRO" placeholder="EX: FOLCLORE BRASILEIRO" />
+                </label>
+
+                <label class="field-group">
+                  <span>NOME DO ALUNO</span>
+                  <input id="studentName" type="text" placeholder="EX: ANA" />
+                </label>
+
+                <div class="field-group">
+                  <span>ESCOLHA AS FIGURAS</span>
+                  <div class="figure-picker">
+                    <button type="button" class="figure-option selected" data-figure="🧑‍🦯 SACI PERERÊ">🧑‍🦯 SACI PERERÊ</button>
+                    <button type="button" class="figure-option" data-figure="🧜‍♀️ IARA">🧜‍♀️ IARA</button>
+                    <button type="button" class="figure-option" data-figure="🧑‍🌾 CURUPIRA">🧑‍🌾 CURUPIRA</button>
+                    <button type="button" class="figure-option" data-figure="🔥 BOITATÁ">🔥 BOITATÁ</button>
+                    <button type="button" class="figure-option" data-figure="🐬 BOTO">🐬 BOTO</button>
+                    <button type="button" class="figure-option" data-figure="🐺 LOBISOMEM">🐺 LOBISOMEM</button>
+                  </div>
+                </div>
+
+                <label class="field-group">
+                  <span>FRASE DO CARTAZ</span>
+                  <textarea id="posterText" class="poster-text" rows="6" placeholder="ESCREVA A MENSAGEM DO SEU CARTAZ...">EU AMO O FOLCLORE BRASILEIRO!</textarea>
+                </label>
+              </div>
+
+              <div id="posterPreview" class="poster-preview" aria-live="polite">
+                <p class="poster-label">CARTAZ DE FOLCLORE</p>
+                <h4 id="previewTitle">FOLCLORE BRASILEIRO</h4>
+                <p class="poster-author">ALUNO: <span id="previewStudent">ALUNO</span></p>
+                <div id="previewFigures" class="preview-figures">
+                  <span>🧑‍🦯 SACI PERERÊ</span>
+                </div>
+                <p id="previewMessage" class="preview-message">EU AMO O FOLCLORE BRASILEIRO!</p>
+              </div>
+
+              <div class="poster-actions">
+                <button type="button" class="btn-secondary ready-btn">PRONTO PARA APRENDER</button>
+                <button type="button" class="btn-primary export-pdf-btn">SALVAR EM PDF</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
