@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mundo Lógico - Pensamento Computacional (4º Ano)</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --secondary: #06b6d4;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --success: #10b981;
+            --error: #ef4444;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.2rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-top: 5px solid var(--primary);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: var(--primary);
+            font-size: 1.15rem;
+        }
+
+        .badge {
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .interactive-area {
+            background: #f1f5f9;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .btn {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 3px;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #0891b2;
+        }
+
+        .btn-audio {
+            background-color: #f59e0b;
+            font-size: 0.85rem;
+            padding: 0.3rem 0.6rem;
+            margin-bottom: 8px;
+        }
+        .btn-audio:hover {
+            background-color: #d97706;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            min-height: 24px;
+        }
+
+        .success { color: var(--success); }
+        .error { color: var(--error); }
+
+        /* Estilos do Mini-Jogo LightBot Animado 5x5 */
+        .grid-lightbot {
+            display: grid;
+            grid-template-columns: repeat(5, 45px);
+            grid-template-rows: repeat(5, 45px);
+            gap: 4px;
+            justify-content: center;
+            margin: 10px auto;
+        }
+
+        .cell {
+            background: #e2e8f0;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            transition: background 0.2s;
+        }
+
+        .cell.target { background: #fef08a; }
+        .cell.target-lit { background: #bbf7d0; }
+
+        .program-slot {
+            background: #ffffff;
+            border: 2px dashed #cbd5e1;
+            min-height: 35px;
+            border-radius: 6px;
+            padding: 5px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .command-chip {
+            background: var(--primary);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🤖 Mundo Lógico - Trilha de Pensamento Computacional</h1>
+        <p>Atividades interativas com áudio para apoio à leitura (4º Ano)</p>
+    </header>
+
+    <div class="container">
+        <div class="grid">
+            
+            <!-- Atividade 1: O Labirinto do Robô -->
+            <div class="card" style="border-top-color: #4f46e5;">
+                <div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3>🗺️ 1. O Labirinto do Robô</h3>
+                        <span class="badge" id="badge-robo">Fase 1/20</span>
+                    </div>
+                    <button class="btn btn-audio" onclick="falarTextoAtivo('robo')">🔊 Ouvir Pergunta</button>
+                    <p id="pergunta-robo" style="margin-top: 5px; font-weight: 500;"></p>
+                </div>
+                <div class="interactive-area">
+                    <div id="opcoes-robo" class="options-container"></div>
+                    <div id="feedback-robo" class="feedback"></div>
+                </div>
+            </div>
+
+            <!-- Atividade 2: Desmontando Tarefas -->
+            <div class="card" style="border-top-color: #06b6d4;">
+                <div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3>🧩 2. Desmontando Tarefas</h3>
+                        <span class="badge" id="badge-decomp">Fase 1/20</span>
+                    </div>
+                    <button class="btn btn-audio" onclick="falarTextoAtivo('decomp')">🔊 Ouvir Pergunta</button>
+                    <p id="pergunta-decomp" style="margin-top: 5px; font-weight: 500;"></p>
+                </div>
+                <div class="interactive-area">
+                    <div id="opcoes-decomp" class="options-container"></div>
+                    <div id="feedback-decomp" class="feedback"></div>
+                </div>
+            </div>
+
+            <!-- Atividade 3: Detetive de Padrões -->
+            <div class="card" style="border-top-color: #10b981;">
+                <div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3>🔍 3. Detetive de Padrões</h3>
+                        <span class="badge" id="badge-padrao">Fase 1/20</span>
+                    </div>
+                    <button class="btn btn-audio" onclick="falarTextoAtivo('padrao')">🔊 Ouvir Pergunta</button>
+                    <p id="pergunta-padrao" style="margin-top: 5px; font-weight: 500;"></p>
+                </div>
+                <div class="interactive-area">
+                    <div id="opcoes-padrao" class="options-container"></div>
+                    <div id="feedback-padrao" class="feedback"></div>
+                </div>
+            </div>
+
+            <!-- Atividade 4: Desafio LightBot Animado -->
+            <div class="card" style="border-top-color: #f59e0b;">
+                <div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3>💡 4. Desafio LightBot</h3>
+                        <span class="badge" id="badge-lightbot" style="background: #fef3c7; color: #b45309;">Fase 1/5</span>
+                    </div>
+                    <button class="btn btn-audio" onclick="falarTextoAtivo('lightbot')">🔊 Ouvir Instrução</button>
+                    <p id="instrucao-lightbot" style="margin-top: 5px; font-weight: 500; font-size: 0.9rem;"></p>
+                </div>
+                <div class="interactive-area">
+                    <div class="grid-lightbot" id="board-lightbot"></div>
+                    <p style="font-size: 0.8rem; margin: 5px 0; color: #64748b;">Fila de Comandos:</p>
+                    <div class="program-slot" id="programa-usuario"></div>
+                    <div>
+                        <button class="btn" style="background-color: #4f46e5;" onclick="adicionarComando('frente')">⬆️ Andar</button>
+                        <button class="btn" style="background-color: #06b6d4;" onclick="adicionarComando('virar')">🔄 Girar</button>
+                        <button class="btn" style="background-color: #10b981;" onclick="adicionarComando('acender')">💡 Acender</button>
+                    </div>
+                    <div style="margin-top: 5px;">
+                        <button class="btn" id="btn-executar" style="background-color: #10b981;" onclick="executarLightBotAnimado()">▶️ Executar</button>
+                        <button class="btn" style="background-color: #ef4444;" onclick="limparPrograma()">🗑️ Limpar</button>
+                    </div>
+                    <div id="feedback-lightbot" class="feedback"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>Desenvolvido para inspirar mentes brilhantes do Ensino Fundamental. 🚀</p>
+    </footer>
+
+    <script>
+        // --- SINTETIZADOR DE VOZ PARA ACESSIBILIDADE ---
+        function falarTexto(texto) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // Cancela falas anteriores pendentes
+                const utterance = new SpeechSynthesisUtterance(texto);
+                utterance.lang = 'pt-BR';
+                utterance.rate = 0.95; // Velocidade levemente ajustada para crianças
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        // --- BANCOS DE DADOS DE PERGUNTAS (1 a 20) ---
+        const desafiosRobo = [
+            { q: "Para o robô andar 1 casa para frente, qual comando usar?", opts: ["➡️ Frente", "⬅️ Trás", "⬆️ Cima"], resp: 0 },
+            { q: "Fase 2: O robô precisa dar 2 passos para a frente e 1 para a direita.", opts: ["➡️ ➡️ ⬇️", "⬇️ ➡️ ➡️", "⬅️ ⬆️ ➡️"], resp: 0 },
+            { q: "Fase 3: Qual comando repete a ação andar para frente 3 vezes seguidas?", opts: ["3 x [➡️ Frente]", "1 x [⬅️ Trás]", "2 x [⬆️ Cima]"], resp: 0 },
+            { q: "Fase 4: Desvie do obstáculo: Frente, Direita, Frente.", opts: ["➡️ ⬇️ ➡️", "⬅️ ⬆️ ⬅️", "⬇️ ➡️ ⬇️"], resp: 0 },
+            { q: "Fase 5: O robô está virado para o Sul e quer ir para o Leste, que é a direita.", opts: ["Virar à Direita", "Virar à Esquerda", "Dar meia-volta"], resp: 0 },
+            { q: "Fase 6: Sequência de 4 passos simétricos: 2 Direita, 2 Esquerda.", opts: ["➡️ ➡️ ⬅️ ⬅️", "⬆️ ⬇️ ⬆️ ⬇️", "➡️ ⬅️ ➡️ ⬅️"], resp: 0 },
+            { q: "Fase 7: Para acender a luz do robô e depois andar, qual a ordem certa?", opts: ["1. Acender e depois Andar", "1. Andar e depois Acender", "Apenas andar"], resp: 0 },
+            { q: "Fase 8: Se um comando repete 5 vezes a ação de dar 1 passo, quantos passos ele dá?", opts: ["5 passos", "1 passo", "10 passos"], resp: 0 },
+            { q: "Fase 9: Criando um quadrado: Direita, Baixo, Esquerda e qual o próximo?", opts: ["Cima", "Baixo", "Direita"], resp: 0 },
+            { q: "Fase 10: O robô pegou a chave e abriu a porta. Qual foi a ordem?", opts: ["Chave antes da porta", "Porta antes da chave", "Tudo junto"], resp: 0 },
+            { q: "Fase 11: Subir uma escada de 3 degraus com Frente e Cima repetidos.", opts: ["Repetir 3 vezes", "Repetir 1 vez", "Repetir 5 vezes"], resp: 0 },
+            { q: "Fase 12: Condicional: SE encontrar parede, então o que fazer?", opts: ["Virar para o lado", "Bater com força", "Desligar para sempre"], resp: 0 },
+            { q: "Fase 13: Condicional: SE ver moeda, então o robô deve...", opts: ["Coletar moeda", "Ignorar moeda", "Correr"], resp: 0 },
+            { q: "Fase 14: Algoritmo para dar meia volta e girar 180 graus.", opts: ["Virar 2 vezes para o mesmo lado", "Dar um pulo", "Andar para trás direto"], resp: 0 },
+            { q: "Fase 15: O robô tem 10 blocos de bateria. Andar gasta 2. Quantos restam após 3 passos?", opts: ["4 blocos", "6 blocos", "8 blocos"], resp: 0 },
+            { q: "Fase 16: Otimizando código: Em vez de andar 4 vezes seguidas, usamos...", opts: ["4 vezes a ação de andar", "2 vezes para trás", "1 vez para cima"], resp: 0 },
+            { q: "Fase 17: Qual destas opções é um bom algoritmo para escovar os dentes?", opts: ["Molhar, escovar e enxaguar", "Dormir, comer e correr", "Escrever, pintar e colar"], resp: 0 },
+            { q: "Fase 18: Se o robô executar Virar, Andar e Virar, ele faz um...", opts: ["Desvio ou curva", "Salto mortal", "Loop infinito"], resp: 0 },
+            { q: "Fase 19: Ordem de prioridade: O robô deve desviar de buracos antes de catar moedas?", opts: ["Sim, segurança primeiro", "Não, pegue moedas no buraco", "Tanto faz"], resp: 0 },
+            { q: "Fase 20: Desafio Mestre: Escreva o algoritmo final para sair do labirinto.", opts: ["Frente, Direita, Frente e Saída", "Parar e esperar", "Ir para trás direto"], resp: 0 }
+        ];
+
+        const desafiosDecomp = [
+            { q: "Qual é o PRIMEIRO passo correto para lavar as mãos?", opts: ["Molhar com água", "Enxugar na toalha", "Passar perfume"], resp: 0 },
+            { q: "Fase 2: Para fazer um bolo, qual etapa vem antes de assar?", opts: ["Misturar os ingredientes", "Comer o bolo pronto", "Lavar a travessa limpa"], resp: 0 },
+            { q: "Fase 3: Dividir a arrumação do quarto em partes menores significa...", opts: ["Arrumar por partes como cama e brinquedos", "Deixar tudo jogado", "Mudar de casa"], resp: 0 },
+            { q: "Fase 4: Qual a primeira parte ao montar um quebra-cabeça?", opts: ["Separar as peças pelas bordas e cantos", "Colar tudo na parede", "Guardar na caixa"], resp: 0 },
+            { q: "Fase 5: Para escrever uma redação escolar, qual deve ser o passo inicial?", opts: ["Fazer um rascunho das ideias e planejamento", "Entregar a folha em branco", "Escrever o título no final"], resp: 0 },
+            { q: "Fase 6: Decompor uma viagem de carro: O que vem antes de pegar a estrada?", opts: ["Fazer as malas e revisar o carro", "Chegar ao destino dormindo", "Comprar lembrancinhas"], resp: 0 },
+            { q: "Fase 7: Para plantar uma flor, qual subtarefa é a primeira?", opts: ["Preparar a terra e cavar o buraco", "Colher a flor", "Regar a flor murcha"], resp: 0 },
+            { q: "Fase 8: Dividir um problema grande em partes menores ajuda a...", opts: ["Resolver tudo com facilidade e calma", "Deixar o problema mais difícil", "Esquecer o problema"], resp: 0 },
+            { q: "Fase 9: Para desenhar um robô, qual forma geométrica podemos usar primeiro?", opts: ["O corpo principal em retângulo ou quadrado", "Pintar o fundo de preto", "Assinar o nome"], resp: 0 },
+            { q: "Fase 10: Qual é a primeira etapa ao organizar uma festa de aniversário?", opts: ["Definir a lista de convidados e o tema", "Comer o bolo antes da festa", "Acender as velas"], resp: 0 },
+            { q: "Fase 11: Para estudar para uma prova difícil, o que é melhor fazer?", opts: ["Estudar um pouco por dia dividindo os capítulos", "Estudar tudo em 5 minutos antes", "Não estudar"], resp: 0 },
+            { q: "Fase 12: Qual o passo inicial para trocar uma lâmpada queimada com segurança?", opts: ["Desligar o interruptor da luz", "Subir na cadeira correndo", "Quebrar o vidro"], resp: 0 },
+            { q: "Fase 13: Decomposição de uma receita de suco: O que fazer antes de espremer?", opts: ["Lavar e cortar as laranjas ao meio", "Beber o suco congelado", "Descascar com alicate"], resp: 0 },
+            { q: "Fase 14: Ao criar um jogo de videogame, o que os programadores fazem primeiro?", opts: ["Desenhar a ideia e as regras básicas no papel", "Lançar o jogo sem testar", "Desligar o computador"], resp: 0 },
+            { q: "Fase 15: Para lavar a louça de forma organizada, por onde começamos?", opts: ["Copos e talheres menos gordurosos", "Panela com gordura pesada", "Jogar tudo fora"], resp: 0 },
+            { q: "Fase 16: Qual é a primeira parte de uma história ou narrativa?", opts: ["A apresentação dos personagens e do lugar", "O final feliz", "O grande mistério"], resp: 0 },
+            { q: "Fase 17: Decompor o corpo humano: Quais são os sistemas básicos estudados?", opts: ["Respiratório, Digestório e Circulatório", "Carros, Rodovias e Motores", "Pintura, Música e Dança"], resp: 0 },
+            { q: "Fase 18: Para fazer uma pesquisa na internet, qual subtarefa vem antes de clicar?", opts: ["Definir as palavras-chave da busca", "Fechar o navegador", "Desligar a internet"], resp: 0 },
+            { q: "Fase 19: Ao construir uma casa de blocos, o que vem por último?", opts: ["O telhado e os detalhes finais", "A fundação e base", "O primeiro bloco"], resp: 0 },
+            { q: "Fase 20: Desafio Mestre: Como decompor o planejamento de um projeto escolar?", opts: ["Tema, Pesquisa, Rascunho e Apresentação", "Apenas improvisar no dia", "Copiar do colega"], resp: 0 }
+        ];
+
+        const desafiosPadrao = [
+            { q: "Qual a próxima cor na sequência: Vermelho, Azul, Verde, Vermelho, Azul, Verde, Vermelho e depois?", opts: ["Azul", "Vermelho", "Verde"], resp: 0 },
+            { q: "Fase 2: Qual a próxima forma: Triângulo, Quadrado, Triângulo, Quadrado, Triângulo e depois?", opts: ["Quadrado", "Triângulo", "Círculo"], resp: 0 },
+            { q: "Fase 3: Sequência numérica somando de 2 em 2: 2, 4, 6, 8 e depois?", opts: ["10", "9", "12"], resp: 0 },
+            { q: "Fase 4: Sequência de símbolos: Estrela, Estrela, Lua, Estrela, Estrela, Lua, Estrela e depois?", opts: ["Estrela", "Lua", "Sol"], resp: 1 },
+            { q: "Fase 5: Sequência numérica decrescente: 10, 9, 8, 7 e depois?", opts: ["6", "5", "8"], resp: 0 },
+            { q: "Fase 6: Padrão de setas: Cima, Direita, Baixo, Esquerda, Cima, Direita e depois?", opts: ["Baixo", "Esquerda", "Cima"], resp: 0 },
+            { q: "Fase 7: Sequência de saltos de 5 em 5: 5, 10, 15, 20 e depois?", opts: ["25", "22", "30"], resp: 0 },
+            { q: "Fase 8: Padrão alfabético pulando uma letra: A, C, E, G e depois?", opts: ["I", "H", "F"], resp: 0 },
+            { q: "Fase 9: Padrão de frutas: Maçã, Banana, Maçã, Banana, Maçã e depois?", opts: ["Banana", "Maçã", "Uva"], resp: 0 },
+            { q: "Fase 10: Sequência numérica dobrando: 2, 4, 8, 16 e depois?", opts: ["32", "20", "24"], resp: 0 },
+            { q: "Fase 11: Padrão geométrico: Verde, Amarelo, Vermelho, Verde, Amarelo e depois?", opts: ["Vermelho", "Azul", "Verde"], resp: 0 },
+            { q: "Fase 12: Sequência de dias: Segunda, Terça, Quarta, Quinta e depois?", opts: ["Sexta", "Domingo", "Sábado"], resp: 0 },
+            { q: "Fase 13: Padrão de clima: Sol, Chuva, Sol, Chuva, Sol e depois?", opts: ["Chuva", "Sol", "Neve"], resp: 0 },
+            { q: "Fase 14: Sequência numérica de 3 em 3: 3, 6, 9, 12 e depois?", opts: ["15", "14", "18"], resp: 0 },
+            { q: "Fase 15: Padrão de animais: Cachorro, Gato, Rato, Cachorro, Gato e depois?", opts: ["Rato", "Cachorro", "Gato"], resp: 0 },
+            { q: "Fase 16: Padrão geométrico avançado de quadrados escuros e claros.", opts: ["Quadrado Preto", "Quadrado Branco", "Vermelho"], resp: 0 },
+            { q: "Fase 17: Sequência decrescente de 5 em 5: 50, 45, 40, 35 e depois?", opts: ["30", "25", "32"], resp: 0 },
+            { q: "Fase 18: Padrão de estações do ano em ciclo contínuo.", opts: ["Outono", "Inverno", "Primavera"], resp: 0 },
+            { q: "Fase 19: Sequência com quadrados perfeitos: 1, 4, 9, 16 e depois?", opts: ["25", "20", "18"], resp: 0 },
+            { q: "Fase 20: Desafio Mestre de Padrões lógicos numéricos complexos.", opts: ["22", "20", "19"], resp: 0 }
+        ];
+
+        const fasesLightBot = [
+            { instrucao: "Dica: O robô precisa andar 2 casas para a direita e acender a lâmpada.", acoes: ["frente", "frente", "acender"], posInicial: 10, dirInicial: 0, alvo: 12 },
+            { instrucao: "Dica: Ande 1 casa, vire para baixo, ande mais 1 e acenda.", acoes: ["frente", "virar", "frente", "acender"], posInicial: 0, dirInicial: 0, alvo: 6 },
+            { instrucao: "Dica: Faça uma curva em L: Ande 2 para frente, vire e ande 1 para baixo.", acoes: ["frente", "frente", "virar", "frente", "acender"], posInicial: 0, dirInicial: 0, alvo: 11 },
+            { instrucao: "Dica: Siga em frente 3 vezes até chegar à lâmpada amarela.", acoes: ["frente", "frente", "frente", "acender"], posInicial: 20, dirInicial: 0, alvo: 23 },
+            { instrucao: "Dica Mestre: Dê 1 passo, vire, dê 2 passos, vire de novo e acenda!", acoes: ["frente", "virar", "frente", "frente", "virar", "acender"], posInicial: 4, dirInicial: 2, alvo: 14 }
+        ];
+
+        let nivelRobo = 0, nivelDecomp = 0, nivelPadrao = 0, nivelLightBot = 0;
+        let programaAtual = [];
+        let posRoboX = 0, posRoboY = 0, direcaoRobo = 0;
+
+        function carregarJogo() {
+            renderizarDesafio('robo', desafiosRobo, nivelRobo, 'badge-robo', 'pergunta-robo', 'opcoes-robo');
+            renderizarDesafio('decomp', desafiosDecomp, nivelDecomp, 'badge-decomp', 'pergunta-decomp', 'opcoes-decomp');
+            renderizarDesafio('padrao', desafiosPadrao, nivelPadrao, 'badge-padrao', 'pergunta-padrao', 'opcoes-padrao');
+            carregarLightBot();
+        }
+
+        function renderizarDesafio(tipo, listaDesafios, nivel, badgeId, pergId, opId) {
+            const badge = document.getElementById(badgeId);
+            const pergunta = document.getElementById(pergId);
+            const opcoes = document.getElementById(opId);
+            const feedback = document.getElementById(`feedback-${tipo}`);
+
+            feedback.innerHTML = "";
+
+            if (nivel >= listaDesafios.length) {
+                badge.innerText = "Concluído! 🏆";
+                pergunta.innerText = "Parabéns! Você completou todos os 20 níveis desta missão!";
+                opcoes.innerHTML = `<button class='btn' onclick='reiniciarMissao("${tipo}")'>🔄 Reiniciar</button>`;
+                return;
+            }
+
+            badge.innerText = `Fase ${nivel + 1}/20`;
+            const atual = listaDesafios[nivel];
+            pergunta.innerText = atual.q;
+            opcoes.innerHTML = "";
+
+            atual.opts.forEach((opt, index) => {
+                const btn = document.createElement("button");
+                btn.className = "btn";
+                btn.innerText = opt;
+                btn.onclick = () => verificarResposta(tipo, index, atual.resp);
+                opcoes.appendChild(btn);
+            });
+        }
+
+        function falarTextoAtivo(tipo) {
+            let texto = "";
+            if (tipo === 'robo') texto = desafiosRobo[nivelRobo]?.q;
+            else if (tipo === 'decomp') texto = desafiosDecomp[nivelDecomp]?.q;
+            else if (tipo === 'padrao') texto = desafiosPadrao[nivelPadrao]?.q;
+            else if (tipo === 'lightbot') texto = fasesLightBot[nivelLightBot]?.instrucao;
+
+            if (texto) falarTexto(texto);
+        }
+
+        function verificarResposta(tipo, escolha, correta) {
+            const feedback = document.getElementById(`feedback-${tipo}`);
+            if (escolha === correta) {
+                feedback.innerHTML = "<span class='success'>🎉 Correto! Avançando...</span>";
+                falarTexto("Correto! Avançando de nível.");
+                setTimeout(() => {
+                    if (tipo === 'robo') { nivelRobo++; }
+                    else if (tipo === 'decomp') { nivelDecomp++; }
+                    else if (tipo === 'padrao') { nivelPadrao++; }
+                    carregarJogo();
+                }, 900);
+            } else {
+                feedback.innerHTML = "<span class='error'>❌ Ops! Tente novamente.</span>";
+                falarTexto("Ops! Tente novamente.");
+            }
+        }
+
+        function reiniciarMissao(tipo) {
+            if (tipo === 'robo') nivelRobo = 0;
+            if (tipo === 'decomp') nivelDecomp = 0;
+            if (tipo === 'padrao') nivelPadrao = 0;
+            carregarJogo();
+        }
+
+        // --- FUNÇÕES DO LIGHTBOT ANIMADO ---
+        function carregarLightBot() {
+            const badge = document.getElementById("badge-lightbot");
+            const instrucao = document.getElementById("instrucao-lightbot");
+            const feedback = document.getElementById("feedback-lightbot");
+
+            feedback.innerHTML = "";
+            limparPrograma();
+
+            if (nivelLightBot >= fasesLightBot.length) {
+                badge.innerText = "Mestre do Bot! 🏆";
+                instrucao.innerText = "Incrível! Você concluiu todos os desafios estilo LightBot!";
+                document.getElementById("board-lightbot").innerHTML = "";
+                return;
+            }
+
+            badge.innerText = `Fase ${nivelLightBot + 1}/5`;
+            const fase = fasesLightBot[nivelLightBot];
+            instrucao.innerText = fase.instrucao;
+
+            posRoboX = fase.posInicial % 5;
+            posRoboY = Math.floor(fase.posInicial / 5);
+            direcaoRobo = fase.dirInicial;
+
+            desenharTabuleiroLightBot();
+        }
+
+        function desenharTabuleiroLightBot(alvoAceso = false) {
+            const board = document.getElementById("board-lightbot");
+            const fase = fasesLightBot[nivelLightBot];
+            board.innerHTML = "";
+
+            const simbolosDirecao = ["🤖➡️", "🤖⬇️", "🤖⬅️", "🤖⬆️"];
+
+            for (let i = 0; i < 25; i++) {
+                const cell = document.createElement("div");
+                cell.className = "cell";
+                const x = i % 5;
+                const y = Math.floor(i / 5);
+
+                if (i === fase.alvo) {
+                    cell.classList.add(alvoAceso ? "target-lit" : "target");
+                    cell.innerHTML = alvoAceso ? "✨" : "💡";
+                }
+
+                if (x === posRoboX && y === posRoboY) {
+                    cell.innerHTML = simbolosDirecao[direcaoRobo];
+                }
+
+                board.appendChild(cell);
+            }
+        }
+
+        function adicionarComando(cmd) {
+            if (programaAtual.length < 10) {
+                programaAtual.push(cmd);
+                atualizarSlotPrograma();
+            }
+        }
+
+        function limparPrograma() {
+            programaAtual = [];
+            atualizarSlotPrograma();
+            document.getElementById("feedback-lightbot").innerHTML = "";
+            if (nivelLightBot < fasesLightBot.length) {
+                const fase = fasesLightBot[nivelLightBot];
+                posRoboX = fase.posInicial % 5;
+                posRoboY = Math.floor(fase.posInicial / 5);
+                direcaoRobo = fase.dirInicial;
+                desenharTabuleiroLightBot(false);
+            }
+        }
+
+        function atualizarSlotPrograma() {
+            const slot = document.getElementById("programa-usuario");
+            slot.innerHTML = "";
+            if (programaAtual.length === 0) {
+                slot.innerHTML = "<span style='color: #94a3b8; font-size: 0.8rem;'>Monte sua sequência abaixo</span>";
+                return;
+            }
+            programaAtual.forEach(c => {
+                const chip = document.createElement("span");
+                chip.className = "command-chip";
+                chip.innerText = c === 'frente' ? '⬆️ Andar' : (c === 'virar' ? '🔄 Girar' : '💡 Acender');
+                slot.appendChild(chip);
+            });
+        }
+
+        async function executarLightBotAnimado() {
+            if (programaAtual.length === 0) return;
+            
+            const btnExec = document.getElementById("btn-executar");
+            const feedback = document.getElementById("feedback-lightbot");
+            btnExec.disabled = true;
+            feedback.innerHTML = "<span style='color: #d97706;'>🚀 Executando programa...</span>";
+
+            const fase = fasesLightBot[nivelLightBot];
+            
+            posRoboX = fase.posInicial % 5;
+            posRoboY = Math.floor(fase.posInicial / 5);
+            direcaoRobo = fase.dirInicial;
+            desenharTabuleiroLightBot(false);
+
+            let acendeuCorreto = false;
+
+            for (let i = 0; i < programaAtual.length; i++) {
+                await new Promise(resolve => setTimeout(resolve, 600));
+                
+                const cmd = programaAtual[i];
+                if (cmd === 'frente') {
+                    if (direcaoRobo === 0) posRoboX = Math.min(4, posRoboX + 1);
+                    else if (direcaoRobo === 1) posRoboY = Math.min(4, posRoboY + 1);
+                    else if (direcaoRobo === 2) posRoboX = Math.max(0, posRoboX - 1);
+                    else if (direcaoRobo === 3) posRoboY = Math.max(0, posRoboY - 1);
+                } else if (cmd === 'virar') {
+                    direcaoRobo = (direcaoRobo + 1) % 4;
+                } else if (cmd === 'acender') {
+                    const posAtualLinear = posRoboY * 5 + posRoboX;
+                    if (posAtualLinear === fase.alvo) {
+                        acendeuCorreto = true;
+                    }
+                }
+
+                desenharTabuleiroLightBot(acendeuCorreto);
+            }
+
+            const posFinalLinear = posRoboY * 5 + posRoboX;
+            const acertouFase = JSON.stringify(programaAtual) === JSON.stringify(fase.acoes) && posFinalLinear === fase.alvo;
+
+            if (acertouFase) {
+                feedback.innerHTML = "<span class='success'>🎉 Perfeito! O robô acionou a luz com sucesso!</span>";
+                falarTexto("Perfeito! O robô acionou a luz com sucesso!");
+                setTimeout(() => {
+                    nivelLightBot++;
+                    carregarJogo();
+                    btnExec.disabled = false;
+                }, 1400);
+            } else {
+                feedback.innerHTML = "<span class='error'>❌ O robô não chegou na lâmpada correta. Tente de novo!</span>";
+                falarTexto("O robô não chegou na lâmpada correta. Tente de novo.");
+                btnExec.disabled = false;
+            }
+        }
+
+        window.onload = carregarJogo;
+    </script>
+</body>
+</html>
