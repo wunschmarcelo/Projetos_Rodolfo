@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafios Interativos de Raciocínio Lógico & Programação - 4º Ano</title>
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --secondary-color: #2ECC71;
+            --error-color: #E74C3C;
+            --background-color: #F4F7F6;
+            --card-bg: #FFFFFF;
+            --text-color: #333333;
+            --shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        header h1 {
+            color: #2C3E50;
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            color: #7F8C8D;
+            font-size: 1rem;
+        }
+
+        .score-board {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            background: #fff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            font-weight: bold;
+            color: #34495E;
+        }
+
+        .score-item span {
+            color: var(--primary-color);
+        }
+
+        /* Container do Card */
+        .card-container {
+            width: 100%;
+            max-width: 540px;
+            height: 520px;
+            perspective: 1000px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+            box-shadow: var(--shadow);
+            border-radius: 15px;
+        }
+
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border: 2px solid #E0E0E0;
+        }
+
+        .card-front {
+            border-top: 6px solid var(--primary-color);
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            border-top: 6px solid var(--secondary-color);
+            background-color: #FAFAFA;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .category-tag {
+            background-color: #EBF5FB;
+            color: #2980B9;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            flex-grow: 1;
+            margin: 5px 0;
+            width: 100%;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #2C3E50;
+            white-space: pre-line;
+        }
+
+        .hint-text {
+            font-size: 0.85rem;
+            color: #E67E22;
+            background-color: #FDF2E9;
+            padding: 4px 10px;
+            border-radius: 8px;
+            border-left: 4px solid #E67E22;
+            margin-bottom: 10px;
+        }
+
+        /* Área de Resposta do Aluno Texto */
+        .answer-box {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .answer-box input {
+            width: 100%;
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: 2px solid #CBD5E1;
+            border-radius: 8px;
+            outline: none;
+            text-align: center;
+        }
+
+        /* ESTILOS DO MODO ROBÔ */
+        .robot-workspace {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            gap: 8px;
+        }
+
+        .grid-board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 4px;
+            background-color: #34495E;
+            padding: 6px;
+            border-radius: 8px;
+            width: 200px;
+            height: 200px;
+        }
+
+        .grid-cell {
+            background-color: #ECF0F1;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            user-select: none;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .command-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-cmd {
+            background-color: #3498DB;
+            color: white;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: transform 0.1s, background-color 0.2s;
+        }
+
+        .btn-cmd:hover {
+            background-color: #2980B9;
+        }
+
+        .btn-cmd:active {
+            transform: scale(0.9);
+        }
+
+        .program-queue {
+            display: flex;
+            gap: 4px;
+            min-height: 38px;
+            width: 100%;
+            background-color: #EDF2F7;
+            border: 2px dashed #CBD5E1;
+            border-radius: 8px;
+            padding: 4px;
+            align-items: center;
+            overflow-x: auto;
+        }
+
+        .cmd-icon {
+            background-color: #E2E8F0;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .robot-actions {
+            display: flex;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .btn-reset {
+            background-color: #E74C3C;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-submit {
+            background-color: #2ECC71;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .btn-submit:hover {
+            background-color: #27AE60;
+        }
+
+        .btn-unflip {
+            background-color: #95A5A6;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        /* Resultado */
+        .feedback-badge {
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 8px 16px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .feedback-correct {
+            background-color: #D4EDDA;
+            color: #155724;
+        }
+
+        .feedback-wrong {
+            background-color: #F8D7DA;
+            color: #721C24;
+        }
+
+        .user-given-answer {
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .answer-text {
+            font-size: 1.05rem;
+            color: #27AE60;
+            font-weight: bold;
+        }
+
+        .card-footer {
+            font-size: 0.8rem;
+            color: #7F8C8D;
+            text-align: center;
+        }
+
+        /* Botões de Controle Nav */
+        .controls {
+            display: flex;
+            gap: 15px;
+            width: 100%;
+            max-width: 540px;
+            justify-content: space-between;
+        }
+
+        .btn-nav {
+            background-color: #34495E;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .btn-nav:disabled {
+            background-color: #BDC3C7;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Lógica & Programação com Robô</h1>
+        <p>Aperte as setas para mover o robô até a bateria!</p>
+    </header>
+
+    <div class="score-board">
+        <div class="score-item" id="cardProgress">Card: <span>1 / 30</span></div>
+        <div class="score-item">Pontos: <span id="score">0</span></div>
+    </div>
+
+    <div class="card-container">
+        <div class="card" id="card">
+            <!-- Frente do Card -->
+            <div class="card-face card-front">
+                <div class="card-header">
+                    <span class="category-tag" id="categoryTag">Categoria</span>
+                </div>
+                <div class="card-body">
+                    <p class="question-text" id="questionText">Carregando pergunta...</p>
+                    <div class="hint-text" id="hintText">Dica: ...</div>
+                    
+                    <!-- MODO A: Digitação de Resposta Texto -->
+                    <div class="answer-box" id="textAnswerBox">
+                        <input type="text" id="studentInput" placeholder="Digite sua resposta aqui..." autocomplete="off">
+                        <button class="btn-submit" onclick="checkTextAnswer()">Enviar Resposta 🚀</button>
+                    </div>
+
+                    <!-- MODO B: Interface do Robô -->
+                    <div class="robot-workspace" id="robotAnswerBox" style="display: none;">
+                        <div class="grid-board" id="gridBoard"></div>
+                        
+                        <!-- Botões de Movimento em Tempo Real -->
+                        <div class="command-buttons">
+                            <button class="btn-cmd" onclick="moveRobot('⬆️')">⬆️</button>
+                            <button class="btn-cmd" onclick="moveRobot('⬇️')">⬇️</button>
+                            <button class="btn-cmd" onclick="moveRobot('⬅️')">⬅️</button>
+                            <button class="btn-cmd" onclick="moveRobot('➡️')">➡️</button>
+                        </div>
+
+                        <!-- Histórico do Caminho Percorrido -->
+                        <div class="program-queue" id="programQueue"></div>
+
+                        <div class="robot-actions">
+                            <button class="btn-reset" onclick="resetRobot()">🔄 Reiniciar Robô</button>
+                            <button class="btn-submit" onclick="checkRobotDestination()">CONFIRMAR CHEGADA 🚀</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">🔒 Chegue ao destino e confirme para virar o card</div>
+            </div>
+
+            <!-- Verso do Card -->
+            <div class="card-face card-back">
+                <div class="card-header">
+                    <span class="category-tag" style="background-color: #E8F8F5; color: #16A085;">Gabarito e Explicação</span>
+                </div>
+                <div class="card-body">
+                    <div id="feedbackBadge" class="feedback-badge"></div>
+                    <p id="userGivenAnswer" class="user-given-answer"></p>
+                    <p class="answer-text" id="answerText">Carregando resposta...</p>
+                    <button class="btn-unflip" onclick="unflipCard()">⬅️ Ver pergunta novamente</button>
+                </div>
+                <div class="card-footer">Avance para a próxima questão nos botões abaixo</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="btn-nav" id="prevBtn" onclick="prevCard()">Anterior</button>
+        <button class="btn-nav" id="nextBtn" onclick="nextCard()">Próximo</button>
+    </div>
+
+    <script>
+        const flashcards = [
+            // CARDS 1 A 25: CHARADAS E SEQUÊNCIAS
+            { category: "Sequência Numérica", question: "Qual número vem a seguir?\n5, 10, 15, 20, [ ? ]", hint: "Soma +5.", type: "text", validAnswers: ["25"], explanation: "25 (Regra: +5)" },
+            { category: "Sequência Numérica", question: "Qual número completa a sequência?\n2, 4, 8, 16, [ ? ]", hint: "Dobro do anterior.", type: "text", validAnswers: ["32"], explanation: "32 (Multiplicar por 2)" },
+            { category: "Sequência Numérica", question: "Qual é o próximo número?\n100, 90, 80, 70, [ ? ]", hint: "Diminui de 10 em 10.", type: "text", validAnswers: ["60"], explanation: "60 (Subtrair 10)" },
+            { category: "Sequência Numérica", question: "Descubra o número que falta:\n3, 6, 9, [ ? ], 15", hint: "Tabuada do 3.", type: "text", validAnswers: ["12"], explanation: "12 (Regra: +3)" },
+            { category: "Sequência Numérica", question: "Qual é o próximo elemento?\n1, 4, 9, 16, [ ? ]", hint: "Multiplique por ele mesmo (5x5).", type: "text", validAnswers: ["25"], explanation: "25 (5 x 5 = 25)" },
+            { category: "Padrão Visual", question: "Qual figura vem a seguir?\n🔴, 🟦, 🔴, 🟦, 🔴, [ ? ]", hint: "Observe a alternância.", type: "text", validAnswers: ["quadrado", "azul"], explanation: "🟦 (Quadrado azul)" },
+            { category: "Padrão Visual", question: "Para qual direção a seta apontará?\n⬆️, ➡️, ⬇️, ⬅️, [ ? ]", hint: "Gire no sentido horário.", type: "text", validAnswers: ["cima"], explanation: "⬆️ (Para cima)" },
+            { category: "Padrão Visual", question: "Qual símbolo completa o padrão?\n⭐, ⭐, 🌙, ⭐, ⭐, 🌙, ⭐, [ ? ]", hint: "Padrão de duas estrelas e uma lua.", type: "text", validAnswers: ["estrela"], explanation: "⭐ (Estrela)" },
+            { category: "Padrão Visual", question: "Quantos lados tem a próxima figura?\nTriângulo (3), Quadrado (4), Pentágono (5), [ ? ]", hint: "Adicione mais 1 lado.", type: "text", validAnswers: ["6", "seis"], explanation: "Hexágono (6 lados)" },
+            { category: "Padrão Visual", question: "Qual emoji completa a sequência?\n😀, 😂, 😀, 😂, 😀, [ ? ]", hint: "Acontece alternadamente.", type: "text", validAnswers: ["rindo", "😂"], explanation: "😂 (Emoji rindo)" },
+            { category: "Dedução Lógica", question: "Ana é mais alta que Bia. Bia é mais alta que Carla. Quem é a mais alta?", hint: "Ordene as três.", type: "text", validAnswers: ["ana"], explanation: "Ana é a mais alta." },
+            { category: "Dedução Lógica", question: "3 caixas: vermelha, azul e verde. A bola NÃO está na azul e nem na verde. Onde está?", hint: "Elimine opções.", type: "text", validAnswers: ["vermelha"], explanation: "Na caixa vermelha!" },
+            { category: "Dedução Lógica", question: "1 gato come 1 peixe em 1 min. Quanto tempo 3 gatos levam para comer 3 peixes juntos?", hint: "Comem ao mesmo tempo!", type: "text", validAnswers: ["1", "1 min", "1 minuto"], explanation: "1 minuto!" },
+            { category: "Dedução Lógica", question: "O pai de Lucas tem 3 filhos: Pipoca, Pamonha e... quem é o terceiro?", hint: "Atenção ao enunciado!", type: "text", validAnswers: ["lucas"], explanation: "Lucas!" },
+            { category: "Dedução Lógica", question: "Se ontem foi terça-feira, que dia será amanhã?", hint: "Descubra o HOJE primeiro.", type: "text", validAnswers: ["quinta"], explanation: "Quinta-feira!" },
+            { category: "Desafio Matemático", question: "Qual é o número oculto?\n10 + [ ? ] = 25", hint: "25 - 10.", type: "text", validAnswers: ["15"], explanation: "15" },
+            { category: "Desafio Matemático", question: "Se 1 maçã = 5 e 1 banana = 2, quanto valem: 2 maçãs + 1 banana?", hint: "5 + 5 + 2.", type: "text", validAnswers: ["12"], explanation: "12" },
+            { category: "Desafio Matemático", question: "Qual número falta?\n50, 45, 40, [ ? ], 30", hint: "Subtraia 5.", type: "text", validAnswers: ["35"], explanation: "35" },
+            { category: "Desafio Matemático", question: "4 carros no estacionamento. Quantas rodas no total?", hint: "4 x 4.", type: "text", validAnswers: ["16"], explanation: "16 rodas" },
+            { category: "Desafio Matemático", question: "Descubra a lógica:\n1+2=3 | 2+3=5 | 3+5=8 | 5+8=[ ? ]", hint: "Some os dois anteriores.", type: "text", validAnswers: ["13"], explanation: "13" },
+            { category: "Charada Lógica", question: "O que fica mais molhado quanto mais seca?", hint: "Usa no banho.", type: "text", validAnswers: ["toalha"], explanation: "A toalha!" },
+            { category: "Charada Lógica", question: "O que passa pela cidade inteira sem se mover?", hint: "Carros andam nela.", type: "text", validAnswers: ["rua", "estrada"], explanation: "A rua!" },
+            { category: "Charada Lógica", question: "O que tem teclas/chaves mas não abre portas?", hint: "Instrumento musical ou computador.", type: "text", validAnswers: ["piano", "teclado"], explanation: "O piano / teclado!" },
+            { category: "Charada Lógica", question: "Quanto mais você tira dele, maior ele fica. O que é?", hint: "Cavar na areia.", type: "text", validAnswers: ["buraco"], explanation: "Um buraco!" },
+            { category: "Charada Lógica", question: "Tenho 4 pernas mas não ando. Apoio a comida. O que sou?", hint: "Móvel de jantar.", type: "text", validAnswers: ["mesa"], explanation: "A mesa!" },
+
+            // CARDS 26 A 30: DESAFIOS DE PROGRAMAÇÃO ROBÔ
+            {
+                category: "Programação de Robô 🤖",
+                question: "Nível 1: Guie o robô 🤖 com as setas até a bateria 🔋",
+                hint: "Clique nas setas para o robô andar.",
+                type: "robot",
+                startPos: { r: 0, c: 0 },
+                targetPos: { r: 2, c: 2 },
+                obstacles: [],
+                explanation: "O robô andou até a bateria com sucesso!"
+            },
+            {
+                category: "Programação de Robô 🤖",
+                question: "Nível 2: Desvie da pedra 🪨 para pegar a bateria 🔋",
+                hint: "A pedra bloqueia o caminho reto. Contorne-a!",
+                type: "robot",
+                startPos: { r: 0, c: 0 },
+                targetPos: { r: 0, c: 3 },
+                obstacles: [{ r: 0, c: 1 }],
+                explanation: "Você contornou a pedra e recarregou o robô!"
+            },
+            {
+                category: "Programação de Robô 🤖",
+                question: "Nível 3: Caminho em Zigue-Zague",
+                hint: "Atenção para não bater nas pedras 🪨.",
+                type: "robot",
+                startPos: { r: 3, c: 0 },
+                targetPos: { r: 0, c: 3 },
+                obstacles: [{ r: 3, c: 1 }, { r: 1, c: 2 }],
+                explanation: "Ótima navegação entre os obstáculos!"
+            },
+            {
+                category: "Programação de Robô 🤖",
+                question: "Nível 4: Labirinto Curto",
+                hint: "Procure a passagem livre na parte inferior.",
+                type: "robot",
+                startPos: { r: 0, c: 0 },
+                targetPos: { r: 3, c: 3 },
+                obstacles: [{ r: 0, c: 1 }, { r: 1, c: 1 }, { r: 2, c: 1 }],
+                explanation: "Você encontrou o único caminho seguro pelo labirinto!"
+            },
+            {
+                category: "Programação de Robô 🤖",
+                question: "Nível 5: Desafio Final de Movimentação",
+                hint: "Calcule bem os passos até a bateria 🔋.",
+                type: "robot",
+                startPos: { r: 1, c: 0 },
+                targetPos: { r: 2, c: 3 },
+                obstacles: [{ r: 1, c: 1 }, { r: 2, c: 1 }, { r: 1, c: 2 }],
+                explanation: "Parabéns! Excelente controle e noção espacial!"
+            }
+        ];
+
+        let currentIndex = 0;
+        let score = 0;
+        const answeredCards = new Set();
+        let userRobotQueue = [];
+        let robotCurrentPos = { r: 0, c: 0 };
+
+        const card = document.getElementById('card');
+        const categoryTag = document.getElementById('categoryTag');
+        const questionText = document.getElementById('questionText');
+        const hintText = document.getElementById('hintText');
+        const textAnswerBox = document.getElementById('textAnswerBox');
+        const robotAnswerBox = document.getElementById('robotAnswerBox');
+        const studentInput = document.getElementById('studentInput');
+        const answerText = document.getElementById('answerText');
+        const feedbackBadge = document.getElementById('feedbackBadge');
+        const userGivenAnswer = document.getElementById('userGivenAnswer');
+        const cardProgress = document.getElementById('cardProgress');
+        const scoreDisplay = document.getElementById('score');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const gridBoard = document.getElementById('gridBoard');
+        const programQueue = document.getElementById('programQueue');
+
+        function normalizeText(text) {
+            return text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+        }
+
+        function updateCard() {
+            card.classList.remove('flipped');
+
+            setTimeout(() => {
+                const item = flashcards[currentIndex];
+                categoryTag.innerText = item.category;
+                questionText.innerText = item.question;
+                hintText.innerText = "💡 Dica: " + item.hint;
+                answerText.innerText = "Explicação: " + item.explanation;
+                cardProgress.innerHTML = `Card: <span>${currentIndex + 1} / ${flashcards.length}</span>`;
+                studentInput.value = "";
+                
+                feedbackBadge.className = "feedback-badge";
+                feedbackBadge.innerText = "";
+                userGivenAnswer.innerText = "";
+
+                if (item.type === "robot") {
+                    textAnswerBox.style.display = "none";
+                    robotAnswerBox.style.display = "flex";
+                    resetRobot();
+                } else {
+                    textAnswerBox.style.display = "flex";
+                    robotAnswerBox.style.display = "none";
+                }
+
+                prevBtn.disabled = currentIndex === 0;
+                nextBtn.disabled = currentIndex === flashcards.length - 1;
+            }, 150);
+        }
+
+        /* LÓGICA DO ROBÔ COM MOVIMENTO EM TEMPO REAL */
+        function resetRobot() {
+            const item = flashcards[currentIndex];
+            robotCurrentPos = { ...item.startPos };
+            userRobotQueue = [];
+            renderRobotGrid();
+            renderProgramQueue();
+        }
+
+        function renderRobotGrid() {
+            const item = flashcards[currentIndex];
+            gridBoard.innerHTML = "";
+
+            for (let r = 0; r < 4; r++) {
+                for (let c = 0; c < 4; c++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'grid-cell';
+                    cell.id = `cell-${r}-${c}`;
+
+                    const isRobotHere = (r === robotCurrentPos.r && c === robotCurrentPos.c);
+                    const isTargetHere = (r === item.targetPos.r && c === item.targetPos.c);
+                    const isObstacleHere = item.obstacles.some(obs => obs.r === r && obs.c === c);
+
+                    if (isRobotHere && isTargetHere) {
+                        cell.innerText = "🤖🔋"; // Robô em cima da bateria!
+                    } else if (isRobotHere) {
+                        cell.innerText = "🤖";
+                    } else if (isTargetHere) {
+                        cell.innerText = "🔋";
+                    } else if (isObstacleHere) {
+                        cell.innerText = "🪨";
+                    }
+
+                    gridBoard.appendChild(cell);
+                }
+            }
+        }
+
+        function moveRobot(direction) {
+            const item = flashcards[currentIndex];
+            let nextPos = { ...robotCurrentPos };
+
+            if (direction === '⬆️') nextPos.r--;
+            if (direction === '⬇️') nextPos.r++;
+            if (direction === '⬅️') nextPos.c--;
+            if (direction === '➡️') nextPos.c++;
+
+            // Validação 1: Limites do Tabuleiro
+            if (nextPos.r < 0 || nextPos.r > 3 || nextPos.c < 0 || nextPos.c > 3) {
+                alert("⚠️ O robô não pode sair do tabuleiro!");
+                return;
+            }
+
+            // Validação 2: Colisão com Pedra
+            if (item.obstacles.some(obs => obs.r === nextPos.r && obs.c === nextPos.c)) {
+                alert("💥 Ops! Tem uma pedra no caminho! Tente outra direção.");
+                return;
+            }
+
+            // Move o robô se estiver livre
+            robotCurrentPos = nextPos;
+            userRobotQueue.push(direction);
+            
+            renderRobotGrid();
+            renderProgramQueue();
+        }
+
+        function renderProgramQueue() {
+            programQueue.innerHTML = "";
+            if (userRobotQueue.length === 0) {
+                programQueue.innerHTML = `<span style="font-size:0.8rem; color:#A0AEC0; padding-left: 5px;">Aperte as setas para mover o robô...</span>`;
+                return;
+            }
+            userRobotQueue.forEach((cmd) => {
+                const icon = document.createElement('div');
+                icon.className = 'cmd-icon';
+                icon.innerText = cmd;
+                programQueue.appendChild(icon);
+            });
+        }
+
+        function checkRobotDestination() {
+            const item = flashcards[currentIndex];
+            const reachedTarget = (robotCurrentPos.r === item.targetPos.r && robotCurrentPos.c === item.targetPos.c);
+
+            if (reachedTarget) {
+                feedbackBadge.innerText = "🎉 Parabéns! O robô chegou à bateria!";
+                feedbackBadge.className = "feedback-badge feedback-correct";
+                if (!answeredCards.has(currentIndex)) {
+                    score += 15;
+                    answeredCards.add(currentIndex);
+                    scoreDisplay.innerText = score;
+                }
+            } else {
+                feedbackBadge.innerText = "❌ O robô ainda não chegou na bateria 🔋!";
+                feedbackBadge.className = "feedback-badge feedback-wrong";
+            }
+
+            userGivenAnswer.innerText = `Sua sequência de passos foi: ${userRobotQueue.length > 0 ? userRobotQueue.join(' ') : "Nenhum passo dado"}`;
+            card.classList.add('flipped');
+        }
+
+        /* LÓGICA DE RESPOSTAS DE TEXTO */
+        function checkTextAnswer() {
+            const rawInput = studentInput.value.trim();
+            if (!rawInput) {
+                alert("Por favor, digite sua resposta antes de enviar!");
+                return;
+            }
+
+            const cleanInput = normalizeText(rawInput);
+            const current = flashcards[currentIndex];
+            
+            const isCorrect = current.validAnswers.some(valid => {
+                const cleanValid = normalizeText(valid);
+                return cleanInput === cleanValid || cleanInput.includes(cleanValid);
+            });
+
+            if (isCorrect) {
+                feedbackBadge.innerText = "🎉 Parabéns! Você acertou!";
+                feedbackBadge.className = "feedback-badge feedback-correct";
+                if (!answeredCards.has(currentIndex)) {
+                    score += 10;
+                    answeredCards.add(currentIndex);
+                    scoreDisplay.innerText = score;
+                }
+            } else {
+                feedbackBadge.innerText = "❌ Quase lá! Veja a resposta correta:";
+                feedbackBadge.className = "feedback-badge feedback-wrong";
+            }
+
+            userGivenAnswer.innerText = `Sua resposta foi: "${rawInput}"`;
+            card.classList.add('flipped');
+        }
+
+        function unflipCard() {
+            card.classList.remove('flipped');
+        }
+
+        function nextCard() {
+            if (currentIndex < flashcards.length - 1) {
+                currentIndex++;
+                updateCard();
+            }
+        }
+
+        function prevCard() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateCard();
+            }
+        }
+
+        studentInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') checkTextAnswer();
+        });
+
+        // Inicializa
+        updateCard();
+    </script>
+</body>
+</html>
