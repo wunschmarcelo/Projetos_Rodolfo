@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mestre da Sequência Lógica & Robô Programador</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            purple: '#7C3AED',
+                            pink: '#EC4899',
+                            yellow: '#F59E0B',
+                            green: '#10B981',
+                            blue: '#3B82F6',
+                            orange: '#F97316'
+                        }
+                    },
+                    fontFamily: {
+                        fredoka: ['"Fredoka One"', 'cursive'],
+                        sans: ['Nunito', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        }
+        .font-fredoka {
+            font-family: 'Fredoka One', cursive;
+        }
+        .btn-bounce {
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+        .btn-bounce:active {
+            transform: scale(0.95);
+        }
+        .card-pulse {
+            animation: pulse-soft 2s infinite;
+        }
+        @keyframes pulse-soft {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        @keyframes robot-hop {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+        .robot-anim {
+            animation: robot-hop 0.5s ease-in-out infinite;
+        }
+        .robot-sprite {
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: inline-block;
+        }
+        .trail-dot {
+            animation: pulse-trail 1.5s infinite alternate;
+        }
+        @keyframes pulse-trail {
+            from { opacity: 0.4; transform: scale(0.8); }
+            to { opacity: 0.8; transform: scale(1.1); }
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col min-h-screen text-slate-800 antialiased selection:bg-purple-300">
+
+    <!-- Header -->
+    <header class="bg-white border-b-4 border-purple-200 sticky top-0 z-30 shadow-md">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="app.showHome()">
+                <div class="w-12 h-12 bg-gradient-to-tr from-purple-600 to-pink-500 rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg transform rotate-3 hover:rotate-0 transition-transform">
+                    🧠
+                </div>
+                <div>
+                    <h1 class="font-fredoka text-xl md:text-2xl text-purple-700 tracking-wide leading-none">LOGICMANIA</h1>
+                    <p class="text-xs font-bold text-slate-500 tracking-wider">SEQUÊNCIAS & PROGRAMAÇÃO</p>
+                </div>
+            </div>
+
+            <!-- Global Score Board -->
+            <div class="flex items-center gap-4 bg-slate-100 px-4 py-2 rounded-full border-2 border-slate-200">
+                <div class="flex items-center gap-1.5" title="Sua Pontuação Total">
+                    <i class="fa-solid fa-trophy text-amber-500 text-lg"></i>
+                    <span id="global-score" class="font-fredoka text-slate-700 text-lg">0</span>
+                </div>
+                <div class="h-4 w-0.5 bg-slate-300"></div>
+                <div class="flex items-center gap-1.5" title="Estrelas de Conquista">
+                    <i class="fa-solid fa-star text-yellow-400 text-lg"></i>
+                    <span id="global-stars" class="font-fredoka text-slate-700 text-lg">0</span>
+                </div>
+                <div class="h-4 w-0.5 bg-slate-300 hidden sm:block"></div>
+                <button id="sound-toggle-btn" onclick="soundManager.toggleSound()" class="hidden sm:flex items-center text-slate-600 hover:text-purple-600 transition-colors" title="Ativar/Desativar Som">
+                    <i id="sound-icon" class="fa-solid fa-volume-high text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-6xl w-full mx-auto p-4 sm:p-6 flex flex-col justify-center">
+
+        <!-- VIEW 1: HOME / MENU -->
+        <section id="view-home" class="space-y-8 py-4">
+            <!-- Hero Banner -->
+            <div class="bg-gradient-to-r from-purple-600 via-pink-500 to-orange-400 rounded-3xl p-6 sm:p-10 text-white shadow-xl relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 opacity-20 text-9xl font-bold select-none">🤖 🧩</div>
+                <div class="relative z-10 max-w-2xl">
+                    <span class="inline-block bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-3">2º Ano do Ensino Fundamental 🚀</span>
+                    <h2 class="font-fredoka text-3xl sm:text-5xl leading-tight mb-3">Desafie sua mente e programe o Robô!</h2>
+                    <p class="text-white/90 text-sm sm:text-base mb-6 font-medium">Descubra padrões em cores, números, letras e ajude nosso robô a encontrar a estrela com comandos de direção!</p>
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="app.startRobotGame()" class="bg-emerald-400 hover:bg-emerald-300 text-slate-900 font-bold px-6 py-3 rounded-2xl shadow-lg border-b-4 border-emerald-600 transition-all btn-bounce flex items-center gap-2">
+                            🤖 Jogar Caminho do Robô
+                        </button>
+                        <button onclick="app.startGame('time')" class="bg-yellow-400 hover:bg-yellow-300 text-slate-900 font-bold px-5 py-3 rounded-2xl shadow-lg border-b-4 border-yellow-600 transition-all btn-bounce flex items-center gap-2">
+                            <i class="fa-solid fa-bolt text-lg"></i> Desafio Rápido
+                        </button>
+                        <button onclick="app.showHowToPlay()" class="bg-white/20 hover:bg-white/30 backdrop-blur-md text-white font-bold px-5 py-3 rounded-2xl transition-all border border-white/40">
+                            <i class="fa-solid fa-circle-question mr-1"></i> Como Jogar?
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Modes Selection -->
+            <div>
+                <h3 class="font-fredoka text-2xl text-slate-700 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-gamepad text-purple-600"></i> Modos de Jogo
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    
+                    <!-- Mode Robot (Lightbot style) -->
+                    <div onclick="app.startRobotGame()" class="bg-emerald-50 border-2 border-emerald-300 hover:border-emerald-500 rounded-2xl p-5 cursor-pointer shadow-sm hover:shadow-xl transition-all transform hover:-translate-y-1 group col-span-1 sm:col-span-2 lg:col-span-1">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center text-3xl font-bold group-hover:scale-110 transition-transform">
+                                🤖
+                            </div>
+                            <span class="bg-emerald-200 text-emerald-800 text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase">Novo! estilo Lightbot</span>
+                        </div>
+                        <h4 class="font-fredoka text-xl text-emerald-900 mb-1">Caminho do Robô</h4>
+                        <p class="text-xs text-slate-600">Programe os passos do robô com setas para desviar de obstáculos e pegar a estrela!</p>
+                    </div>
+
+                    <!-- Mode 1 -->
+                    <div onclick="app.startGame('complete')" class="bg-white border-2 border-purple-200 hover:border-purple-500 rounded-2xl p-5 cursor-pointer shadow-sm hover:shadow-xl transition-all transform hover:-translate-y-1 group">
+                        <div class="w-14 h-14 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center text-2xl font-bold mb-4 group-hover:scale-110 transition-transform">
+                            🧩
+                        </div>
+                        <h4 class="font-fredoka text-xl text-purple-800 mb-1">Complete a Sequência</h4>
+                        <p class="text-xs text-slate-500">Encontre o elemento que falta na posição certa do padrão.</p>
+                    </div>
+
+                    <!-- Mode 2 -->
+                    <div onclick="app.startGame('rule')" class="bg-white border-2 border-pink-200 hover:border-pink-500 rounded-2xl p-5 cursor-pointer shadow-sm hover:shadow-xl transition-all transform hover:-translate-y-1 group">
+                        <div class="w-14 h-14 bg-pink-100 text-pink-600 rounded-xl flex items-center justify-center text-2xl font-bold mb-4 group-hover:scale-110 transition-transform">
+                            🔍
+                        </div>
+                        <h4 class="font-fredoka text-xl text-pink-800 mb-1">Descubra a Regra</h4>
+                        <p class="text-xs text-slate-500">Identifique qual é a regra oculta da sequência apresentada.</p>
+                    </div>
+
+                    <!-- Mode 3 -->
+                    <div onclick="app.startGame('next')" class="bg-white border-2 border-blue-200 hover:border-blue-500 rounded-2xl p-5 cursor-pointer shadow-sm hover:shadow-xl transition-all transform hover:-translate-y-1 group">
+                        <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-2xl font-bold mb-4 group-hover:scale-110 transition-transform">
+                            ➡️
+                        </div>
+                        <h4 class="font-fredoka text-xl text-blue-800 mb-1">Próximo Elemento</h4>
+                        <p class="text-xs text-slate-500">Qual é o próximo passo da sequência? Qual figura vem a seguir?</p>
+                    </div>
+
+                    <!-- Mode 4 -->
+                    <div onclick="app.startGame('time')" class="bg-white border-2 border-amber-200 hover:border-amber-500 rounded-2xl p-5 cursor-pointer shadow-sm hover:shadow-xl transition-all transform hover:-translate-y-1 group">
+                        <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center text-2xl font-bold mb-4 group-hover:scale-110 transition-transform">
+                            ⏱️
+                        </div>
+                        <h4 class="font-fredoka text-xl text-amber-800 mb-1">Desafio do Tempo</h4>
+                        <p class="text-xs text-slate-500">Responda o máximo de sequências corretas em 60 segundos!</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Categories / Level Selector -->
+            <div class="bg-white p-6 rounded-3xl border-2 border-slate-200 shadow-sm">
+                <h3 class="font-fredoka text-xl text-slate-700 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-pink-500"></i> Configurações do Desafio
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-bold text-slate-600 mb-2">Categoria das Sequências:</label>
+                        <select id="category-select" class="w-full bg-slate-50 border-2 border-slate-200 text-slate-700 font-semibold rounded-xl px-4 py-2.5 outline-none focus:border-purple-500 transition-colors">
+                            <option value="all">🌟 Todas as Categorias (Misto)</option>
+                            <option value="colors">🎨 Cores e Matrizes</option>
+                            <option value="shapes">🔷 Formas Geométricas</option>
+                            <option value="numbers">🔢 Números (2º Ano)</option>
+                            <option value="letters">🔤 Letras e Vogais</option>
+                            <option value="figures">🐶 Figuras e Emojis</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-600 mb-2">Nível de Dificuldade:</label>
+                        <div class="grid grid-cols-3 gap-2" id="difficulty-buttons">
+                            <button onclick="app.setDifficulty('easy')" id="diff-easy" class="diff-btn bg-emerald-50 text-emerald-700 border-2 border-emerald-400 font-bold py-2 rounded-xl text-sm transition-all">Fácil</button>
+                            <button onclick="app.setDifficulty('medium')" id="diff-medium" class="diff-btn bg-slate-100 text-slate-600 border-2 border-slate-200 font-bold py-2 rounded-xl text-sm transition-all">Médio</button>
+                            <button onclick="app.setDifficulty('hard')" id="diff-hard" class="diff-btn bg-slate-100 text-slate-600 border-2 border-slate-200 font-bold py-2 rounded-xl text-sm transition-all">Difícil</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 2: GAMEPLAY (SEQUENCES) -->
+        <section id="view-game" class="hidden flex-col gap-4 py-2">
+            <!-- Game Top Info Bar -->
+            <div class="bg-white p-4 rounded-2xl border-2 border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-3">
+                <button onclick="app.showHome()" class="text-slate-500 hover:text-purple-600 font-bold text-sm flex items-center gap-1.5 transition-colors">
+                    <i class="fa-solid fa-arrow-left"></i> Voltar ao Menu
+                </button>
+
+                <div class="flex items-center gap-4">
+                    <div id="streak-counter" class="hidden items-center gap-1 text-orange-500 font-fredoka text-sm bg-orange-50 border border-orange-200 px-3 py-1 rounded-full">
+                        🔥 Combo x<span id="streak-val">0</span>
+                    </div>
+
+                    <!-- Timer Badge (Only for Time Mode) -->
+                    <div id="timer-badge" class="hidden items-center gap-1.5 bg-red-100 border-2 border-red-300 text-red-600 px-3 py-1 rounded-full font-fredoka">
+                        <i class="fa-solid fa-stopwatch animate-spin"></i>
+                        <span id="time-left">60</span>s
+                    </div>
+
+                    <div class="text-slate-500 font-bold text-sm">
+                        Questão: <span id="current-question-num" class="text-purple-600 font-fredoka">1</span>/<span id="total-questions-num" class="text-slate-700 font-fredoka">10</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="bg-white rounded-3xl border-4 border-purple-200 p-6 sm:p-8 shadow-md relative overflow-hidden flex flex-col items-center">
+                <!-- Hint / Category Tag -->
+                <div class="w-full flex items-center justify-between mb-4">
+                    <span id="game-category-tag" class="bg-purple-100 text-purple-700 text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
+                        Categoria
+                    </span>
+                    <button onclick="app.useHint()" id="hint-btn" class="bg-amber-100 hover:bg-amber-200 border border-amber-300 text-amber-800 text-xs font-bold px-3 py-1.5 rounded-xl transition-all flex items-center gap-1">
+                        <i class="fa-solid fa-lightbulb text-yellow-500"></i> Dica (<span id="hints-count">2</span>)
+                    </button>
+                </div>
+
+                <!-- Title / Instructions -->
+                <h3 id="question-prompt" class="font-fredoka text-xl sm:text-2xl text-slate-800 text-center mb-6">
+                    Complete a sequência lógica abaixo:
+                </h3>
+
+                <!-- Sequence Board -->
+                <div id="sequence-container" class="flex flex-wrap items-center justify-center gap-3 sm:gap-4 my-4 min-h-[100px] w-full max-w-3xl px-2">
+                    <!-- Sequence elements will be rendered dynamically here -->
+                </div>
+
+                <!-- Explanation Box (Hidden initially) -->
+                <div id="hint-box" class="hidden my-4 w-full max-w-xl bg-amber-50 border-2 border-amber-300 text-amber-900 text-sm p-4 rounded-2xl text-center shadow-inner">
+                    <i class="fa-solid fa-comment-dots text-amber-500 mr-1"></i> <span id="hint-text">Dica vai aparecer aqui.</span>
+                </div>
+
+                <!-- Options Grid -->
+                <div class="w-full mt-6">
+                    <p class="text-center text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Escolha a resposta correta:</p>
+                    <div id="options-container" class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 max-w-2xl mx-auto">
+                        <!-- Options buttons rendered dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feedback Modal Banner -->
+            <div id="feedback-modal" class="hidden transition-all duration-300 p-4 rounded-2xl text-center border-2 shadow-lg">
+                <div id="feedback-content" class="flex flex-col sm:flex-row items-center justify-between gap-3 max-w-2xl mx-auto">
+                    <div class="flex items-center gap-3 text-left">
+                        <span id="feedback-icon" class="text-3xl">🎉</span>
+                        <div>
+                            <h4 id="feedback-title" class="font-fredoka text-lg">Excelente!</h4>
+                            <p id="feedback-msg" class="text-xs sm:text-sm">Explicação da resposta vem aqui.</p>
+                        </div>
+                    </div>
+                    <button onclick="app.nextQuestion()" id="next-btn" class="bg-slate-900 hover:bg-slate-800 text-white font-bold px-6 py-2.5 rounded-xl shadow transition-all text-sm btn-bounce whitespace-nowrap">
+                        Próxima <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 3: LIGHTBOT / ROBOT GAMEPLAY -->
+        <section id="view-robot-game" class="hidden flex-col gap-4 py-2">
+            <!-- Header bar for Robot mode -->
+            <div class="bg-white p-4 rounded-2xl border-2 border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-3">
+                <button onclick="app.showHome()" class="text-slate-500 hover:text-emerald-600 font-bold text-sm flex items-center gap-1.5 transition-colors">
+                    <i class="fa-solid fa-arrow-left"></i> Voltar ao Menu
+                </button>
+                <div class="flex items-center gap-3">
+                    <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full uppercase">
+                        🤖 Nível <span id="robot-level-num">1</span>/5
+                    </span>
+                </div>
+            </div>
+
+            <!-- Main Robot Coding Workspace -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                
+                <!-- Grid Map Container -->
+                <div class="lg:col-span-6 bg-white rounded-3xl border-4 border-emerald-200 p-5 shadow-md flex flex-col items-center">
+                    <h3 class="font-fredoka text-xl text-slate-800 mb-2 text-center">
+                        Ajude o Robô 🤖 a pegar a Estrela ⭐!
+                    </h3>
+                    <p class="text-xs text-slate-500 mb-4 text-center">
+                        Clique nas setas para <strong>mover o robô em tempo real</strong> pelo caminho!
+                    </p>
+
+                    <!-- 5x5 Grid Board -->
+                    <div id="robot-grid-board" class="grid grid-cols-5 gap-1.5 bg-slate-200 p-2 rounded-2xl border-4 border-slate-300 w-full max-w-[320px] aspect-square shadow-inner">
+                        <!-- Dynamic cells -->
+                    </div>
+
+                    <div id="robot-status-msg" class="mt-4 text-xs font-bold px-4 py-2 rounded-xl text-center w-full max-w-[320px] bg-slate-100 text-slate-600">
+                        Aguardando seus comandos...
+                    </div>
+                </div>
+
+                <!-- Control Panel & Program Queue -->
+                <div class="lg:col-span-6 space-y-4">
+                    
+                    <!-- Command Buttons -->
+                    <div class="bg-white rounded-3xl border-4 border-slate-200 p-5 shadow-md">
+                        <h4 class="font-fredoka text-lg text-slate-700 mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-gamepad text-emerald-500"></i> Blocos de Comando:
+                        </h4>
+                        
+                        <div class="grid grid-cols-3 gap-2 max-w-xs mx-auto mb-4">
+                            <div></div>
+                            <button onclick="robotGame.addCommand('UP')" class="bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-white font-fredoka py-3 rounded-2xl shadow border-b-4 border-emerald-700 btn-bounce text-xl flex flex-col items-center">
+                                <span>⬆️</span>
+                                <span class="text-[10px] font-sans font-bold">Subir</span>
+                            </button>
+                            <div></div>
+
+                            <button onclick="robotGame.addCommand('LEFT')" class="bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-white font-fredoka py-3 rounded-2xl shadow border-b-4 border-emerald-700 btn-bounce text-xl flex flex-col items-center">
+                                <span>⬅️</span>
+                                <span class="text-[10px] font-sans font-bold">Esquerda</span>
+                            </button>
+                            
+                            <button onclick="robotGame.addCommand('DOWN')" class="bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-white font-fredoka py-3 rounded-2xl shadow border-b-4 border-emerald-700 btn-bounce text-xl flex flex-col items-center">
+                                <span>⬇️</span>
+                                <span class="text-[10px] font-sans font-bold">Descer</span>
+                            </button>
+
+                            <button onclick="robotGame.addCommand('RIGHT')" class="bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-white font-fredoka py-3 rounded-2xl shadow border-b-4 border-emerald-700 btn-bounce text-xl flex flex-col items-center">
+                                <span>➡️</span>
+                                <span class="text-[10px] font-sans font-bold">Direita</span>
+                            </button>
+                        </div>
+
+                        <div class="flex justify-center">
+                            <button onclick="robotGame.addCommand('STAR')" class="w-full max-w-xs bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold py-2.5 rounded-2xl shadow border-b-4 border-amber-600 btn-bounce text-sm flex items-center justify-center gap-2">
+                                ⭐ Pegar Estrela
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Program Queue Box -->
+                    <div class="bg-white rounded-3xl border-4 border-slate-200 p-5 shadow-md">
+                        <div class="flex justify-between items-center mb-3">
+                            <h4 class="font-fredoka text-lg text-slate-700 flex items-center gap-2">
+                                📜 Passos Dados (<span id="cmd-count">0</span>)
+                            </h4>
+                            <div class="flex gap-2">
+                                <button onclick="robotGame.removeLastCommand()" class="text-xs bg-amber-100 hover:bg-amber-200 text-amber-800 font-bold px-3 py-1.5 rounded-xl transition-colors flex items-center gap-1" title="Desfazer último passo">
+                                    <i class="fa-solid fa-rotate-left"></i> Desfazer
+                                </button>
+                                <button onclick="robotGame.resetRobotPosition()" class="text-xs bg-red-50 hover:bg-red-100 text-red-600 font-bold px-3 py-1.5 rounded-xl transition-colors flex items-center gap-1" title="Reiniciar posição do robô">
+                                    <i class="fa-solid fa-arrows-rotate"></i> Reiniciar
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Command Sequence Display -->
+                        <div id="command-queue-list" class="flex flex-wrap gap-2 p-3 bg-slate-50 rounded-2xl border-2 border-slate-200 min-h-[70px] max-h-[140px] overflow-y-auto items-center">
+                            <span class="text-xs text-slate-400 italic w-full text-center">Clique nas setas para o robô andar no mapa!</span>
+                        </div>
+
+                        <!-- Immediate feedback action info -->
+                        <div class="mt-4 flex gap-3">
+                            <button onclick="robotGame.resetRobotPosition()" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-fredoka text-md py-2.5 rounded-2xl shadow border-b-4 border-slate-950 btn-bounce flex items-center justify-center gap-2">
+                                🔄 Reiniciar Posição Inicial
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 4: GAME OVER / RESULTS -->
+        <section id="view-results" class="hidden flex-col items-center justify-center py-6 text-center">
+            <div class="bg-white rounded-3xl border-4 border-purple-200 p-8 shadow-xl max-w-md w-full relative">
+                <div class="w-20 h-20 bg-yellow-100 rounded-full flex items-center justify-center text-4xl mx-auto mb-4 border-4 border-yellow-300 shadow-md">
+                    🏆
+                </div>
+                <h2 class="font-fredoka text-3xl text-slate-800 mb-1">Fim de Jogo!</h2>
+                <p class="text-slate-500 text-sm font-semibold mb-6">Confira o seu desempenho nesta rodada:</p>
+
+                <!-- Stars Render -->
+                <div id="result-stars" class="flex justify-center gap-2 text-3xl text-yellow-400 mb-6">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+
+                <!-- Stats Box -->
+                <div class="bg-slate-50 rounded-2xl p-4 border-2 border-slate-100 space-y-3 mb-6 text-left">
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-slate-500 font-bold">Pontuação da Rodada:</span>
+                        <span id="res-score" class="font-fredoka text-purple-600 text-lg">0</span>
+                    </div>
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-slate-500 font-bold">Acertos / Fases Completas:</span>
+                        <span id="res-correct" class="font-bold text-emerald-600">0 / 10</span>
+                    </div>
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-slate-500 font-bold">Maior Combo:</span>
+                        <span id="res-streak" class="font-bold text-orange-500">0x 🔥</span>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-col gap-3">
+                    <button onclick="app.restartGame()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-2xl shadow-lg border-b-4 border-purple-800 transition-all btn-bounce">
+                        <i class="fa-solid fa-rotate-right mr-1"></i> Jogar Novamente
+                    </button>
+                    <button onclick="app.showHome()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 px-6 rounded-2xl transition-all">
+                        <i class="fa-solid fa-house mr-1"></i> Voltar ao Inicio
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 5: HOW TO PLAY MODAL / SECTION -->
+        <section id="view-tutorial" class="hidden py-6">
+            <div class="bg-white rounded-3xl border-2 border-slate-200 p-6 sm:p-8 max-w-2xl mx-auto shadow-md">
+                <h3 class="font-fredoka text-2xl text-purple-700 mb-4 flex items-center gap-2">
+                    📖 Como Jogar os Desafios Lógicos?
+                </h3>
+                <div class="space-y-4 text-slate-600 text-sm leading-relaxed">
+                    <p>Uma <strong>sequência lógica</strong> é uma ordem de elementos (números, cores, formas, figuras) que seguem uma <strong>regrinha especial</strong>!</p>
+                    
+                    <div class="bg-purple-50 p-4 rounded-xl border border-purple-200">
+                        <h4 class="font-bold text-purple-900 mb-1">Exemplo com Cores:</h4>
+                        <p class="mb-2 text-lg">🔴 🔵 🔴 🔵 ❓ 🔵</p>
+                        <p class="text-xs text-purple-800">A regra é alternar Vermelho e Azul. O elemento que falta é 🔴!</p>
+                    </div>
+
+                    <div class="bg-blue-50 p-4 rounded-xl border border-blue-200">
+                        <h4 class="font-bold text-blue-900 mb-1">Exemplo com Números do 2º Ano:</h4>
+                        <p class="mb-2 text-lg font-fredoka">2, 4, 6, 8, ❓</p>
+                        <p class="text-xs text-blue-800">Estamos contando de 2 em 2! O próximo número é o 10!</p>
+                    </div>
+
+                    <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200">
+                        <h4 class="font-bold text-emerald-900 mb-1">🤖 Modo Robô Programador:</h4>
+                        <p class="text-xs text-emerald-800">Monte uma fila de instruções com as setas para guiar o robô desviando das pedras 🧱 e pegando a estrela ⭐!</p>
+                    </div>
+
+                    <p>Ganhe estrelinhas e descubra os segredos de cada padrão!</p>
+                </div>
+
+                <div class="mt-6 text-center">
+                    <button onclick="app.showHome()" class="bg-purple-600 text-white font-bold px-6 py-2.5 rounded-xl shadow hover:bg-purple-700 transition-all">
+                        Entendi! Vamos Jogar!
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-400 font-semibold mt-auto">
+        <p>Mestre da Sequência Lógica &copy; 2026 - Plataforma Educativa Interativa de Raciocínio Lógico (2º Ano)</p>
+    </footer>
+
+    <script>
+        // Web Audio API Sound Generator (No external MP3 files needed)
+        class SoundManager {
+            constructor() {
+                this.audioCtx = null;
+                this.enabled = true;
+            }
+
+            init() {
+                if (!this.audioCtx) {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    this.audioCtx = new AudioContext();
+                }
+            }
+
+            toggleSound() {
+                this.enabled = !this.enabled;
+                const icon = document.getElementById('sound-icon');
+                if (this.enabled) {
+                    icon.className = 'fa-solid fa-volume-high text-lg';
+                } else {
+                    icon.className = 'fa-solid fa-volume-xmark text-lg text-slate-400';
+                }
+            }
+
+            playCorrect() {
+                if (!this.enabled) return;
+                this.init();
+                
+                const now = this.audioCtx.currentTime;
+                const osc = this.audioCtx.createOscillator();
+                const gain = this.audioCtx.createGain();
+
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(523.25, now); // C5
+                osc.frequency.exponentialRampToValueAtTime(659.25, now + 0.1); // E5
+                osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.2); // G5
+
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+
+                osc.connect(gain);
+                gain.connect(this.audioCtx.destination);
+
+                osc.start(now);
+                osc.stop(now + 0.35);
+            }
+
+            playWrong() {
+                if (!this.enabled) return;
+                this.init();
+
+                const now = this.audioCtx.currentTime;
+                const osc = this.audioCtx.createOscillator();
+                const gain = this.audioCtx.createGain();
+
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(220, now); // A3
+                osc.frequency.setValueAtTime(174.61, now + 0.15); // F3
+
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+
+                osc.connect(gain);
+                gain.connect(this.audioCtx.destination);
+
+                osc.start(now);
+                osc.stop(now + 0.35);
+            }
+
+            playStep() {
+                if (!this.enabled) return;
+                this.init();
+
+                const now = this.audioCtx.currentTime;
+                const osc = this.audioCtx.createOscillator();
+                const gain = this.audioCtx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(350, now);
+                osc.frequency.exponentialRampToValueAtTime(550, now + 0.08);
+
+                gain.gain.setValueAtTime(0.15, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+
+                osc.connect(gain);
+                gain.connect(this.audioCtx.destination);
+
+                osc.start(now);
+                osc.stop(now + 0.08);
+            }
+
+            playClick() {
+                if (!this.enabled) return;
+                this.init();
+
+                const now = this.audioCtx.currentTime;
+                const osc = this.audioCtx.createOscillator();
+                const gain = this.audioCtx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(400, now);
+                osc.frequency.exponentialRampToValueAtTime(200, now + 0.05);
+
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+
+                osc.connect(gain);
+                gain.connect(this.audioCtx.destination);
+
+                osc.start(now);
+                osc.stop(now + 0.05);
+            }
+
+            playVictory() {
+                if (!this.enabled) return;
+                this.init();
+                
+                const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+                notes.forEach((freq, idx) => {
+                    const osc = this.audioCtx.createOscillator();
+                    const gain = this.audioCtx.createGain();
+                    const now = this.audioCtx.currentTime + (idx * 0.12);
+
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(freq, now);
+
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+
+                    osc.connect(gain);
+                    gain.connect(this.audioCtx.destination);
+
+                    osc.start(now);
+                    osc.stop(now + 0.25);
+                });
+            }
+        }
+
+        const soundManager = new SoundManager();
+
+        class SequenceEngine {
+            constructor() {
+                this.colorsList = [
+                    { name: 'Vermelho', class: 'bg-red-500', hex: '#EF4444' },
+                    { name: 'Azul', class: 'bg-blue-500', hex: '#3B82F6' },
+                    { name: 'Amarelo', class: 'bg-yellow-400', hex: '#FACC15' },
+                    { name: 'Verde', class: 'bg-emerald-500', hex: '#10B981' },
+                    { name: 'Roxo', class: 'bg-purple-600', hex: '#9333EA' },
+                    { name: 'Laranja', class: 'bg-orange-500', hex: '#F97316' }
+                ];
+
+                this.shapesList = [
+                    { name: 'Círculo', icon: 'fa-circle' },
+                    { name: 'Quadrado', icon: 'fa-square' },
+                    { name: 'Triângulo', icon: 'fa-play -rotate-90' },
+                    { name: 'Estrela', icon: 'fa-star' },
+                    { name: 'Coração', icon: 'fa-heart' },
+                    { name: 'Diamante', icon: 'fa-gem' }
+                ];
+
+                this.figuresList = ['🐶', '🐱', '🦊', '🐸', '🦁', '🐵', '🍎', '🚀', '⚽', '🚗'];
+            }
+
+            generate(mode, category, difficulty) {
+                let cat = category;
+                if (cat === 'all') {
+                    const cats = ['colors', 'shapes', 'numbers', 'letters', 'figures'];
+                    cat = cats[Math.floor(Math.random() * cats.length)];
+                }
+
+                switch (cat) {
+                    case 'colors': return this.generateColorSequence(mode, difficulty);
+                    case 'shapes': return this.generateShapeSequence(mode, difficulty);
+                    case 'numbers': return this.generateNumberSequence(mode, difficulty);
+                    case 'letters': return this.generateLetterSequence(mode, difficulty);
+                    case 'figures': return this.generateFigureSequence(mode, difficulty);
+                    default: return this.generateNumberSequence(mode, difficulty);
+                }
+            }
+
+            // SIMPLIFIED NUMBER SEQUENCES FOR 2ND GRADE
+            generateNumberSequence(mode, difficulty) {
+                const typePool = difficulty === 'easy' ? ['plus1', 'plus1', 'minus1'] 
+                               : difficulty === 'medium' ? ['plus1', 'plus2', 'plus5']
+                               : ['plus2', 'plus5', 'plus10'];
+
+                const selectedType = typePool[Math.floor(Math.random() * typePool.length)];
+
+                let seq = [];
+                let ruleText = "";
+                let maxStart = difficulty === 'easy' ? 15 : (difficulty === 'medium' ? 30 : 60);
+
+                if (selectedType === 'plus1') {
+                    const start = Math.floor(Math.random() * maxStart) + 1;
+                    seq = [start, start + 1, start + 2, start + 3, start + 4];
+                    ruleText = "Estamos contando de 1 em 1 para a frente!";
+                } else if (selectedType === 'minus1') {
+                    const start = Math.floor(Math.random() * 10) + 6;
+                    seq = [start, start - 1, start - 2, start - 3, start - 4];
+                    ruleText = "Estamos voltando! Contagem regressiva de 1 em 1.";
+                } else if (selectedType === 'plus2') {
+                    const isEven = Math.random() > 0.5;
+                    const start = isEven ? (Math.floor(Math.random() * 8) + 1) * 2 : (Math.floor(Math.random() * 8) * 2 + 1);
+                    seq = [start, start + 2, start + 4, start + 6, start + 8];
+                    ruleText = "Estamos pulando de 2 em 2!";
+                } else if (selectedType === 'plus5') {
+                    const startMulti = Math.floor(Math.random() * 5) + 1;
+                    const start = startMulti * 5;
+                    seq = [start, start + 5, start + 10, start + 15, start + 20];
+                    ruleText = "Estamos contando de 5 em 5!";
+                } else if (selectedType === 'plus10') {
+                    const startMulti = Math.floor(Math.random() * 5) + 1;
+                    const start = startMulti * 10;
+                    seq = [start, start + 10, start + 20, start + 30, start + 40];
+                    ruleText = "Estamos contando de 10 em 10!";
+                }
+
+                return this.buildQuestionObject(seq, mode, 'numbers', '🔢 Números', ruleText, (item) => `<span class="text-2xl font-fredoka">${item}</span>`);
+            }
+
+            // SIMPLIFIED LETTER SEQUENCES FOR 2ND GRADE
+            generateLetterSequence(mode, difficulty) {
+                const typePool = difficulty === 'easy' ? ['alphabet', 'pattern'] 
+                               : ['alphabet', 'vowels', 'pattern'];
+
+                const selectedType = typePool[Math.floor(Math.random() * typePool.length)];
+                let seq = [];
+                let ruleText = "";
+
+                if (selectedType === 'alphabet') {
+                    const alphabet = "ABCDEFGHIJKLM".split("");
+                    const maxStartIdx = alphabet.length - 5;
+                    const startIdx = Math.floor(Math.random() * (maxStartIdx + 1));
+                    seq = alphabet.slice(startIdx, startIdx + 5);
+                    ruleText = "Seguindo a ordem do alfabeto: A, B, C, D...";
+                } else if (selectedType === 'vowels') {
+                    seq = ['A', 'E', 'I', 'O', 'U'];
+                    ruleText = "É a sequência das nossas Vogais: A, E, I, O, U!";
+                } else if (selectedType === 'pattern') {
+                    const l1 = Math.random() > 0.5 ? 'A' : 'X';
+                    const l2 = l1 === 'A' ? 'B' : 'Y';
+                    seq = [l1, l2, l1, l2, l1];
+                    ruleText = `É um padrão que se repete: ${l1}, ${l2}, ${l1}, ${l2}...`;
+                }
+
+                return this.buildQuestionObject(seq, mode, 'letters', '🔤 Letras', ruleText, (item) => `<span class="text-3xl font-fredoka text-purple-700">${item}</span>`);
+            }
+
+            generateColorSequence(mode, difficulty) {
+                const c1 = this.colorsList[Math.floor(Math.random() * this.colorsList.length)];
+                let c2 = this.colorsList[Math.floor(Math.random() * this.colorsList.length)];
+                while (c2 === c1) c2 = this.colorsList[Math.floor(Math.random() * this.colorsList.length)];
+                let c3 = this.colorsList[Math.floor(Math.random() * this.colorsList.length)];
+
+                let pattern = [c1, c2, c1, c2, c1];
+                let ruleText = `Alternando entre as cores ${c1.name} e ${c2.name}!`;
+
+                if (difficulty !== 'easy') {
+                    pattern = [c1, c2, c3, c1, c2, c3];
+                    ruleText = `Repetindo as 3 cores: ${c1.name}, ${c2.name} e ${c3.name}!`;
+                }
+
+                return this.buildQuestionObject(pattern, mode, 'colors', '🎨 Cores', ruleText, (item) => 
+                    `<div class="w-10 h-10 rounded-full ${item.class} shadow-md border-2 border-white" title="${item.name}"></div>`,
+                    (item) => item.name
+                );
+            }
+
+            generateShapeSequence(mode, difficulty) {
+                const s1 = this.shapesList[Math.floor(Math.random() * this.shapesList.length)];
+                let s2 = this.shapesList[Math.floor(Math.random() * this.shapesList.length)];
+                while (s2 === s1) s2 = this.shapesList[Math.floor(Math.random() * this.shapesList.length)];
+
+                let pattern = [s1, s2, s1, s2, s1];
+                let ruleText = `Alternando entre ${s1.name} e ${s2.name}!`;
+
+                return this.buildQuestionObject(pattern, mode, 'shapes', '🔷 Formas', ruleText, (item) => 
+                    `<i class="fa-solid ${item.icon} text-3xl text-purple-600"></i>`,
+                    (item) => item.name
+                );
+            }
+
+            generateFigureSequence(mode, difficulty) {
+                const f1 = this.figuresList[Math.floor(Math.random() * this.figuresList.length)];
+                let f2 = this.figuresList[Math.floor(Math.random() * this.figuresList.length)];
+                while (f2 === f1) f2 = this.figuresList[Math.floor(Math.random() * this.figuresList.length)];
+
+                let pattern = [f1, f2, f1, f2, f1];
+                let ruleText = `Alternando entre as figuras ${f1} e ${f2}!`;
+
+                return this.buildQuestionObject(pattern, mode, 'figures', '🐶 Figuras', ruleText, (item) => 
+                    `<span class="text-3xl">${item}</span>`
+                );
+            }
+
+            buildQuestionObject(seq, mode, catKey, catLabel, ruleText, renderFn, labelFn = (item) => item) {
+                let questionSeq = [...seq];
+                let missingIdx = 3;
+                
+                if (mode === 'next') {
+                    missingIdx = seq.length - 1;
+                } else if (mode === 'complete') {
+                    missingIdx = Math.floor(Math.random() * (seq.length - 2)) + 1;
+                }
+
+                const correctAnswer = seq[missingIdx];
+                questionSeq[missingIdx] = '?';
+
+                let options = [correctAnswer];
+                
+                let attempts = 0;
+                while (options.length < 4 && attempts < 50) {
+                    attempts++;
+                    let randomItem;
+                    if (catKey === 'numbers') {
+                        const offsets = [-2, -1, 1, 2, 3, 5];
+                        randomItem = correctAnswer + offsets[Math.floor(Math.random() * offsets.length)];
+                        if (randomItem <= 0) randomItem = correctAnswer + attempts;
+                    } else if (catKey === 'letters') {
+                        const vowels = ['A', 'E', 'I', 'O', 'U'];
+                        if (vowels.includes(correctAnswer)) {
+                            randomItem = vowels[Math.floor(Math.random() * vowels.length)];
+                        } else {
+                            const earlyAlphabet = "ABCDEFGHIJKLM".split("");
+                            randomItem = earlyAlphabet[Math.floor(Math.random() * earlyAlphabet.length)];
+                        }
+                    } else if (catKey === 'colors') {
+                        randomItem = this.colorsList[Math.floor(Math.random() * this.colorsList.length)];
+                    } else if (catKey === 'shapes') {
+                        randomItem = this.shapesList[Math.floor(Math.random() * this.shapesList.length)];
+                    } else if (catKey === 'figures') {
+                        randomItem = this.figuresList[Math.floor(Math.random() * this.figuresList.length)];
+                    }
+
+                    const exists = options.some(opt => JSON.stringify(opt) === JSON.stringify(randomItem));
+                    if (!exists) {
+                        options.push(randomItem);
+                    }
+                }
+
+                options.sort(() => Math.random() - 0.5);
+
+                return {
+                    sequence: questionSeq,
+                    fullSequence: seq,
+                    missingIndex: missingIdx,
+                    correctAnswer: correctAnswer,
+                    options: options,
+                    rule: ruleText,
+                    categoryLabel: catLabel,
+                    renderFn: renderFn,
+                    labelFn: labelFn,
+                    mode: mode
+                };
+            }
+        }
+
+        class RobotGameEngine {
+            constructor(app) {
+                this.app = app;
+                this.gridSize = 5;
+                this.initialRobotPos = { x: 0, y: 0 };
+                this.robotPos = { x: 0, y: 0 };
+                this.starPos = { x: 4, y: 4 };
+                this.obstacles = [];
+                this.commands = [];
+                this.pathHistory = [];
+                this.robotOrientation = 0; // 0: Down, 90: Left, 180: Up, 270: Right
+                this.currentLevel = 1;
+                this.maxLevels = 5;
+                this.isFinished = false;
+            }
+
+            initLevel(levelNum) {
+                this.currentLevel = levelNum;
+                this.commands = [];
+                this.pathHistory = [];
+                this.robotOrientation = 0;
+                this.isFinished = false;
+                document.getElementById('robot-level-num').textContent = this.currentLevel;
+
+                // Levels designed for 2nd Graders
+                if (levelNum === 1) {
+                    this.initialRobotPos = { x: 0, y: 2 };
+                    this.starPos = { x: 4, y: 2 };
+                    this.obstacles = [{ x: 2, y: 1 }, { x: 2, y: 3 }];
+                } else if (levelNum === 2) {
+                    this.initialRobotPos = { x: 0, y: 0 };
+                    this.starPos = { x: 3, y: 3 };
+                    this.obstacles = [{ x: 1, y: 0 }, { x: 1, y: 1 }, { x: 2, y: 3 }];
+                } else if (levelNum === 3) {
+                    this.initialRobotPos = { x: 0, y: 4 };
+                    this.starPos = { x: 4, y: 0 };
+                    this.obstacles = [{ x: 2, y: 4 }, { x: 2, y: 3 }, { x: 2, y: 2 }, { x: 2, y: 0 }];
+                } else if (levelNum === 4) {
+                    this.initialRobotPos = { x: 1, y: 1 };
+                    this.starPos = { x: 4, y: 4 };
+                    this.obstacles = [{ x: 2, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 2 }, { x: 1, y: 3 }];
+                } else {
+                    this.initialRobotPos = { x: 0, y: 0 };
+                    this.starPos = { x: 4, y: 4 };
+                    this.obstacles = [{ x: 1, y: 0 }, { x: 1, y: 1 }, { x: 1, y: 2 }, { x: 3, y: 2 }, { x: 3, y: 3 }, { x: 3, y: 4 }];
+                }
+
+                this.robotPos = { ...this.initialRobotPos };
+                this.pathHistory.push({ ...this.robotPos });
+
+                this.renderGrid();
+                this.renderCommands();
+                this.updateStatus("Clique nas setas para mover o robô em tempo real até a estrela ⭐!");
+            }
+
+            renderGrid() {
+                const board = document.getElementById('robot-grid-board');
+                board.innerHTML = '';
+
+                for (let y = 0; y < this.gridSize; y++) {
+                    for (let x = 0; x < this.gridSize; x++) {
+                        const cell = document.createElement('div');
+                        cell.className = "w-full h-full bg-white/80 rounded-xl flex items-center justify-center text-xl font-bold border border-slate-200/80 transition-all relative select-none";
+
+                        const isRobot = this.robotPos.x === x && this.robotPos.y === y;
+                        const isStar = this.starPos.x === x && this.starPos.y === y;
+                        const isObstacle = this.obstacles.some(o => o.x === x && o.y === y);
+                        const isTrail = this.pathHistory.some((p, idx) => p.x === x && p.y === y && idx < this.pathHistory.length - 1);
+
+                        if (isRobot) {
+                            cell.innerHTML = `<span class="text-2xl robot-sprite robot-anim" style="transform: rotate(${this.robotOrientation}deg);">🤖</span>`;
+                            cell.className += " bg-emerald-100 border-2 border-emerald-400 shadow-md z-10";
+                        } else if (isStar) {
+                            cell.innerHTML = '<span class="text-2xl animate-bounce">⭐</span>';
+                            cell.className += " bg-amber-50 border-2 border-amber-300";
+                        } else if (isObstacle) {
+                            cell.innerHTML = '<span class="text-xl">🧱</span>';
+                            cell.className += " bg-slate-300 border-2 border-slate-400";
+                        } else if (isTrail) {
+                            cell.innerHTML = '<span class="w-3 h-3 rounded-full bg-emerald-400/70 trail-dot"></span>';
+                            cell.className += " bg-emerald-50 border border-emerald-200";
+                        }
+
+                        board.appendChild(cell);
+                    }
+                }
+            }
+
+            addCommand(type) {
+                if (this.isFinished) return;
+
+                if (this.commands.length >= 20) {
+                    this.updateStatus("Muitos passos! Tente refazer o caminho mais curto.", "bg-amber-100 text-amber-800");
+                    return;
+                }
+
+                let nextPos = { ...this.robotPos };
+                let targetOrientation = this.robotOrientation;
+
+                if (type === 'UP') {
+                    nextPos.y -= 1;
+                    targetOrientation = 0;
+                } else if (type === 'DOWN') {
+                    nextPos.y += 1;
+                    targetOrientation = 180;
+                } else if (type === 'LEFT') {
+                    nextPos.x -= 1;
+                    targetOrientation = -90;
+                } else if (type === 'RIGHT') {
+                    nextPos.x += 1;
+                    targetOrientation = 90;
+                }
+
+                // Boundary check
+                if (type !== 'STAR' && (nextPos.x < 0 || nextPos.x >= this.gridSize || nextPos.y < 0 || nextPos.y >= this.gridSize)) {
+                    soundManager.playWrong();
+                    this.updateStatus("⚠️ Cuidado! O robô não pode sair da grade!", "bg-red-100 text-red-800");
+                    return;
+                }
+
+                // Obstacle check
+                if (type !== 'STAR' && this.obstacles.some(o => o.x === nextPos.x && o.y === nextPos.y)) {
+                    soundManager.playWrong();
+                    this.updateStatus("💥 Opa! Tem uma pedra 🧱 no caminho!", "bg-red-100 text-red-800");
+                    return;
+                }
+
+                // Execute valid movement instantly
+                soundManager.playStep();
+                this.robotOrientation = targetOrientation;
+                this.commands.push(type);
+
+                if (type !== 'STAR') {
+                    this.robotPos = nextPos;
+                    this.pathHistory.push({ ...this.robotPos });
+                }
+
+                this.renderGrid();
+                this.renderCommands();
+
+                // Check victory condition (if on star or clicked STAR command)
+                if (type === 'STAR' || (this.robotPos.x === this.starPos.x && this.robotPos.y === this.starPos.y)) {
+                    if (this.robotPos.x === this.starPos.x && this.robotPos.y === this.starPos.y) {
+                        this.handleVictory();
+                        return;
+                    } else if (type === 'STAR') {
+                        this.updateStatus("⭐ O robô tentou pegar a estrela, mas ela ainda não está aqui!", "bg-amber-100 text-amber-800");
+                        return;
+                    }
+                }
+
+                this.updateStatus("Robô em movimento! Continue até a estrela ⭐.", "bg-emerald-50 text-emerald-800");
+            }
+
+            removeLastCommand() {
+                if (this.isFinished || this.commands.length === 0) return;
+
+                soundManager.playClick();
+                const lastCmd = this.commands.pop();
+
+                if (lastCmd !== 'STAR' && this.pathHistory.length > 1) {
+                    this.pathHistory.pop();
+                    this.robotPos = { ...this.pathHistory[this.pathHistory.length - 1] };
+                }
+
+                this.renderGrid();
+                this.renderCommands();
+                this.updateStatus("Último passo desfeito! Ajuste o caminho.");
+            }
+
+            resetRobotPosition() {
+                if (this.isFinished) return;
+
+                soundManager.playClick();
+                this.commands = [];
+                this.robotPos = { ...this.initialRobotPos };
+                this.pathHistory = [{ ...this.robotPos }];
+                this.robotOrientation = 0;
+
+                this.renderGrid();
+                this.renderCommands();
+                this.updateStatus("Posição do robô reiniciada ao ponto de partida! 🤖");
+            }
+
+            renderCommands() {
+                const list = document.getElementById('command-queue-list');
+                document.getElementById('cmd-count').textContent = this.commands.length;
+
+                if (this.commands.length === 0) {
+                    list.innerHTML = '<span class="text-xs text-slate-400 italic w-full text-center">Clique nas setas para mover o robô no mapa!</span>';
+                    return;
+                }
+
+                list.innerHTML = '';
+                const mapIcons = {
+                    'UP': '⬆️ Cima',
+                    'DOWN': '⬇️ Descer',
+                    'LEFT': '⬅️ Esquerda',
+                    'RIGHT': '➡️ Direita',
+                    'STAR': '⭐ Pegar'
+                };
+
+                this.commands.forEach((cmd, idx) => {
+                    const badge = document.createElement('span');
+                    badge.id = `cmd-badge-${idx}`;
+                    badge.className = "bg-emerald-100 border border-emerald-300 text-emerald-800 text-xs font-bold px-2.5 py-1 rounded-xl flex items-center gap-1 transition-all";
+                    badge.textContent = `${idx + 1}. ${mapIcons[cmd]}`;
+                    list.appendChild(badge);
+                });
+            }
+
+            updateStatus(msg, bgClass = "bg-slate-100 text-slate-600") {
+                const el = document.getElementById('robot-status-msg');
+                el.className = `mt-4 text-xs font-bold px-4 py-2 rounded-xl text-center w-full max-w-[320px] ${bgClass}`;
+                el.textContent = msg;
+            }
+
+            async handleVictory() {
+                this.isFinished = true;
+                soundManager.playCorrect();
+                confetti({ particleCount: 70, spread: 70, origin: { y: 0.7 } });
+                this.updateStatus("🎉 PARABÉNS! O robô alcançou a estrela ⭐!", "bg-emerald-100 text-emerald-900");
+
+                this.app.score += 150;
+                this.app.stars += 1;
+                this.app.updateScoreBoard();
+
+                await new Promise(r => setTimeout(r, 1300));
+
+                if (this.currentLevel < this.maxLevels) {
+                    this.initLevel(this.currentLevel + 1);
+                } else {
+                    this.app.finishGame();
+                }
+            }
+        }
+
+        class App {
+            constructor() {
+                this.engine = new SequenceEngine();
+                this.score = 0;
+                this.stars = 0;
+                this.currentQuestionIdx = 0;
+                this.totalQuestions = 10;
+                this.streak = 0;
+                this.maxStreak = 0;
+                this.correctCount = 0;
+                this.difficulty = 'easy';
+                this.currentMode = 'complete';
+                this.hintsLeft = 2;
+                this.timer = null;
+                this.timeLeft = 60;
+                this.currentQuestion = null;
+                this.answered = false;
+            }
+
+            init() {
+                window.robotGame = new RobotGameEngine(this);
+                this.showHome();
+                this.updateScoreBoard();
+            }
+
+            showHome() {
+                this.stopTimer();
+                document.getElementById('view-home').classList.remove('hidden');
+                document.getElementById('view-game').classList.add('hidden');
+                document.getElementById('view-robot-game').classList.add('hidden');
+                document.getElementById('view-results').classList.add('hidden');
+                document.getElementById('view-tutorial').classList.add('hidden');
+            }
+
+            showHowToPlay() {
+                this.showHome();
+                document.getElementById('view-home').classList.add('hidden');
+                document.getElementById('view-tutorial').classList.remove('hidden');
+            }
+
+            setDifficulty(diff) {
+                soundManager.playClick();
+                this.difficulty = diff;
+                
+                ['easy', 'medium', 'hard'].forEach(d => {
+                    const btn = document.getElementById(`diff-${d}`);
+                    if (d === diff) {
+                        btn.className = 'diff-btn bg-purple-600 text-white font-bold py-2 rounded-xl text-sm transition-all shadow';
+                    } else {
+                        btn.className = 'diff-btn bg-slate-100 text-slate-600 border-2 border-slate-200 font-bold py-2 rounded-xl text-sm transition-all';
+                    }
+                });
+            }
+
+            startRobotGame() {
+                soundManager.playClick();
+                document.getElementById('view-home').classList.add('hidden');
+                document.getElementById('view-game').classList.add('hidden');
+                document.getElementById('view-robot-game').classList.remove('hidden');
+                document.getElementById('view-robot-game').classList.add('flex');
+                document.getElementById('view-results').classList.add('hidden');
+                document.getElementById('view-tutorial').classList.add('hidden');
+
+                robotGame.initLevel(1);
+            }
+
+            startGame(mode) {
+                soundManager.playClick();
+                this.currentMode = mode;
+                this.currentQuestionIdx = 0;
+                this.streak = 0;
+                this.maxStreak = 0;
+                this.correctCount = 0;
+                this.hintsLeft = 2;
+                this.answered = false;
+
+                document.getElementById('view-home').classList.add('hidden');
+                document.getElementById('view-game').classList.remove('hidden');
+                document.getElementById('view-robot-game').classList.add('hidden');
+                document.getElementById('view-results').classList.add('hidden');
+                document.getElementById('view-tutorial').classList.add('hidden');
+
+                const timerBadge = document.getElementById('timer-badge');
+                if (mode === 'time') {
+                    this.timeLeft = 60;
+                    timerBadge.classList.remove('hidden');
+                    timerBadge.classList.add('flex');
+                    this.startTimer();
+                } else {
+                    timerBadge.classList.add('hidden');
+                    timerBadge.classList.remove('flex');
+                }
+
+                this.loadNextQuestion();
+            }
+
+            startTimer() {
+                this.stopTimer();
+                document.getElementById('time-left').textContent = this.timeLeft;
+                this.timer = setInterval(() => {
+                    this.timeLeft--;
+                    document.getElementById('time-left').textContent = this.timeLeft;
+                    if (this.timeLeft <= 0) {
+                        this.stopTimer();
+                        this.finishGame();
+                    }
+                }, 1000);
+            }
+
+            stopTimer() {
+                if (this.timer) clearInterval(this.timer);
+            }
+
+            loadNextQuestion() {
+                this.answered = false;
+                document.getElementById('feedback-modal').classList.add('hidden');
+                document.getElementById('hint-box').classList.add('hidden');
+                document.getElementById('hints-count').textContent = this.hintsLeft;
+
+                this.currentQuestionIdx++;
+                document.getElementById('current-question-num').textContent = this.currentQuestionIdx;
+                document.getElementById('total-questions-num').textContent = this.totalQuestions;
+
+                const category = document.getElementById('category-select').value;
+                this.currentQuestion = this.engine.generate(this.currentMode, category, this.difficulty);
+
+                this.renderQuestion();
+            }
+
+            renderQuestion() {
+                const q = this.currentQuestion;
+                document.getElementById('game-category-tag').textContent = q.categoryLabel;
+
+                const promptEl = document.getElementById('question-prompt');
+                if (q.mode === 'rule') {
+                    promptEl.textContent = "Olhe a sequência com atenção! Qual é a regrinha dela?";
+                } else if (q.mode === 'next') {
+                    promptEl.textContent = "Qual vem logo a seguir no final da sequência?";
+                } else {
+                    promptEl.textContent = "Qual elemento falta no lugar da interrogação (?):";
+                }
+
+                const seqContainer = document.getElementById('sequence-container');
+                seqContainer.innerHTML = '';
+
+                q.sequence.forEach((item) => {
+                    const card = document.createElement('div');
+                    card.className = "flex flex-col items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-slate-50 border-2 border-slate-200 rounded-2xl shadow-sm transition-all";
+                    
+                    if (item === '?') {
+                        card.className += " border-dashed border-purple-400 bg-purple-50 text-purple-600 font-fredoka text-2xl animate-pulse";
+                        card.textContent = '?';
+                    } else {
+                        card.innerHTML = q.renderFn(item);
+                    }
+                    seqContainer.appendChild(card);
+                });
+
+                const optContainer = document.getElementById('options-container');
+                optContainer.innerHTML = '';
+
+                if (q.mode === 'rule') {
+                    const rules = [
+                        q.rule,
+                        "Contando de 10 em 10 para frente",
+                        "Alternando sem ordem definida",
+                        "Subindo de 100 em 100"
+                    ].sort(() => Math.random() - 0.5);
+
+                    optContainer.className = "grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-xl mx-auto";
+                    rules.forEach(ruleText => {
+                        const btn = document.createElement('button');
+                        btn.className = "bg-slate-50 hover:bg-purple-50 hover:border-purple-300 border-2 border-slate-200 p-3 rounded-xl font-bold text-slate-700 text-sm transition-all btn-bounce text-left flex items-center gap-2";
+                        btn.innerHTML = `<i class="fa-solid fa-circle-dot text-purple-400"></i> ${ruleText}`;
+                        btn.onclick = () => this.handleAnswer(ruleText === q.rule);
+                        optContainer.appendChild(btn);
+                    });
+
+                } else {
+                    optContainer.className = "grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 max-w-2xl mx-auto";
+                    q.options.forEach(opt => {
+                        const btn = document.createElement('button');
+                        btn.className = "bg-slate-50 hover:bg-purple-50 hover:border-purple-400 border-2 border-slate-200 py-3 px-4 rounded-2xl flex items-center justify-center transition-all btn-bounce shadow-sm";
+                        btn.innerHTML = q.renderFn(opt);
+                        btn.onclick = () => this.handleAnswer(opt === q.correctAnswer);
+                        optContainer.appendChild(btn);
+                    });
+                }
+            }
+
+            useHint() {
+                if (this.hintsLeft <= 0 || this.answered) return;
+                soundManager.playClick();
+                this.hintsLeft--;
+                document.getElementById('hints-count').textContent = this.hintsLeft;
+                
+                const hintBox = document.getElementById('hint-box');
+                const hintText = document.getElementById('hint-text');
+                hintText.textContent = `Dica do Mestre: ${this.currentQuestion.rule}`;
+                hintBox.classList.remove('hidden');
+            }
+
+            handleAnswer(isCorrect) {
+                if (this.answered) return;
+                this.answered = true;
+
+                const modal = document.getElementById('feedback-modal');
+                const title = document.getElementById('feedback-title');
+                const msg = document.getElementById('feedback-msg');
+                const icon = document.getElementById('feedback-icon');
+
+                modal.classList.remove('hidden');
+
+                if (isCorrect) {
+                    soundManager.playCorrect();
+                    this.score += 100 + (this.streak * 10);
+                    this.correctCount++;
+                    this.streak++;
+                    if (this.streak > this.maxStreak) this.maxStreak = this.streak;
+
+                    modal.className = "p-4 rounded-2xl text-center border-2 border-emerald-300 bg-emerald-50 text-emerald-900 shadow-lg";
+                    icon.textContent = "🌟";
+                    title.textContent = "Parabéns! Você acertou!";
+                    msg.textContent = `${this.currentQuestion.rule}`;
+
+                    if (this.streak % 3 === 0) {
+                        confetti({ particleCount: 50, spread: 60, origin: { y: 0.8 } });
+                    }
+                } else {
+                    soundManager.playWrong();
+                    this.streak = 0;
+
+                    modal.className = "p-4 rounded-2xl text-center border-2 border-red-300 bg-red-50 text-red-900 shadow-lg";
+                    icon.textContent = "💡";
+                    title.textContent = "Quase lá! Vamos aprender?";
+                    msg.textContent = `Lembre-se: ${this.currentQuestion.rule}`;
+                }
+
+                const streakCounter = document.getElementById('streak-counter');
+                if (this.streak > 1) {
+                    streakCounter.classList.remove('hidden');
+                    streakCounter.classList.add('flex');
+                    document.getElementById('streak-val').textContent = this.streak;
+                } else {
+                    streakCounter.classList.add('hidden');
+                }
+
+                this.updateScoreBoard();
+            }
+
+            nextQuestion() {
+                soundManager.playClick();
+                if (this.currentQuestionIdx >= this.totalQuestions && this.currentMode !== 'time') {
+                    this.finishGame();
+                } else {
+                    this.loadNextQuestion();
+                }
+            }
+
+            finishGame() {
+                this.stopTimer();
+                soundManager.playVictory();
+                confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+
+                document.getElementById('view-game').classList.add('hidden');
+                document.getElementById('view-robot-game').classList.add('hidden');
+                document.getElementById('view-results').classList.remove('hidden');
+                document.getElementById('view-results').classList.add('flex');
+
+                let starsEarned = 1;
+                const ratio = this.correctCount / this.totalQuestions;
+                if (ratio >= 0.8 || this.score > 400) starsEarned = 3;
+                else if (ratio >= 0.5 || this.score > 200) starsEarned = 2;
+
+                this.stars += starsEarned;
+                this.updateScoreBoard();
+
+                const starsContainer = document.getElementById('result-stars');
+                starsContainer.innerHTML = '';
+                for (let i = 0; i < 3; i++) {
+                    const star = document.createElement('i');
+                    star.className = i < starsEarned ? "fa-solid fa-star text-yellow-400" : "fa-regular fa-star text-slate-300";
+                    starsContainer.appendChild(star);
+                }
+
+                document.getElementById('res-score').textContent = this.score;
+                document.getElementById('res-correct').textContent = `${this.correctCount} acertos`;
+                document.getElementById('res-streak').textContent = `${this.maxStreak}x 🔥`;
+            }
+
+            restartGame() {
+                if (document.getElementById('view-robot-game').classList.contains('flex')) {
+                    this.startRobotGame();
+                } else {
+                    this.startGame(this.currentMode);
+                }
+            }
+
+            updateScoreBoard() {
+                document.getElementById('global-score').textContent = this.score;
+                document.getElementById('global-stars').textContent = this.stars;
+            }
+        }
+
+        let app;
+        window.onload = () => {
+            app = new App();
+            app.init();
+        };
+    </script>
+</body>
+</html>
