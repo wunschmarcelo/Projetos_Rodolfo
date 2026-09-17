@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aventura do Robô Bit - Algoritmos para Crianças</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f0fdf4;
+        }
+        
+        h1, h2, h3, .font-fun {
+            font-family: 'Fredoka One', cursive;
+        }
+
+        /* Animações e efeitos personalizados */
+        .bounce-gentle {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .pulse-btn {
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .pulse-btn:hover {
+            transform: scale(1.08);
+        }
+
+        .pulse-btn:active {
+            transform: scale(0.95);
+        }
+
+        .grid-board {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+        }
+
+        /* Tabuleiro Isométrico / 3D Falso para Lightbot */
+        .iso-tile {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 0 #cbd5e1;
+        }
+        .iso-tile.active {
+            box-shadow: 0 6px 0 #94a3b8;
+        }
+        .iso-tile.lit {
+            background-color: #fef08a !important;
+            box-shadow: 0 4px 0 #fde047 !important;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Navigation Header -->
+    <header class="bg-indigo-600 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center gap-3">
+            <div class="flex items-center space-x-3">
+                <div class="bg-amber-400 p-2.5 rounded-2xl text-indigo-900 text-2xl font-bold shadow-md bounce-gentle">
+                    🤖
+                </div>
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-extrabold tracking-wide text-amber-300">Aventura do Robô Bit</h1>
+                    <p class="text-xs text-indigo-200">Aprenda Algoritmos Jogando!</p>
+                </div>
+            </div>
+
+            <!-- Tab Buttons -->
+            <nav class="flex flex-wrap justify-center gap-1.5 sm:gap-2 bg-indigo-800/50 p-1.5 rounded-2xl border border-indigo-500/30">
+                <button onclick="switchTab('padroes')" id="tab-padroes" class="tab-btn active bg-amber-400 text-indigo-950 px-3 py-2 rounded-xl text-xs sm:text-sm font-extrabold shadow transition duration-200 flex items-center gap-1.5">
+                    <span>🎨</span> Padrões Divertidos
+                </button>
+                <button onclick="switchTab('lightbot')" id="tab-lightbot" class="tab-btn bg-indigo-700 hover:bg-indigo-600 text-white px-3 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition duration-200 flex items-center gap-1.5">
+                    <span>💡</span> Robô Iluminado
+                </button>
+                <button onclick="switchTab('scratch')" id="tab-scratch" class="tab-btn bg-indigo-700 hover:bg-indigo-600 text-white px-3 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition duration-200 flex items-center gap-1.5">
+                    <span>🧩</span> Scratch em Blocos
+                </button>
+                <button onclick="switchTab('tabuleiro')" id="tab-tabuleiro" class="tab-btn bg-indigo-700 hover:bg-indigo-600 text-white px-3 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition duration-200 flex items-center gap-1.5">
+                    <span>🗺️</span> Robô Tabuleiro
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-3 sm:p-6">
+
+        <!-- SEÇÃO 1: PADRÕES DIVERTIDOS (SUPER SIMPLIFICADO) -->
+        <section id="sec-padroes" class="tab-content block space-y-6">
+            
+            <!-- Banner Inicial com o Mascote Bit -->
+            <div class="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 rounded-3xl p-6 text-white shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="space-y-2 text-center sm:text-left">
+                    <div class="inline-block bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-amber-200">
+                        ⭐ Descubra a Sequência!
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold">Qual é o Próximo Elemento?</h2>
+                    <p class="text-purple-100 text-sm sm:text-base max-w-xl">
+                        Ache o segredo da sequência de emojis, cores, figuras ou letras e clique no botão correto para ajudar o Robô Bit!
+                    </p>
+                </div>
+                <div class="bg-white/20 backdrop-blur-md p-4 rounded-2xl flex items-center space-x-3 text-center sm:text-left border border-white/30 shrink-0">
+                    <span class="text-5xl bounce-gentle">🤖</span>
+                    <div>
+                        <div class="font-bold text-amber-300 text-sm">Robô Bit Diz:</div>
+                        <div class="text-xs sm:text-sm text-white font-medium" id="bit-speech-padroes">
+                            "Escolha um tema abaixo e tente adivinhar a sequência!"
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categorias de Padrões -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+                <button onclick="selectPatternCategory('emojis')" id="cat-btn-emojis" class="cat-btn p-4 rounded-2xl bg-amber-100 border-4 border-amber-400 hover:bg-amber-200 text-amber-900 font-extrabold text-sm sm:text-base flex flex-col items-center justify-center gap-2 shadow-md transition pulse-btn">
+                    <span class="text-3xl">🍎🍌</span>
+                    <span>1. Emojis</span>
+                </button>
+                <button onclick="selectPatternCategory('cores')" id="cat-btn-cores" class="cat-btn p-4 rounded-2xl bg-blue-100 border-4 border-blue-300 hover:bg-blue-200 text-blue-900 font-extrabold text-sm sm:text-base flex flex-col items-center justify-center gap-2 shadow-md transition pulse-btn">
+                    <span class="text-3xl">🟢🔴</span>
+                    <span>2. Cores & Formas</span>
+                </button>
+                <button onclick="selectPatternCategory('figuras')" id="cat-btn-figuras" class="cat-btn p-4 rounded-2xl bg-emerald-100 border-4 border-emerald-300 hover:bg-emerald-200 text-emerald-900 font-extrabold text-sm sm:text-base flex flex-col items-center justify-center gap-2 shadow-md transition pulse-btn">
+                    <span class="text-3xl">🔺⭐</span>
+                    <span>3. Geometria</span>
+                </button>
+                <button onclick="selectPatternCategory('letras')" id="cat-btn-letras" class="cat-btn p-4 rounded-2xl bg-purple-100 border-4 border-purple-300 hover:bg-purple-200 text-purple-900 font-extrabold text-sm sm:text-base flex flex-col items-center justify-center gap-2 shadow-md transition pulse-btn">
+                    <span class="text-3xl">🔤</span>
+                    <span>4. Alfabeto</span>
+                </button>
+            </div>
+
+            <!-- Display do Desafio -->
+            <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-lg border-2 border-slate-100 flex flex-col items-center text-center space-y-8">
+                
+                <!-- Indicador do Nível da Categoria -->
+                <div class="flex items-center justify-between w-full max-w-md">
+                    <span id="pattern-cat-title" class="text-lg font-bold text-slate-700 bg-slate-100 px-4 py-1.5 rounded-full">
+                        🍎 Emojis Divertidos
+                    </span>
+                    <span id="pattern-score" class="text-amber-500 font-extrabold text-lg flex items-center gap-1">
+                        ⭐ Desafio <span id="pattern-level-num">1</span> de <span id="pattern-level-total">3</span>
+                    </span>
+                </div>
+
+                <!-- Sequência Visual Principal -->
+                <div class="bg-slate-50 p-6 sm:p-8 rounded-3xl border-2 border-dashed border-slate-300 w-full max-w-2xl flex flex-wrap items-center justify-center gap-3 sm:gap-6 min-h-[140px]" id="sequence-container">
+                    <!-- Gerado Dinamicamente -->
+                </div>
+
+                <!-- Opções de Escolha (Botões Grandes e Coloridos) -->
+                <div class="w-full max-w-2xl">
+                    <p class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4">Clique no elemento que completa o [ ? ]:</p>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4" id="options-container">
+                        <!-- Gerado Dinamicamente -->
+                    </div>
+                </div>
+
+                <!-- Feedback & Explicação da Regra -->
+                <div id="pattern-feedback" class="hidden w-full max-w-2xl bg-emerald-50 border-2 border-emerald-300 p-4 rounded-2xl text-emerald-800 text-left flex items-start gap-3">
+                    <span class="text-3xl shrink-0">🎉</span>
+                    <div>
+                        <div class="font-bold text-base text-emerald-900">Parabéns! Você descobriu o padrão!</div>
+                        <div class="text-sm font-medium mt-1 text-emerald-700" id="pattern-explanation">
+                            A regra é repetir o ciclo 🍎 -> 🍌!
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botão Próximo -->
+                <button id="next-pattern-btn" onclick="nextPatternLevel()" class="hidden bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-extrabold text-lg px-8 py-3.5 rounded-2xl shadow-lg transition pulse-btn flex items-center gap-2">
+                    <span>Próximo Desafio</span>
+                    <i class="fa-solid font-bold fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 2: LIGHTBOT (10 FASES) -->
+        <section id="sec-lightbot" class="tab-content hidden space-y-6">
+            <div class="bg-indigo-900 text-white rounded-3xl p-6 shadow-xl flex flex-col md:flex-row items-center justify-between gap-4">
+                <div>
+                    <span class="bg-indigo-800 text-indigo-200 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">💡 Raciocínio Lógico</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold mt-1">Robô Iluminado (Lightbot)</h2>
+                    <p class="text-indigo-200 text-sm mt-1">Programe o robô para andar e acender as lâmpadas azuis!</p>
+                </div>
+                <!-- Seletor de Fases -->
+                <div class="flex items-center gap-2 bg-indigo-950 p-2 rounded-2xl border border-indigo-700/50">
+                    <button onclick="changeLightbotLevel(-1)" class="w-9 h-9 bg-indigo-800 hover:bg-indigo-700 text-white rounded-xl font-bold flex items-center justify-center">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <span class="font-extrabold text-amber-300 px-3 text-sm" id="lb-level-indicator">Fase 1 / 10</span>
+                    <button onclick="changeLightbotLevel(1)" class="w-9 h-9 bg-indigo-800 hover:bg-indigo-700 text-white rounded-xl font-bold flex items-center justify-center">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Visualização do Tabuleiro Grid (Left) -->
+                <div class="lg:col-span-7 bg-white rounded-3xl p-6 shadow-lg border border-slate-100 flex flex-col items-center justify-center min-h-[380px]">
+                    <div id="lb-board" class="grid gap-2 p-4 bg-slate-100 rounded-2xl border-2 border-slate-200 relative">
+                        <!-- Células geradas via JS -->
+                    </div>
+                    <div class="mt-4 flex items-center gap-4 text-xs font-bold text-slate-500">
+                        <span class="flex items-center gap-1.5"><span class="w-4 h-4 bg-slate-300 rounded border"></span> Bloco Normal</span>
+                        <span class="flex items-center gap-1.5"><span class="w-4 h-4 bg-blue-500 rounded border"></span> Lâmpada (Apagada)</span>
+                        <span class="flex items-center gap-1.5"><span class="w-4 h-4 bg-amber-300 rounded border"></span> Lâmpada (Acesa)</span>
+                    </div>
+                </div>
+
+                <!-- Painel de Comandos e Programa (Right) -->
+                <div class="lg:col-span-5 bg-white rounded-3xl p-6 shadow-lg border border-slate-100 flex flex-col justify-between space-y-6">
+                    <div>
+                        <h3 class="font-extrabold text-slate-800 text-lg mb-2">Comandos Disponíveis</h3>
+                        <p class="text-xs text-slate-500 mb-4">Clique nos botões para adicionar à sua lista de instruções:</p>
+                        
+                        <!-- Botões de Comando -->
+                        <div class="grid grid-cols-4 gap-2">
+                            <button onclick="addLbCommand('walk')" class="p-3 bg-indigo-50 border-2 border-indigo-200 hover:bg-indigo-100 text-indigo-700 rounded-2xl flex flex-col items-center gap-1 transition pulse-btn">
+                                <span class="text-xl">🚶</span>
+                                <span class="text-[10px] font-bold">Andar</span>
+                            </button>
+                            <button onclick="addLbCommand('left')" class="p-3 bg-amber-50 border-2 border-amber-200 hover:bg-amber-100 text-amber-700 rounded-2xl flex flex-col items-center gap-1 transition pulse-btn">
+                                <span class="text-xl">↪️</span>
+                                <span class="text-[10px] font-bold">Esq</span>
+                            </button>
+                            <button onclick="addLbCommand('right')" class="p-3 bg-amber-50 border-2 border-amber-200 hover:bg-amber-100 text-amber-700 rounded-2xl flex flex-col items-center gap-1 transition pulse-btn">
+                                <span class="text-xl">↩️</span>
+                                <span class="text-[10px] font-bold">Dir</span>
+                            </button>
+                            <button onclick="addLbCommand('light')" class="p-3 bg-yellow-50 border-2 border-yellow-300 hover:bg-yellow-100 text-yellow-800 rounded-2xl flex flex-col items-center gap-1 transition pulse-btn">
+                                <span class="text-xl">💡</span>
+                                <span class="text-[10px] font-bold">Luz</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Fila de Execução / Programa -->
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-extrabold text-slate-800 text-sm">Meu Programa:</h3>
+                            <button onclick="clearLbProgram()" class="text-xs text-red-500 hover:underline font-bold">Limpar Tudo</button>
+                        </div>
+                        <div id="lb-program-queue" class="min-h-[90px] bg-slate-50 border-2 border-dashed border-slate-300 rounded-2xl p-3 flex flex-wrap gap-2 items-center">
+                            <span class="text-xs text-slate-400 italic" id="lb-empty-msg">Nenhum comando adicionado...</span>
+                        </div>
+                    </div>
+
+                    <!-- Botão Executar -->
+                    <div class="flex gap-2">
+                        <button onclick="runLbProgram()" id="lb-run-btn" class="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold py-3 rounded-2xl shadow-md transition flex items-center justify-center gap-2 text-base">
+                            <i class="fa-solid fa-play"></i>
+                            <span>Executar Código</span>
+                        </button>
+                        <button onclick="resetLbLevel()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-extrabold px-4 rounded-2xl transition">
+                            <i class="fa-solid fa-rotate-left"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 3: SCRATCH EM BLOCOS -->
+        <section id="sec-scratch" class="tab-content hidden space-y-6">
+            <div class="bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-3xl p-6 shadow-xl flex justify-between items-center">
+                <div>
+                    <span class="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">🧩 Programação Visual</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold mt-1">Scratch com Robô Bit</h2>
+                    <p class="text-orange-100 text-sm mt-1">Arraste ou clique nos blocos coloridos para dar ordens ao robô!</p>
+                </div>
+                <div class="text-4xl hidden sm:block">🐱🤖</div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Paleta de Blocos (Left) -->
+                <div class="lg:col-span-4 bg-white rounded-3xl p-5 shadow-lg border border-slate-100 space-y-4">
+                    <h3 class="font-extrabold text-slate-800 text-base flex items-center gap-2">
+                        <i class="fa-solid fa-cubes text-orange-500"></i> Blocos de Código
+                    </h3>
+
+                    <div class="space-y-2">
+                        <!-- Bloco Movimento -->
+                        <div onclick="addScratchBlock('move', 100)" class="p-3 bg-blue-500 text-white rounded-2xl font-extrabold text-xs shadow hover:bg-blue-600 cursor-pointer transition flex items-center justify-between pulse-btn">
+                            <span>Mova 100 passos ➡️</span>
+                            <i class="fa-solid fa-plus bg-white/20 p-1.5 rounded-lg"></i>
+                        </div>
+                        <div onclick="addScratchBlock('turnRight', 90)" class="p-3 bg-blue-500 text-white rounded-2xl font-extrabold text-xs shadow hover:bg-blue-600 cursor-pointer transition flex items-center justify-between pulse-btn">
+                            <span>Gire 90° para Direita ↷</span>
+                            <i class="fa-solid fa-plus bg-white/20 p-1.5 rounded-lg"></i>
+                        </div>
+                        <div onclick="addScratchBlock('turnLeft', 90)" class="p-3 bg-blue-500 text-white rounded-2xl font-extrabold text-xs shadow hover:bg-blue-600 cursor-pointer transition flex items-center justify-between pulse-btn">
+                            <span>Gire 90° para Esquerda ↶</span>
+                            <i class="fa-solid fa-plus bg-white/20 p-1.5 rounded-lg"></i>
+                        </div>
+                        <!-- Bloco Aparência -->
+                        <div onclick="addScratchBlock('say', 'Olá! VAMOS PROGRAMAR!')" class="p-3 bg-purple-500 text-white rounded-2xl font-extrabold text-xs shadow hover:bg-purple-600 cursor-pointer transition flex items-center justify-between pulse-btn">
+                            <span>Diga "Olá!" 💬</span>
+                            <i class="fa-solid fa-plus bg-white/20 p-1.5 rounded-lg"></i>
+                        </div>
+                        <div onclick="addScratchBlock('changeColor', '')" class="p-3 bg-purple-500 text-white rounded-2xl font-extrabold text-xs shadow hover:bg-purple-600 cursor-pointer transition flex items-center justify-between pulse-btn">
+                            <span>Mude a Cor do Robô 🎨</span>
+                            <i class="fa-solid fa-plus bg-white/20 p-1.5 rounded-lg"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Área de Roteiro / Script (Center) -->
+                <div class="lg:col-span-4 bg-slate-50 rounded-3xl p-5 shadow-lg border-2 border-slate-200 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="font-extrabold text-slate-800 text-base">Seu Algoritmo:</h3>
+                            <button onclick="clearScratchBlocks()" class="text-xs text-red-500 font-bold hover:underline">Limpar</button>
+                        </div>
+                        
+                        <!-- Evento Inicial -->
+                        <div class="p-3 bg-amber-400 text-amber-950 font-extrabold rounded-t-2xl text-xs flex items-center gap-2 shadow">
+                            <i class="fa-solid fa-flag"></i> Quando a Bandeira Verde for Clicada:
+                        </div>
+                        
+                        <!-- Lista de Blocos Adicionados -->
+                        <div id="scratch-workspace" class="bg-white p-3 rounded-b-2xl min-h-[220px] border border-slate-200 space-y-2">
+                            <!-- Blocos Dinâmicos -->
+                        </div>
+                    </div>
+
+                    <button onclick="runScratchCode()" class="mt-4 bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold py-3 rounded-2xl shadow-lg transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-flag"></i>
+                        <span>Executar Bandeira Verde</span>
+                    </button>
+                </div>
+
+                <!-- Palco / Canvas (Right) -->
+                <div class="lg:col-span-4 bg-white rounded-3xl p-5 shadow-lg border border-slate-100 flex flex-col items-center justify-between">
+                    <h3 class="font-extrabold text-slate-800 text-base mb-2">Palco de Apresentação</h3>
+                    
+                    <div class="w-full h-64 bg-slate-100 rounded-2xl border-2 border-slate-300 relative overflow-hidden flex items-center justify-center grid-board" id="scratch-stage">
+                        <!-- Robô no Palco -->
+                        <div id="scratch-sprite" class="absolute transition-all duration-500 ease-out flex flex-col items-center justify-center" style="left: 40%; top: 40%; transform: rotate(0deg);">
+                            <!-- Balão de Fala -->
+                            <div id="scratch-bubble" class="hidden bg-white text-slate-800 text-xs font-bold px-3 py-1.5 rounded-xl shadow-md border border-slate-200 mb-1 whitespace-nowrap">
+                                Olá!
+                            </div>
+                            <span id="scratch-icon" class="text-5xl drop-shadow-md">🤖</span>
+                        </div>
+                    </div>
+
+                    <button onclick="resetScratchStage()" class="mt-3 w-full bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2 rounded-xl text-xs transition">
+                        Resetar Posicionamento
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 4: ROBÔ TABULEIRO 2D -->
+        <section id="sec-tabuleiro" class="tab-content hidden space-y-6">
+            <div class="bg-emerald-600 text-white rounded-3xl p-6 shadow-xl flex justify-between items-center">
+                <div>
+                    <span class="bg-emerald-800 text-emerald-200 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">🗺️ Navegação Espacial</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold mt-1">Navegação no Tabuleiro 2D</h2>
+                    <p class="text-emerald-100 text-sm mt-1">Guie o robô até o troféu usando os botões de seta!</p>
+                </div>
+                <span class="text-4xl hidden sm:block">🏆</span>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                <!-- Tabuleiro 2D (Left) -->
+                <div class="lg:col-span-7 bg-white rounded-3xl p-6 shadow-lg border border-slate-100 flex flex-col items-center">
+                    <div id="grid-2d" class="grid grid-cols-5 gap-2 bg-slate-200 p-3 rounded-2xl border-4 border-slate-300">
+                        <!-- Matriz 5x5 Gerada por JS -->
+                    </div>
+                </div>
+
+                <!-- Painel de Controle por Setas (Right) -->
+                <div class="lg:col-span-5 bg-white rounded-3xl p-6 shadow-lg border border-slate-100 space-y-6">
+                    <div>
+                        <h3 class="font-extrabold text-slate-800 text-lg">Painel de Direções</h3>
+                        <p class="text-xs text-slate-500">Mova o robô pelo tabuleiro até atingir a meta:</p>
+                    </div>
+
+                    <!-- D-Pad Controles Visual -->
+                    <div class="flex flex-col items-center gap-2 py-4">
+                        <button onclick="moveBoardRobot(0, -1)" class="w-16 h-16 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl shadow-lg font-bold text-2xl flex items-center justify-center pulse-btn">
+                            ▲
+                        </button>
+                        <div class="flex gap-4">
+                            <button onclick="moveBoardRobot(-1, 0)" class="w-16 h-16 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl shadow-lg font-bold text-2xl flex items-center justify-center pulse-btn">
+                                ◄
+                            </button>
+                            <button onclick="moveBoardRobot(0, 1)" class="w-16 h-16 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl shadow-lg font-bold text-2xl flex items-center justify-center pulse-btn">
+                                ▼
+                            </button>
+                            <button onclick="moveBoardRobot(1, 0)" class="w-16 h-16 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl shadow-lg font-bold text-2xl flex items-center justify-center pulse-btn">
+                                ►
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Status e Histórico -->
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-center">
+                        <div class="text-xs font-bold text-slate-400 uppercase">Passos Dados:</div>
+                        <div id="board-step-count" class="text-3xl font-extrabold text-emerald-600">0</div>
+                    </div>
+
+                    <button onclick="resetBoardGame()" class="w-full bg-slate-200 hover:bg-slate-300 text-slate-700 font-extrabold py-3 rounded-2xl transition">
+                        Reiniciar Posição
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        /* ==========================================================================
+           1. GERENCIAMENTO DE ABAS E NAVEGAÇÃO
+           ========================================================================== */
+        function switchTab(tabId) {
+            // Esconde todas as seções
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            
+            // Desativa estilo dos botões
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.className = 'tab-btn bg-indigo-700 hover:bg-indigo-600 text-white px-3 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition duration-200 flex items-center gap-1.5';
+            });
+
+            // Ativa a seção selecionada
+            document.getElementById(`sec-${tabId}`).classList.remove('hidden');
+            
+            // Ativa o botão selecionado
+            const activeBtn = document.getElementById(`tab-${tabId}`);
+            activeBtn.className = 'tab-btn active bg-amber-400 text-indigo-950 px-3 py-2 rounded-xl text-xs sm:text-sm font-extrabold shadow transition duration-200 flex items-center gap-1.5';
+        }
+
+        /* ==========================================================================
+           2. SEÇÃO 1: PADRÕES DIVERTIDOS (SIMPLIFICADO EM 4 CATEGORIAS)
+           ========================================================================== */
+        const PATTERN_DATA = {
+            emojis: [
+                {
+                    sequence: ['🍎', '🍌', '🍎', '🍌'],
+                    options: ['🍎', '🍌', '🍇', '🍊'],
+                    correct: '🍎',
+                    rule: 'Repete alternando: Maçã (🍎) -> Banana (🍌).'
+                },
+                {
+                    sequence: ['🐶', '🐱', '🐭', '🐶', '🐱'],
+                    options: ['🐶', '🐱', '🐭', '🐰'],
+                    correct: '🐭',
+                    rule: 'A ordem dos bichinhos é: Cachorro (🐶) -> Gato (🐱) -> Ratinho (🐭).'
+                },
+                {
+                    sequence: ['🚗', '🚀', '🚗', '🚀'],
+                    options: ['🚀', '🚗', '🚲', '✈️'],
+                    correct: '🚗',
+                    rule: 'Alterna entre Carro (🚗) e Foguete (🚀).'
+                }
+            ],
+            cores: [
+                {
+                    sequence: ['🟢', '🔴', '🟢', '🔴'],
+                    options: ['🟢', '🔴', '🔵', '🟡'],
+                    correct: '🟢',
+                    rule: 'Sequência de cores simples: Verde (🟢) -> Vermelho (🔴).'
+                },
+                {
+                    sequence: ['🟦', '🟧', '🟨', '🟦', '🟧'],
+                    options: ['🟦', '🟧', '🟨', '💜'],
+                    correct: '🟨',
+                    rule: 'Regra do trio de cores: Azul (🟦) -> Laranja (🟧) -> Amarelo (🟨).'
+                },
+                {
+                    sequence: ['🟣', '🟣', '🟡', '🟣', '🟣'],
+                    options: ['🟣', '🟡', '🔴', '🟢'],
+                    correct: '🟡',
+                    rule: 'Duas Roxas (🟣) e depois uma Amarela (🟡)!'
+                }
+            ],
+            figuras: [
+                {
+                    sequence: ['🔺', '🔵', '🔺', '🔵'],
+                    options: ['🔺', '🔵', '⬛', '⭐'],
+                    correct: '🔺',
+                    rule: 'Formas geométricas: Triângulo Vermelho (🔺) -> Círculo Azul (🔵).'
+                },
+                {
+                    sequence: ['⭐', '🌙', '⭐', '🌙'],
+                    options: ['🌙', '⭐', '☀️', '☁️'],
+                    correct: '⭐',
+                    rule: 'Alterna entre Estrela (⭐) e Lua (🌙).'
+                },
+                {
+                    sequence: ['⬛', '⬛', '⚪', '⬛', '⬛'],
+                    options: ['⬛', '⚪', '🔺', '⭐'],
+                    correct: '⚪',
+                    rule: 'Dois Quadrados Pretos (⬛) e um Círculo Branco (⚪)!'
+                }
+            ],
+            letras: [
+                {
+                    sequence: ['A', 'B', 'A', 'B'],
+                    options: ['A', 'B', 'C', 'D'],
+                    correct: 'A',
+                    rule: 'Alfabeto simples: A -> B -> A -> B.'
+                },
+                {
+                    sequence: ['A', 'C', 'E', 'G'],
+                    options: ['H', 'I', 'I', 'J'],
+                    correct: 'I',
+                    rule: 'Pulando uma letra do alfabeto! (A -> C -> E -> G -> I).'
+                },
+                {
+                    sequence: ['X', 'Y', 'Z', 'X', 'Y'],
+                    options: ['X', 'Y', 'Z', 'W'],
+                    correct: 'Z',
+                    rule: 'A sequência do fim do alfabeto é X -> Y -> Z.'
+                }
+            ]
+        };
+
+        let currentCategory = 'emojis';
+        let currentPatternIndex = 0;
+
+        function selectPatternCategory(catKey) {
+            currentCategory = catKey;
+            currentPatternIndex = 0;
+
+            // Atualiza botões visuais das categorias
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.classList.remove('ring-4', 'ring-amber-400', 'scale-105');
+            });
+            const activeBtn = document.getElementById(`cat-btn-${catKey}`);
+            if(activeBtn) activeBtn.classList.add('ring-4', 'ring-amber-400', 'scale-105');
+
+            renderPatternChallenge();
+        }
+
+        function renderPatternChallenge() {
+            const categoryData = PATTERN_DATA[currentCategory];
+            const item = categoryData[currentPatternIndex];
+
+            // Esconde Feedback e Botão Próximo
+            document.getElementById('pattern-feedback').classList.add('hidden');
+            document.getElementById('next-pattern-btn').classList.add('hidden');
+
+            // Atualiza Título e Placar
+            const titleMap = {
+                emojis: '🍎 Emojis Divertidos',
+                cores: '🟢 Cores & Formas',
+                figuras: '🔺 Geometria Divertida',
+                letras: '🔤 Alfabeto Lúdico'
+            };
+            document.getElementById('pattern-cat-title').innerText = titleMap[currentCategory];
+            document.getElementById('pattern-level-num').innerText = currentPatternIndex + 1;
+            document.getElementById('pattern-level-total').innerText = categoryData.length;
+
+            // Fala do Bit Mascote
+            document.getElementById('bit-speech-padroes').innerText = `Qual figura vem logo depois no [ ? ] ?`;
+
+            // Renderiza Sequência com [ ? ] no final
+            const seqContainer = document.getElementById('sequence-container');
+            seqContainer.innerHTML = '';
+
+            item.sequence.forEach(el => {
+                const box = document.createElement('div');
+                box.className = 'w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-2xl shadow-md border-2 border-slate-200 flex items-center justify-center text-2xl sm:text-3xl font-extrabold text-slate-700 animate-fade-in';
+                box.innerText = el;
+                seqContainer.appendChild(box);
+            });
+
+            // Adiciona a caixa do ponto de interrogação [ ? ]
+            const qBox = document.createElement('div');
+            qBox.className = 'w-14 h-14 sm:w-16 sm:h-16 bg-amber-200 border-4 border-dashed border-amber-400 rounded-2xl shadow-inner flex items-center justify-center text-2xl sm:text-3xl font-black text-amber-800 animate-pulse';
+            qBox.innerText = '?';
+            seqContainer.appendChild(qBox);
+
+            // Renderiza Botões de Resposta
+            const optsContainer = document.getElementById('options-container');
+            optsContainer.innerHTML = '';
+
+            item.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.onclick = () => checkPatternAnswer(opt);
+                btn.className = 'p-4 sm:p-5 bg-gradient-to-b from-slate-50 to-slate-100 hover:from-amber-100 hover:to-amber-200 border-3 border-slate-300 hover:border-amber-400 rounded-2xl text-3xl font-extrabold shadow-md hover:shadow-lg transition flex items-center justify-center pulse-btn text-slate-800';
+                btn.innerText = opt;
+                optsContainer.appendChild(btn);
+            });
+        }
+
+        function checkPatternAnswer(selected) {
+            const categoryData = PATTERN_DATA[currentCategory];
+            const item = categoryData[currentPatternIndex];
+
+            if(selected === item.correct) {
+                // Efeito Confeti
+                confetti({
+                    particleCount: 80,
+                    spread: 60,
+                    origin: { y: 0.6 }
+                });
+
+                // Fala do Mascote
+                document.getElementById('bit-speech-padroes').innerText = "Incrível! Você acertou de primeira!";
+
+                // Mostra Explicação
+                document.getElementById('pattern-explanation').innerText = item.rule;
+                document.getElementById('pattern-feedback').classList.remove('hidden');
+                document.getElementById('next-pattern-btn').classList.remove('hidden');
+            } else {
+                document.getElementById('bit-speech-padroes').innerText = "Ops! Tente novamente, você consegue!";
+            }
+        }
+
+        function nextPatternLevel() {
+            const categoryData = PATTERN_DATA[currentCategory];
+            if(currentPatternIndex < categoryData.length - 1) {
+                currentPatternIndex++;
+                renderPatternChallenge();
+            } else {
+                // Troca para próxima categoria automaticamente se acabar
+                const categories = ['emojis', 'cores', 'figuras', 'letras'];
+                const nextCatIndex = (categories.indexOf(currentCategory) + 1) % categories.length;
+                selectPatternCategory(categories[nextCatIndex]);
+            }
+        }
+
+        /* ==========================================================================
+           3. SEÇÃO 2: LIGHTBOT (10 FASES COMPLETA COM VISUALIZAÇÃO REAL)
+           ========================================================================== */
+        const LIGHTBOT_LEVELS = [
+            { grid: [[0, 0, 0], [0, 0, 0]], start: [0, 0], dir: 'E', lights: [[0, 2]] },
+            { grid: [[0, 0, 0], [0, 0, 0]], start: [0, 0], dir: 'E', lights: [[0, 1], [0, 2]] },
+            { grid: [[0, 0], [0, 0], [0, 0]], start: [0, 0], dir: 'S', lights: [[2, 0]] },
+            { grid: [[0, 0, 0], [0, 0, 0], [0, 0, 0]], start: [0, 0], dir: 'E', lights: [[0, 2], [2, 2]] },
+            { grid: [[0, 0, 0], [0, 0, 0], [0, 0, 0]], start: [1, 0], dir: 'E', lights: [[1, 2]] },
+            { grid: [[0, 0, 0], [0, 0, 0], [0, 0, 0]], start: [0, 0], dir: 'S', lights: [[1, 0], [2, 0]] },
+            { grid: [[0, 0, 0, 0], [0, 0, 0, 0]], start: [0, 0], dir: 'E', lights: [[0, 3]] },
+            { grid: [[0, 0, 0], [0, 0, 0], [0, 0, 0]], start: [0, 0], dir: 'E', lights: [[2, 2]] },
+            { grid: [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], start: [0, 0], dir: 'E', lights: [[0, 3], [2, 3]] },
+            { grid: [[0, 0, 0], [0, 0, 0], [0, 0, 0]], start: [1, 1], dir: 'N', lights: [[0, 1], [2, 1]] }
+        ];
+
+        let lbCurrentLevel = 0;
+        let lbProgram = [];
+        let lbRobotState = { r: 0, c: 0, dir: 'E' };
+        let lbLitMap = {};
+
+        function initLightbotLevel() {
+            const lvl = LIGHTBOT_LEVELS[lbCurrentLevel];
+            document.getElementById('lb-level-indicator').innerText = `Fase ${lbCurrentLevel + 1} / ${LIGHTBOT_LEVELS.length}`;
+            
+            lbRobotState = { r: lvl.start[0], c: lvl.start[1], dir: lvl.dir };
+            lbLitMap = {};
+
+            renderLightbotBoard();
+        }
+
+        function renderLightbotBoard() {
+            const lvl = LIGHTBOT_LEVELS[lbCurrentLevel];
+            const board = document.getElementById('lb-board');
+            board.style.gridTemplateColumns = `repeat(${lvl.grid[0].length}, minmax(0, 1fr))`;
+            board.innerHTML = '';
+
+            for(let r = 0; r < lvl.grid.length; r++) {
+                for(let c = 0; c < lvl.grid[0].length; c++) {
+                    const tile = document.createElement('div');
+                    tile.className = 'w-16 h-16 sm:w-20 sm:h-20 bg-slate-200 rounded-2xl flex items-center justify-center font-bold text-2xl relative iso-tile border-2 border-slate-300';
+
+                    // Verifica se é lâmpada
+                    const isLight = lvl.lights.some(l => l[0] === r && l[1] === c);
+                    if(isLight) {
+                        const litKey = `${r}-${c}`;
+                        if(lbLitMap[litKey]) {
+                            tile.classList.add('lit');
+                            tile.innerHTML = '💡';
+                        } else {
+                            tile.classList.add('bg-blue-200');
+                            tile.innerHTML = '🟦';
+                        }
+                    }
+
+                    // Renderiza Robô
+                    if(lbRobotState.r === r && lbRobotState.c === c) {
+                        const bot = document.createElement('div');
+                        bot.className = 'text-3xl sm:text-4xl absolute transition-all duration-300';
+                        const dirIcons = { N: '⬆️', E: '➡️', S: '⬇️', W: '⬅️' };
+                        bot.innerText = '🤖';
+                        tile.appendChild(bot);
+                    }
+
+                    board.appendChild(tile);
+                }
+            }
+        }
+
+        function addLbCommand(cmd) {
+            if(lbProgram.length < 12) {
+                lbProgram.push(cmd);
+                renderLbProgram();
+            }
+        }
+
+        function renderLbProgram() {
+            const queue = document.getElementById('lb-program-queue');
+            queue.innerHTML = '';
+
+            if(lbProgram.length === 0) {
+                queue.innerHTML = '<span class="text-xs text-slate-400 italic">Nenhum comando adicionado...</span>';
+                return;
+            }
+
+            const icons = { walk: '🚶', left: '↪️', right: '↩️', light: '💡' };
+            lbProgram.forEach((cmd, idx) => {
+                const tag = document.createElement('span');
+                tag.className = 'px-3 py-1.5 bg-indigo-100 text-indigo-900 border border-indigo-300 rounded-xl text-xs font-extrabold flex items-center gap-1 shadow-sm';
+                tag.innerHTML = `${icons[cmd]} <button onclick="removeLbCmd(${idx})" class="text-red-500 hover:text-red-700 ml-1">×</button>`;
+                queue.appendChild(tag);
+            });
+        }
+
+        function removeLbCmd(index) {
+            lbProgram.splice(index, 1);
+            renderLbProgram();
+        }
+
+        function clearLbProgram() {
+            lbProgram = [];
+            renderLbProgram();
+        }
+
+        function resetLbLevel() {
+            initLightbotLevel();
+        }
+
+        function changeLightbotLevel(delta) {
+            lbCurrentLevel = (lbCurrentLevel + delta + LIGHTBOT_LEVELS.length) % LIGHTBOT_LEVELS.length;
+            clearLbProgram();
+            initLightbotLevel();
+        }
+
+        async function runLbProgram() {
+            const lvl = LIGHTBOT_LEVELS[lbCurrentLevel];
+            initLightbotLevel();
+
+            const dirs = ['N', 'E', 'S', 'W'];
+
+            for(let cmd of lbProgram) {
+                await new Promise(r => setTimeout(r, 450));
+
+                if(cmd === 'walk') {
+                    let { r, c, dir } = lbRobotState;
+                    if(dir === 'N' && r > 0) r--;
+                    if(dir === 'S' && r < lvl.grid.length - 1) r++;
+                    if(dir === 'E' && c < lvl.grid[0].length - 1) c++;
+                    if(dir === 'W' && c > 0) c--;
+                    lbRobotState.r = r;
+                    lbRobotState.c = c;
+                } else if(cmd === 'left') {
+                    let idx = dirs.indexOf(lbRobotState.dir);
+                    lbRobotState.dir = dirs[(idx + 3) % 4];
+                } else if(cmd === 'right') {
+                    let idx = dirs.indexOf(lbRobotState.dir);
+                    lbRobotState.dir = dirs[(idx + 1) % 4];
+                } else if(cmd === 'light') {
+                    const isLight = lvl.lights.some(l => l[0] === lbRobotState.r && l[1] === lbRobotState.c);
+                    if(isLight) {
+                        lbLitMap[`${lbRobotState.r}-${lbRobotState.c}`] = true;
+                    }
+                }
+
+                renderLightbotBoard();
+            }
+
+            // Verifica Vitória
+            const allLit = lvl.lights.every(l => lbLitMap[`${l[0]}-${l[1]}`]);
+            if(allLit) {
+                confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+            }
+        }
+
+        /* ==========================================================================
+           4. SEÇÃO 3: SCRATCH EM BLOCOS
+           ========================================================================== */
+        let scratchBlocks = [];
+        let scratchRobotState = { x: 40, y: 40, rot: 0 };
+
+        function addScratchBlock(type, val) {
+            scratchBlocks.push({ type, val });
+            renderScratchWorkspace();
+        }
+
+        function renderScratchWorkspace() {
+            const ws = document.getElementById('scratch-workspace');
+            ws.innerHTML = '';
+
+            const names = {
+                move: 'Mova 100 passos ➡️',
+                turnRight: 'Gire 90° Direita ↷',
+                turnLeft: 'Gire 90° Esquerda ↶',
+                say: 'Diga "Olá!" 💬',
+                changeColor: 'Mude a Cor 🎨'
+            };
+
+            scratchBlocks.forEach((b, idx) => {
+                const el = document.createElement('div');
+                el.className = 'p-2.5 bg-blue-500 text-white font-bold rounded-xl text-xs flex justify-between items-center shadow-sm';
+                el.innerHTML = `<span>${names[b.type]}</span> <button onclick="removeScratchBlock(${idx})" class="text-white hover:text-red-200">✕</button>`;
+                ws.appendChild(el);
+            });
+        }
+
+        function removeScratchBlock(i) {
+            scratchBlocks.splice(i, 1);
+            renderScratchWorkspace();
+        }
+
+        function clearScratchBlocks() {
+            scratchBlocks = [];
+            renderScratchWorkspace();
+        }
+
+        async function runScratchCode() {
+            const sprite = document.getElementById('scratch-sprite');
+            const bubble = document.getElementById('scratch-bubble');
+
+            for(let b of scratchBlocks) {
+                await new Promise(r => setTimeout(r, 600));
+
+                if(b.type === 'move') {
+                    const rad = scratchRobotState.rot * Math.PI / 180;
+                    scratchRobotState.x += Math.cos(rad) * 25;
+                    scratchRobotState.y += Math.sin(rad) * 25;
+                } else if(b.type === 'turnRight') {
+                    scratchRobotState.rot += 90;
+                } else if(b.type === 'turnLeft') {
+                    scratchRobotState.rot -= 90;
+                } else if(b.type === 'say') {
+                    bubble.innerText = b.val;
+                    bubble.classList.remove('hidden');
+                    setTimeout(() => bubble.classList.add('hidden'), 1500);
+                } else if(b.type === 'changeColor') {
+                    const colors = ['#ef4444', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6'];
+                    sprite.style.color = colors[Math.floor(Math.random() * colors.length)];
+                }
+
+                sprite.style.left = `${Math.min(Math.max(scratchRobotState.x, 10), 80)}%`;
+                sprite.style.top = `${Math.min(Math.max(scratchRobotState.y, 10), 80)}%`;
+                sprite.style.transform = `rotate(${scratchRobotState.rot}deg)`;
+            }
+        }
+
+        function resetScratchStage() {
+            scratchRobotState = { x: 40, y: 40, rot: 0 };
+            const sprite = document.getElementById('scratch-sprite');
+            sprite.style.left = '40%';
+            sprite.style.top = '40%';
+            sprite.style.transform = 'rotate(0deg)';
+        }
+
+        /* ==========================================================================
+           5. SEÇÃO 4: ROBÔ TABULEIRO 2D
+           ========================================================================== */
+        let boardPos = { r: 0, c: 0 };
+        const boardGoal = { r: 4, c: 4 };
+        let boardSteps = 0;
+
+        function render2DBoard() {
+            const grid = document.getElementById('grid-2d');
+            grid.innerHTML = '';
+
+            for(let r = 0; r < 5; r++) {
+                for(let c = 0; c < 5; c++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'w-12 h-12 sm:w-16 sm:h-16 bg-white rounded-xl flex items-center justify-center text-2xl font-bold shadow-sm border border-slate-200';
+
+                    if(boardPos.r === r && boardPos.c === c) {
+                        cell.innerText = '🤖';
+                        cell.classList.add('bg-amber-100');
+                    } else if(boardGoal.r === r && boardGoal.c === c) {
+                        cell.innerText = '🏆';
+                        cell.classList.add('bg-emerald-100');
+                    }
+
+                    grid.appendChild(cell);
+                }
+            }
+
+            document.getElementById('board-step-count').innerText = boardSteps;
+        }
+
+        function moveBoardRobot(dc, dr) {
+            const newR = boardPos.r + dr;
+            const newC = boardPos.c + dc;
+
+            if(newR >= 0 && newR < 5 && newC >= 0 && newC < 5) {
+                boardPos.r = newR;
+                boardPos.c = newC;
+                boardSteps++;
+                render2DBoard();
+
+                if(boardPos.r === boardGoal.r && boardPos.c === boardGoal.c) {
+                    confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+                }
+            }
+        }
+
+        function resetBoardGame() {
+            boardPos = { r: 0, c: 0 };
+            boardSteps = 0;
+            render2DBoard();
+        }
+
+        /* Inicialização ao Carregar a Página */
+        window.onload = function() {
+            selectPatternCategory('emojis');
+            initLightbotLevel();
+            render2DBoard();
+        };
+    </script>
+</body>
+</html>
