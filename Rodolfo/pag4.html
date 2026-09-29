@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vida Saudável - Nutrição & Bem-Estar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #fcf4f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #6a1b9a, #e91e63);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        nav {
+            background-color: #4a148c;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 10px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #f48fb1;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .hero {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .hero img {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-top: 5px solid #e91e63;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            color: #6a1b9a;
+            margin-bottom: 0.8rem;
+        }
+
+        /* Jogo Interativo */
+        .game-section {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            border-top: 5px solid #ff9800;
+            text-align: center;
+            position: relative;
+        }
+
+        .game-section h2 {
+            color: #e65100;
+            margin-bottom: 0.5rem;
+        }
+
+        .activity-banner {
+            background-color: #fff3e0;
+            border: 2px solid #ffe0b2;
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin: 1rem auto;
+            max-width: 500px;
+            font-weight: bold;
+            color: #e65100;
+        }
+
+        .avatar-container {
+            height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0.5rem 0;
+        }
+
+        .avatar {
+            font-size: 5rem;
+            display: inline-block;
+            transition: transform 0.3s;
+        }
+
+        @keyframes pulseTired {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(0.85); opacity: 0.6; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes actionBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .anim-tired { animation: pulseTired 1.2s infinite ease-in-out; }
+        .anim-active { animation: actionBounce 0.6s infinite ease-in-out; }
+
+        .status-bar {
+            width: 100%;
+            max-width: 400px;
+            background-color: #eee;
+            height: 25px;
+            border-radius: 12px;
+            margin: 0.5rem auto 1rem;
+            overflow: hidden;
+            border: 2px solid #ccc;
+        }
+
+        .status-fill {
+            height: 100%;
+            width: 50%;
+            background-color: #e91e63;
+            transition: width 0.3s, background-color 0.3s;
+        }
+
+        .reward-box {
+            background-color: #fce4ec;
+            border: 2px dashed #e91e63;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem auto;
+            max-width: 450px;
+            display: none;
+            color: #8e24aa;
+        }
+
+        .food-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .food-btn {
+            padding: 10px 14px;
+            font-size: 0.95rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .food-btn:hover {
+            transform: scale(1.05);
+            border-color: #e91e63;
+        }
+
+        #game-msg {
+            font-weight: bold;
+            min-height: 24px;
+            margin-top: 1rem;
+        }
+
+        .timer-badge {
+            display: inline-block;
+            background-color: #e0e0e0;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Questionário Variado */
+        .quiz-section {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            border-top: 5px solid #8e24aa;
+            text-align: center;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-around;
+            background-color: #f3e5f5;
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-weight: bold;
+            color: #6a1b9a;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 1.5rem 0;
+        }
+
+        .quiz-btn {
+            padding: 12px;
+            font-size: 1rem;
+            background-color: #fcf4f9;
+            border: 2px solid #8e24aa;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+        }
+
+        .quiz-btn:hover {
+            background-color: #f3e5f5;
+        }
+
+        #quiz-feedback {
+            font-weight: bold;
+            min-height: 25px;
+            margin-top: 1rem;
+        }
+
+        .btn-restart {
+            padding: 10px 20px;
+            background-color: #8e24aa;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .btn-restart:hover {
+            background-color: #6a1b9a;
+        }
+
+        /* Calculadora e Tabela */
+        .imc-calculator, .tabela-secao {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            border-top: 5px solid #6a1b9a;
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .imc-calculator button {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: #e91e63;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .imc-calculator button:hover {
+            background-color: #d81b60;
+        }
+
+        #resultado-imc {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+        }
+
+        .table-responsive { overflow-x: auto; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #6a1b9a;
+            color: white;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #6a1b9a, #e91e63);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Vida & Saúde</h1>
+        <p>Descubra o poder de uma alimentação equilibrada</p>
+    </header>
+
+    <nav>
+        <a href="#jogo">Jogo Nutritivo</a>
+        <a href="#questionario">Questionário</a>
+        <a href="#pilares">Pilares</a>
+        <a href="#calculadora">Calculadora IMC</a>
+        <a href="#tabela-peso">Tabela de Pesos</a>
+    </nav>
+
+    <div class="container">
+        
+        <section class="hero">
+            <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?w=800" alt="Prato com alimentos saudáveis">
+            <h2>Por que investir em uma alimentação saudável?</h2>
+            <p>Comer bem não significa fazer dietas restritivas, mas sim fornecer ao corpo os nutrientes necessários para funcionar com energia, prevenindo doenças e melhorando a disposição no dia a dia.</p>
+        </section>
+
+        <!-- Seção do Jogo Interativo -->
+        <section id="jogo" class="game-section">
+            <h2>🎮 Jogo: Alimente seu Personagem!</h2>
+            <p>A cada 20 segundos o personagem realiza uma atividade e fica cansado. Escolha o alimento ideal para recarregar!</p>
+            
+            <div id="activity-banner" class="activity-banner">
+                O personagem está relaxando no momento.
+            </div>
+
+            <div class="avatar-container">
+                <div id="avatar" class="avatar">😃</div>
+            </div>
+            
+            <p><strong>Saúde / Energia:</strong> <span id="health-num">50</span>%</p>
+            <div class="status-bar">
+                <div id="status-fill" class="status-fill"></div>
+            </div>
+            
+            <div class="timer-badge">Próxima atividade em: <span id="timer">20</span>s</div>
+
+            <!-- Caixa de Recompensa do Sorteio -->
+            <div id="reward-box" class="reward-box">
+                <h3>🎁 PARABÉNS! VOCÊ ATINGIU 100%!</h3>
+                <p id="reward-text">Carregando prêmio...</p>
+            </div>
+
+            <!-- Botões de Comidas -->
+            <div class="food-buttons" style="margin-top: 1.5rem;">
+                <button class="food-btn" onclick="feed('banana')">🍌 Banana (Potássio / Energia)</button>
+                <button class="food-btn" onclick="feed('water')">💧 Água (Hidratação)</button>
+                <button class="food-btn" onclick="feed('nuts')">🥜 Castanhas (Foco / Cérebro)</button>
+                <button class="food-btn" onclick="feed('fish')">🐟 Peixe Grelhado (Proteína)</button>
+                <button class="food-btn" onclick="feed('salad')">🥗 Salada (Fibras / Vitaminas)</button>
+                <button class="food-btn" onclick="feed('burger')">🍔 Hambúrguer (Gordura)</button>
+                <button class="food-btn" onclick="feed('soda')">🥤 Refrigerante (Açúcar)</button>
+            </div>
+
+            <div id="game-msg">Fique atento à atividade do personagem!</div>
+        </section>
+
+        <!-- Questionário Dinâmico -->
+        <section id="questionario" class="quiz-section">
+            <h2>📝 Questionário Dinâmico de Aprendizado</h2>
+            <p>A cada rodada as perguntas mudam! Acerte todas e alcance os 100 pontos. (+20 para acerto / -10 para erro)</p>
+
+            <div class="quiz-header">
+                <span>Nível: <span id="quiz-level">1 / 5</span></span>
+                <span>Pontuação: <span id="quiz-score">0</span> / 100</span>
+            </div>
+
+            <div id="quiz-box">
+                <h3 id="quiz-question" style="margin-bottom: 1rem; color: #6a1b9a;">Carregando pergunta...</h3>
+                <div id="quiz-options" class="quiz-options"></div>
+            </div>
+
+            <div id="quiz-feedback"></div>
+            <button id="btn-restart" class="btn-restart" style="display: none;" onclick="resetQuiz()">🎮 Jogar Nova Rodada com Perguntas Inéditas</button>
+        </section>
+
+        <section id="pilares" class="cards-grid">
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=500" alt="Frutas e vegetais frescos">
+                <h3>🌱 Alimentos In Natura</h3>
+                <p>Baseie sua dieta em frutas, legumes, verduras, grãos integrais, sementes e proteínas magras.</p>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1548839140-29a749e1bc4e?w=500" alt="Copo com água e limão">
+                <h3>💧 Hidratação Constante</h3>
+                <p>A água é fundamental para o transporte de nutrientes, digestão e regulação da temperatura.</p>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1561758033-d89a9ad46330?w=500" alt="Evitar ultraprocessados">
+                <h3>⚠️ Reduza o Processado</h3>
+                <p>Evite o excesso de açúcar refinado, sódio e gorduras saturadas presentes em alimentos ultraprocessados.</p>
+            </div>
+        </section>
+
+        <!-- Calculadora de IMC -->
+        <section id="calculadora" class="imc-calculator">
+            <h2 style="color:#6a1b9a; text-align:center; margin-bottom:1rem;">Calculadora de IMC</h2>
+            
+            <div class="input-group">
+                <label for="peso">Peso (kg):</label>
+                <input type="number" id="peso" placeholder="Ex: 70" step="0.1">
+            </div>
+
+            <div class="input-group">
+                <label for="altura">Altura (metros):</label>
+                <input type="number" id="altura" placeholder="Ex: 1.75" step="0.01">
+            </div>
+
+            <button onclick="calcularIMC()">Calcular IMC</button>
+            <div id="resultado-imc"></div>
+        </section>
+
+        <!-- Tabela de Peso -->
+        <section id="tabela-peso" class="tabela-secao">
+            <h2 style="color:#6a1b9a; text-align:center; margin-bottom:1rem;">Faixa de Peso de Referência (1 a 20 Anos)</h2>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Idade</th>
+                            <th>Meninas (kg)</th>
+                            <th>Meninos (kg)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1 a 5 anos</td><td>8,9 - 22,8 kg</td><td>9,6 - 23,2 kg</td></tr>
+                        <tr><td>6 a 10 anos</td><td>19,0 - 47,0 kg</td><td>19,5 - 46,0 kg</td></tr>
+                        <tr><td>11 a 15 anos</td><td>34,0 - 72,0 kg</td><td>34,5 - 77,0 kg</td></tr>
+                        <tr><td>16 a 20 anos</td><td>52,0 - 78,0 kg</td><td>58,0 - 90,0 kg</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Guia de Alimentação Saudável. Viva melhor com escolhas inteligentes.</p>
+    </footer>
+
+    <script>
+        // Lógica do Jogo Interativo
+        let health = 50;
+        let rewardGiven = false;
+        let countdown = 20;
+        let currentActivity = null;
+
+        const activities = [
+            { id: 'run', text: '🏃 O personagem correu bastante e está desidratado e cansado!', bestFood: 'water', altFood: 'banana', emoji: '🥵', desc: 'Necessita de Água ou Banana para repor líquidos e carboidratos.' },
+            { id: 'work', text: '💻 O personagem trabalhou duro no computador e está mentalmente exausto!', bestFood: 'nuts', altFood: 'fish', emoji: '🤯', desc: 'Necessita de Castanhas ou Peixe para foco mental e ômega 3.' },
+            { id: 'play', text: '🛝 O personagem brincou no parque e gastou muita energia física!', bestFood: 'banana', altFood: 'salad', emoji: '🥱', desc: 'Necessita de Banana ou Salada para energia rápida e vitaminas.' },
+            { id: 'study', text: '📚 O personagem estudou para uma prova difícil!', bestFood: 'nuts', altFood: 'water', emoji: '😵‍💫', desc: 'Necessita de Castanhas ou Água para manter a concentração.' }
+        ];
+
+        const rewards = [
+            "🏆 **Selo Mestre da Nutrição!** Você sabe exatamente o que o corpo precisa em cada momento!",
+            "🚴 **Super Disposição!** Seu personagem recuperou o fôlego total!",
+            "🌟 **Nutricionista Expert!** Escolhas perfeitas para cada tipo de esforço físico e mental!"
+        ];
+
+        setInterval(() => {
+            countdown--;
+            document.getElementById('timer').textContent = countdown;
+
+            if (countdown <= 0) {
+                triggerNewActivity();
+                countdown = 20;
+            }
+        }, 1000);
+
+        function triggerNewActivity() {
+            const randomIndex = Math.floor(Math.random() * activities.length);
+            currentActivity = activities[randomIndex];
+
+            health -= 25;
+            if (health < 0) health = 0;
+
+            document.getElementById('activity-banner').textContent = currentActivity.text;
+            const msg = document.getElementById('game-msg');
+            msg.textContent = currentActivity.desc;
+            msg.style.color = "#e65100";
+
+            const avatar = document.getElementById('avatar');
+            avatar.textContent = currentActivity.emoji;
+            avatar.className = "avatar anim-tired";
+
+            updateGameUI();
+        }
+
+        function feed(food) {
+            const msg = document.getElementById('game-msg');
+            const avatar = document.getElementById('avatar');
+            let gain = 0;
+
+            if (!currentActivity) {
+                msg.textContent = "Aguarde o personagem iniciar uma atividade para alimentar!";
+                msg.style.color = "#666";
+                return;
+            }
+
+            if (food === currentActivity.bestFood) {
+                gain = 30;
+                msg.textContent = "Excelente! Escolha perfeita para esta atividade (+30% de energia)! 🎉";
+                msg.style.color = "#8e24aa";
+            } else if (food === currentActivity.altFood) {
+                gain = 20;
+                msg.textContent = "Boa escolha! Ajudou a recuperar a energia (+20%). 👍";
+                msg.style.color = "#8e24aa";
+            } else if (food === 'burger' || food === 'soda') {
+                gain = -15;
+                msg.textContent = "Péssima escolha! Comida pesada só aumentou o cansaço (-15%). 🤢";
+                msg.style.color = "#c62828";
+            } else {
+                gain = 10;
+                msg.textContent = "Alimentou um pouco, mas não era o ideal para este momento (+10%). 😐";
+                msg.style.color = "#e65100";
+            }
+
+            health += gain;
+            if (health > 100) health = 100;
+            if (health < 0) health = 0;
+
+            avatar.className = "avatar anim-active";
+            setTimeout(() => {
+                if (health < 100) avatar.className = "avatar";
+            }, 1000);
+
+            if (health === 100 && !rewardGiven) {
+                drawReward();
+                rewardGiven = true;
+            } else if (health < 100) {
+                rewardGiven = false;
+                document.getElementById('reward-box').style.display = 'none';
+            }
+
+            updateGameUI();
+        }
+
+        function drawReward() {
+            const rewardBox = document.getElementById('reward-box');
+            const rewardText = document.getElementById('reward-text');
+            const randomIndex = Math.floor(Math.random() * rewards.length);
+            
+            rewardText.innerHTML = rewards[randomIndex];
+            rewardBox.style.display = 'block';
+        }
+
+        function updateGameUI() {
+            const fill = document.getElementById('status-fill');
+            const num = document.getElementById('health-num');
+            const avatar = document.getElementById('avatar');
+
+            num.textContent = health;
+            fill.style.width = health + '%';
+
+            if (health >= 100) {
+                fill.style.backgroundColor = '#6a1b9a';
+                avatar.textContent = '🌟';
+            } else if (health >= 70) {
+                fill.style.backgroundColor = '#e91e63';
+            } else if (health >= 30) {
+                fill.style.backgroundColor = '#ff9800';
+            } else {
+                fill.style.backgroundColor = '#f44336';
+            }
+        }
+
+        // Banco de Perguntas Expandido por Níveis
+        const questionBank = {
+            level1: [
+                {
+                    question: "Nível 1: Qual é a bebida mais recomendada para manter o corpo hidratado durante o dia?",
+                    options: ["Água natural", "Refrigerante", "Suco de caixinha com açúcar", "Energético"],
+                    correct: 0
+                },
+                {
+                    question: "Nível 1: Qual alimento é uma fonte natural de potássio ideal para evitar cãibras?",
+                    options: ["Salgadinho", "Banana", "Biscoito recheado", "Refrigerante"],
+                    correct: 1
+                },
+                {
+                    question: "Nível 1: Quantas refeições equilibradas devemos buscar ter no dia?",
+                    options: ["Apenas 1 refeição grande", "Pular todas e comer só doces", "Refeições regulares (café, almoço e jantar)", "Comer só quando sentir tontura"],
+                    correct: 2
+                }
+            ],
+            level2: [
+                {
+                    question: "Nível 2: Qual dessas opções é uma gordura boa para a saúde do cérebro?",
+                    options: ["Gordura de frituras", "Castanhas e nozes", "Margarina ultraprocessada", "Óleo reutilizado"],
+                    correct: 1
+                },
+                {
+                    question: "Nível 2: O que é recomendado comer após um treino ou brincadeira física intensa?",
+                    options: ["Proteínas e carboidratos saudáveis", "Doces refinados e refrigerante", "Frituras com muito sódio", "Nada, ficar em jejum extremo"],
+                    correct: 0
+                },
+                {
+                    question: "Nível 2: As frutas e vegetais são ricos em qual nutriente essencial para o intestino?",
+                    options: ["Fibras alimentares", "Açúcar refinado", "Gordura trans", "Sódio elevado"],
+                    correct: 0
+                }
+            ],
+            level3: [
+                {
+                    question: "Nível 3: O que são alimentos 'In Natura'?",
+                    options: ["Alimentos produzidos em fábricas com química", "Alimentos obtidos diretamente da natureza sem alteração", "Doces coloridos artificialmente", "Comidas enlatadas com conservantes"],
+                    correct: 1
+                },
+                {
+                    question: "Nível 3: Qual é o perigo de consumir muito sódio (sal) no dia a dia?",
+                    options: ["Pode aumentar a pressão arterial", "Melhora o sono", "Deixa os ossos mais fortes", "Não traz nenhum efeito"],
+                    correct: 0
+                },
+                {
+                    question: "Nível 3: Qual alimento abaixo ajuda a manter o foco mental devido aos seus ácidos graxos (Ômega-3)?",
+                    options: ["Peixe (como salmão ou sardinha)", "Batata frita", "Bolo industrializado", "Refrigerante zero"],
+                    correct: 0
+                }
+            ],
+            level4: [
+                {
+                    question: "Nível 4: Como é feito o cálculo básico do IMC (Índice de Massa Corporal)?",
+                    options: ["Peso dividido pela altura ao quadrado", "Altura multiplicada pela idade", "Peso multiplicado pela quantidade de água", "Idade somada ao peso"],
+                    correct: 0
+                },
+                {
+                    question: "Nível 4: Por que o açúcar em excesso gera o famoso 'pico de energia' seguido de cansaço?",
+                    options: ["Porque é absorvido rápido demais, gerando queda brusca da glicose", "Porque ele fortalece os músculos instantaneamente", "Porque estimula o sono profundo imediato", "Não altera a glicose do corpo"],
+                    correct: 0
+                },
+                {
+                    question: "Nível 4: O que é o Guia Alimentar para a População Brasileira?",
+                    options: ["Um documento oficial que orienta escolhas de comidas saudáveis", "Um livro de receitas de doces", "Um catálogo de fast-food", "Um manual de exercícios pesados"],
+                    correct: 0
+                }
+            ],
+            level5: [
+                {
+                    question: "Nível 5: O que caracteriza um alimento 'Ultraprocessado'?",
+                    options: ["Insumos industriais com aditivos, corantes e conservantes", "Frutas colhidas na hora", "Vegetais cozidos no vapor", "Grãos integrais embalados a vácuo"],
+                    correct: 0
+                },
+                {
+                    question: "Nível 5: Qual a principal função das proteínas no nosso organismo?",
+                    options: ["Construção e reparação de tecidos e músculos", "Armazenar apenas açúcar", "Colorir a pele", "Produzir água pura no sangue"],
+                    correct: 0
+                },
+                {
+                    question: "Nível 5: Por que a variedade de cores no prato indica uma refeição nutricionalmente rica?",
+                    options: ["Cada cor representa diferentes vitaminas e antioxidantes", "Apenas por estética visual", "Porque indica a presença de corantes artificiais", "Não faz nenhuma diferença nutricional"],
+                    correct: 0
+                }
+            ]
+        };
+
+        let currentQuizQuestions = [];
+        let currentQuizIndex = 0;
+        let quizScore = 0;
+
+        function setupNewQuiz() {
+            currentQuizQuestions = [
+                getRandomQuestion(questionBank.level1),
+                getRandomQuestion(questionBank.level2),
+                getRandomQuestion(questionBank.level3),
+                getRandomQuestion(questionBank.level4),
+                getRandomQuestion(questionBank.level5)
+            ];
+            currentQuizIndex = 0;
+            quizScore = 0;
+            document.getElementById('quiz-box').style.display = 'block';
+            document.getElementById('btn-restart').style.display = 'none';
+            loadQuestion();
+        }
+
+        function getRandomQuestion(arr) {
+            const randomIndex = Math.floor(Math.random() * arr.length);
+            return arr[randomIndex];
+        }
+
+        function loadQuestion() {
+            const q = currentQuizQuestions[currentQuizIndex];
+            document.getElementById('quiz-level').textContent = `${currentQuizIndex + 1} / ${currentQuizQuestions.length}`;
+            document.getElementById('quiz-score').textContent = quizScore;
+            document.getElementById('quiz-question').textContent = q.question;
+
+            const optionsDiv = document.getElementById('quiz-options');
+            optionsDiv.innerHTML = '';
+
+            q.options.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'quiz-btn';
+                btn.textContent = `${index + 1}. ${opt}`;
+                btn.onclick = () => checkQuizAnswer(index);
+                optionsDiv.appendChild(btn);
+            });
+
+            document.getElementById('quiz-feedback').textContent = '';
+        }
+
+        function checkQuizAnswer(selected) {
+            const q = currentQuizQuestions[currentQuizIndex];
+            const feedback = document.getElementById('quiz-feedback');
+
+            if (selected === q.correct) {
+                quizScore += 20;
+                feedback.textContent = "✨ Resposta Correta! +20 Pontos!";
+                feedback.style.color = "#8e24aa";
+            } else {
+                quizScore -= 10;
+                if (quizScore < 0) quizScore = 0;
+                feedback.textContent = "❌ Resposta Incorreta! -10 Pontos.";
+                feedback.style.color = "#c62828";
+            }
+
+            document.getElementById('quiz-score').textContent = quizScore;
+
+            setTimeout(() => {
+                currentQuizIndex++;
+                if (currentQuizIndex < currentQuizQuestions.length) {
+                    loadQuestion();
+                } else {
+                    finishQuiz();
+                }
+            }, 1200);
+        }
+
+        function finishQuiz() {
+            document.getElementById('quiz-box').style.display = 'none';
+            const feedback = document.getElementById('quiz-feedback');
+            document.getElementById('btn-restart').style.display = 'inline-block';
+
+            if (quizScore === 100) {
+                feedback.innerHTML = `🎉 <strong>PONTUAÇÃO MÁXIMA!</strong> Você fez 100 Pontos e provou que é um Mestre da Nutrição! 🏆`;
+                feedback.style.color = "#8e24aa";
+            } else {
+                feedback.innerHTML = `🏁 <strong>Fim da Rodada!</strong> Você fez <strong>${quizScore} / 100 Pontos</strong>. Clique abaixo para tentar uma nova rodada com perguntas inéditas!`;
+                feedback.style.color = "#6a1b9a";
+            }
+        }
+
+        function resetQuiz() {
+            setupNewQuiz();
+        }
+
+        setupNewQuiz();
+
+        // Lógica do IMC
+        function calcularIMC() {
+            const peso = parseFloat(document.getElementById('peso').value);
+            const altura = parseFloat(document.getElementById('altura').value);
+            const resultadoDiv = document.getElementById('resultado-imc');
+
+            if (!peso || !altura || peso <= 0 || altura <= 0) {
+                resultadoDiv.style.display = 'block';
+                resultadoDiv.style.backgroundColor = '#ffebee';
+                resultadoDiv.style.color = '#c62828';
+                resultadoDiv.innerHTML = 'Por favor, insira valores válidos.';
+                return;
+            }
+
+            const imc = (peso / (altura * altura)).toFixed(1);
+            let mensagem = `Seu IMC é ${imc}: `;
+            
+            if (imc < 18.5) mensagem += "Abaixo do peso.";
+            else if (imc < 25) mensagem += "Peso normal (Saudável).";
+            else if (imc < 30) mensagem += "Sobrepeso.";
+            else mensagem += "Obesidade.";
+
+            resultadoDiv.style.display = 'block';
+            resultadoDiv.style.backgroundColor = '#f3e5f5';
+            resultadoDiv.style.color = '#6a1b9a';
+            resultadoDiv.innerHTML = mensagem;
+        }
+    </script>
+
+</body>
+</html>
