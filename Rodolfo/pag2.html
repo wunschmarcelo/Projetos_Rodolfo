@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vida Saudável | Nutrição, Saúde & Bem-Estar</title>
+    <style>
+        /* CSS RESET & ESTILOS BASE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #f4f9f4;
+            color: #2d3748;
+            line-height: 1.6;
+        }
+
+        /* HEADER & NAVEGAÇÃO */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 8%;
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.6rem;
+            color: #2e7d32;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        nav a:hover {
+            color: #2e7d32;
+        }
+
+        /* SEÇÃO DE BOAS-VINDAS */
+        .hero-clean {
+            text-align: center;
+            padding: 3.5rem 1.5rem;
+            background-color: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .hero-clean h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+            color: #1b5e20;
+        }
+
+        .hero-clean p {
+            font-size: 1.15rem;
+            color: #4a5568;
+            margin-bottom: 1.5rem;
+        }
+
+        /* BOTÕES GERAIS */
+        .btn-main {
+            background-color: #2e7d32;
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-main:hover {
+            background-color: #1b5e20;
+            transform: scale(1.05);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            color: #1b5e20;
+            margin-bottom: 2rem;
+        }
+
+        /* SEÇÃO SOBRE NÓS */
+        .about-section {
+            padding: 4rem 8%;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .about-content {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-content h2 {
+            color: #2e7d32;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* SEÇÃO DICAS / CARDS DE ARTIGOS */
+        .tips-section {
+            padding: 4rem 8%;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-content h3 {
+            color: #2e7d32;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-content p {
+            color: #718096;
+            font-size: 0.95rem;
+        }
+
+        /* SEÇÃO DE FERRAMENTAS */
+        .tools-section {
+            padding: 4rem 8%;
+            background-color: #f4f9f4;
+        }
+
+        .tools-grid {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .calc-box {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            width: 320px;
+            text-align: center;
+        }
+
+        .calc-box h3 {
+            color: #2e7d32;
+            margin-bottom: 1rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.2rem;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            font-size: 0.9rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .calc-result {
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #2e7d32;
+        }
+
+        /* SEÇÃO QUIZ INTERATIVO */
+        .quiz-section {
+            padding: 4rem 8%;
+            background: #ffffff;
+        }
+
+        .quiz-box {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #f4f9f4;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .quiz-options button {
+            display: block;
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.8rem 0;
+            border: 2px solid #a5d6a7;
+            background: white;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #2d3748;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .quiz-options button:hover {
+            background: #e8f5e9;
+            border-color: #2e7d32;
+        }
+
+        /* SEÇÃO GERADOR DE REFEIÇÕES */
+        .generator-section {
+            padding: 4rem 8%;
+            background: #f4f9f4;
+            text-align: center;
+        }
+
+        .plate-box {
+            background: #ffffff;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .plate-display {
+            font-size: 1.1rem;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: #f4f9f4;
+            border-radius: 8px;
+            color: #1b5e20;
+            font-weight: 600;
+            border: 1px solid #c8e6c9;
+            text-align: left;
+        }
+
+        /* SEÇÃO CONTATO E NEWSLETTER */
+        .contact-section {
+            padding: 4rem 8%;
+            background: #ffffff;
+            text-align: center;
+        }
+
+        .newsletter-box {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #cbd5e0;
+            border-radius: 25px;
+            font-size: 1rem;
+            padding-left: 1.2rem;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: #1b5e20;
+            color: #ffffff;
+        }
+
+        footer p {
+            margin: 0.3rem 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CABEÇALHO DE NAVEGAÇÃO -->
+    <header class="header">
+        <div class="logo">🌱 VidaSaudável</div>
+        <nav>
+            <ul>
+                <li><a href="#sobre">Sobre Nós</a></li>
+                <li><a href="#dicas">Dicas & Artigos</a></li>
+                <li><a href="#ferramentas">Calculadoras</a></li>
+                <li><a href="#quiz">Quiz</a></li>
+                <li><a href="#gerador">Monte seu Prato</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- SEÇÃO BOAS-VINDAS -->
+    <section class="hero-clean">
+        <h1>Alimente seu corpo, nutra sua vida</h1>
+        <p>Aprenda hábitos saudáveis, calcule suas metas e monte refeições equilibradas!</p>
+        <a href="#ferramentas" class="btn-main">Começar Agora</a>
+    </section>
+
+    <!-- SEÇÃO SOBRE NÓS -->
+    <section id="sobre" class="about-section">
+        <div class="about-content">
+            <h2>Transforme seus hábitos diários</h2>
+            <p>O <strong>VidaSaudável</strong> é o seu portal definitivo para alcançar bem-estar e equilíbrio. Criado por <strong>Cristian</strong>, o projeto tem como missão promover a alimentação consciente aliada ao conhecimento prático para transformar sua rotina, trazendo mais energia e longevidade.</p>
+        </div>
+        <div class="about-image">
+            <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=80" alt="Alimentação Saudável">
+        </div>
+    </section>
+
+    <!-- SEÇÃO DICAS & ARTIGOS -->
+    <section id="dicas" class="tips-section">
+        <h2 class="section-title">Dicas para o seu Dia a Dia 🍏</h2>
+        <div class="cards-grid">
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80" alt="Alimentação Colorida">
+                <div class="card-content">
+                    <h3>Prato Colorido e Nutritivo</h3>
+                    <p>Quanto mais cores no seu prato, maior a variedade de vitaminas e minerais essenciais para a sua imunidade.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=600&q=80" alt="Importância da Água">
+                <div class="card-content">
+                    <h3>A Importância da Hidratação</h3>
+                    <p>Beber água regularmente melhora o funcionamento do metabolismo, melhora a pele e ajuda na concentração.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=600&q=80" alt="Prática de Exercícios">
+                <div class="card-content">
+                    <h3>Movimente o seu Corpo</h3>
+                    <p>Atividades físicas diárias reduzem o estresse e fortalecem o sistema cardiovascular e muscular.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO CALCULADORAS (IMC & ÁGUA) -->
+    <section id="ferramentas" class="tools-section">
+        <h2 class="section-title">Calculadoras de Saúde 📊</h2>
+        <div class="tools-grid">
+            
+            <!-- Calculadora de IMC -->
+            <div class="calc-box">
+                <h3>Calculadora de IMC ⚖️</h3>
+                <p style="font-size: 0.85rem; color: #718096; margin-bottom: 1rem;">Calcule seu Índice de Massa Corporal.</p>
+                <div class="input-group">
+                    <label for="pesoIMC">Seu peso (kg):</label>
+                    <input type="number" id="pesoIMC" placeholder="Ex: 70" step="0.1" min="1">
+                </div>
+                <div class="input-group">
+                    <label for="alturaIMC">Sua altura (m):</label>
+                    <input type="number" id="alturaIMC" placeholder="Ex: 1.75" step="0.01" min="0.5">
+                </div>
+                <button class="btn-main" style="width: 100%; border-radius: 8px;" onclick="calcularIMC()">Calcular IMC</button>
+                <div id="resultadoIMC" class="calc-result"></div>
+            </div>
+
+            <!-- Calculadora de Água -->
+            <div class="calc-box">
+                <h3>Meta de Água Diária 💧</h3>
+                <p style="font-size: 0.85rem; color: #718096; margin-bottom: 1rem;">Descubra sua meta ideal diária de água.</p>
+                <div class="input-group">
+                    <label for="pesoAgua">Seu peso (kg):</label>
+                    <input type="number" id="pesoAgua" placeholder="Ex: 70" min="1">
+                </div>
+                <button class="btn-main" style="width: 100%; margin-top: 2.3rem; border-radius: 8px;" onclick="calcularAgua()">Calcular Meta</button>
+                <div id="resultadoAgua" class="calc-result"></div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SEÇÃO QUIZ NUTRICIONAL -->
+    <section id="quiz" class="quiz-section">
+        <h2 class="section-title">Quiz Nutricional 🧠</h2>
+        <div class="quiz-box">
+            <h3 id="questionText">Qual é a recomendação ideal para o consumo diário de vegetais no prato?</h3>
+            <div class="quiz-options">
+                <button onclick="checkAnswer(false)">25% do prato</button>
+                <button onclick="checkAnswer(true)">50% do prato</button>
+                <button onclick="checkAnswer(false)">10% do prato</button>
+            </div>
+            <div id="quizFeedback" style="margin-top: 1rem; font-weight: bold; text-align: center;"></div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO MONTADOR DE PRATO -->
+    <section id="gerador" class="generator-section">
+        <h2 class="section-title">Montador de Prato Perfeito 🍽️</h2>
+        <div class="plate-box">
+            <p>Clique abaixo para gerar uma sugestão de refeição saudável e bem distribuída!</p>
+            <div id="plateDisplay" class="plate-display">Clique no botão para gerar seu prato!</div>
+            <button class="btn-main" onclick="generateMeal()">Gerar Refeição</button>
+        </div>
+    </section>
+
+    <!-- SEÇÃO CONTATO / NEWSLETTER -->
+    <section id="contato" class="contact-section">
+        <h2 class="section-title">Receba Dicas Semanalmente 📩</h2>
+        <div class="newsletter-box">
+            <p>Cadastre seu e-mail para receber nossas últimas dicas de nutrição e receitas exclusivas.</p>
+            <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Obrigado por se inscrever!');">
+                <input type="email" placeholder="Seu melhor e-mail..." required>
+                <button type="submit" class="btn-main">Inscrever</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- RODAPÉ -->
+    <footer>
+        <p>&copy; 2026 VidaSaudável — Dicas de Nutrição & Bem-Estar. Todos os direitos reservados.</p>
+        <p>Desenvolvido por <strong>Cristian</strong></p>
+    </footer>
+
+    <!-- SCRIPTS JAVASCRIPT -->
+    <script>
+        // Lógica da Calculadora de IMC
+        function calcularIMC() {
+            const peso = parseFloat(document.getElementById('pesoIMC').value);
+            const altura = parseFloat(document.getElementById('alturaIMC').value);
+            const res = document.getElementById('resultadoIMC');
+
+            if (isNaN(peso) || isNaN(altura) || peso <= 0 || altura <= 0) {
+                res.style.color = '#e53e3e';
+                res.innerText = 'Preencha peso e altura corretamente!';
+                return;
+            }
+
+            const imc = (peso / (altura * altura)).toFixed(1);
+            let classificacao = '';
+            let cor = '#2e7d32';
+
+            if (imc < 18.5) {
+                classificacao = 'Abaixo do peso';
+                cor = '#d69e2e';
+            } else if (imc < 24.9) {
+                classificacao = 'Peso normal (Ideal)';
+                cor = '#2e7d32';
+            } else if (imc < 29.9) {
+                classificacao = 'Sobrepeso';
+                cor = '#d69e2e';
+            } else if (imc < 34.9) {
+                classificacao = 'Obesidade Grau I';
+                cor = '#e53e3e';
+            } else {
+                classificacao = 'Obesidade Grau II/III';
+                cor = '#e53e3e';
+            }
+
+            res.style.color = cor;
+            res.innerHTML = `IMC: <strong>${imc}</strong><br><small>(${classificacao})</small>`;
+        }
+
+        // Lógica da Calculadora de Água
+        function calcularAgua() {
+            const peso = parseFloat(document.getElementById('pesoAgua').value);
+            const res = document.getElementById('resultadoAgua');
+
+            if (isNaN(peso) || peso <= 0) {
+                res.style.color = '#e53e3e';
+                res.innerText = 'Insira um peso válido!';
+                return;
+            }
+
+            const mlTotal = peso * 35;
+            const litros = (mlTotal / 1000).toFixed(2);
+
+            res.style.color = '#2e7d32';
+            res.innerHTML = `Meta: <strong>${litros} Litros</strong>/dia 🥤`;
+        }
+
+        // Lógica do Quiz
+        function checkAnswer(isCorrect) {
+            const feedback = document.getElementById('quizFeedback');
+            if (isCorrect) {
+                feedback.style.color = '#2e7d32';
+                feedback.innerText = '✅ Correto! Metade do seu prato deve ser composta por saladas e vegetais!';
+            } else {
+                feedback.style.color = '#e53e3e';
+                feedback.innerText = '❌ Ops! O ideal é que 50% do prato seja composto por vegetais e legumes.';
+            }
+        }
+
+        // Lógica do Gerador de Prato
+        const carboidratos = ['Arroz Integral', 'Batata Doce Assada', 'Quinoa Nutritiva', 'Mandioca Cozida'];
+        const proteinas = ['Frango Grelhado', 'Peixe Assado', 'Ovos Mexidos', 'Lentilha Recipiente'];
+        const vegetais = ['Brócolis ao Vapor + Salada Verde', 'Cenoura Ralada + Tomate', 'Abobrinha Refogada + Rúcula'];
+
+        function generateMeal() {
+            const carb = carboidratos[Math.floor(Math.random() * carboidratos.length)];
+            const prot = proteinas[Math.floor(Math.random() * proteinas.length)];
+            const veg = vegetais[Math.floor(Math.random() * vegetais.length)];
+
+            document.getElementById('plateDisplay').innerHTML = `
+                📌 <strong>Carboidrato:</strong> ${carb}<br>
+                🍗 <strong>Proteína:</strong> ${prot}<br>
+                🥗 <strong>Vegetais:</strong> ${veg}
+            `;
+        }
+    </script>
+</body>
+</html>
