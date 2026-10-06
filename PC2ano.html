@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mundo Mágico do Pensamento Computacional | 2º Ano</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts: Fredoka & Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Fredoka', 'Inter', sans-serif; }
+        .bounce-slow { animation: bounce 3s infinite; }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body class="bg-sky-50 text-slate-800 antialiased selection:bg-amber-400 selection:text-slate-900">
+
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b-4 border-amber-300 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-14 h-14 rounded-2xl bg-amber-400 border-4 border-amber-500 flex items-center justify-center text-white shadow-md bounce-slow text-3xl">
+                    🤖
+                </div>
+                <div>
+                    <h1 class="font-bold text-xl sm:text-2xl text-indigo-600 flex items-center gap-2">
+                        Mundo Mágico do Bit <span class="text-xs px-2.5 py-1 bg-amber-100 text-amber-800 rounded-full border border-amber-300">2º Ano 🎒</span>
+                    </h1>
+                    <p class="text-xs sm:text-sm text-slate-500 font-semibold">Aventuras de Lógica e Brincadeiras!</p>
+                </div>
+            </div>
+            <nav class="hidden md:flex items-center gap-6 font-bold text-slate-600 text-base">
+                <a href="#pilares" class="hover:text-indigo-600 transition-colors">✨ O que é?</a>
+                <a href="#jogos" class="hover:text-amber-500 transition-colors">🎮 Mini-Jogos</a>
+                <a href="#plataformas" class="hover:text-emerald-600 transition-colors">🚀 Aplicativos</a>
+                <a href="#professor" class="hover:text-purple-600 transition-colors">👩‍🏫 Espaço do Professor</a>
+            </nav>
+            <div>
+                <a href="#jogos" class="px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-400 to-orange-400 text-slate-900 font-bold shadow-lg shadow-amber-200 hover:scale-105 transition-transform flex items-center gap-2 text-base border-2 border-amber-500">
+                    ⭐ Jogar Agora!
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section class="relative overflow-hidden py-16 lg:py-24 bg-gradient-to-b from-sky-100 via-sky-50 to-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="text-center lg:text-left space-y-6">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-100 border-2 border-amber-300 text-amber-800 font-bold text-sm">
+                        <span>👋 Olá, amiguinho(a)! Eu sou o Robô Bit!</span>
+                    </div>
+                    <h2 class="text-4xl sm:text-6xl font-bold tracking-tight text-indigo-900 leading-tight">
+                        Vamos brincar de <span class="text-amber-500 underline decoration-wavy decoration-indigo-400">pensar</span> como um computador?
+                    </h2>
+                    <p class="text-lg sm:text-xl text-slate-600 font-normal leading-relaxed">
+                        Agora com 5 FASES em cada jogo! Crie sequências mágicas, mova o robô em tempo real e vença todos os níveis!
+                    </p>
+                    <div class="flex flex-wrap justify-center lg:justify-start gap-4 pt-4">
+                        <a href="#jogos" class="px-8 py-4 rounded-3xl bg-indigo-600 text-white font-bold text-lg shadow-xl shadow-indigo-200 hover:bg-indigo-700 hover:scale-105 transition-all flex items-center gap-3 border-4 border-indigo-400">
+                            🎮 Começar a Aventura
+                        </a>
+                        <a href="#pilares" class="px-8 py-4 rounded-3xl bg-emerald-500 text-white font-bold text-lg shadow-xl shadow-emerald-200 hover:bg-emerald-600 hover:scale-105 transition-all flex items-center gap-3 border-4 border-emerald-400">
+                            🧠 O que vamos aprender?
+                        </a>
+                    </div>
+                </div>
+                <div class="flex justify-center">
+                    <div class="relative w-72 h-72 sm:w-96 sm:h-96 bg-gradient-to-tr from-amber-300 to-amber-100 rounded-full flex items-center justify-center shadow-2xl border-8 border-white bounce-slow">
+                        <div class="text-9xl">🤖</div>
+                        <div class="absolute -bottom-4 bg-white px-6 py-3 rounded-2xl shadow-lg border-2 border-amber-300 text-indigo-900 font-bold text-base flex items-center gap-2">
+                            <span>⭐ Ready para as 5 fases?</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pilares" class="py-20 bg-white border-t-4 border-sky-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="px-4 py-2 rounded-full bg-indigo-100 text-indigo-800 font-bold text-sm border border-indigo-200">Superpoderes do Pensamento</span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-indigo-900 mt-3">O que você vai descobrir?</h2>
+                <p class="mt-4 text-slate-600 text-lg">Quatro superpoderes para você resolver qualquer mistério na escola e em casa!</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="p-8 rounded-3xl bg-amber-50 border-4 border-amber-200 shadow-lg hover:-translate-y-2 transition-transform text-center">
+                    <div class="w-20 h-20 mx-auto rounded-2xl bg-amber-400 text-white flex items-center justify-center text-4xl mb-6 shadow-md border-4 border-amber-500">👣</div>
+                    <h3 class="text-2xl font-bold text-amber-900 mb-2">1. Sequência Lógica</h3>
+                    <p class="text-base text-slate-600 leading-relaxed">Tudo tem uma ordem certa! Primeiro colocar a meia, depois o tênis. Passo a passo para chegar ao objetivo!</p>
+                </div>
+                <div class="p-8 rounded-3xl bg-emerald-50 border-4 border-emerald-200 shadow-lg hover:-translate-y-2 transition-transform text-center">
+                    <div class="w-20 h-20 mx-auto rounded-2xl bg-emerald-400 text-white flex items-center justify-center text-4xl mb-6 shadow-md border-4 border-emerald-500">🔄</div>
+                    <h3 class="text-2xl font-bold text-emerald-900 mb-2">2. Padrões e Loops</h3>
+                    <p class="text-base text-slate-600 leading-relaxed">Descobrir o que se repete! "Cima, baixo, cima, baixo..." Repetir comandos mágicos para não cansar o robô!</p>
+                </div>
+                <div class="p-8 rounded-3xl bg-purple-50 border-4 border-purple-200 shadow-lg hover:-translate-y-2 transition-transform text-center">
+                    <div class="w-20 h-20 mx-auto rounded-2xl bg-purple-400 text-white flex items-center justify-center text-4xl mb-6 shadow-md border-4 border-purple-500">🧩</div>
+                    <h3 class="text-2xl font-bold text-purple-900 mb-2">3. Decomposição</h3>
+                    <p class="text-base text-slate-600 leading-relaxed">Dividir um problemão difícil em pedacinhos bem pequenininhos e fáceis de resolver, um por um!</p>
+                </div>
+                <div class="p-8 rounded-3xl bg-sky-50 border-4 border-sky-200 shadow-lg hover:-translate-y-2 transition-transform text-center">
+                    <div class="w-20 h-20 mx-auto rounded-2xl bg-sky-400 text-white flex items-center justify-center text-4xl mb-6 shadow-md border-4 border-sky-500">🎯</div>
+                    <h3 class="text-2xl font-bold text-sky-900 mb-2">4. Abstração</h3>
+                    <p class="text-base text-slate-600 leading-relaxed">Focar só no que é mais importante e esquecer o que atrapalha para acertar o alvo em cheio!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="jogos" class="py-20 bg-gradient-to-b from-sky-50 to-indigo-50 border-t-4 border-indigo-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-10">
+                <span class="px-4 py-2 rounded-full bg-amber-100 text-amber-800 font-bold text-sm border border-amber-200">Área de Brincadeiras</span>
+                <h2 class="text-3xl sm:text-5xl font-bold text-indigo-900 mt-3">Laboratório de Lógica do Bit</h2>
+                <p class="mt-4 text-slate-600 text-lg">Escolha um jogo e complete as 5 FASES!</p>
+            </div>
+
+            <!-- Abas dos Jogos (1 a 11) -->
+            <div class="flex flex-wrap justify-center gap-2 mb-10 max-w-5xl mx-auto">
+                <button onclick="switchGame(1)" id="tab-btn-1" class="px-4 py-2.5 rounded-2xl font-bold text-sm bg-indigo-600 text-white transition-all shadow-md">🤖 1. Leve o Bit</button>
+                <button onclick="switchGame(2)" id="tab-btn-2" class="px-4 py-2.5 rounded-2xl font-bold text-sm bg-slate-200 text-slate-700 hover:bg-slate-300 transition-all">🍎 2. Sequência</button>
+                <button onclick="switchGame(3)" id="tab-btn-3" class="px-4 py-2.5 rounded-2xl font-bold text-sm bg-slate-200 text-slate-700 hover:bg-slate-300 transition-all">🐛 3. Caça aos Erros</button>
+                <button onclick="switchGame(4)" id="tab-btn-4" class="px-4 py-2.5 rounded-2xl font-bold text-sm bg-slate-200 text-slate-700 hover:bg-slate-300 transition-all">🔍 4. Classificação</button>
+                <button onclick="switchGame(5)" id="tab-btn-5" class="px-4 py-2.5 rounded-2xl font-bold text-sm bg-slate-200 text-slate-700 hover:bg-slate-300 transition-all">📋 5. Rotinas</button>
+                <button onclick="switchGame(6)" id="tab-btn-6" class="px-4 py-2.5 rounded-2xl font-bold text-sm bg-slate-200 text-slate-700 hover:bg-slate-300 transition-all">🔄 6. Repetição</button>
+                <button onclick="switchGame(7)" id="tab-btn-7" class="px-4 py-2.5 rounded-2xl font-bold text-sm bg-slate-200 text-slate-700 hover:bg-slate-300 transition-all">🔑 7. Código Secreto</button>
+                <button onclick="switchGame(8)" id="tab-btn-8" class="px-4 py-2.5 rounded-2xl font-bold text-sm bg-slate-200 text-slate-700 hover:bg-slate-300 transition-all">🚦 8. Condicionais</button>
+                <button onclick="switchGame(9)" id="tab-btn-9" class="px-4 py-2.5 rounded-2xl font-bold text-sm bg-slate-200 text-slate-700 hover:bg-slate-300 transition-all">🏗️ 9. Decomposição</button>
+                <button onclick="switchGame(10)" id="tab-btn-10" class="px-4 py-2.5 rounded-2xl font-bold text-sm bg-slate-200 text-slate-700 hover:bg-slate-300 transition-all">📍 10. Coordenadas</button>
+                <button onclick="switchGame(11)" id="tab-btn-11" class="px-4 py-2.5 rounded-2xl font-bold text-sm bg-slate-200 text-slate-700 hover:bg-slate-300 transition-all">💃 11. Dança do Bit</button>
+            </div>
+
+            <!-- JOGO 1: O Robô Bit -->
+            <div id="game-container-1" class="bg-white rounded-3xl border-4 border-indigo-300 p-6 sm:p-10 shadow-2xl max-w-4xl mx-auto">
+                <div class="flex flex-col lg:flex-row gap-8 items-center justify-between">
+                    <div class="w-full lg:w-1/2 space-y-6">
+                        <div class="flex items-center justify-between">
+                            <span class="px-3 py-1 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold border border-indigo-200">Desafio do Passo a Passo</span>
+                            <span id="stage-badge-1" class="px-3 py-1 rounded-full bg-amber-400 text-indigo-950 font-bold text-xs shadow-sm">Fase 1 / 5</span>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-indigo-900">Guie o Robô Bit até a Estrela ⭐</h3>
+                            <p class="text-sm text-slate-600 mt-1">Escolha os comandos e clique em Executar para ver o Bit andar ao vivo!</p>
+                        </div>
+
+                        <div class="bg-sky-50 p-4 rounded-2xl border-2 border-sky-200">
+                            <h4 class="text-xs font-bold text-sky-800 uppercase tracking-wider mb-2">Seus Comandos Mágicos:</h4>
+                            <div id="command-queue-1" class="flex flex-wrap gap-2 min-h-[60px] p-3 bg-white rounded-xl border-2 border-dashed border-sky-300 items-center">
+                                <span class="text-sm text-slate-400 italic">Nenhum comando escolhido ainda.</span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-4 gap-2">
+                            <button onclick="addCmd1('frente')" class="p-3 rounded-xl bg-amber-100 hover:bg-amber-200 border-2 border-amber-300 text-amber-900 font-bold text-xs flex flex-col items-center">
+                                <span class="text-lg">⬆️</span> Cima
+                            </button>
+                            <button onclick="addCmd1('baixo')" class="p-3 rounded-xl bg-amber-100 hover:bg-amber-200 border-2 border-amber-300 text-amber-900 font-bold text-xs flex flex-col items-center">
+                                <span class="text-lg">⬇️</span> Baixo
+                            </button>
+                            <button onclick="addCmd1('esquerda')" class="p-3 rounded-xl bg-sky-100 hover:bg-sky-200 border-2 border-sky-300 text-sky-900 font-bold text-xs flex flex-col items-center">
+                                <span class="text-lg">⬅️</span> Esquerda
+                            </button>
+                            <button onclick="addCmd1('direita')" class="p-3 rounded-xl bg-emerald-100 hover:bg-emerald-200 border-2 border-emerald-300 text-emerald-900 font-bold text-xs flex flex-col items-center">
+                                <span class="text-lg">➡️️</span> Direita
+                            </button>
+                        </div>
+
+                        <div class="flex gap-3">
+                            <button id="run-btn-1" onclick="runGame1()" class="flex-1 py-3.5 rounded-2xl bg-emerald-500 text-white font-bold text-base shadow-lg hover:bg-emerald-600 transition-all border-2 border-emerald-600">
+                                ▶️ Executar Código
+                            </button>
+                            <button onclick="resetGame1()" class="px-5 py-3.5 rounded-2xl bg-slate-200 text-slate-700 font-bold text-base hover:bg-slate-300 border-2 border-slate-300">
+                                🔄 Limpar
+                            </button>
+                        </div>
+                        <div id="feedback-1" class="text-base font-bold text-center h-8"></div>
+                    </div>
+
+                    <div class="w-full lg:w-auto flex justify-center">
+                        <div id="grid-1" class="grid grid-cols-4 gap-3 bg-sky-100 p-4 rounded-3xl border-4 border-indigo-200 shadow-inner"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JOGO 2: Sequência de Frutas -->
+            <div id="game-container-2" class="bg-white rounded-3xl border-4 border-emerald-300 p-6 sm:p-10 shadow-2xl max-w-4xl mx-auto hidden">
+                <div class="space-y-6 text-center max-w-2xl mx-auto">
+                    <div class="flex justify-between items-center">
+                        <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold border border-emerald-200">Padrão e Repetição</span>
+                        <span id="stage-badge-2" class="px-3 py-1 rounded-full bg-amber-400 text-indigo-950 font-bold text-xs">Fase 1 / 5</span>
+                    </div>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-indigo-900">Qual fruta vem a seguir no padrão? 🍎🍌</h3>
+
+                    <div id="sequence-display" class="flex justify-center items-center gap-4 p-6 bg-emerald-50 rounded-3xl border-4 border-emerald-200 text-4xl sm:text-5xl shadow-inner"></div>
+
+                    <div class="text-lg font-bold text-indigo-900">Escolha o próximo elemento:</div>
+                    <div id="sequence-options" class="flex justify-center gap-4"></div>
+
+                    <div id="feedback-2" class="text-lg font-bold h-8"></div>
+                </div>
+            </div>
+
+            <!-- JOGO 3: Caça aos Erros (Debugging) -->
+            <div id="game-container-3" class="bg-white rounded-3xl border-4 border-amber-300 p-6 sm:p-10 shadow-2xl max-w-4xl mx-auto hidden">
+                <div class="space-y-6 text-center max-w-2xl mx-auto">
+                    <div class="flex justify-between items-center">
+                        <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold border border-amber-200">Depuração (Debugging)</span>
+                        <span id="stage-badge-3" class="px-3 py-1 rounded-full bg-amber-400 text-indigo-950 font-bold text-xs">Fase 1 / 5</span>
+                    </div>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-indigo-900">Encontre o Erro no Código! 🐛</h3>
+                    <p class="text-slate-600">Clique na seta com o erro de direção para corrigi-la!</p>
+
+                    <div id="bug-sequence" class="flex justify-center items-center gap-3 p-6 bg-amber-50 rounded-3xl border-4 border-amber-200 text-3xl shadow-inner"></div>
+
+                    <div id="feedback-3" class="text-lg font-bold h-8"></div>
+                </div>
+            </div>
+
+            <!-- JOGO 4: Classificação (Abstração) -->
+            <div id="game-container-4" class="bg-white rounded-3xl border-4 border-purple-300 p-6 sm:p-10 shadow-2xl max-w-4xl mx-auto hidden">
+                <div class="space-y-6 text-center max-w-2xl mx-auto">
+                    <div class="flex justify-between items-center">
+                        <span class="px-3 py-1 rounded-full bg-purple-100 text-purple-800 text-xs font-bold border border-purple-200">Abstração e Filtragem</span>
+                        <span id="stage-badge-4" class="px-3 py-1 rounded-full bg-amber-400 text-indigo-950 font-bold text-xs">Fase 1 / 5</span>
+                    </div>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-indigo-900">Filtro de Memória do Bit 🔍</h3>
+                    <p id="game4-instruction" class="text-slate-600 font-semibold text-lg"></p>
+
+                    <div id="game4-items" class="flex justify-center gap-4 text-5xl py-6 flex-wrap"></div>
+
+                    <div id="feedback-4" class="text-lg font-bold h-8"></div>
+                </div>
+            </div>
+
+            <!-- JOGO 5: Rotinas Lógicas (Algoritmos) -->
+            <div id="game-container-5" class="bg-white rounded-3xl border-4 border-sky-300 p-6 sm:p-10 shadow-2xl max-w-4xl mx-auto hidden">
+                <div class="space-y-6 text-center max-w-2xl mx-auto">
+                    <div class="flex justify-between items-center">
+                        <span class="px-3 py-1 rounded-full bg-sky-100 text-sky-800 text-xs font-bold border border-sky-200">Algoritmos do Dia a Dia</span>
+                        <span id="stage-badge-5" class="px-3 py-1 rounded-full bg-amber-400 text-indigo-950 font-bold text-xs">Fase 1 / 5</span>
+                    </div>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-indigo-900">Organize a Rotina Correta 📋</h3>
+                    <p class="text-slate-600">Clique nas etapas na ordem cronológica em que devem acontecer!</p>
+
+                    <div id="game5-options" class="grid grid-cols-3 gap-3 py-4"></div>
+
+                    <div class="bg-sky-50 p-4 rounded-2xl border-2 border-sky-200">
+                        <span class="text-xs font-bold text-sky-800 uppercase">Sua Ordem Escolhida:</span>
+                        <div id="game5-selected" class="text-lg font-bold text-indigo-900 min-h-[40px] mt-2 flex justify-center items-center gap-2"></div>
+                    </div>
+
+                    <div id="feedback-5" class="text-lg font-bold h-8"></div>
+                    <button onclick="initGame5()" class="px-6 py-2 rounded-2xl bg-slate-200 text-slate-700 font-bold text-sm border-2 border-slate-300">🔄 Reiniciar Esta Fase</button>
+                </div>
+            </div>
+
+            <!-- JOGO 6: A Máquina de Repetição (Loops) -->
+            <div id="game-container-6" class="bg-white rounded-3xl border-4 border-emerald-300 p-6 sm:p-10 shadow-2xl max-w-4xl mx-auto hidden">
+                <div class="space-y-6 text-center max-w-2xl mx-auto">
+                    <div class="flex justify-between items-center">
+                        <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold border border-emerald-200">Laços de Repetição (Loops)</span>
+                        <span id="stage-badge-6" class="px-3 py-1 rounded-full bg-amber-400 text-indigo-950 font-bold text-xs">Fase 1 / 5</span>
+                    </div>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-indigo-900">Economize Comandos com Loops! 🔄</h3>
+                    <p id="game6-prompt" class="text-slate-600 text-lg"></p>
+
+                    <div id="game6-track" class="flex justify-center gap-2 text-3xl sm:text-4xl p-6 bg-emerald-50 rounded-3xl border-4 border-emerald-200"></div>
+
+                    <div id="game6-buttons" class="flex justify-center gap-4"></div>
+
+                    <div id="feedback-6" class="text-lg font-bold h-8"></div>
+                </div>
+            </div>
+
+            <!-- JOGO 7: Código Secreto -->
+            <div id="game-container-7" class="bg-white rounded-3xl border-4 border-indigo-300 p-6 sm:p-10 shadow-2xl max-w-4xl mx-auto hidden">
+                <div class="space-y-6 text-center max-w-2xl mx-auto">
+                    <div class="flex justify-between items-center">
+                        <span class="px-3 py-1 rounded-full bg-indigo-100 text-indigo-800 text-xs font-bold border border-indigo-200">Descodificação e Cifra</span>
+                        <span id="stage-badge-7" class="px-3 py-1 rounded-full bg-amber-400 text-indigo-950 font-bold text-xs">Fase 1 / 5</span>
+                    </div>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-indigo-900">Descodifique a Palavra Secreta 🔑</h3>
+
+                    <div id="game7-legend" class="flex justify-center gap-4 p-4 bg-indigo-50 rounded-2xl border-2 border-indigo-200 text-lg font-bold"></div>
+
+                    <div id="game7-code" class="text-5xl tracking-widest my-4"></div>
+
+                    <input type="text" id="game7-input" placeholder="DIGITE A PALAVRA" class="px-4 py-3 text-center uppercase font-bold text-xl rounded-2xl border-4 border-indigo-300 focus:outline-none focus:border-indigo-600">
+
+                    <div>
+                        <button onclick="checkGame7()" class="px-8 py-3 rounded-2xl bg-emerald-500 text-white font-bold text-lg shadow-lg hover:bg-emerald-600 border-2 border-emerald-600">Decifrar Código</button>
+                    </div>
+
+                    <div id="feedback-7" class="text-lg font-bold h-8"></div>
+                </div>
+            </div>
+
+            <!-- JOGO 8: O Caminho Condicional -->
+            <div id="game-container-8" class="bg-white rounded-3xl border-4 border-rose-300 p-6 sm:p-10 shadow-2xl max-w-4xl mx-auto hidden">
+                <div class="space-y-6 text-center max-w-2xl mx-auto">
+                    <div class="flex justify-between items-center">
+                        <span class="px-3 py-1 rounded-full bg-rose-100 text-rose-800 text-xs font-bold border border-rose-200">Condicionais (Se ... Senão)</span>
+                        <span id="stage-badge-8" class="px-3 py-1 rounded-full bg-amber-400 text-indigo-950 font-bold text-xs">Fase 1 / 5</span>
+                    </div>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-indigo-900">Decisão Condicional! 🚦</h3>
+                    <p id="game8-prompt" class="text-slate-600 font-semibold text-lg"></p>
+
+                    <div id="game8-light" class="text-8xl my-4"></div>
+
+                    <div id="game8-buttons" class="flex justify-center gap-4"></div>
+
+                    <div id="feedback-8" class="text-lg font-bold h-8"></div>
+                </div>
+            </div>
+
+            <!-- JOGO 9: Construção por Partes -->
+            <div id="game-container-9" class="bg-white rounded-3xl border-4 border-amber-300 p-6 sm:p-10 shadow-2xl max-w-4xl mx-auto hidden">
+                <div class="space-y-6 text-center max-w-2xl mx-auto">
+                    <div class="flex justify-between items-center">
+                        <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold border border-amber-200">Decomposição</span>
+                        <span id="stage-badge-9" class="px-3 py-1 rounded-full bg-amber-400 text-indigo-950 font-bold text-xs">Fase 1 / 5</span>
+                    </div>
+                    <h3 id="game9-title" class="text-2xl sm:text-3xl font-bold text-indigo-900"></h3>
+                    <p class="text-slate-600">Qual é a 1ª etapa para resolver esta tarefa?</p>
+
+                    <div id="game9-options" class="grid grid-cols-3 gap-4 py-4"></div>
+
+                    <div id="feedback-9" class="text-lg font-bold h-8"></div>
+                </div>
+            </div>
+
+            <!-- JOGO 10: O Labirinto de Coordenadas -->
+            <div id="game-container-10" class="bg-white rounded-3xl border-4 border-sky-300 p-6 sm:p-10 shadow-2xl max-w-4xl mx-auto hidden">
+                <div class="space-y-6 text-center max-w-2xl mx-auto">
+                    <div class="flex justify-between items-center">
+                        <span class="px-3 py-1 rounded-full bg-sky-100 text-sky-800 text-xs font-bold border border-sky-200">Mapeamento e Coordenadas</span>
+                        <span id="stage-badge-10" class="px-3 py-1 rounded-full bg-amber-400 text-indigo-950 font-bold text-xs">Fase 1 / 5</span>
+                    </div>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-indigo-900">Encontre a Posição Correta 📍</h3>
+                    <p id="game10-prompt" class="text-slate-600 text-lg font-semibold"></p>
+
+                    <div id="game10-grid" class="grid grid-cols-3 gap-3 bg-sky-100 p-4 rounded-3xl max-w-xs mx-auto border-4 border-sky-200"></div>
+
+                    <div id="feedback-10" class="text-lg font-bold h-8"></div>
+                </div>
+            </div>
+
+            <!-- JOGO 11: Dança do Bit -->
+            <div id="game-container-11" class="bg-white rounded-3xl border-4 border-purple-300 p-6 sm:p-10 shadow-2xl max-w-4xl mx-auto hidden">
+                <div class="space-y-6 text-center max-w-2xl mx-auto">
+                    <div class="flex justify-between items-center">
+                        <span class="px-3 py-1 rounded-full bg-purple-100 text-purple-800 text-xs font-bold border border-purple-200">Sequenciamento Executivo</span>
+                        <span id="stage-badge-11" class="px-3 py-1 rounded-full bg-amber-400 text-indigo-950 font-bold text-xs">Fase 1 / 5</span>
+                    </div>
+                    <h3 class="text-2xl sm:text-3xl font-bold text-indigo-900">Siga a Dança do Bit! 💃</h3>
+                    <p class="text-slate-600">Memorize a sequência mostrada e repita-a!</p>
+
+                    <div id="game11-show" class="flex justify-center gap-3 text-4xl p-6 bg-purple-50 rounded-3xl border-4 border-purple-200 min-h-[90px] items-center"></div>
+
+                    <div class="flex justify-center gap-4">
+                        <button onclick="addDanceStep('👏')" class="p-4 bg-amber-100 border-2 border-amber-300 rounded-2xl text-2xl font-bold flex flex-col items-center"><span>👏</span><span class="text-xs">Palma</span></button>
+                        <button onclick="addDanceStep('🦘')" class="p-4 bg-sky-100 border-2 border-sky-300 rounded-2xl text-2xl font-bold flex flex-col items-center"><span>🦘</span><span class="text-xs">Pulo</span></button>
+                        <button onclick="addDanceStep('🔄')" class="p-4 bg-emerald-100 border-2 border-emerald-300 rounded-2xl text-2xl font-bold flex flex-col items-center"><span>🔄</span><span class="text-xs">Giro</span></button>
+                    </div>
+
+                    <div id="feedback-11" class="text-lg font-bold h-8"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="plataformas" class="py-20 bg-white border-t-4 border-sky-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="px-4 py-2 rounded-full bg-emerald-100 text-emerald-800 font-bold text-sm border border-emerald-200">Mundo Digital</span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-indigo-900 mt-3">Outros Sites Incríveis para Brincar</h2>
+                <p class="mt-4 text-slate-600 text-lg">Conheça plataformas recomendadas para continuar a aprender!</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-8 rounded-3xl bg-amber-50 border-4 border-amber-300 shadow-lg flex flex-col justify-between hover:scale-105 transition-transform">
+                    <div>
+                        <div class="w-16 h-16 rounded-2xl bg-amber-400 text-white flex items-center justify-center text-3xl mb-6 shadow-md border-4 border-amber-500">🐱</div>
+                        <h3 class="text-2xl font-bold text-amber-900">ScratchJr</h3>
+                        <p class="text-xs text-amber-700 font-bold mt-1">Para Tablets e Computadores</p>
+                        <p class="text-base text-slate-600 mt-4">Crie suas próprias histórias animadas empilhando blocos coloridos!</p>
+                    </div>
+                    <a href="https://www.scratchjr.org" target="_blank" class="mt-8 w-full py-3.5 rounded-2xl bg-amber-500 text-white font-bold text-base text-center border-2 border-amber-600 shadow-md">Visitar ScratchJr 🚀</a>
+                </div>
+
+                <div class="p-8 rounded-3xl bg-sky-50 border-4 border-sky-300 shadow-lg flex flex-col justify-between hover:scale-105 transition-transform">
+                    <div>
+                        <div class="w-16 h-16 rounded-2xl bg-sky-400 text-white flex items-center justify-center text-3xl mb-6 shadow-md border-4 border-sky-500">💻</div>
+                        <h3 class="text-2xl font-bold text-sky-900">Code.org (Hora do Código)</h3>
+                        <p class="text-xs text-sky-700 font-bold mt-1">Jogos com Personagens Famosos</p>
+                        <p class="text-base text-slate-600 mt-4">Aventure-se com o Minecraft e Frozen resolvendo quebra-cabeças lógicos.</p>
+                    </div>
+                    <a href="https://code.org/hourofcode" target="_blank" class="mt-8 w-full py-3.5 rounded-2xl bg-sky-500 text-white font-bold text-base text-center border-2 border-sky-600 shadow-md">Visitar Code.org 🚀</a>
+                </div>
+
+                <div class="p-8 rounded-3xl bg-purple-50 border-4 border-purple-300 shadow-lg flex flex-col justify-between hover:scale-105 transition-transform">
+                    <div>
+                        <div class="w-16 h-16 rounded-2xl bg-purple-400 text-white flex items-center justify-center text-3xl mb-6 shadow-md border-4 border-purple-500">🧩</div>
+                        <h3 class="text-2xl font-bold text-purple-900">Blockly Games (Maze)</h3>
+                        <p class="text-xs text-purple-700 font-bold mt-1">Desafios de Labirinto</p>
+                        <p class="text-base text-slate-600 mt-4">Use blocos para guiar o personagem através de labirintos inteligentes.</p>
+                    </div>
+                    <a href="https://blockly.games/maze?lang=pt-br" target="_blank" class="mt-8 w-full py-3.5 rounded-2xl bg-purple-500 text-white font-bold text-base text-center border-2 border-purple-600 shadow-md">Visitar Blockly 🚀</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="professor" class="py-20 bg-indigo-900 text-white border-t-8 border-amber-400">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <span class="px-4 py-2 rounded-full bg-indigo-800 text-amber-300 font-bold text-sm border border-indigo-700">Espaço do Mestre 👩‍🏫</span>
+                    <h2 class="text-3xl sm:text-5xl font-bold leading-tight">Plataforma de Autoria e Dicas Pedagógicas</h2>
+                    <p class="text-indigo-200 text-base sm:text-lg leading-relaxed">
+                        Professor(a), trabalhar o pensamento computacional no 2º ano do Ensino Fundamental pode ser feito de forma lúdica através de atividades desplugadas e gamificadas. Use o gerador ao lado para criar um passo a passo para sua turma!
+                    </p>
+                </div>
+
+                <div class="bg-indigo-950 p-8 rounded-3xl border-4 border-indigo-700 shadow-2xl space-y-6">
+                    <h3 class="text-2xl font-bold text-amber-300">✨ Gerador de Desafio Rápido para Aula</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-indigo-300 uppercase mb-1">Nome da Atividade</label>
+                            <input type="text" id="prof-title" value="Resgate do Tesouro na Sala de Aula" class="w-full px-4 py-3 rounded-2xl bg-indigo-900 border-2 border-indigo-700 text-white text-sm font-semibold focus:outline-none focus:border-amber-400">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-indigo-300 uppercase mb-1">Tipo de Desafio</label>
+                            <select id="prof-type" class="w-full px-4 py-3 rounded-2xl bg-indigo-900 border-2 border-indigo-700 text-white text-sm font-semibold focus:outline-none focus:border-amber-400">
+                                <option>Desplugado (Caça ao Tesouro)</option>
+                                <option>Sequência de Passos (Labirinto Humano)</option>
+                                <option>Loops e Repetição (Dança dos Padrões)</option>
+                            </select>
+                        </div>
+                        <button onclick="generateTeacherChallenge()" class="w-full py-4 rounded-2xl bg-amber-400 text-indigo-950 font-bold text-base hover:bg-amber-300 transition-all shadow-lg border-2 border-amber-500">
+                            📋 Gerar Roteiro para Imprimir
+                        </button>
+                    </div>
+                    <div id="prof-output" class="p-4 rounded-2xl bg-indigo-900 border-2 border-indigo-700 text-sm text-indigo-100 hidden space-y-2"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-indigo-950 text-white py-12 border-t-4 border-indigo-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+            <div class="text-3xl">🤖 ⭐ 🎒</div>
+            <p class="font-bold text-lg text-amber-300">Mundo Mágico do Pensamento Computacional</p>
+            <p class="text-sm text-indigo-300">Desenvolvido com carinho para estudantes do 2º Ano do Ensino Fundamental.</p>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // Estado do Estágio (1 a 5) para cada jogo
+        const stages = { 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1, 11: 1 };
+
+        function updateBadge(gameId) {
+            const badge = document.getElementById(`stage-badge-${gameId}`);
+            if (badge) badge.textContent = `Fase ${stages[gameId]} / 5`;
+        }
+
+        function advanceStage(gameId, nextInitFunc) {
+            if (stages[gameId] < 5) {
+                stages[gameId]++;
+                updateBadge(gameId);
+                setTimeout(() => nextInitFunc(), 1500);
+            } else {
+                setTimeout(() => {
+                    alert(`🏆 Parabéns! Você completou todas as 5 fases do Jogo ${gameId}!`);
+                    stages[gameId] = 1;
+                    updateBadge(gameId);
+                    nextInitFunc();
+                }, 1200);
+            }
+        }
+
+        function switchGame(gameId) {
+            for (let i = 1; i <= 11; i++) {
+                const container = document.getElementById(`game-container-${i}`);
+                const btn = document.getElementById(`tab-btn-${i}`);
+                if (container) container.classList.add('hidden');
+                if (btn) btn.className = "px-4 py-2.5 rounded-2xl font-bold text-sm bg-slate-200 text-slate-700 hover:bg-slate-300 transition-all";
+            }
+
+            const activeContainer = document.getElementById(`game-container-${gameId}`);
+            const activeBtn = document.getElementById(`tab-btn-${gameId}`);
+            if (activeContainer) activeContainer.classList.remove('hidden');
+            if (activeBtn) activeBtn.className = "px-4 py-2.5 rounded-2xl font-bold text-sm bg-indigo-600 text-white shadow-md transition-all";
+
+            updateBadge(gameId);
+            if (gameId === 1) initGame1();
+            if (gameId === 2) initGame2();
+            if (gameId === 3) initGame3();
+            if (gameId === 4) initGame4();
+            if (gameId === 5) initGame5();
+            if (gameId === 6) initGame6();
+            if (gameId === 7) initGame7();
+            if (gameId === 8) initGame8();
+            if (gameId === 9) initGame9();
+            if (gameId === 10) initGame10();
+            if (gameId === 11) initGame11();
+        }
+
+        // --- JOGO 1: Robô Bit com Movimento em Tempo Real ---
+        const stages1Config = [
+            { start: { x: 0, y: 0 }, target: { x: 2, y: 0 } }, // Fase 1
+            { start: { x: 0, y: 0 }, target: { x: 0, y: 2 } }, // Fase 2
+            { start: { x: 0, y: 0 }, target: { x: 2, y: 2 } }, // Fase 3
+            { start: { x: 3, y: 0 }, target: { x: 0, y: 3 } }, // Fase 4
+            { start: { x: 1, y: 1 }, target: { x: 3, y: 3 } }  // Fase 5
+        ];
+
+        let robotPos = { x: 0, y: 0 };
+        let targetPos = { x: 2, y: 0 };
+        let commands1 = [];
+        let isRunning1 = false;
+
+        function initGame1() {
+            const cfg = stages1Config[stages[1] - 1];
+            robotPos = { ...cfg.start };
+            targetPos = { ...cfg.target };
+            commands1 = [];
+            isRunning1 = false;
+            renderGrid1();
+            updateQueue1();
+            document.getElementById('feedback-1').textContent = '';
+        }
+
+        function renderGrid1() {
+            const gridEl = document.getElementById('grid-1');
+            gridEl.innerHTML = '';
+            for (let r = 0; r < 4; r++) {
+                for (let c = 0; c < 4; c++) {
+                    const cell = document.createElement('div');
+                    cell.className = "w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white border-2 border-sky-200 flex items-center justify-center text-3xl font-bold shadow-sm transition-all duration-300";
+                    if (robotPos.x === c && robotPos.y === r) {
+                        cell.innerHTML = '🤖';
+                        cell.classList.add('bg-amber-100', 'border-amber-400', 'scale-105');
+                    } else if (targetPos.x === c && targetPos.y === r) {
+                        cell.innerHTML = '⭐';
+                        cell.classList.add('bg-amber-50', 'border-amber-300');
+                    }
+                    gridEl.appendChild(cell);
+                }
+            }
+        }
+
+        function addCmd1(dir) {
+            if (isRunning1) return;
+            commands1.push(dir);
+            updateQueue1();
+        }
+
+        function updateQueue1() {
+            const queueEl = document.getElementById('command-queue-1');
+            if (commands1.length === 0) {
+                queueEl.innerHTML = '<span class="text-sm text-slate-400 italic">Nenhum comando escolhido.</span>';
+                return;
+            }
+            queueEl.innerHTML = commands1.map(cmd => {
+                let icon = '⬆️';
+                if (cmd === 'baixo') icon = '⬇️';
+                if (cmd === 'esquerda') icon = '⬅️';
+                if (cmd === 'direita') icon = '➡️';
+                return `<span class="px-2.5 py-1 bg-indigo-100 text-indigo-800 rounded-xl font-bold text-xs border border-indigo-200">${icon}</span>`;
+            }).join('');
+        }
+
+        function resetGame1() {
+            if (isRunning1) return;
+            initGame1();
+        }
+
+        async function runGame1() {
+            if (isRunning1) return;
+            if (commands1.length === 0) {
+                document.getElementById('feedback-1').innerHTML = '<span class="text-amber-600">⚠️ Escolha comandos primeiro!</span>';
+                return;
+            }
+
+            isRunning1 = true;
+            document.getElementById('feedback-1').innerHTML = '<span class="text-indigo-600">🤖 Bit movimentando-se...</span>';
+
+            for (let cmd of commands1) {
+                await new Promise(r => setTimeout(r, 500)); // Animação do movimento
+                if (cmd === 'frente' && robotPos.y > 0) robotPos.y--;
+                else if (cmd === 'baixo' && robotPos.y < 3) robotPos.y++;
+                else if (cmd === 'esquerda' && robotPos.x > 0) robotPos.x--;
+                else if (cmd === 'direita' && robotPos.x < 3) robotPos.x++;
+                renderGrid1();
+            }
+
+            const fb = document.getElementById('feedback-1');
+            if (robotPos.x === targetPos.x && robotPos.y === targetPos.y) {
+                fb.innerHTML = '<span class="text-emerald-600">🎉 Excelente! O Bit chegou à estrela! ⭐</span>';
+                isRunning1 = false;
+                advanceStage(1, initGame1);
+            } else {
+                fb.innerHTML = '<span class="text-rose-600">❌ Não chegou à estrela! Tente outra combinação.</span>';
+                isRunning1 = false;
+            }
+        }
+
+        // --- JOGO 2: Sequência de Frutas (5 Fases) ---
+        const stages2Config = [
+            { seq: ['🍎', '🍌', '🍎', '🍌'], correct: '🍎', options: ['🍎', '🍇', '🍊'] },
+            { seq: ['🍇', '🍇', '🍊', '🍇', '🍇'], correct: '🍊', options: ['🍌', '🍊', '🍎'] },
+            { seq: ['🍓', '🍍', '🥝', '🍓', '🍍'], correct: '🥝', options: ['🥝', '🍓', '🍌'] },
+            { seq: ['🍉', '🍉', '🍉', '🍌', '🍉', '🍉', '🍉'], correct: '🍌', options: ['🍉', '🍌', '🍎'] },
+            { seq: ['🍒', '🍋', '🍒', '🍒', '🍋', '🍒', '🍒'], correct: '🍋', options: ['🍒', '🍋', '🍇'] }
+        ];
+
+        function initGame2() {
+            const cfg = stages2Config[stages[2] - 1];
+            const displayEl = document.getElementById('sequence-display');
+            displayEl.innerHTML = cfg.seq.map(f => `<span>${f}</span>`).join(' <span class="text-slate-300">➔</span> ') + ' <span class="text-indigo-500">➔ ❓</span>';
+
+            const optionsEl = document.getElementById('sequence-options');
+            optionsEl.innerHTML = cfg.options.map(opt => `
+                <button onclick="checkGame2('${opt}', '${cfg.correct}')" class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white border-4 border-emerald-300 shadow-md text-3xl sm:text-4xl hover:scale-110 transition-transform flex items-center justify-center">
+                    ${opt}
+                </button>
+            `).join('');
+            document.getElementById('feedback-2').textContent = '';
+        }
+
+        function checkGame2(selected, correct) {
+            const fb = document.getElementById('feedback-2');
+            if (selected === correct) {
+                fb.innerHTML = '<span class="text-emerald-600">🌟 Padrão correto! Avançando...</span>';
+                advanceStage(2, initGame2);
+            } else {
+                fb.innerHTML = '<span class="text-rose-600">❌ Padrão incorreto. Observe com atenção!</span>';
+            }
+        }
+
+        // --- JOGO 3: Caça aos Erros (5 Fases) ---
+        const stages3Config = [
+            { seq: ['⬆️', '⬆️', '⬅️', '⬆️'], bugIdx: 2, fix: '➡️' },
+            { seq: ['➡️', '⬇️', '⬆️', '➡️'], bugIdx: 2, fix: '⬇️' },
+            { seq: ['⬆️', '➡️', '➡️️', '⬅️'], bugIdx: 3, fix: '⬇️' },
+            { seq: ['⬇️', '⬇️', '⬅️', '⬇️'], bugIdx: 2, fix: '➡️️' },
+            { seq: ['➡️', '⬆️', '⬆️', '⬆️'], bugIdx: 0, fix: '⬅️' }
+        ];
+
+        function initGame3() {
+            const cfg = stages3Config[stages[3] - 1];
+            const container = document.getElementById('bug-sequence');
+            container.innerHTML = cfg.seq.map((item, idx) => `
+                <button onclick="checkGame3(${idx}, ${cfg.bugIdx}, '${cfg.fix}')" class="p-4 bg-white rounded-2xl border-2 border-amber-300 hover:scale-110 transition-transform font-bold">
+                    ${item}
+                </button>
+            `).join(' ➔ ');
+            document.getElementById('feedback-3').textContent = '';
+        }
+
+        function checkGame3(idx, bugIdx, fix) {
+            const fb = document.getElementById('feedback-3');
+            if (idx === bugIdx) {
+                fb.innerHTML = `<span class="text-emerald-600">🎉 Bug corrigido! A seta certa era ${fix}!</span>`;
+                advanceStage(3, initGame3);
+            } else {
+                fb.innerHTML = '<span class="text-rose-600">❌ Esse comando está certo. Procure outro!</span>';
+            }
+        }
+
+        // --- JOGO 4: Classificação (5 Fases) ---
+        const stages4Config = [
+            { prompt: 'Clique apenas nas FRUTAS:', items: [{ icon: '🍎', target: true }, { icon: '🚗', target: false }, { icon: '🍌', target: true }, { icon: '⚽', target: false }] },
+            { prompt: 'Clique apenas em ANIMAIS:', items: [{ icon: '🐶', target: true }, { icon: '🍕', target: false }, { icon: '🐱', target: true }, { icon: '📚', target: false }] },
+            { prompt: 'Clique apenas em MEIOS DE TRANSPORTE:', items: [{ icon: '🚀', target: true }, { icon: '🍏', target: false }, { icon: '🚗', target: true }, { icon: '🎈', target: false }] },
+            { prompt: 'Clique apenas em OBJETOS REDONDOS:', items: [{ icon: '⚽', target: true }, { icon: '📦', target: false }, { icon: '🏀', target: true }, { icon: '📐', target: false }] },
+            { prompt: 'Clique apenas em INSTRUMENTOS MUSICAIS:', items: [{ icon: '🎸', target: true }, { icon: '🎺', target: true }, { icon: '🍔', target: false }, { icon: '👟', target: false }] }
+        ];
+
+        function initGame4() {
+            const cfg = stages4Config[stages[4] - 1];
+            document.getElementById('game4-instruction').textContent = cfg.prompt;
+            const container = document.getElementById('game4-items');
+            container.innerHTML = cfg.items.map(item => `
+                <button onclick="checkGame4(${item.target})" class="p-4 bg-purple-50 rounded-2xl border-2 border-purple-200 hover:scale-110 transition-transform">
+                    ${item.icon}
+                </button>
+            `).join('');
+            document.getElementById('feedback-4').textContent = '';
+        }
+
+        function checkGame4(isTarget) {
+            const fb = document.getElementById('feedback-4');
+            if (isTarget) {
+                fb.innerHTML = '<span class="text-emerald-600">✨ Correto! Item classificado!</span>';
+                advanceStage(4, initGame4);
+            } else {
+                fb.innerHTML = '<span class="text-rose-600">❌ Item incorreto para esta categoria.</span>';
+            }
+        }
+
+        // --- JOGO 5: Rotinas Lógicas (5 Fases) ---
+        const stages5Config = [
+            { options: ['2. Escovar', '1. Molhar dentes', '3. Enxaguar'], correct: ['1. Molhar dentes', '2. Escovar', '3. Enxaguar'] },
+            { options: ['2. Calçar tênis', '1. Varrer meia', '3. Amarrar cadarço'], correct: ['1. Varrer meia', '2. Calçar tênis', '3. Amarrar cadarço'] },
+            { options: ['2. Comer', '1. Preparar prato', '3. Lavar o prato'], correct: ['1. Preparar prato', '2. Comer', '3. Lavar o prato'] },
+            { options: ['2. Entrar no banho', '1. Tirar a roupa', '3. Enxugar-se'], correct: ['1. Tirar a roupa', '2. Entrar no banho', '3. Enxugar-se'] },
+            { options: ['2. Ligar o PC', '1. Sentar na cadeira', '3. Abrir o jogo'], correct: ['1. Sentar na cadeira', '2. Ligar o PC', '3. Abrir o jogo'] }
+        ];
+        let userRoutine = [];
+
+        function initGame5() {
+            userRoutine = [];
+            document.getElementById('game5-selected').textContent = 'Nenhum passo escolhido';
+            const cfg = stages5Config[stages[5] - 1];
+            const container = document.getElementById('game5-options');
+            container.innerHTML = cfg.options.map(opt => `
+                <button onclick="addStep5('${opt}')" class="p-3 bg-sky-100 rounded-2xl font-bold text-sm border-2 border-sky-300 hover:bg-sky-200">
+                    ${opt}
+                </button>
+            `).join('');
+            document.getElementById('feedback-5').textContent = '';
+        }
+
+        function addStep5(step) {
+            const cfg = stages5Config[stages[5] - 1];
+            if (userRoutine.length < 3 && !userRoutine.includes(step)) {
+                userRoutine.push(step);
+                document.getElementById('game5-selected').textContent = userRoutine.join(' ➔ ');
+            }
+            if (userRoutine.length === 3) {
+                const fb = document.getElementById('feedback-5');
+                if (JSON.stringify(userRoutine) === JSON.stringify(cfg.correct)) {
+                    fb.innerHTML = '<span class="text-emerald-600">🌟 Rotina perfeita! Avançando...</span>';
+                    advanceStage(5, initGame5);
+                } else {
+                    fb.innerHTML = '<span class="text-rose-600">❌ Sequência incorreta! Tente novamente.</span>';
+                }
+            }
+        }
+
+        // --- JOGO 6: Loops (5 Fases) ---
+        const stages6Config = [
+            { prompt: 'O Bit precisa dar 3 passos à frente:', track: '🤖 ➔ ⬜ ➔ ⬜ ➔ 🏁', correct: 3, opts: [2, 3, 5] },
+            { prompt: 'O Bit precisa dar 5 passos à frente:', track: '🤖 ➔ ⬜ ➔ ⬜ ➔ ⬜ ➔ ⬜ ➔ 🏁', correct: 5, opts: [3, 4, 5] },
+            { prompt: 'O Bit precisa dar 2 pulos para cima:', track: '🤖 ➔ ⬆️ ➔ 🏁', correct: 2, opts: [1, 2, 4] },
+            { prompt: 'O Bit precisa girar 4 vezes:', track: '🤖 ➔ 🔄 ➔ 🔄 ➔ 🔄 ➔ 🏁', correct: 4, opts: [2, 4, 6] },
+            { prompt: 'O Bit precisa recuar 6 passos:', track: '🤖 ➔ ⬇️ ➔ ... ➔ 🏁', correct: 6, opts: [4, 5, 6] }
+        ];
+
+        function initGame6() {
+            const cfg = stages6Config[stages[6] - 1];
+            document.getElementById('game6-prompt').textContent = cfg.prompt;
+            document.getElementById('game6-track').textContent = cfg.track;
+            const container = document.getElementById('game6-buttons');
+            container.innerHTML = cfg.opts.map(val => `
+                <button onclick="checkGame6(${val === cfg.correct})" class="p-4 bg-emerald-100 border-2 border-emerald-300 rounded-2xl font-bold text-base hover:bg-emerald-200">
+                    Repetir ${val}x 🔄
+                </button>
+            `).join('');
+            document.getElementById('feedback-6').textContent = '';
+        }
+
+        function checkGame6(isCorrect) {
+            const fb = document.getElementById('feedback-6');
+            if (isCorrect) {
+                fb.innerHTML = '<span class="text-emerald-600">🎉 Loop correto! O robô economizou passos!</span>';
+                advanceStage(6, initGame6);
+            } else {
+                fb.innerHTML = '<span class="text-rose-600">❌ Número de repetições incorreto!</span>';
+            }
+        }
+
+        // --- JOGO 7: Código Secreto (5 Fases) ---
+        const stages7Config = [
+            { code: '🔴 🟢 🟡', word: 'BIT', legend: '🔴 = B | 🟢 = I | 🟡 = T' },
+            { code: '🟢 🔵 🔴', word: 'SOL', legend: '🟢 = S | 🔵 = O | 🔴 = L' },
+            { code: '🟡 🔴 🟢', word: 'LUA', legend: '🟡 = L | 🔴 = U | 🟢 = A' },
+            { code: '🔵 🔴 🟡 🟢', word: 'ROBÔ', legend: '🔵 = R | 🔴 = O | 🟡 = B | 🟢 = Ô' },
+            { code: '🔴 🟢 🔵 🟡', word: 'AMOR', legend: '🔴 = A | 🟢 = M | 🔵 = O | 🟡 = R' }
+        ];
+
+        function initGame7() {
+            const cfg = stages7Config[stages[7] - 1];
+            document.getElementById('game7-legend').textContent = cfg.legend;
+            document.getElementById('game7-code').textContent = cfg.code;
+            document.getElementById('game7-input').value = '';
+            document.getElementById('feedback-7').textContent = '';
+        }
+
+        function checkGame7() {
+            const cfg = stages7Config[stages[7] - 1];
+            const val = document.getElementById('game7-input').value.toUpperCase().trim();
+            const fb = document.getElementById('feedback-7');
+            if (val === cfg.word) {
+                fb.innerHTML = '<span class="text-emerald-600">🔓 Código correto! Palavra decifrada!</span>';
+                advanceStage(7, initGame7);
+            } else {
+                fb.innerHTML = '<span class="text-rose-600">❌ Palavra incorreta. Verifique a legenda!</span>';
+            }
+        }
+
+        // --- JOGO 8: Condicionais (5 Fases) ---
+        const stages8Config = [
+            { prompt: 'Se o sinal for VERDE 🟢, o que fazer?', light: '🟢', correct: 'AVANCAR' },
+            { prompt: 'Se o sinal for VERMELHO 🔴, o que fazer?', light: '🔴', correct: 'PARAR' },
+            { prompt: 'Se a pista tiver um OBSTÁCULO 🚧, o que fazer?', light: '🚧', correct: 'DESVIAR' },
+            { prompt: 'Se a bateria estiver FRACA 🪫, o que fazer?', light: '🪫', correct: 'RECARREGAR' },
+            { prompt: 'Se o robô achar a ESTRELA ⭐, o que fazer?', light: '⭐', correct: 'COMEMORAR' }
+        ];
+
+        function initGame8() {
+            const cfg = stages8Config[stages[8] - 1];
+            document.getElementById('game8-prompt').textContent = cfg.prompt;
+            document.getElementById('game8-light').textContent = cfg.light;
+            
+            const btnContainer = document.getElementById('game8-buttons');
+            let btns = [];
+            if (cfg.correct === 'AVANCAR' || cfg.correct === 'PARAR') {
+                btns = [
+                    { label: '🟢 Avançar', val: 'AVANCAR', color: 'bg-emerald-500' },
+                    { label: '🔴 Parar', val: 'PARAR', color: 'bg-rose-500' }
+                ];
+            } else if (cfg.correct === 'DESVIAR') {
+                btns = [
+                    { label: '➡️ Desviar', val: 'DESVIAR', color: 'bg-amber-500' },
+                    { label: '⬆️ Em Frente', val: 'FRENTE', color: 'bg-indigo-500' }
+                ];
+            } else if (cfg.correct === 'RECARREGAR') {
+                btns = [
+                    { label: '🔌 Recarregar', val: 'RECARREGAR', color: 'bg-sky-500' },
+                    { label: '🏃 Correr', val: 'CORRER', color: 'bg-purple-500' }
+                ];
+            } else {
+                btns = [
+                    { label: '🎉 Comemorar', val: 'COMEMORAR', color: 'bg-amber-400 text-slate-900' },
+                    { label: '😴 DORMIR', val: 'DORMIR', color: 'bg-slate-500' }
+                ];
+            }
+
+            btnContainer.innerHTML = btns.map(b => `
+                <button onclick="checkGame8('${b.val}', '${cfg.correct}')" class="px-6 py-3.5 rounded-2xl ${b.color} text-white font-bold text-base shadow-md">
+                    ${b.label}
+                </button>
+            `).join('');
+            document.getElementById('feedback-8').textContent = '';
+        }
+
+        function checkGame8(selected, correct) {
+            const fb = document.getElementById('feedback-8');
+            if (selected === correct) {
+                fb.innerHTML = '<span class="text-emerald-600">🎉 Decisão Condicional Correta!</span>';
+                advanceStage(8, initGame8);
+            } else {
+                fb.innerHTML = '<span class="text-rose-600">❌ Decisão incorreta para este estado!</span>';
+            }
+        }
+
+        // --- JOGO 9: Decomposição (5 Fases) ---
+        const stages9Config = [
+            { title: 'Construção da Casa 🏗️', opts: ['1. Fundação / Chão', '2. Paredes', '3. Telhado'], correct: '1. Fundação / Chão' },
+            { title: 'Fazer um Bolo 🎂', opts: ['1. Juntar Ingredientes', '2. Assar no Forno', '3. Decorar'], correct: '1. Juntar Ingredientes' },
+            { title: 'Desenhar um Personagem 🎨', opts: ['1. Esboço das Formas', '2. Pintar Cores', '3. Assinar'], correct: '1. Esboço das Formas' },
+            { title: 'Plantar uma Árvore 🌳', opts: ['1. Cavar o Buraco', '2. Colocar a Semente', '3. Regar'], correct: '1. Cavar o Buraco' },
+            { title: 'Montar um Quebra-Cabeça 🧩', opts: ['1. Separar as Bordas', '2. Encaixar o Meio', '3. Guardar'], correct: '1. Separar as Bordas' }
+        ];
+
+        function initGame9() {
+            const cfg = stages9Config[stages[9] - 1];
+            document.getElementById('game9-title').textContent = cfg.title;
+            const container = document.getElementById('game9-options');
+            container.innerHTML = cfg.opts.map(opt => `
+                <button onclick="checkGame9('${opt}', '${cfg.correct}')" class="p-4 bg-amber-100 rounded-2xl border-2 border-amber-300 font-bold text-sm">
+                    ${opt}
+                </button>
+            `).join('');
+            document.getElementById('feedback-9').textContent = '';
+        }
+
+        function checkGame9(selected, correct) {
+            const fb = document.getElementById('feedback-9');
+            if (selected === correct) {
+                fb.innerHTML = '<span class="text-emerald-600">🏗️ Correto! 1ª etapa identificada com sucesso!</span>';
+                advanceStage(9, initGame9);
+            } else {
+                fb.innerHTML = '<span class="text-rose-600">❌ Essa etapa vem depois. Qual é a PRIMEIRA?</span>';
+            }
+        }
+
+        // --- JOGO 10: Coordenadas (5 Fases) ---
+        const stages10Config = [
+            { prompt: 'Clique na moeda na Posição 5:', pos: 5 },
+            { prompt: 'Clique na moeda na Posição 1 (Topo Esquerdo):', pos: 1 },
+            { prompt: 'Clique na moeda na Posição 9 (Canto Inferior Direito):', pos: 9 },
+            { prompt: 'Clique na moeda na Posição 3:', pos: 3 },
+            { prompt: 'Clique na moeda na Posição 7:', pos: 7 }
+        ];
+
+        function initGame10() {
+            const cfg = stages10Config[stages[10] - 1];
+            document.getElementById('game10-prompt').textContent = cfg.prompt;
+            const grid = document.getElementById('game10-grid');
+            grid.innerHTML = '';
+            for (let i = 1; i <= 9; i++) {
+                const btn = document.createElement('button');
+                btn.className = "w-16 h-16 bg-white border-2 border-sky-300 rounded-2xl flex items-center justify-center font-bold text-lg hover:bg-sky-200";
+                btn.textContent = i;
+                btn.onclick = () => {
+                    const fb = document.getElementById('feedback-10');
+                    if (i === cfg.pos) {
+                        fb.innerHTML = `<span class="text-emerald-600">🎯 Posição ${i} encontrada!</span>`;
+                        advanceStage(10, initGame10);
+                    } else {
+                        fb.innerHTML = '<span class="text-rose-600">❌ Posição incorreta. Tente outro quadrado!</span>';
+                    }
+                };
+                grid.appendChild(btn);
+            }
+            document.getElementById('feedback-10').textContent = '';
+        }
+
+        // --- JOGO 11: Dança do Bit (5 Fases) ---
+        const stages11Config = [
+            { reqLen: 2, msg: 'Faça 2 passos de dança!' },
+            { reqLen: 3, msg: 'Faça 3 passos de dança!' },
+            { reqLen: 4, msg: 'Faça 4 passos de dança!' },
+            { reqLen: 5, msg: 'Faça 5 passos de dança!' },
+            { reqLen: 6, msg: 'Mestre da Dança! Faça 6 passos!' }
+        ];
+        let danceSeq = [];
+
+        function initGame11() {
+            danceSeq = [];
+            const cfg = stages11Config[stages[11] - 1];
+            document.getElementById('game11-show').textContent = cfg.msg;
+            document.getElementById('feedback-11').textContent = '';
+        }
+
+        function addDanceStep(step) {
+            const cfg = stages11Config[stages[11] - 1];
+            danceSeq.push(step);
+            document.getElementById('game11-show').textContent = danceSeq.join(' ');
+            if (danceSeq.length === cfg.reqLen) {
+                document.getElementById('feedback-11').innerHTML = '<span class="text-emerald-600">💃 Ritmo perfeito! Sequência completa!</span>';
+                advanceStage(11, initGame11);
+            }
+        }
+
+        // --- GERADOR DO PROFESSOR ---
+        function generateTeacherChallenge() {
+            const title = document.getElementById('prof-title').value;
+            const type = document.getElementById('prof-type').value;
+            const output = document.getElementById('prof-output');
+            output.classList.remove('hidden');
+            output.innerHTML = `
+                <p class="font-bold text-amber-300">📋 Roteiro Gerado: ${title}</p>
+                <p><strong>Tipo:</strong> ${type}</p>
+                <p><strong>Objetivo para o 2º Ano:</strong> Desenvolver raciocínio passo a passo e lateralidade.</p>
+                <p><strong>Passo 1:</strong> Formar duplas (um programador e um robô humano).</p>
+                <p><strong>Passo 2:</strong> O programador dita comandos usando setas no chão.</p>
+                <p><strong>Passo 3:</strong> O robô executa até atingir a meta da fase.</p>
+            `;
+        }
+
+        window.onload = function() {
+            initGame1();
+        };
+    </script>
+</body>
+</html>
