@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIGITAÇÃO FESTIVA - OUTUBRO ESPECIAL</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Fredoka -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti for celebration -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Fredoka', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.15);
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(0,0,0,0.25);
+        }
+        @keyframes pulse-subtle {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+        .animate-pulse-subtle {
+            animation: pulse-subtle 3s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="h-full bg-slate-900 text-slate-100 font-sans antialiased flex flex-col justify-between selection:bg-pink-500 selection:text-white uppercase">
+
+    <!-- Header / Navbar -->
+    <header id="main-header" class="w-full py-4 px-6 md:px-12 flex items-center justify-between bg-slate-800/80 backdrop-blur-md border-b border-slate-700/50 sticky top-0 z-50 transition-colors duration-500">
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="app.returnToHome()">
+            <div id="header-icon-bg" class="w-10 h-10 rounded-xl bg-pink-500 flex items-center justify-center text-white shadow-lg shadow-pink-500/30 transition-all duration-300">
+                <i class="fa-solid fa-keyboard text-lg"></i>
+            </div>
+            <div>
+                <h1 class="font-display font-bold text-lg md:text-xl tracking-wide">DIGITAOUTUBRO</h1>
+                <p class="text-[10px] text-slate-400">TECLADO MÁGICO DAS DATAS ESPECIAIS</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-3">
+            <button onclick="app.toggleSound()" id="sound-btn" class="px-3 py-2 rounded-xl bg-slate-700 hover:bg-slate-600 text-slate-300 transition text-xs flex items-center space-x-2">
+                <i id="sound-icon" class="fa-solid fa-volume-high"></i>
+                <span class="hidden sm:inline">SOM: <span id="sound-status">LIGADO</span></span>
+            </button>
+            <button onclick="app.returnToHome()" class="px-4 py-2 rounded-xl bg-slate-700 hover:bg-slate-600 text-slate-200 font-medium transition text-xs flex items-center space-x-2">
+                <i class="fa-solid fa-house"></i>
+                <span class="hidden sm:inline">INÍCIO</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main App Container -->
+    <main class="flex-grow flex flex-col items-center justify-center p-4 sm:p-6 md:p-8 max-w-5xl mx-auto w-full">
+
+        <!-- VIEW 1: HOME (Theme Selection) -->
+        <div id="view-home" class="w-full flex flex-col items-center space-y-8 py-6 animate-fadeIn">
+            <div class="text-center space-y-3 max-w-2xl">
+                <span class="px-4 py-1.5 rounded-full bg-pink-500/10 text-pink-400 font-semibold text-xs border border-pink-500/20 inline-flex items-center space-x-2">
+                    <i class="fa-solid fa-star text-amber-400"></i>
+                    <span>ESPECIAL DE OUTUBRO • NÍVEL INICIANTE</span>
+                </span>
+                <h2 class="font-display font-bold text-3xl sm:text-4xl md:text-5xl text-white">
+                    PRATIQUE DIGITAÇÃO COM PROPÓSITO
+                </h2>
+                <p class="text-slate-400 text-xs sm:text-sm tracking-normal">
+                    ESCOLHA UM TEMA COMEMORATIVO ABAIXO. CADA TEMA POSSUI 5 TEXTOS CURTOS E SIMPLES EM CAIXA ALTA PARA VOCÊ TREINAR SUA VELOCIDADE E PRECISÃO.
+                </p>
+            </div>
+
+            <!-- Theme Selection Cards -->
+            <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
+                <!-- Dia das Crianças (Azul e Amarelo) -->
+                <div onclick="app.selectTheme('criancas')" class="group relative bg-gradient-to-br from-amber-500/10 to-blue-600/10 hover:from-amber-500/20 hover:to-blue-600/20 border border-amber-500/40 hover:border-amber-400 rounded-3xl p-6 cursor-pointer transition-all duration-300 transform hover:-translate-y-1 shadow-xl flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-amber-500 flex items-center justify-center text-blue-950 text-2xl shadow-lg shadow-amber-500/40 mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-child-reaching"></i>
+                        </div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-amber-400">12 DE OUTUBRO</span>
+                        <h3 class="font-display font-bold text-xl sm:text-2xl text-white mt-1">DIA DAS CRIANÇAS</h3>
+                        <p class="text-slate-300 text-xs mt-3 leading-relaxed">
+                            5 FRASES CURTAS SOBRE ALEGRIA, BRINCADEIRAS E SONHOS INFANTIS.
+                        </p>
+                    </div>
+                    <div class="mt-6 flex items-center justify-between text-amber-400 font-semibold text-xs">
+                        <span>SELECIONAR TEMA</span>
+                        <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+
+                <!-- Dia do Professor (Azul e Verde) -->
+                <div onclick="app.selectTheme('professor')" class="group relative bg-gradient-to-br from-blue-500/10 to-emerald-600/10 hover:from-blue-500/20 hover:to-emerald-600/20 border border-emerald-500/40 hover:border-emerald-400 rounded-3xl p-6 cursor-pointer transition-all duration-300 transform hover:-translate-y-1 shadow-xl flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-emerald-500 flex items-center justify-center text-blue-950 text-2xl shadow-lg shadow-emerald-500/40 mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">15 DE OUTUBRO</span>
+                        <h3 class="font-display font-bold text-xl sm:text-2xl text-white mt-1">DIA DO PROFESSOR</h3>
+                        <p class="text-slate-300 text-xs mt-3 leading-relaxed">
+                            5 MENSAGENS DE AGRADECIMENTO E HOMENAGEM AOS MESTRES.
+                        </p>
+                    </div>
+                    <div class="mt-6 flex items-center justify-between text-emerald-400 font-semibold text-xs">
+                        <span>SELECIONAR TEMA</span>
+                        <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+
+                <!-- Outubro Rosa (Rosa Vibrante) -->
+                <div onclick="app.selectTheme('rosa')" class="group relative bg-gradient-to-br from-pink-500/10 to-rose-600/10 hover:from-pink-500/20 hover:to-rose-600/20 border border-pink-500/40 hover:border-pink-400 rounded-3xl p-6 cursor-pointer transition-all duration-300 transform hover:-translate-y-1 shadow-xl flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-pink-500 flex items-center justify-center text-white text-2xl shadow-lg shadow-pink-500/40 mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-ribbon"></i>
+                        </div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-pink-400">CONSCIENTIZAÇÃO</span>
+                        <h3 class="font-display font-bold text-xl sm:text-2xl text-white mt-1">OUTUBRO ROSA</h3>
+                        <p class="text-slate-300 text-xs mt-3 leading-relaxed">
+                            5 TEXTOS INSPIRADORES SOBRE PREVENÇÃO E AUTOCUIDADO.
+                        </p>
+                    </div>
+                    <div class="mt-6 flex items-center justify-between text-pink-400 font-semibold text-xs">
+                        <span>SELECIONAR TEMA</span>
+                        <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 2: GAME / TYPING PRACTICE -->
+        <div id="view-game" class="w-full flex flex-col space-y-6 hidden animate-fadeIn">
+            <!-- Game Top Bar / Stats -->
+            <div class="flex flex-wrap items-center justify-between gap-4 bg-slate-800/80 border border-slate-700/60 px-6 py-4 rounded-2xl shadow-lg backdrop-blur-md">
+                <div class="flex items-center space-x-3">
+                    <span id="game-theme-badge" class="px-3 py-1 rounded-full bg-pink-500/20 text-pink-400 font-bold text-xs border border-pink-500/30 flex items-center space-x-1.5">
+                        <i class="fa-solid fa-ribbon"></i>
+                        <span id="theme-name-display">OUTUBRO ROSA</span>
+                    </span>
+                    <span id="game-progress-badge" class="px-3 py-1 rounded-full bg-slate-700 text-slate-300 font-bold text-xs">
+                        TEXTO 1 DE 5
+                    </span>
+                </div>
+
+                <div class="flex items-center space-x-6 sm:space-x-8">
+                    <!-- WPM -->
+                    <div class="text-center">
+                        <div class="text-[10px] text-slate-400 font-bold">WPM</div>
+                        <div id="stat-wpm" class="font-display font-bold text-xl sm:text-2xl text-white">0</div>
+                    </div>
+                    <!-- Accuracy -->
+                    <div class="text-center">
+                        <div class="text-[10px] text-slate-400 font-bold">PRECISÃO</div>
+                        <div id="stat-accuracy" class="font-display font-bold text-xl sm:text-2xl text-emerald-400">100%</div>
+                    </div>
+                    <!-- Errors -->
+                    <div class="text-center">
+                        <div class="text-[10px] text-slate-400 font-bold">ERROS</div>
+                        <div id="stat-errors" class="font-display font-bold text-xl sm:text-2xl text-rose-400">0</div>
+                    </div>
+                    <!-- Time -->
+                    <div class="text-center">
+                        <div class="text-[10px] text-slate-400 font-bold">TEMPO</div>
+                        <div id="stat-time" class="font-display font-bold text-xl sm:text-2xl text-amber-400">0S</div>
+                    </div>
+                </div>
+
+                <button onclick="app.returnToHome()" class="text-slate-400 hover:text-white transition p-2 rounded-xl hover:bg-slate-700/50" title="SAIR PARA O MENU">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Typing Prompt Card -->
+            <div class="relative bg-slate-800/60 border border-slate-700/60 rounded-3xl p-6 sm:p-10 shadow-2xl backdrop-blur-md flex flex-col justify-between min-h-[260px]">
+                
+                <!-- Helper overlay before typing starts -->
+                <div id="typing-overlay" onclick="app.focusInput()" class="absolute inset-0 bg-slate-900/40 backdrop-blur-[2px] rounded-3xl flex flex-col items-center justify-center cursor-pointer z-10 transition-opacity duration-300">
+                    <div class="w-16 h-16 rounded-2xl bg-pink-500 text-white flex items-center justify-center text-2xl shadow-xl shadow-pink-500/30 mb-3 animate-bounce">
+                        <i class="fa-solid fa-hand-pointer"></i>
+                    </div>
+                    <span class="font-display font-bold text-base sm:text-lg text-white">CLIQUE AQUI OU COMECE A DIGITAR PARA INICIAR!</span>
+                    <span class="text-[10px] text-slate-300 mt-1">O CRONÔMETRO COMEÇARÁ ASSIM QUE VOCÊ PRESSIONAR A PRIMEIRA TECLA.</span>
+                </div>
+
+                <!-- Text Display Area -->
+                <div id="text-display" class="font-mono text-lg sm:text-2xl leading-relaxed tracking-wide select-none break-words text-slate-300 mb-6">
+                    <!-- Characters injected dynamically -->
+                </div>
+
+                <!-- Hidden Input for Capturing Keystrokes -->
+                <input type="text" id="hidden-input" class="opacity-0 absolute inset-0 w-full h-full cursor-default z-0" autocomplete="off" autocapitalize="off" spellcheck="false">
+
+                <!-- Bottom Bar inside typing box -->
+                <div class="flex items-center justify-between text-[11px] text-slate-400 border-t border-slate-700/50 pt-4 mt-auto">
+                    <div class="flex items-center space-x-2">
+                        <i class="fa-solid fa-circle-info text-pink-500"></i>
+                        <span>DIGITE EXATAMENTE O TEXTO ACIMA EM CAIXA ALTA. ERROS EM VERMELHO, ACERTOS EM VERDE.</span>
+                    </div>
+                    <button onclick="app.restartCurrentText()" class="px-3 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-200 transition flex items-center space-x-1.5">
+                        <i class="fa-solid fa-rotate-right"></i>
+                        <span>REINICIAR</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 3: RESULTS SCREEN -->
+        <div id="view-results" class="w-full max-w-2xl bg-slate-800/80 border border-slate-700/60 rounded-3xl p-6 sm:p-10 shadow-2xl backdrop-blur-md flex flex-col items-center text-center hidden animate-fadeIn">
+            <div class="w-20 h-20 rounded-3xl bg-gradient-to-tr from-pink-500 to-amber-400 flex items-center justify-center text-white text-3xl shadow-xl shadow-pink-500/30 mb-6 animate-pulse-subtle">
+                <i class="fa-solid fa-award"></i>
+            </div>
+
+            <span id="result-badge-text" class="px-4 py-1.5 rounded-full bg-emerald-500/10 text-emerald-400 font-bold text-xs border border-emerald-500/20 mb-2">
+                PARABÉNS! TEXTO CONCLUÍDO
+            </span>
+
+            <h3 class="font-display font-bold text-2xl sm:text-3xl text-white mb-2" id="result-title">
+                EXCELENTE DESEMPENHO!
+            </h3>
+            <p class="text-slate-400 text-xs sm:text-sm mb-8" id="result-subtitle">
+                VOCÊ CONCLUIU ESTE TEXTO COM SUCESSO. VAMOS PARA O PRÓXIMO?
+            </p>
+
+            <!-- Results Grid -->
+            <div class="w-full grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+                <div class="bg-slate-900/60 border border-slate-700/50 rounded-2xl p-4 flex flex-col items-center">
+                    <span class="text-[10px] text-slate-400 font-bold mb-1">VELOCIDADE</span>
+                    <span id="res-wpm" class="font-display font-bold text-2xl text-white">45</span>
+                    <span class="text-[9px] text-slate-500 font-bold">WPM</span>
+                </div>
+                <div class="bg-slate-900/60 border border-slate-700/50 rounded-2xl p-4 flex flex-col items-center">
+                    <span class="text-[10px] text-slate-400 font-bold mb-1">PRECISÃO</span>
+                    <span id="res-accuracy" class="font-display font-bold text-2xl text-emerald-400">98%</span>
+                    <span class="text-[9px] text-slate-500 font-bold">ACERTO</span>
+                </div>
+                <div class="bg-slate-900/60 border border-slate-700/50 rounded-2xl p-4 flex flex-col items-center">
+                    <span class="text-[10px] text-slate-400 font-bold mb-1">TOTAL ERROS</span>
+                    <span id="res-errors" class="font-display font-bold text-2xl text-rose-400">2</span>
+                    <span class="text-[9px] text-slate-500 font-bold">EQUÍVOCOS</span>
+                </div>
+                <div class="bg-slate-900/60 border border-slate-700/50 rounded-2xl p-4 flex flex-col items-center">
+                    <span class="text-[10px] text-slate-400 font-bold mb-1">TEMPO GASTO</span>
+                    <span id="res-time" class="font-display font-bold text-2xl text-amber-400">32S</span>
+                    <span class="text-[9px] text-slate-500 font-bold">SEGUNDOS</span>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full">
+                <button id="next-action-btn" onclick="app.handleNextAction()" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700 text-white font-display font-bold text-sm shadow-lg shadow-pink-500/30 transition flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-arrow-right"></i>
+                    <span>PRÓXIMO TEXTO</span>
+                </button>
+                <button onclick="app.returnToHome()" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-slate-700 hover:bg-slate-600 text-slate-200 font-semibold text-sm transition flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-list"></i>
+                    <span>ESCOLHER OUTRO TEMA</span>
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full py-4 px-6 text-center text-[10px] text-slate-500 border-t border-slate-800">
+        <p>DIGITAOUTUBRO • CELEBRANDO O DIA DAS CRIANÇAS, DIA DO PROFESSOR E OUTUBRO ROSA COM EDUCAÇÃO E TECNOLOGIA.</p>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Database with exactly 5 beginner texts per theme in strict UPPERCASE
+        const textDatabase = {
+            criancas: {
+                name: "DIA DAS CRIANÇAS",
+                icon: "fa-child-reaching",
+                colorBadgeClass: "bg-amber-500/20 text-amber-400 border-amber-500/30",
+                texts: [
+                    "BRINCAR FAZ BEM PARA A ALMA.",
+                    "A ALEGRIA DAS CRIANÇAS É CONTAGIANTE.",
+                    "SORRISOS SINCEROS ILUMINAM O DIA.",
+                    "SER CRIANÇA É SONHAR SEM LIMITES.",
+                    "TODA CRIANÇA MERECE AMOR E PAZ."
+                ]
+            },
+            professor: {
+                name: "DIA DO PROFESSOR",
+                icon: "fa-graduation-cap",
+                colorBadgeClass: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
+                texts: [
+                    "EDUCAR É TRANSFORMAR VIDAS.",
+                    "OBRIGADO POR ENSINAR COM AMOR.",
+                    "MESTRES INSPIRAM O FUTURO.",
+                    "O CONHECIMENTO É UM GRANDE TESOURO.",
+                    "A SABEDORIA ILUMINA NOSSOS PASSOS."
+                ]
+            },
+            rosa: {
+                name: "OUTUBRO ROSA",
+                icon: "fa-ribbon",
+                colorBadgeClass: "bg-pink-500/20 text-pink-400 border-pink-500/30",
+                texts: [
+                    "PREVENÇÃO É UM ATO DE AMOR.",
+                    "CUIDE-SE EXAMINE-SE AME-SE.",
+                    "JUNTAS SOMOS MAIS FORTES.",
+                    "O DIAGNÓSTICO PRECOCE SALVA VIDAS.",
+                    "A ESPERANÇA VENCE QUALQUER BATALHA."
+                ]
+            }
+        };
+
+        // Application State
+        class TypingApp {
+            constructor() {
+                this.selectedTheme = 'rosa';
+                this.currentTextIndex = 0;
+                this.currentText = '';
+                this.currentIndex = 0;
+                this.errors = 0;
+                this.startTime = null;
+                this.timerInterval = null;
+                this.isStarted = false;
+                this.isFinished = false;
+                this.soundEnabled = true;
+                this.audioCtx = null;
+
+                this.initAudio();
+            }
+
+            initAudio() {
+                try {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    if (AudioContext) {
+                        this.audioCtx = new AudioContext();
+                    }
+                } catch(e) {}
+            }
+
+            playClickSound(isError = false) {
+                if (!this.soundEnabled || !this.audioCtx) return;
+                try {
+                    if (this.audioCtx.state === 'suspended') {
+                        this.audioCtx.resume();
+                    }
+                    const osc = this.audioCtx.createOscillator();
+                    const gain = this.audioCtx.createGain();
+                    
+                    osc.type = isError ? 'sawtooth' : 'sine';
+                    osc.frequency.setValueAtTime(isError ? 150 : 600, this.audioCtx.currentTime);
+                    
+                    gain.gain.setValueAtTime(0.05, this.audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, this.audioCtx.currentTime + 0.05);
+                    
+                    osc.connect(gain);
+                    gain.connect(this.audioCtx.destination);
+                    
+                    osc.start();
+                    osc.stop(this.audioCtx.currentTime + 0.05);
+                } catch(e) {}
+            }
+
+            toggleSound() {
+                this.soundEnabled = !this.soundEnabled;
+                document.getElementById('sound-status').innerText = this.soundEnabled ? 'LIGADO' : 'DESLIGADO';
+                const icon = document.getElementById('sound-icon');
+                icon.className = this.soundEnabled ? 'fa-solid fa-volume-high' : 'fa-solid fa-volume-xmark';
+            }
+
+            selectTheme(themeKey) {
+                this.selectedTheme = themeKey;
+                this.currentTextIndex = 0;
+                this.startGameSession();
+            }
+
+            startGameSession() {
+                const themeData = textDatabase[this.selectedTheme];
+                this.currentText = themeData.texts[this.currentTextIndex];
+                
+                this.currentIndex = 0;
+                this.errors = 0;
+                this.startTime = null;
+                this.isStarted = false;
+                this.isFinished = false;
+                if (this.timerInterval) clearInterval(this.timerInterval);
+
+                // Update Theme & Progress badges
+                const badge = document.getElementById('game-theme-badge');
+                badge.className = `px-3 py-1 rounded-full font-bold text-xs border flex items-center space-x-1.5 ${themeData.colorBadgeClass}`;
+                badge.innerHTML = `<i class="fa-solid ${themeData.icon}"></i><span>${themeData.name}</span>`;
+                
+                document.getElementById('game-progress-badge').innerText = `TEXTO ${this.currentTextIndex + 1} DE 5`;
+
+                // Render characters in display
+                this.renderTextDisplay();
+
+                // Reset stats
+                document.getElementById('stat-wpm').innerText = '0';
+                document.getElementById('stat-accuracy').innerText = '100%';
+                document.getElementById('stat-errors').innerText = '0';
+                document.getElementById('stat-time').innerText = '0S';
+
+                // Show game view, hide others
+                document.getElementById('view-home').classList.add('hidden');
+                document.getElementById('view-results').classList.add('hidden');
+                document.getElementById('view-game').classList.remove('hidden');
+                document.getElementById('typing-overlay').classList.remove('opacity-0', 'pointer-events-none');
+
+                const input = document.getElementById('hidden-input');
+                input.value = '';
+                input.focus();
+            }
+
+            restartCurrentText() {
+                this.startGameSession();
+            }
+
+            returnToHome() {
+                if (this.timerInterval) clearInterval(this.timerInterval);
+                document.getElementById('view-game').classList.add('hidden');
+                document.getElementById('view-results').classList.add('hidden');
+                document.getElementById('view-home').classList.remove('hidden');
+            }
+
+            focusInput() {
+                document.getElementById('typing-overlay').classList.add('opacity-0', 'pointer-events-none');
+                document.getElementById('hidden-input').focus();
+            }
+
+            renderTextDisplay() {
+                const container = document.getElementById('text-display');
+                container.innerHTML = '';
+                
+                for (let i = 0; i < this.currentText.length; i++) {
+                    const span = document.createElement('span');
+                    span.innerText = this.currentText[i];
+                    span.className = 'transition-colors duration-100';
+                    if (i === 0) {
+                        span.classList.add('border-b-2', 'border-pink-500', 'bg-pink-500/20', 'text-white');
+                    } else {
+                        span.classList.add('text-slate-400');
+                    }
+                    container.appendChild(span);
+                }
+            }
+
+            handleTyping(e) {
+                if (this.isFinished) return;
+
+                const overlay = document.getElementById('typing-overlay');
+                if (!overlay.classList.contains('opacity-0')) {
+                    overlay.classList.add('opacity-0', 'pointer-events-none');
+                }
+
+                if (!this.isStarted) {
+                    this.isStarted = true;
+                    this.startTime = new Date();
+                    this.startTimer();
+                }
+
+                const typedChar = e.key.toUpperCase();
+
+                if (e.key === 'Backspace') {
+                    if (this.currentIndex > 0) {
+                        this.currentIndex--;
+                        this.updateDisplayAfterKey();
+                        this.playClickSound(false);
+                    }
+                    return;
+                }
+
+                if (typedChar.length !== 1) return;
+
+                const expectedChar = this.currentText[this.currentIndex];
+
+                if (typedChar === expectedChar) {
+                    this.playClickSound(false);
+                    this.currentIndex++;
+                } else {
+                    this.playClickSound(true);
+                    this.errors++;
+                    this.currentIndex++;
+                }
+
+                this.updateDisplayAfterKey();
+                this.updateLiveStats();
+
+                if (this.currentIndex >= this.currentText.length) {
+                    this.finishGame();
+                }
+            }
+
+            updateDisplayAfterKey() {
+                const container = document.getElementById('text-display');
+                const spans = container.children;
+
+                for (let i = 0; i < spans.length; i++) {
+                    spans[i].className = 'transition-colors duration-100 ';
+                    if (i < this.currentIndex) {
+                        spans[i].classList.add('text-emerald-400', 'font-semibold');
+                    } else if (i === this.currentIndex) {
+                        spans[i].classList.add('border-b-2', 'border-pink-500', 'bg-pink-500/20', 'text-white');
+                    } else {
+                        spans[i].classList.add('text-slate-400');
+                    }
+                }
+            }
+
+            startTimer() {
+                this.timerInterval = setInterval(() => {
+                    const now = new Date();
+                    const elapsedSeconds = Math.floor((now - this.startTime) / 1000);
+                    document.getElementById('stat-time').innerText = `${elapsedSeconds}S`;
+                    this.updateLiveStats();
+                }, 1000);
+            }
+
+            updateLiveStats() {
+                if (!this.startTime) return;
+                const now = new Date();
+                const elapsedMinutes = (now - this.startTime) / 60000;
+                
+                if (elapsedMinutes <= 0) return;
+
+                const wordsTyped = this.currentIndex / 5;
+                const wpm = Math.round(wordsTyped / elapsedMinutes);
+                document.getElementById('stat-wpm').innerText = wpm > 0 ? wpm : 0;
+
+                let accuracy = 100;
+                if (this.currentIndex > 0) {
+                    accuracy = Math.max(0, Math.round(((this.currentIndex - this.errors) / this.currentIndex) * 100));
+                }
+                document.getElementById('stat-accuracy').innerText = `${accuracy}%`;
+                document.getElementById('stat-errors').innerText = this.errors;
+            }
+
+            finishGame() {
+                this.isFinished = true;
+                if (this.timerInterval) clearInterval(this.timerInterval);
+
+                const now = new Date();
+                const elapsedMinutes = Math.max(0.001, (now - this.startTime) / 60000);
+                const wordsTyped = this.currentText.length / 5;
+                const finalWpm = Math.round(wordsTyped / elapsedMinutes);
+                
+                let finalAccuracy = Math.max(0, Math.round(((this.currentText.length - this.errors) / this.currentText.length) * 100));
+                const finalTimeSec = Math.round((now - this.startTime) / 1000);
+
+                // Populate results view
+                document.getElementById('res-wpm').innerText = finalWpm;
+                document.getElementById('res-accuracy').innerText = `${finalAccuracy}%`;
+                document.getElementById('res-errors').innerText = this.errors;
+                document.getElementById('res-time').innerText = `${finalTimeSec}S`;
+
+                // Update button text depending on whether there are more texts in the theme
+                const nextBtn = document.getElementById('next-action-btn');
+                if (this.currentTextIndex < 4) {
+                    nextBtn.innerHTML = '<i class="fa-solid fa-arrow-right"></i><span>PRÓXIMO TEXTO</span>';
+                } else {
+                    nextBtn.innerHTML = '<i class="fa-solid fa-rotate-right"></i><span>REINICIAR TEMA</span>';
+                }
+
+                if (typeof confetti === 'function') {
+                    confetti({
+                        particleCount: 100,
+                        spread: 70,
+                        origin: { y: 0.6 }
+                    });
+                }
+
+                document.getElementById('view-game').classList.add('hidden');
+                document.getElementById('view-results').classList.remove('hidden');
+            }
+
+            handleNextAction() {
+                this.currentTextIndex++;
+                if (this.currentTextIndex >= 5) {
+                    this.currentTextIndex = 0; // loop back to first text
+                }
+                this.startGameSession();
+            }
+        }
+
+        const app = new TypingApp();
+
+        document.addEventListener('keydown', (e) => {
+            const gameView = document.getElementById('view-game');
+            if (gameView && !gameView.classList.contains('hidden')) {
+                if (e.key === ' ' || e.key.length === 1 || e.key === 'Backspace') {
+                    if (e.key === ' ') e.preventDefault();
+                    app.handleTyping(e);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
