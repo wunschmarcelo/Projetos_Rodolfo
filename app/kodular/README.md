@@ -1,18 +1,39 @@
-# Florescer no Kodular
+# Florescer — projeto para Kodular
 
-Esta pasta contém os assets adaptados para montar o projeto no Kodular. Não é um projeto `.aia` importável e ainda não foi validada no Kodular Companion ou em APK gerado pelo Kodular.
+O arquivo pronto para importação é `app/entregas/Florescer.aia`. Ele é diferente do ZIP antigo de assets: contém a tela Screen1, componentes, blocos e os arquivos da interface.
 
-1. No Kodular Creator, crie o projeto `Florescer`.
-2. Em Screen1, oculte a barra de título, use orientação Portrait e desative Scrollable. Escolha o layout responsivo.
-3. Adicione um Web Viewer chamado `Web_Viewer1`, com largura e altura Fill Parent. Habilite JavaScript, se essa propriedade estiver disponível.
-4. Envie os três arquivos da pasta `assets` para a mídia do projeto, preservando os nomes.
-5. No evento `Screen1.Initialize`, chame `Web_Viewer1.GoToUrl` com `file:///android_asset/index.html`.
-6. Adicione um Activity Starter. No evento `Web_Viewer1.WebViewStringChange`, aceite somente os valores `tel:188` e `tel:192`; configure Action como `android.intent.action.DIAL`, DataUri como o valor recebido e chame StartActivity. Isso abre o discador; não use ACTION_CALL.
-7. No evento `Screen1.BackPressed`, se Web_Viewer1.CanGoBack for verdadeiro chame GoBack; caso contrário, feche a tela ou exiba uma confirmação.
-8. Gere um APK pelo menu de exportação do Kodular e teste no aparelho. O caminho de assets pode diferir no Companion: valide principalmente no APK exportado.
+## Importar
 
-Os registros usam localStorage da WebView e não são compartilhados com o navegador ou com o APK Android Studio. Esta versão dispensa fontes externas e inclui alternativa para gerar IDs em origens locais sem crypto.randomUUID.
+1. Acesse https://creator.kodular.io e entre na sua conta.
+2. No menu Projects (Projetos), escolha Import project (.aia) from my computer.
+3. Selecione `Florescer.aia` no computador. Não descompacte o arquivo e não use o ZIP antigo.
+4. Abra Screen1. No Designer devem aparecer WebViewer1, ActivityStarter1 e Notifier1.
+5. Em Blocks, os eventos Initialize, WebViewStringChange, BackPressed, AfterChoosing e ErrorOccurred já estão configurados.
+6. Use o menu Export para gerar o APK e instale no celular Android. O Kodular pode solicitar ajustes conforme sua versão atual e as políticas de geração de APK.
 
-## Verificação necessária no APK Kodular
+## O que está incluído
 
-Salve check-in e diário; feche e reabra o app para confirmar a persistência. Teste a exclusão de registros (diálogo confirm), limite de sentimentos, pausa de respiração, teclado, botão voltar e a abertura do discador. Não considere a persistência validada apenas pelo Companion. Limpar dados ou desinstalar pode apagar os registros. O armazenamento não possui criptografia adicional.
+- Interface de check-in, energia, ansiedade, sentimentos, diário e respiração.
+- Arquivos locais: não precisa de servidor ou de fontes externas.
+- Inicialização automática da página no WebViewer.
+- Integração dos links 188 e 192 com o discador por ActivityStarter, sem efetuar ligações automaticamente.
+- Botão voltar: fecha apoio, retorna ao check-in ou pede confirmação para sair.
+- Armazenamento local da WebView, com alternativa de geração de IDs para origens locais.
+
+## Limites e validação
+
+O pacote foi gerado no formato padrão AIA e sua estrutura ZIP, JSON da tela e XML dos blocos foram verificados. A interface e a ponte JavaScript foram testadas em Chromium com uma ponte simulada. A importação no Kodular Creator, o Companion e o APK gerado pelo Kodular ainda não foram executados neste ambiente; essa validação depende do serviço externo. O pacote não contém extensões de terceiros.
+
+No APK gerado, teste: salvar e reabrir check-in e diário; excluir registro; selecionar até quatro sentimentos; iniciar e encerrar respiração; abrir o discador; usar voltar e verificar o teclado. O Companion pode usar um caminho de assets diferente de `file:///android_asset/index.html`; valide o APK exportado antes de concluir que o caminho está quebrado.
+
+Os registros não são compartilhados com o site ou com o APK feito pelo Android Studio. Não há conta, sincronização nem criptografia adicional pelo app. Limpar os dados da aplicação ou desinstalá-la pode apagar os registros. Confira as configurações de backup do Kodular antes de distribuir o aplicativo.
+
+## Atualizar o projeto
+
+Edite a interface em `assets/` ou os blocos em `build_project.py`, depois execute:
+
+```sh
+python3 app/kodular/build_project.py
+```
+
+O script atualiza os fontes da tela em `project/` e gera novamente `app/entregas/Florescer.aia`. Importe o arquivo atualizado como um novo projeto ou preserve uma cópia do projeto anterior no Kodular antes de substituí-lo.
