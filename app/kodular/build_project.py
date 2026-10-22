@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parent
 PROJECT = ROOT / 'project'
 SRC = PROJECT / 'src/appinventor/ai_florescer/Florescer'
 SRC.mkdir(parents=True, exist_ok=True)
-# Conservative App Inventor component versions allow the importer to upgrade them.
+# Kodular component versions checked against its published component documentation.
 form = {'authURL':['ai2.appinventor.mit.edu'], 'YaVersion':'208', 'Source':'Form', 'Properties':{
  '$Name':'Screen1','$Type':'Form','$Version':'26','Uuid':'0',
  'AppName':'Florescer','Title':'Florescer','TitleVisible':'False','ShowStatusBar':'True',
@@ -16,9 +16,9 @@ form = {'authURL':['ai2.appinventor.mit.edu'], 'YaVersion':'208', 'Source':'Form
  'BackgroundColor':'&HFFFFFCF4','PrimaryColor':'&HFFF4B721','PrimaryColorDark':'&HFFB88013',
  'AccentColor':'&HFFF4B721','Theme':'AppTheme.Light.DarkActionBar',
  '$Components':[
-  {'$Name':'WebViewer1','$Type':'WebViewer','$Version':'8','Uuid':'1001','Width':'-2','Height':'-2','HomeUrl':'','FollowLinks':'True','IgnoreSslErrors':'False','PromptforPermission':'False'},
+  {'$Name':'WebViewer1','$Type':'WebViewer','$Version':'13','Uuid':'1001','Width':'-2','Height':'-2','HomeUrl':'file:///android_asset/index.html','EnableJavaScript':'True','FollowLinks':'True','IgnoreSslErrors':'False','PromptforPermission':'False'},
   {'$Name':'ActivityStarter1','$Type':'ActivityStarter','$Version':'6','Uuid':'1002','Action':'android.intent.action.DIAL'},
-  {'$Name':'Notifier1','$Type':'Notifier','$Version':'4','Uuid':'1003'}]}}
+  {'$Name':'Notifier1','$Type':'Notifier','$Version':'11','Uuid':'1003'}]}}
 (SRC/'Screen1.scm').write_text('#|\n$JSON\n'+json.dumps(form,ensure_ascii=False,separators=(',',':'))+'\n|#',encoding='utf-8')
 xml=ET.Element('xml',{'xmlns':'http://www.w3.org/1999/xhtml'})
 counter=0
@@ -52,7 +52,7 @@ def get_webstring(parent):
 def next_of(b):return ET.SubElement(b,'next')
 
 init=event('Screen1','Form','Initialize',20,20)
-method(init,'WebViewer1','WebViewer','GoToUrl','file:///android_asset/index.html')
+method(init,'WebViewer1','WebViewer','GoHome')
 changed=event('WebViewer1','WebViewer','WebViewStringChange',20,180)
 choose=block('controls_if',changed);ET.SubElement(choose,'mutation',{'elseif':'1'})
 # Allow exactly the two support numbers; never accept arbitrary bridge commands.
@@ -63,7 +63,7 @@ for i,number in enumerate(['188','192']):
  a=prop(body,'ActivityStarter1','ActivityStarter','DataUri','tel:'+number)
  method(next_of(a),'ActivityStarter1','ActivityStarter','StartActivity')
 back=event('Screen1','Form','BackPressed',20,650)
-method(back,'WebViewer1','WebViewer','RunJavaScript',"(() => {const d=document.querySelector('dialog[open]');if(d){d.close();return;}const tab=document.querySelector('[data-tab=checkin]');if(tab && !tab.classList.contains('active')){tab.click();return;}window.AppInventor.setWebViewString('confirm-exit');})()")
+method(back,'WebViewer1','WebViewer','EvaluateJS',"(() => {const d=document.querySelector('dialog[open]');if(d){d.close();return;}const tab=document.querySelector('[data-tab=checkin]');if(tab && !tab.classList.contains('active')){tab.click();return;}(window.Kodular || window.AppInventor).setWebViewString('confirm-exit');})()")
 # Add a separate IF after the telephone dispatch to confirm exiting.
 exit_if=block('controls_if',next_of(choose))
 compare=block('logic_compare',ET.SubElement(exit_if,'value',{'name':'IF0'}));field(compare,'OP','EQ');get_webstring(ET.SubElement(compare,'value',{'name':'A'}));text(ET.SubElement(compare,'value',{'name':'B'}),'confirm-exit')
@@ -106,4 +106,7 @@ with ZipFile(output,'w',ZIP_DEFLATED) as z:
   if f.is_file():z.write(f,f.relative_to(PROJECT).as_posix())
  for f in sorted((ROOT/'assets').iterdir()):
   if f.is_file():z.write(f,'assets/'+f.name)
+import shutil
+shutil.copyfile(output, output.with_name('FlorescerKodularV2.aia'))
 print(output)
+print(output.with_name('FlorescerKodularV2.aia'))

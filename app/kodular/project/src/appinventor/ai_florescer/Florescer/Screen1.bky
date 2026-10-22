@@ -4,51 +4,46 @@
     <field name="COMPONENT_SELECTOR">Screen1</field>
     <statement name="DO">
       <block type="component_method" id="florescer_2">
-        <mutation component_type="WebViewer" method_name="GoToUrl" is_generic="false" instance_name="WebViewer1" />
+        <mutation component_type="WebViewer" method_name="GoHome" is_generic="false" instance_name="WebViewer1" />
         <field name="COMPONENT_SELECTOR">WebViewer1</field>
-        <value name="ARG0">
-          <block type="text" id="florescer_3">
-            <field name="TEXT">file:///android_asset/index.html</field>
-          </block>
-        </value>
       </block>
     </statement>
   </block>
-  <block type="component_event" id="florescer_4" x="20" y="180">
+  <block type="component_event" id="florescer_3" x="20" y="180">
     <mutation component_type="WebViewer" is_generic="false" instance_name="WebViewer1" event_name="WebViewStringChange" />
     <field name="COMPONENT_SELECTOR">WebViewer1</field>
     <statement name="DO">
-      <block type="controls_if" id="florescer_5">
+      <block type="controls_if" id="florescer_4">
         <mutation elseif="1" />
         <value name="IF0">
-          <block type="logic_compare" id="florescer_6">
+          <block type="logic_compare" id="florescer_5">
             <field name="OP">EQ</field>
             <value name="A">
-              <block type="component_set_get" id="florescer_7">
+              <block type="component_set_get" id="florescer_6">
                 <mutation component_type="WebViewer" set_or_get="get" property_name="WebViewString" is_generic="false" instance_name="WebViewer1" />
                 <field name="COMPONENT_SELECTOR">WebViewer1</field>
                 <field name="PROP">WebViewString</field>
               </block>
             </value>
             <value name="B">
-              <block type="text" id="florescer_8">
+              <block type="text" id="florescer_7">
                 <field name="TEXT">tel:188</field>
               </block>
             </value>
           </block>
         </value>
         <statement name="DO0">
-          <block type="component_set_get" id="florescer_9">
+          <block type="component_set_get" id="florescer_8">
             <mutation component_type="ActivityStarter" set_or_get="set" property_name="DataUri" is_generic="false" instance_name="ActivityStarter1" />
             <field name="COMPONENT_SELECTOR">ActivityStarter1</field>
             <field name="PROP">DataUri</field>
             <value name="VALUE">
-              <block type="text" id="florescer_10">
+              <block type="text" id="florescer_9">
                 <field name="TEXT">tel:188</field>
               </block>
             </value>
             <next>
-              <block type="component_method" id="florescer_11">
+              <block type="component_method" id="florescer_10">
                 <mutation component_type="ActivityStarter" method_name="StartActivity" is_generic="false" instance_name="ActivityStarter1" />
                 <field name="COMPONENT_SELECTOR">ActivityStarter1</field>
               </block>
@@ -56,34 +51,34 @@
           </block>
         </statement>
         <value name="IF1">
-          <block type="logic_compare" id="florescer_12">
+          <block type="logic_compare" id="florescer_11">
             <field name="OP">EQ</field>
             <value name="A">
-              <block type="component_set_get" id="florescer_13">
+              <block type="component_set_get" id="florescer_12">
                 <mutation component_type="WebViewer" set_or_get="get" property_name="WebViewString" is_generic="false" instance_name="WebViewer1" />
                 <field name="COMPONENT_SELECTOR">WebViewer1</field>
                 <field name="PROP">WebViewString</field>
               </block>
             </value>
             <value name="B">
-              <block type="text" id="florescer_14">
+              <block type="text" id="florescer_13">
                 <field name="TEXT">tel:192</field>
               </block>
             </value>
           </block>
         </value>
         <statement name="DO1">
-          <block type="component_set_get" id="florescer_15">
+          <block type="component_set_get" id="florescer_14">
             <mutation component_type="ActivityStarter" set_or_get="set" property_name="DataUri" is_generic="false" instance_name="ActivityStarter1" />
             <field name="COMPONENT_SELECTOR">ActivityStarter1</field>
             <field name="PROP">DataUri</field>
             <value name="VALUE">
-              <block type="text" id="florescer_16">
+              <block type="text" id="florescer_15">
                 <field name="TEXT">tel:192</field>
               </block>
             </value>
             <next>
-              <block type="component_method" id="florescer_17">
+              <block type="component_method" id="florescer_16">
                 <mutation component_type="ActivityStarter" method_name="StartActivity" is_generic="false" instance_name="ActivityStarter1" />
                 <field name="COMPONENT_SELECTOR">ActivityStarter1</field>
               </block>
@@ -91,50 +86,50 @@
           </block>
         </statement>
         <next>
-          <block type="controls_if" id="florescer_21">
+          <block type="controls_if" id="florescer_20">
             <value name="IF0">
-              <block type="logic_compare" id="florescer_22">
+              <block type="logic_compare" id="florescer_21">
                 <field name="OP">EQ</field>
                 <value name="A">
-                  <block type="component_set_get" id="florescer_23">
+                  <block type="component_set_get" id="florescer_22">
                     <mutation component_type="WebViewer" set_or_get="get" property_name="WebViewString" is_generic="false" instance_name="WebViewer1" />
                     <field name="COMPONENT_SELECTOR">WebViewer1</field>
                     <field name="PROP">WebViewString</field>
                   </block>
                 </value>
                 <value name="B">
-                  <block type="text" id="florescer_24">
+                  <block type="text" id="florescer_23">
                     <field name="TEXT">confirm-exit</field>
                   </block>
                 </value>
               </block>
             </value>
             <statement name="DO0">
-              <block type="component_method" id="florescer_25">
+              <block type="component_method" id="florescer_24">
                 <mutation component_type="Notifier" method_name="ShowChooseDialog" is_generic="false" instance_name="Notifier1" />
                 <field name="COMPONENT_SELECTOR">Notifier1</field>
                 <value name="ARG0">
-                  <block type="text" id="florescer_26">
+                  <block type="text" id="florescer_25">
                     <field name="TEXT">Deseja sair do Florescer? Seus registros salvos ficam neste aparelho.</field>
                   </block>
                 </value>
                 <value name="ARG1">
-                  <block type="text" id="florescer_27">
+                  <block type="text" id="florescer_26">
                     <field name="TEXT">Até logo 🌻</field>
                   </block>
                 </value>
                 <value name="ARG2">
-                  <block type="text" id="florescer_28">
+                  <block type="text" id="florescer_27">
                     <field name="TEXT">Sair</field>
                   </block>
                 </value>
                 <value name="ARG3">
-                  <block type="text" id="florescer_29">
+                  <block type="text" id="florescer_28">
                     <field name="TEXT">Continuar</field>
                   </block>
                 </value>
                 <value name="ARG4">
-                  <block type="logic_boolean" id="florescer_30">
+                  <block type="logic_boolean" id="florescer_29">
                     <field name="BOOL">TRUE</field>
                   </block>
                 </value>
@@ -145,56 +140,56 @@
       </block>
     </statement>
   </block>
-  <block type="component_event" id="florescer_18" x="20" y="650">
+  <block type="component_event" id="florescer_17" x="20" y="650">
     <mutation component_type="Form" is_generic="false" instance_name="Screen1" event_name="BackPressed" />
     <field name="COMPONENT_SELECTOR">Screen1</field>
     <statement name="DO">
-      <block type="component_method" id="florescer_19">
-        <mutation component_type="WebViewer" method_name="RunJavaScript" is_generic="false" instance_name="WebViewer1" />
+      <block type="component_method" id="florescer_18">
+        <mutation component_type="WebViewer" method_name="EvaluateJS" is_generic="false" instance_name="WebViewer1" />
         <field name="COMPONENT_SELECTOR">WebViewer1</field>
         <value name="ARG0">
-          <block type="text" id="florescer_20">
-            <field name="TEXT">(() =&gt; {const d=document.querySelector('dialog[open]');if(d){d.close();return;}const tab=document.querySelector('[data-tab=checkin]');if(tab &amp;&amp; !tab.classList.contains('active')){tab.click();return;}window.AppInventor.setWebViewString('confirm-exit');})()</field>
+          <block type="text" id="florescer_19">
+            <field name="TEXT">(() =&gt; {const d=document.querySelector('dialog[open]');if(d){d.close();return;}const tab=document.querySelector('[data-tab=checkin]');if(tab &amp;&amp; !tab.classList.contains('active')){tab.click();return;}(window.Kodular || window.AppInventor).setWebViewString('confirm-exit');})()</field>
           </block>
         </value>
       </block>
     </statement>
   </block>
-  <block type="component_event" id="florescer_31" x="20" y="920">
+  <block type="component_event" id="florescer_30" x="20" y="920">
     <mutation component_type="Notifier" is_generic="false" instance_name="Notifier1" event_name="AfterChoosing" />
     <field name="COMPONENT_SELECTOR">Notifier1</field>
     <statement name="DO">
-      <block type="controls_if" id="florescer_32">
+      <block type="controls_if" id="florescer_31">
         <value name="IF0">
-          <block type="logic_compare" id="florescer_33">
+          <block type="logic_compare" id="florescer_32">
             <field name="OP">EQ</field>
             <value name="A">
-              <block type="lexical_variable_get" id="florescer_34">
+              <block type="lexical_variable_get" id="florescer_33">
                 <field name="VAR">get choice</field>
               </block>
             </value>
             <value name="B">
-              <block type="text" id="florescer_35">
+              <block type="text" id="florescer_34">
                 <field name="TEXT">Sair</field>
               </block>
             </value>
           </block>
         </value>
         <statement name="DO0">
-          <block type="controls_closeApplication" id="florescer_36" />
+          <block type="controls_closeApplication" id="florescer_35" />
         </statement>
       </block>
     </statement>
   </block>
-  <block type="component_event" id="florescer_37" x="650" y="20">
+  <block type="component_event" id="florescer_36" x="650" y="20">
     <mutation component_type="Form" is_generic="false" instance_name="Screen1" event_name="ErrorOccurred" />
     <field name="COMPONENT_SELECTOR">Screen1</field>
     <statement name="DO">
-      <block type="component_method" id="florescer_38">
+      <block type="component_method" id="florescer_37">
         <mutation component_type="Notifier" method_name="ShowAlert" is_generic="false" instance_name="Notifier1" />
         <field name="COMPONENT_SELECTOR">Notifier1</field>
         <value name="ARG0">
-          <block type="text" id="florescer_39">
+          <block type="text" id="florescer_38">
             <field name="TEXT">Não foi possível concluir essa ação. Se o discador não estiver disponível, ligue 188 para apoio emocional ou 192 em uma emergência, usando outro telefone.</field>
           </block>
         </value>

@@ -1,12 +1,12 @@
 # Florescer — projeto para Kodular
 
-O arquivo pronto para importação é `app/entregas/Florescer.aia`. Ele é diferente do ZIP antigo de assets: contém a tela Screen1, componentes, blocos e os arquivos da interface.
+A versão corrigida é `app/entregas/FlorescerKodularV2.aia` (também disponível como `Florescer.aia`). Ele é diferente do ZIP antigo de assets: contém a tela Screen1, componentes, blocos e os arquivos da interface.
 
 ## Importar
 
 1. Acesse https://creator.kodular.io e entre na sua conta.
 2. No menu Projects (Projetos), escolha Import project (.aia) from my computer.
-3. Selecione `Florescer.aia` no computador. Não descompacte o arquivo e não use o ZIP antigo.
+3. Selecione `FlorescerKodularV2.aia` no computador e importe com o nome `FlorescerV2` para preservar o projeto anterior. Não descompacte o arquivo e não use o ZIP antigo.
 4. Abra Screen1. No Designer devem aparecer WebViewer1, ActivityStarter1 e Notifier1.
 5. Em Blocks, os eventos Initialize, WebViewStringChange, BackPressed, AfterChoosing e ErrorOccurred já estão configurados.
 6. Use o menu Export para gerar o APK e instale no celular Android. O Kodular pode solicitar ajustes conforme sua versão atual e as políticas de geração de APK.
@@ -37,3 +37,9 @@ python3 app/kodular/build_project.py
 ```
 
 O script atualiza os fontes da tela em `project/` e gera novamente `app/entregas/Florescer.aia`. Importe o arquivo atualizado como um novo projeto ou preserve uma cópia do projeto anterior no Kodular antes de substituí-lo.
+
+## Correção V2
+
+A primeira versão continha um método do MIT App Inventor (`RunJavaScript`) que não existe no WebViewer do Kodular. O gerador YAIL tenta ler `continuation` de um método indefinido, resultando no erro relatado. A V2 usa `EvaluateJS`, documentado pelo Kodular. A comunicação JavaScript agora prefere `window.Kodular`, mantendo `window.AppInventor` como alternativa. O HomeUrl já aponta para o asset e Initialize chama GoHome.
+
+Todos os métodos, eventos e propriedades usados nos blocos foram comparados com a documentação oficial em https://github.com/Kodular/Documentation; as quantidades de argumentos também foram verificadas. Um teste com o trecho upstream do gerador YAIL reproduziu o erro `continuation` com método ausente e executou as chamadas corrigidas sem esse erro. Isso não substitui a compilação completa no Kodular, que continua pendente.

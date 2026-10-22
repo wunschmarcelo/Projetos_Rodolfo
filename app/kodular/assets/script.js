@@ -14,4 +14,4 @@ $('#breathe').onclick=()=>{if(timer){stopBreath();$('#breath-status').textConten
 $('.help').onclick=$('#support-link').onclick=()=>$('#support').showModal();$('#close-support').onclick=()=>$('#support').close();if(!storageAvailable)$('#check-status').textContent='O armazenamento local está indisponível. Seus registros podem não ser salvos.';
 
 // Kodular: encaminha pedidos de ligação aos blocos, sem ligar automaticamente.
-document.querySelectorAll('a[href^="tel:"]').forEach(a=>a.addEventListener('click',e=>{if(window.AppInventor){e.preventDefault();window.AppInventor.setWebViewString(a.getAttribute('href'));}}));
+document.querySelectorAll('a[href^="tel:"]').forEach(a=>a.addEventListener('click',e=>{const bridge=window.Kodular || window.AppInventor;if(bridge){e.preventDefault();bridge.setWebViewString(a.getAttribute('href'));}}));
