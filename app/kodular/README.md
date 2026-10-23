@@ -1,12 +1,12 @@
-# Florescer — projeto para Kodular
+# Mente Conectada — projeto para Kodular
 
-A versão corrigida é `app/entregas/FlorescerKodularV2.aia` (também disponível como `Florescer.aia`). Ele é diferente do ZIP antigo de assets: contém a tela Screen1, componentes, blocos e os arquivos da interface.
+A versão corrigida é `app/entregas/MenteConectada.aia`. Ele é diferente do ZIP antigo de assets: contém a tela Screen1, componentes, blocos e os arquivos da interface.
 
 ## Importar
 
 1. Acesse https://creator.kodular.io e entre na sua conta.
 2. No menu Projects (Projetos), escolha Import project (.aia) from my computer.
-3. Selecione `FlorescerKodularV2.aia` no computador e importe com o nome `FlorescerV2` para preservar o projeto anterior. Não descompacte o arquivo e não use o ZIP antigo.
+3. Selecione `MenteConectada.aia` no computador e importe com o nome `MenteConectada` para preservar o projeto anterior. Não descompacte o arquivo e não use o ZIP antigo.
 4. Abra Screen1. No Designer devem aparecer WebViewer1, ActivityStarter1 e Notifier1.
 5. Em Blocks, os eventos Initialize, WebViewStringChange, BackPressed, AfterChoosing e ErrorOccurred já estão configurados.
 6. Use o menu Export para gerar o APK e instale no celular Android. O Kodular pode solicitar ajustes conforme sua versão atual e as políticas de geração de APK.
@@ -36,7 +36,7 @@ Edite a interface em `assets/` ou os blocos em `build_project.py`, depois execut
 python3 app/kodular/build_project.py
 ```
 
-O script atualiza os fontes da tela em `project/` e gera novamente `app/entregas/Florescer.aia`. Importe o arquivo atualizado como um novo projeto ou preserve uma cópia do projeto anterior no Kodular antes de substituí-lo.
+O script atualiza os fontes da tela em `project/` e gera novamente `app/entregas/MenteConectada.aia`. Importe o arquivo atualizado como um novo projeto ou preserve uma cópia do projeto anterior no Kodular antes de substituí-lo.
 
 ## Correção V2
 

@@ -110,7 +110,7 @@
                 <field name="COMPONENT_SELECTOR">Notifier1</field>
                 <value name="ARG0">
                   <block type="text" id="florescer_25">
-                    <field name="TEXT">Deseja sair do Florescer? Seus registros salvos ficam neste aparelho.</field>
+                    <field name="TEXT">Deseja sair do Mente Conectada? Seus registros salvos ficam neste aparelho.</field>
                   </block>
                 </value>
                 <value name="ARG1">

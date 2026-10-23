@@ -6,12 +6,12 @@ from zipfile import ZipFile, ZIP_DEFLATED
 
 ROOT = Path(__file__).resolve().parent
 PROJECT = ROOT / 'project'
-SRC = PROJECT / 'src/appinventor/ai_florescer/Florescer'
+SRC = PROJECT / 'src/appinventor/ai_florescer/MenteConectada'
 SRC.mkdir(parents=True, exist_ok=True)
 # Kodular component versions checked against its published component documentation.
 form = {'authURL':['ai2.appinventor.mit.edu'], 'YaVersion':'208', 'Source':'Form', 'Properties':{
  '$Name':'Screen1','$Type':'Form','$Version':'26','Uuid':'0',
- 'AppName':'Florescer','Title':'Florescer','TitleVisible':'False','ShowStatusBar':'True',
+ 'AppName':'Mente Conectada','Title':'Mente Conectada','TitleVisible':'False','ShowStatusBar':'True',
  'Sizing':'Responsive','Scrollable':'False','ScreenOrientation':'portrait',
  'BackgroundColor':'&HFFFFFCF4','PrimaryColor':'&HFFF4B721','PrimaryColorDark':'&HFFB88013',
  'AccentColor':'&HFFF4B721','Theme':'AppTheme.Light.DarkActionBar',
@@ -69,7 +69,7 @@ exit_if=block('controls_if',next_of(choose))
 compare=block('logic_compare',ET.SubElement(exit_if,'value',{'name':'IF0'}));field(compare,'OP','EQ');get_webstring(ET.SubElement(compare,'value',{'name':'A'}));text(ET.SubElement(compare,'value',{'name':'B'}),'confirm-exit')
 body=ET.SubElement(exit_if,'statement',{'name':'DO0'})
 b=block('component_method',body);ET.SubElement(b,'mutation',{'component_type':'Notifier','method_name':'ShowChooseDialog','is_generic':'false','instance_name':'Notifier1'});field(b,'COMPONENT_SELECTOR','Notifier1')
-for i,value in enumerate(['Deseja sair do Florescer? Seus registros salvos ficam neste aparelho.','Até logo 🌻','Sair','Continuar']):text(ET.SubElement(b,'value',{'name':'ARG'+str(i)}),value)
+for i,value in enumerate(['Deseja sair do Mente Conectada? Seus registros salvos ficam neste aparelho.','Até logo 🌻','Sair','Continuar']):text(ET.SubElement(b,'value',{'name':'ARG'+str(i)}),value)
 boolb=block('logic_boolean',ET.SubElement(b,'value',{'name':'ARG4'}));field(boolb,'BOOL','TRUE')
 after=event('Notifier1','Notifier','AfterChoosing',20,920)
 cond=block('controls_if',after);comp=block('logic_compare',ET.SubElement(cond,'value',{'name':'IF0'}));field(comp,'OP','EQ')
@@ -80,15 +80,15 @@ method(error,'Notifier1','Notifier','ShowAlert','Não foi possível concluir ess
 ET.SubElement(xml,'yacodeblocks',{'ya-version':'208','language-version':'36'})
 ET.indent(xml)
 (SRC/'Screen1.bky').write_text(ET.tostring(xml,encoding='unicode'),encoding='utf-8')
-properties='''main=appinventor.ai_florescer.Florescer.Screen1
-name=Florescer
+properties='''main=appinventor.ai_florescer.MenteConectada.Screen1
+name=MenteConectada
 assets=../assets
 source=../src
 build=../build
 versioncode=1
 versionname=1.0
 useslocation=False
-aname=Florescer
+aname=Mente Conectada
 sizing=Responsive
 showlistsasjson=True
 actionbar=False
@@ -99,14 +99,11 @@ color.accent=&HFFF4B721
 '''
 (PROJECT/'youngandroidproject').mkdir(exist_ok=True)
 (PROJECT/'youngandroidproject/project.properties').write_text(properties,encoding='utf-8')
-output=ROOT.parent/'entregas/Florescer.aia'
+output=ROOT.parent/'entregas/MenteConectada.aia'
 output.parent.mkdir(exist_ok=True)
 with ZipFile(output,'w',ZIP_DEFLATED) as z:
  for f in sorted(PROJECT.rglob('*')):
   if f.is_file():z.write(f,f.relative_to(PROJECT).as_posix())
  for f in sorted((ROOT/'assets').iterdir()):
   if f.is_file():z.write(f,'assets/'+f.name)
-import shutil
-shutil.copyfile(output, output.with_name('FlorescerKodularV2.aia'))
 print(output)
-print(output.with_name('FlorescerKodularV2.aia'))

@@ -1,4 +1,0 @@
-#|
-$JSON
-{"authURL":["ai2.appinventor.mit.edu"],"YaVersion":"208","Source":"Form","Properties":{"$Name":"Screen1","$Type":"Form","$Version":"26","Uuid":"0","AppName":"Florescer","Title":"Florescer","TitleVisible":"False","ShowStatusBar":"True","Sizing":"Responsive","Scrollable":"False","ScreenOrientation":"portrait","BackgroundColor":"&HFFFFFCF4","PrimaryColor":"&HFFF4B721","PrimaryColorDark":"&HFFB88013","AccentColor":"&HFFF4B721","Theme":"AppTheme.Light.DarkActionBar","$Components":[{"$Name":"WebViewer1","$Type":"WebViewer","$Version":"13","Uuid":"1001","Width":"-2","Height":"-2","HomeUrl":"file:///android_asset/index.html","EnableJavaScript":"True","FollowLinks":"True","IgnoreSslErrors":"False","PromptforPermission":"False"},{"$Name":"ActivityStarter1","$Type":"ActivityStarter","$Version":"6","Uuid":"1002","Action":"android.intent.action.DIAL"},{"$Name":"Notifier1","$Type":"Notifier","$Version":"11","Uuid":"1003"}]}}
-|#
