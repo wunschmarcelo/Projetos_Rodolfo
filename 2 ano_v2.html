@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aventura Segura na Internet - 2º Ano</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Fredoka', cursive, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #74b9ff, #a29bfe);
+            color: #2d3436;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 800px;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        h1 {
+            color: #0984e3;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        p.subtitle {
+            color: #636e72;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+
+        /* Menu Principal */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .menu-card {
+            background: #dfe6e9;
+            border: none;
+            border-radius: 20px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+            background: #74b9ff;
+            color: white;
+        }
+
+        .menu-card span {
+            font-size: 3rem;
+        }
+
+        .menu-card h3 {
+            font-size: 1.3rem;
+        }
+
+        /* Botões Gerais */
+        .btn {
+            background: #00b894;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            background: #00cec9;
+            transform: scale(1.05);
+        }
+
+        .btn-back {
+            background: #636e72;
+            margin-bottom: 20px;
+        }
+        .btn-back:hover {
+            background: #b2bec3;
+        }
+
+        /* Seleção de Níveis */
+        .level-grid {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+
+        .level-btn {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            border: none;
+            background: #fdcb6e;
+            color: #2d3436;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .level-btn:hover {
+            background: #ffeaa7;
+            transform: scale(1.1);
+        }
+
+        /* Telas dos Jogos */
+        .game-screen {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+
+        /* Jogo da Memória */
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            max-width: 500px;
+            margin: 20px auto;
+        }
+
+        .memory-card {
+            height: 90px;
+            background: #0984e3;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            color: white;
+            transition: 0.3s;
+            user-select: none;
+        }
+
+        .memory-card.flipped {
+            background: #fff;
+            border: 3px solid #0984e3;
+        }
+
+        /* Associação */
+        .assoc-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .assoc-item {
+            background: #f1f2f6;
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1rem;
+        }
+
+        .assoc-item select {
+            padding: 8px;
+            border-radius: 8px;
+            border: 2px solid #b2bec3;
+            font-family: 'Fredoka', cursive;
+        }
+
+        /* Digitação */
+        .typing-box {
+            margin: 20px 0;
+        }
+
+        .typing-target {
+            font-size: 1.4rem;
+            color: #d63031;
+            margin-bottom: 15px;
+            background: #fab1a0;
+            padding: 12px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        .typing-input {
+            width: 100%;
+            max-width: 450px;
+            padding: 12px;
+            font-size: 1.2rem;
+            border: 2px solid #74b9ff;
+            border-radius: 10px;
+            text-align: center;
+            outline: none;
+        }
+
+        /* Quiz & Certo ou Errado */
+        .question-box {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            background: #dfe6e9;
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .option-btn {
+            background: #74b9ff;
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 1.1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .option-btn:hover {
+            background: #0984e3;
+        }
+
+        /* Caça-Palavras */
+        .wordsearch-grid {
+            display: grid;
+            gap: 6px;
+            justify-content: center;
+            margin: 15px 0;
+        }
+
+        .ws-cell {
+            width: 40px;
+            height: 40px;
+            background: #f1f2f6;
+            border: 2px solid #b2bec3;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            user-select: none;
+            transition: 0.1s;
+        }
+
+        .ws-cell.selected {
+            background: #fdcb6e;
+            border-color: #f39c12;
+        }
+
+        .ws-cell.correct {
+            background: #55efc4;
+            color: #00b894;
+            border-color: #00b894;
+        }
+
+        .word-list {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .word-tag {
+            background: #dfe6e9;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+
+        .word-tag.found {
+            background: #55efc4;
+            text-decoration: line-through;
+            color: #2d3436;
+        }
+
+        /* Feedback de Sucesso */
+        .success-msg {
+            margin-top: 20px;
+            font-size: 1.3rem;
+            color: #00b894;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="app">
+        <!-- MENU PRINCIPAL -->
+        <div id="main-menu" class="game-screen active">
+            <h1>🛡️ Aventura Segura na Internet 💻</h1>
+            <p class="subtitle">Escolha um minigame para aprender se divertindo! (2º Ano)</p>
+            
+            <div class="menu-grid">
+                <button class="menu-card" onclick="openLevelSelect('memory')">
+                    <span>🧩</span>
+                    <h3>Jogo da Memória</h3>
+                </button>
+                <button class="menu-card" onclick="openLevelSelect('association')">
+                    <span>🔗</span>
+                    <h3>Ligue os Pontos</h3>
+                </button>
+                <button class="menu-card" onclick="openLevelSelect('typing')">
+                    <span>⌨️</span>
+                    <h3>Hora de Digitar</h3>
+                </button>
+                <button class="menu-card" onclick="openLevelSelect('quiz')">
+                    <span>❓</span>
+                    <h3>Quiz Legal</h3>
+                </button>
+                <button class="menu-card" onclick="openLevelSelect('truefalse')">
+                    <span>👍</span>
+                    <h3>Certo ou Errado</h3>
+                </button>
+                <button class="menu-card" onclick="openLevelSelect('wordsearch')">
+                    <span>🔍</span>
+                    <h3>Caça-Palavras</h3>
+                </button>
+            </div>
+        </div>
+
+        <!-- TELA DE SELEÇÃO DE NÍVEL -->
+        <div id="level-select-screen" class="game-screen">
+            <button class="btn btn-back" onclick="backToMenu()">⬅️ Voltar ao Menu</button>
+            <h2 id="level-title" style="color: #0984e3; margin-bottom: 10px;">Escolha o Nível</h2>
+            <p class="subtitle">Cada jogo tem 5 níveis de desafio!</p>
+            <div class="level-grid">
+                <button class="level-btn" onclick="startLevel(1)">1</button>
+                <button class="level-btn" onclick="startLevel(2)">2</button>
+                <button class="level-btn" onclick="startLevel(3)">3</button>
+                <button class="level-btn" onclick="startLevel(4)">4</button>
+                <button class="level-btn" onclick="startLevel(5)">5</button>
+            </div>
+        </div>
+
+        <!-- ÁREA DO JOGO -->
+        <div id="game-play-screen" class="game-screen">
+            <button class="btn btn-back" onclick="openLevelSelect(currentGame)">⬅️ Escolher Outro Nível</button>
+            <h2 id="play-subtitle" style="color: #636e72; margin-bottom: 15px;"></h2>
+            <div id="game-content"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentGame = '';
+        let currentLevel = 1;
+
+        const gameNames = {
+            memory: '🧩 Jogo da Memória',
+            association: '🔗 Ligue os Pontos',
+            typing: '⌨️ Hora de Digitar',
+            quiz: '❓ Quiz Legal',
+            truefalse: '👍 Certo ou Errado',
+            wordsearch: '🔍 Caça-Palavras'
+        };
+
+        function openLevelSelect(game) {
+            currentGame = game;
+            document.getElementById('level-title').innerText = gameNames[game];
+            switchScreen('level-select-screen');
+        }
+
+        function backToMenu() {
+            switchScreen('main-menu');
+        }
+
+        function switchScreen(screenId) {
+            document.querySelectorAll('.game-screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function startLevel(level) {
+            currentLevel = level;
+            document.getElementById('play-subtitle').innerText = `${gameNames[currentGame]} - Nível ${level}`;
+            switchScreen('game-play-screen');
+            loadGameContent();
+        }
+
+        function loadGameContent() {
+            const container = document.getElementById('game-content');
+            container.innerHTML = '';
+
+            if (currentGame === 'memory') initMemory(container);
+            else if (currentGame === 'association') initAssociation(container);
+            else if (currentGame === 'typing') initTyping(container);
+            else if (currentGame === 'quiz') initQuiz(container);
+            else if (currentGame === 'truefalse') initTrueFalse(container);
+            else if (currentGame === 'wordsearch') initWordSearch(container);
+        }
+
+        // --- 1. JOGO DA MEMÓRIA ---
+        function initMemory(container) {
+            const iconsPool = ['🔒', '💻', '🦠', '👤', '🔑', '📱', '🛑', '📧', '🧹', '🎮'];
+            const pairsCount = currentLevel + 2; 
+            let selectedIcons = iconsPool.slice(0, pairsCount);
+            let deck = [...selectedIcons, ...selectedIcons].sort(() => Math.random() - 0.5);
+
+            let grid = document.createElement('div');
+            grid.className = 'memory-grid';
+            
+            let firstCard = null;
+            let lockBoard = false;
+            let matches = 0;
+
+            deck.forEach((icon, idx) => {
+                let card = document.createElement('div');
+                card.className = 'memory-card';
+                card.dataset.icon = icon;
+                card.onclick = function() {
+                    if (lockBoard || card.classList.contains('flipped') || card.classList.contains('matched')) return;
+                    card.classList.add('flipped');
+                    card.innerText = icon;
+
+                    if (!firstCard) {
+                        firstCard = card;
+                    } else {
+                        if (firstCard.dataset.icon === card.dataset.icon) {
+                            matches++;
+                            firstCard = null;
+                            if (matches === pairsCount) {
+                                container.innerHTML += `<div class="success-msg">🎉 Parabéns! Você encontrou todos os pares no Nível ${currentLevel}!</div>`;
+                            }
+                        } else {
+                            lockBoard = true;
+                            setTimeout(() => {
+                                firstCard.classList.remove('flipped');
+                                firstCard.innerText = '';
+                                card.classList.remove('flipped');
+                                card.innerText = '';
+                                firstCard = null;
+                                lockBoard = false;
+                            }, 900);
+                        }
+                    }
+                };
+                grid.appendChild(card);
+            });
+            container.appendChild(grid);
+        }
+
+        // --- 2. ASSOCIAÇÃO ---
+        function initAssociation(container) {
+            const itemsByLevel = {
+                1: [
+                    { q: 'Alguém pede sua senha na internet', a: 'Não contar para ninguém' },
+                    { q: 'Terminou de usar o tablet', a: 'Guardar com cuidado' }
+                ],
+                2: [
+                    { q: 'Mensagem com link estranho e prêmio', a: 'Não clicar e avisar um adulto' },
+                    { q: 'Mãos sujas antes de mexer no computador', a: 'Lavar bem as mãos' }
+                ],
+                3: [
+                    { q: 'Foto que você não quer que estranhos vejam', a: 'Não postar na internet' },
+                    { q: 'Aparelho aviso que precisa atualizar antivírus', a: 'Pedir ajuda para atualizar' }
+                ],
+                4: [
+                    { q: 'Pessoa estranha quer conversar no chat', a: 'Bloquear e avisar os pais' },
+                    { q: 'Comer perto do teclado do computador', a: 'Evitar para não sujar ou estragar' }
+                ],
+                5: [
+                    { q: 'Senha fácil (ex: 12345)', a: 'Criar uma senha forte com letras e números' },
+                    { q: 'Tempo limite de tela estipulado', a: 'Desligar e brincar fora da tela' }
+                ]
+            };
+
+            let data = itemsByLevel[currentLevel] || itemsByLevel[1];
+            let box = document.createElement('div');
+            box.className = 'assoc-container';
+
+            let answersPool = data.map(d => d.a).sort(() => Math.random() - 0.5);
+
+            data.forEach((item, idx) => {
+                let div = document.createElement('div');
+                div.className = 'assoc-item';
+                div.innerHTML = `<span>❓ ${item.q}</span>`;
+                
+                let select = document.createElement('select');
+                select.innerHTML = `<option value="">-- Escolha a atitude --</option>` + 
+                    answersPool.map(ans => `<option value="${ans}">${ans}</option>`).join('');
+                
+                select.onchange = function() {
+                    if (select.value === item.a) {
+                        select.style.borderColor = '#00b894';
+                        select.disabled = true;
+                        if (Array.from(box.querySelectorAll('select')).every(s => s.disabled)) {
+                            container.innerHTML += `<div class="success-msg">🌟 Excelente! Você acertou todas as combinações!</div>`;
+                        }
+                    } else if(select.value !== "") {
+                        select.style.borderColor = '#d63031';
+                    }
+                };
+                div.appendChild(select);
+                box.appendChild(div);
+            });
+            container.appendChild(box);
+        }
+
+        // --- 3. HORA DE DIGITAR ---
+        function initTyping(container) {
+            const phrases = {
+                1: 'SENHA SECRETA',
+                2: 'NAO FALE COM ESTRANHOS',
+                3: 'CUIDADO COM OS LINKS',
+                4: 'ANTIVIRUS PROTEGE O COMPUTADOR',
+                5: 'SEGURANCA DIGITAL E MUITO IMPORTANTE'
+            };
+
+            let targetText = phrases[currentLevel] || phrases[1];
+            let wrapper = document.createElement('div');
+            wrapper.className = 'typing-box';
+            wrapper.innerHTML = `
+                <p>Digite exatamente a frase abaixo:</p>
+                <div class="typing-target">${targetText}</div><br>
+                <input type="text" class="typing-input" id="type-input" placeholder="Digite aqui..." autocomplete="off">
+            `;
+            container.appendChild(wrapper);
+
+            let input = document.getElementById('type-input');
+            input.oninput = function() {
+                if (input.value.toUpperCase() === targetText) {
+                    input.disabled = true;
+                    input.style.borderColor = '#00b894';
+                    container.innerHTML += `<div class="success-msg">🎉 Digitou certinho! Parabéns!</div>`;
+                }
+            };
+        }
+
+        // --- 4. QUIZ LEGAL ---
+        function initQuiz(container) {
+            const quizData = {
+                1: { q: 'Para quem devemos contar nossa senha secreta?', opts: ['Para os melhores amigos', 'Para ninguém, ela é secreta', 'Para quem pedir na internet'], correct: 1 },
+                2: { q: 'O que devemos fazer se recebermos uma mensagem de um estranho oferecendo um presente?', opts: ['Aceitar e passar o endereço', 'Ignorar, bloquear e avisar um adulto', 'Clicar em todos os links'], correct: 1 },
+                3: { q: 'Onde é seguro guardar as senhas?', opts: ['Num papel colado no monitor', 'Na cabeça (memorizadas) com ajuda dos pais', 'Contar para todo mundo'], correct: 1 },
+                4: { q: 'O que o antivírus faz no computador?', opts: ['Deixa o jogo mais rápido', 'Ajuda a proteger contra vírus e invasores', 'Serve para limpar a tela'], correct: 1 },
+                5: { q: 'Por que é importante descansar dos jogos e telas?', opts: ['Para descansar os olhos e brincar fora', 'Porque o computador quebra se usar', 'Para gastar energia elétrica'], correct: 0 }
+            };
+
+            let item = quizData[currentLevel] || quizData[1];
+            let box = document.createElement('div');
+            box.innerHTML = `
+                <div class="question-box">💡 ${item.q}</div>
+                <div class="options-grid" id="quiz-options"></div>
+            `;
+            container.appendChild(box);
+
+            let optGrid = document.getElementById('quiz-options');
+            item.opts.forEach((opt, idx) => {
+                let btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt;
+                btn.onclick = function() {
+                    if (idx === item.correct) {
+                        btn.style.background = '#00b894';
+                        Array.from(optGrid.children).forEach(b => b.disabled = true);
+                        container.innerHTML += `<div class="success-msg">🎉 Resposta correta! Muito bem!</div>`;
+                    } else {
+                        btn.style.background = '#d63031';
+                    }
+                };
+                optGrid.appendChild(btn);
+            });
+        }
+
+        // --- 5. CERTO OU ERRADO ---
+        function initTrueFalse(container) {
+            const tfData = {
+                1: { q: 'Posso comer com as mãos engorduradas em cima do teclado do computador.', ans: false, expl: 'Isso pode estragar o teclado!' },
+                2: { q: 'Devemos manter o antivírus do computador sempre atualizado.', ans: true, expl: 'Isso ajuda a manter o aparelho seguro.' },
+                3: { q: 'É seguro baixar qualquer arquivo da internet sem pedir permissão.', ans: false, expl: 'Alguns arquivos podem ter vírus perigosos.' },
+                4: { q: 'Se alguém me ameaçar ou deixar triste na internet, devo contar aos pais ou professores.', ans: true, expl: 'Eles sempre vão te ajudar a se proteger.' },
+                5: { q: 'Posso usar minha foto e nome completo em qualquer site público sem supervisão.', ans: false, expl: 'Precisamos proteger nossa privacidade online.' }
+            };
+
+            let item = tfData[currentLevel] || tfData[1];
+            let box = document.createElement('div');
+            box.innerHTML = `
+                <div class="question-box">⚖️ Atitude: "${item.q}"</div>
+                <div style="display: flex; justify-content: center; gap: 20px;">
+                    <button class="btn" style="background: #00b894; font-size: 1.3rem; padding: 15px 30px;" onclick="checkTF(true)">👍 CERTO</button>
+                    <button class="btn" style="background: #d63031; font-size: 1.3rem; padding: 15px 30px;" onclick="checkTF(false)">👎 ERRADO</button>
+                </div>
+                <div id="tf-feedback" style="margin-top: 20px; font-size: 1.1rem; font-weight: bold;"></div>
+            `;
+            container.appendChild(box);
+
+            window.checkTF = function(userAns) {
+                let fb = document.getElementById('tf-feedback');
+                if (userAns === item.ans) {
+                    fb.style.color = '#00b894';
+                    fb.innerHTML = `🎉 Exato! ${item.expl}`;
+                } else {
+                    fb.style.color = '#d63031';
+                    fb.innerHTML = `❌ Ops! Pense bem: ${item.expl}`;
+                }
+            };
+        }
+
+        // --- 6. CAÇA-PALAVRAS (Com 5 Níveis) ---
+        function initWordSearch(container) {
+            const wsData = {
+                1: { words: ['SENHA', 'TABLET'], size: 6 },
+                2: { words: ['AMIGO', 'SENHA', 'LIPE'], size: 6 },
+                3: { words: ['ANTIVIRUS', 'SENHA'], size: 7 },
+                4: { words: ['TABLET', 'COMP', 'DADO'], size: 6 },
+                5: { words: ['SEGURANCA', 'SENHA'], size: 8 }
+            };
+
+            let data = wsData[currentLevel] || wsData[1];
+            let words = data.words;
+            let foundWords = [];
+
+            let listDiv = document.createElement('div');
+            listDiv.className = 'word-list';
+            words.forEach(w => {
+                let tag = document.createElement('span');
+                tag.className = 'word-tag';
+                tag.id = `tag-${w}`;
+                tag.innerText = w;
+                listDiv.appendChild(tag);
+            });
+            container.appendChild(listDiv);
+
+            let instruction = document.createElement('p');
+            instruction.style.marginBottom = '10px';
+            instruction.style.fontSize = '1.05rem';
+            instruction.style.color = '#636e72';
+            instruction.innerText = `Nível ${currentLevel}: Clique nas letras em ordem para formar uma das palavras acima!`;
+            container.appendChild(instruction);
+
+            // Letras variadas conforme o nível selecionado
+            let lettersPools = {
+                1: ['S', 'E', 'N', 'H', 'A', 'X', 'A', 'M', 'I', 'G', 'O', 'Z', 'T', 'A', 'B', 'L', 'E', 'T'],
+                2: ['S', 'E', 'N', 'H', 'A', 'X', 'A', 'M', 'I', 'G', 'O', 'Z', 'L', 'I', 'P', 'E', 'R', 'S'],
+                3: ['A', 'N', 'T', 'I', 'V', 'I', 'R', 'U', 'S', 'S', 'E', 'N', 'H', 'A', 'P', 'R', 'O', 'T'],
+                4: ['T', 'A', 'B', 'L', 'E', 'T', 'C', 'O', 'M', 'P', 'D', 'A', 'D', 'O', 'S', 'E', 'G', 'U'],
+                5: ['S', 'E', 'G', 'U', 'R', 'A', 'N', 'C', 'A', 'S', 'E', 'N', 'H', 'A', 'L', 'I', 'M', 'P']
+            };
+
+            let letters = lettersPools[currentLevel] || lettersPools[1];
+            let grid = document.createElement('div');
+            grid.className = 'wordsearch-grid';
+            let cols = currentLevel >= 3 ? 6 : 6;
+            grid.style.gridTemplateColumns = `repeat(${cols}, 40px)`;
+
+            let currentSelectedLetters = '';
+
+            letters.forEach((char, idx) => {
+                let cell = document.createElement('div');
+                cell.className = 'ws-cell';
+                cell.innerText = char;
+                cell.onclick = function() {
+                    cell.classList.toggle('selected');
+                    if (cell.classList.contains('selected')) {
+                        currentSelectedLetters += char;
+                    } else {
+                        currentSelectedLetters = currentSelectedLetters.replace(char, '');
+                    }
+
+                    words.forEach(w => {
+                        if (currentSelectedLetters === w && !foundWords.includes(w)) {
+                            foundWords.push(w);
+                            document.getElementById(`tag-${w}`).classList.add('found');
+                            currentSelectedLetters = '';
+                            
+                            document.querySelectorAll('.ws-cell.selected').forEach(c => {
+                                c.classList.remove('selected');
+                                c.classList.add('correct');
+                            });
+
+                            if (foundWords.length === words.length) {
+                                container.innerHTML += `<div class="success-msg">🏆 Parabéns! Você encontrou todas as palavras do Nível ${currentLevel}!</div>`;
+                            }
+                        }
+                    });
+                };
+                grid.appendChild(cell);
+            });
+            container.appendChild(grid);
+        }
+    </script>
+</body>
+</html>
