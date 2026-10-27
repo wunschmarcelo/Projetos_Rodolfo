@@ -1,0 +1,1764 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setembro Amarelo - Conscientização e Valorização da Vida</title>
+    
+    <!-- Tipografia Externa Atualizada: Nunito (Corpo), Playfair Display (Títulos & Logo) e Cinzel (Hero) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+
+    <!-- JS Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+
+    <style>
+        /* Variáveis de Cor (Tema Claro por padrão) */
+        :root {
+            --bg-body: #fdfdf7;
+            --bg-card: rgba(255, 255, 255, 0.92);
+            --bg-card-solid: #ffffff;
+            --bg-box-soft: #fffdf0;
+            --text-primary: #1a1a1a;
+            --text-secondary: #4a4a4a;
+            --text-gold: #7a6500;
+            --accent-yellow: #ffd700;
+            --accent-yellow-hover: #e6c200;
+            --accent-border: #f0e08a;
+            --header-bg: #ffd700;
+            --header-text: #3a2e00;
+            --shadow-color: rgba(0,0,0,0.05);
+            --bg-gradient-overlay: rgba(255, 255, 255, 0.88);
+            --accent-pink: #e84393;
+            --accent-purple: #6c5ce7;
+            --highlight-bg: #fff8d6;
+            --highlight-border: #ffd700;
+        }
+
+        /* Variáveis do Modo Noturno */
+        body.dark-mode {
+            --bg-body: #0d1117;
+            --bg-card: rgba(22, 27, 34, 0.92);
+            --bg-card-solid: #161b22;
+            --bg-box-soft: #1c2128;
+            --text-primary: #f0f6fc;
+            --text-secondary: #c9d1d9;
+            --text-gold: #ffe169;
+            --accent-yellow: #d4af37;
+            --accent-yellow-hover: #b8972e;
+            --accent-border: #30363d;
+            --header-bg: #161b22;
+            --header-text: #ffe169;
+            --shadow-color: rgba(0,0,0,0.4);
+            --bg-gradient-overlay: rgba(13, 17, 23, 0.92);
+            --accent-pink: #fd79a8;
+            --accent-purple: #a29bfe;
+            --highlight-bg: #22272e;
+            --highlight-border: #d4af37;
+        }
+
+        /* Reset Geral */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--text-gold);
+            margin-bottom: 0.8rem;
+            border-bottom: 3px solid var(--accent-yellow);
+            display: inline-block;
+            padding-bottom: 2px;
+            line-height: 1.2;
+        }
+
+        p {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .lead-text {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .sunflower-field-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle, var(--bg-gradient-overlay) 0%, var(--bg-body) 100%),
+                        url('https://images.unsplash.com/photo-1597848212624-a19eb35e2651?auto=format&fit=crop&w=1920&q=80') center/cover repeat-y;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .sunflower-rain-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .falling-flower {
+            position: absolute;
+            top: -50px;
+            font-size: 1.8rem;
+            opacity: 0.5;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-50px) rotate(0deg); opacity: 0.7; }
+            100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Cabeçalho */
+        header {
+            background-color: var(--header-bg);
+            padding: 0.8rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--accent-border);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .logo {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--header-text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-header-logo {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+            border-radius: 50%;
+            background: #ffffff;
+            padding: 2px;
+            border: 2px solid var(--header-text);
+        }
+
+        .logo span.cursiva-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            font-style: italic;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--header-text);
+            font-weight: 700;
+            font-size: 0.88rem;
+            transition: opacity 0.2s;
+        }
+
+        .nav-links a:hover { opacity: 0.75; }
+
+        /* Botão Tema Noturno */
+        .theme-toggle-btn {
+            background: var(--bg-card-solid);
+            border: 1px solid var(--accent-border);
+            color: var(--text-primary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 700;
+            font-family: 'Nunito', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .theme-toggle-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* BARRA DO SOUND PLAYER RELAXANTE */
+        .sound-player-bar {
+            background: var(--bg-box-soft);
+            border-bottom: 1px solid var(--accent-border);
+            padding: 0.5rem 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.85rem;
+            flex-wrap: wrap;
+        }
+
+        .sound-player-bar select, .sound-player-bar button {
+            background: var(--bg-card-solid);
+            color: var(--text-primary);
+            border: 1px solid var(--accent-border);
+            padding: 0.3rem 0.7rem;
+            border-radius: 15px;
+            font-size: 0.82rem;
+            cursor: pointer;
+            outline: none;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), 
+                        url('https://images.unsplash.com/photo-1597848212624-a19eb35e2651?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+            padding: 6.5rem 2rem;
+            text-align: center;
+            color: #ffffff;
+        }
+
+        .hero-content {
+            max-width: 850px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.45);
+            padding: 3rem 2rem;
+            border-radius: 16px;
+            backdrop-filter: blur(4px);
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.8rem;
+            line-height: 1.2;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #f1f1f1;
+            margin-bottom: 2.2rem;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        .btn-cvv {
+            display: inline-block;
+            background-color: #d9534f;
+            color: #ffffff;
+            padding: 1rem 2.2rem;
+            font-size: 1.05rem;
+            font-weight: 800;
+            text-decoration: none;
+            border-radius: 50px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .btn-cvv:hover {
+            background-color: #c9302c;
+            transform: translateY(-2px);
+        }
+
+        /* BANNER FRASE EM DESTAQUE */
+        .quote-banner {
+            background: var(--highlight-bg);
+            border: 3px solid var(--highlight-border);
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            margin: -2rem auto 3rem auto;
+            max-width: 950px;
+            text-align: center;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            position: relative;
+            z-index: 10;
+        }
+
+        .quote-banner blockquote {
+            font-size: 1.6rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            font-style: italic;
+            color: var(--text-primary);
+            line-height: 1.5;
+            letter-spacing: 0.2px;
+        }
+
+        .quote-banner .quote-icon {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Estrutura Container */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem 1.5rem;
+        }
+
+        section {
+            margin-bottom: 4.5rem;
+            background: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            backdrop-filter: blur(5px);
+            border: 1px solid var(--accent-border);
+        }
+
+        /* Saldo de Girassóis */
+        .global-score-bar {
+            background: var(--bg-box-soft);
+            border: 2px solid var(--accent-border);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .global-score-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .global-score-badge {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-gold);
+            background: var(--bg-card-solid);
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            box-shadow: 0 2px 8px var(--shadow-color);
+        }
+
+        /* SOBRE O SITE */
+        .about-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .about-card {
+            background: var(--bg-card-solid);
+            border-radius: 14px;
+            padding: 1.8rem;
+            border-left: 5px solid var(--accent-yellow);
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+
+        .about-card h3 {
+            font-size: 1.25rem;
+            font-family: 'Playfair Display', serif;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* 2. EXERCÍCIOS E FERRAMENTAS INTERATIVAS */
+        .tools-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .subcard-tool {
+            background: var(--bg-box-soft);
+            border: 2px solid var(--accent-border);
+            border-radius: 16px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .subcard-tool h3 {
+            font-size: 1.4rem;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        /* RESPIRAÇÃO GUIADA */
+        .breathe-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .sunflower-breathe {
+            width: 90px;
+            height: 90px;
+            background-color: var(--accent-yellow);
+            border-radius: 50%;
+            position: relative;
+            transition: transform 4s linear;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 15px rgba(242, 169, 0, 0.4);
+        }
+
+        .sunflower-breathe::before, .sunflower-breathe::after {
+            content: "";
+            position: absolute;
+            top: -10px; left: -10px; right: -10px; bottom: -10px;
+            border: 12px dotted var(--accent-yellow);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .breathe-text {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #3a2e00;
+            z-index: 2;
+        }
+
+        .breathe-timer {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-top: 10px;
+            min-height: 25px;
+            color: var(--text-primary);
+        }
+
+        /* CAIXINHA DO ACOLHIMENTO */
+        .mailbox-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 1.2rem 0;
+        }
+
+        .message-display {
+            min-height: 80px;
+            width: 100%;
+            max-width: 650px;
+            background: var(--bg-card-solid);
+            border-left: 5px solid var(--accent-purple);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px var(--shadow-color);
+        }
+
+        /* POTINHO DA GRATIDÃO */
+        .gratitude-layout {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .gratitude-inputs {
+            flex: 1;
+            min-width: 280px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .gratitude-inputs input {
+            padding: 12px;
+            border: 2px solid var(--accent-border);
+            background: var(--bg-card-solid);
+            color: var(--text-primary);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: 'Nunito', sans-serif;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .gratitude-inputs input:focus {
+            border-color: var(--accent-yellow);
+        }
+
+        .jar-wrapper {
+            position: relative;
+            width: 160px;
+            height: 220px;
+            border: 5px solid #a4b0be;
+            border-top: 12px solid #747d8c;
+            border-radius: 20px 20px 40px 40px;
+            background: rgba(255, 255, 255, 0.4);
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            padding: 10px;
+            overflow: hidden;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+
+        .jar-note {
+            width: 90%;
+            background-color: #ffeaa7;
+            border: 1px solid #fdcb6e;
+            color: #2d3436;
+            border-radius: 6px;
+            padding: 6px 8px;
+            margin-top: 5px;
+            font-size: 0.8rem;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            animation: dropNote 0.5s ease-out forwards;
+        }
+
+        @keyframes dropNote {
+            from { transform: translateY(-150px) rotate(10deg); opacity: 0; }
+            to { transform: translateY(0) rotate(0deg); opacity: 1; }
+        }
+
+        /* DIÁRIO PESSOAL */
+        .diary-container {
+            background: var(--bg-box-soft);
+            border: 2px solid var(--accent-border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .mood-selector {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 1rem 0 1.5rem;
+        }
+
+        .mood-btn {
+            background: var(--bg-card-solid);
+            border: 2px solid var(--accent-border);
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 700;
+            font-family: 'Nunito', sans-serif;
+            color: var(--text-primary);
+            transition: all 0.2s;
+        }
+
+        .mood-btn:hover, .mood-btn.selected {
+            background: var(--accent-yellow);
+            color: #1a1a1a;
+            border-color: var(--accent-yellow);
+            transform: translateY(-2px);
+        }
+
+        .diary-textarea {
+            width: 100%;
+            height: 120px;
+            padding: 1rem;
+            background: var(--bg-card-solid);
+            color: var(--text-primary);
+            border: 2px solid var(--accent-border);
+            border-radius: 12px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            resize: vertical;
+            outline: none;
+        }
+
+        .diary-textarea:focus { border-color: var(--accent-yellow); }
+
+        .diary-entries-list {
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .diary-entry-card {
+            background: var(--bg-card-solid);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border-left: 5px solid var(--accent-yellow);
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }
+
+        .diary-entry-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .diary-entry-mood {
+            background: var(--bg-box-soft);
+            color: var(--text-gold);
+            font-weight: 700;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            border: 1px solid var(--accent-border);
+        }
+
+        /* ÁREA DE COLORIR */
+        .coloring-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            background: var(--bg-box-soft);
+            padding: 2rem;
+            border-radius: 18px;
+            border: 2px solid var(--accent-border);
+        }
+
+        .template-selector {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .template-btn {
+            background: var(--bg-card-solid);
+            border: 2px solid var(--accent-yellow);
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            font-family: 'Nunito', sans-serif;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .template-btn:hover, .template-btn.active {
+            background: var(--accent-yellow);
+            color: #1a1a1a;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .coloring-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-card-solid);
+            padding: 1.2rem 1.8rem;
+            border-radius: 50px;
+            border: 2px solid var(--accent-border);
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+
+        .color-dot {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #ffffff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+            transition: transform 0.2s;
+        }
+
+        .color-dot:hover, .color-dot.active {
+            transform: scale(1.25);
+            border-color: #1a1a1a;
+        }
+
+        .tool-btn {
+            background: var(--bg-box-soft);
+            border: 1px solid var(--accent-border);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.88rem;
+            font-weight: 700;
+            font-family: 'Nunito', sans-serif;
+            color: var(--text-primary);
+            transition: background 0.2s;
+        }
+
+        .tool-btn:hover, .tool-btn.active {
+            background: var(--accent-yellow);
+            color: #1a1a1a;
+        }
+
+        .canvas-wrapper {
+            background: #ffffff;
+            border: 4px solid var(--accent-yellow);
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            overflow: hidden;
+            position: relative;
+            max-width: 100%;
+        }
+
+        #coloring-canvas {
+            cursor: crosshair;
+            touch-action: none;
+            background-color: #ffffff;
+            display: block;
+        }
+
+        .coloring-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* MOTIVOS PARA CONTINUAR */
+        .reasons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .reason-card {
+            background: var(--bg-card-solid);
+            padding: 1.8rem;
+            border-radius: 14px;
+            border-top: 5px solid var(--accent-yellow);
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+
+        .reason-icon { font-size: 2.2rem; margin-bottom: 0.6rem; }
+        .reason-title { 
+            font-size: 1.3rem; 
+            font-family: 'Playfair Display', serif; 
+            font-weight: 700; 
+            color: var(--text-primary); 
+            margin-bottom: 0.5rem; 
+        }
+
+        /* MURAL */
+        .mural-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .mural-note {
+            background: #fff9a6;
+            color: #2c2c2c;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 3px 5px 12px rgba(0,0,0,0.08);
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .mural-note p {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: #2c2c2c;
+        }
+
+        .like-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'Nunito', sans-serif;
+            color: #d9534f;
+        }
+
+        .mural-form textarea {
+            width: 100%;
+            height: 90px;
+            padding: 0.8rem;
+            background: var(--bg-card-solid);
+            color: var(--text-primary);
+            border: 1px solid var(--accent-border);
+            border-radius: 8px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        /* JOGOS & QUIZ */
+        .games-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.8rem;
+            margin-top: 1.5rem;
+        }
+
+        .game-card {
+            background: var(--bg-card-solid);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 2px solid var(--accent-border);
+            text-align: center;
+        }
+
+        .game-card h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .sunflower-catch-area {
+            width: 100%;
+            height: 180px;
+            background: var(--bg-box-soft);
+            border: 2px dashed var(--accent-yellow);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .clickable-sunflower {
+            position: absolute;
+            font-size: 2.5rem;
+            cursor: pointer;
+        }
+
+        /* Botões Gerais */
+        .btn-game {
+            background-color: var(--accent-yellow);
+            color: #1a1a1a;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            font-size: 0.95rem;
+            font-weight: 800;
+            font-family: 'Nunito', sans-serif;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            margin: 4px;
+        }
+
+        .btn-game:hover { 
+            background-color: var(--accent-yellow-hover); 
+            transform: translateY(-2px);
+        }
+
+        .btn-purple {
+            background-color: var(--accent-purple);
+            color: #ffffff;
+        }
+        .btn-purple:hover { background-color: #5b4bc4; }
+
+        .btn-pink {
+            background-color: var(--accent-pink);
+            color: #ffffff;
+        }
+        .btn-pink:hover { background-color: #d63031; }
+
+        .cvv-box {
+            background-color: var(--bg-box-soft);
+            border: 2px dashed var(--accent-yellow);
+            padding: 3rem 2rem;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .cvv-box h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+        }
+
+        .cvv-number {
+            font-size: 4rem;
+            font-weight: 800;
+            color: #d9534f;
+            margin: 0.5rem 0;
+            font-family: 'Cinzel', serif;
+        }
+
+        footer {
+            background-color: #121212;
+            color: #e0e0e0;
+            text-align: center;
+            padding: 3.5rem 1.5rem;
+            margin-top: 4rem;
+            border-top: 1px solid var(--accent-border);
+        }
+
+        .school-logo {
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            background: #ffffff;
+            padding: 5px;
+            border-radius: 50%;
+            border: 3px solid var(--accent-yellow);
+        }
+
+        @media (max-width: 768px) {
+            nav { flex-direction: column; gap: 0.8rem; }
+            .hero h1 { font-size: 2.2rem; }
+            h2 { font-size: 1.8rem; }
+            .quote-banner blockquote { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sunflower-field-bg"></div>
+    <div class="sunflower-rain-container" id="flower-rain"></div>
+
+    <!-- Navegação -->
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="LOGO.webp" alt="Logo EEB Rodolfo Zipperer" class="nav-header-logo">
+                <span class="cursiva-logo">Setembro Amarelo</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#sobre">💡 Sobre</a></li>
+                <li><a href="#ferramentas">🧘 Ferramentas</a></li>
+                <li><a href="#diario">📓 Diário Pessoal</a></li>
+                <li><a href="#colorir">🎨 Colorir</a></li>
+                <li><a href="#motivos">💛 Motivos</a></li>
+                <li><a href="#mural">📝 Mural</a></li>
+                <li><a href="#jogos">🎮 Jogos</a></li>
+                <li><a href="#ajuda">Buscar Ajuda</a></li>
+                <li>
+                    <button class="theme-toggle-btn" onclick="toggleDarkMode()">
+                        <span id="theme-icon">🌙</span> Modo Escuro
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- MINI PLAYER DE SONS RELAXANTES -->
+    <div class="sound-player-bar">
+        <span>🎧 <strong>Sons Relaxantes:</strong></span>
+        <select id="sound-type">
+            <option value="rain">🌧️ Chuva Suave</option>
+            <option value="waves">🌊 Ondas do Mar</option>
+            <option value="white">🍃 Ruído Branco Suave</option>
+            <option value="calm">🎹 Tom Calmo (432Hz)</option>
+        </select>
+        <button id="play-sound-btn" onclick="toggleRelaxingSound()">▶️ Tocar Som</button>
+        <label style="display:flex; align-items:center; gap:5px; margin-left:5px;">
+            <span>🔈</span>
+            <input type="range" id="sound-volume" min="0" max="1" step="0.05" value="0.3" style="width:70px;">
+        </label>
+    </div>
+
+    <!-- Hero -->
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Falar é a melhor solução 🌻</h1>
+            <p>A conscientização salva vidas. Se você ou alguém que você conhece está enfrentando momentos difíceis, saiba que não está sozinho e existe apoio gratuito disponível.</p>
+            <a href="#ajuda" class="btn-cvv">Preciso de Apoio Agora</a>
+        </div>
+    </div>
+
+    <!-- BANNER DE FRASE EM DESTAQUE -->
+    <div class="quote-banner">
+        <span class="quote-icon">🌻</span>
+        <blockquote>
+            "Que a valorização à vida seja todo dia, porque a dor não escolhe o mês para vir."
+        </blockquote>
+    </div>
+
+    <div class="container">
+
+        <!-- Saldo de Girassóis -->
+        <div class="global-score-bar">
+            <div class="global-score-text">🌻 Seu Banco de Girassóis Conquistados:</div>
+            <div class="global-score-badge"><span id="global-sunflowers">0</span> 🌻</div>
+        </div>
+
+        <!-- SOBRE -->
+        <section id="sobre">
+            <h2>Por que este site existe? 💡💛</h2>
+            <p class="lead-text">
+                Este espaço digital foi idealizado pelas alunas <strong>Sthefany Luiza</strong> e <strong>Mariana Rodrigues</strong>, da <strong>E.E.B. Rodolfo Zipperer</strong>, como uma iniciativa do projeto <strong>Setembro Amarelo</strong>.
+            </p>
+            <p>
+                O objetivo é oferecer um refúgio de paz, acolhimento e conscientização. Ninguém precisa carregar suas dores sozinho.
+            </p>
+            <div class="about-cards-grid">
+                <div class="about-card">
+                    <h3>🤝 Acolhimento</h3>
+                    <p>Um lugar seguro para pausar, refletir e buscar paz em momentos difíceis.</p>
+                </div>
+                <div class="about-card">
+                    <h3>📢 Conscientização</h3>
+                    <p>Falar sobre saúde mental e valorização da vida sem tabus ou preconceitos.</p>
+                </div>
+                <div class="about-card">
+                    <h3>🌱 Descompressão</h3>
+                    <p>Ferramentas lúdicas e interativas para aliviar o estresse e a ansiedade.</p>
+                </div>
+                <div class="about-card">
+                    <h3>📞 Apoio Real</h3>
+                    <p>Conexão direta e facilitada com o CVV (Ligue 188).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. EXERCÍCIOS E FERRAMENTAS INTERATIVAS -->
+        <section id="ferramentas">
+            <h2>2. Exercícios e Ferramentas Interativas 🧘🌻</h2>
+            <p class="lead-text">Pausas intencionais para desacelerar a mente, nutrir o carinho próprio e cultivar a gratidão no seu dia a dia.</p>
+
+            <div class="tools-grid">
+                
+                <!-- GUIA DE RESPIRAÇÃO GUIADA -->
+                <div class="subcard-tool">
+                    <h3>🌻 Guia de Respiração Guiada (Mindfulness)</h3>
+                    <p>Acompanhe o movimento do girassol para acalmar os batimentos e a mente.</p>
+                    
+                    <div class="breathe-container">
+                        <div class="sunflower-breathe" id="sunflowerBreathe">
+                            <span class="breathe-text" id="breatheText">Iniciar</span>
+                        </div>
+                    </div>
+                    
+                    <div class="breathe-timer" id="breatheTimer">Clique no botão para começar o ciclo (4s-4s-4s)</div>
+                    <button class="btn-game" id="startBreatheBtn" onclick="toggleBreathing()">Começar Respiração 🌬️</button>
+                </div>
+
+                <!-- CAIXINHA DE CORREIO DO ACOLHIMENTO -->
+                <div class="subcard-tool">
+                    <h3>📬 Caixinha de Correio do Acolhimento</h3>
+                    <p>Escolha o tipo de suporte motivacional que seu coração precisa agora:</p>
+                    
+                    <div class="mailbox-buttons">
+                        <button class="btn-game btn-purple" onclick="getAcolhimentoMessage('conselho')">💡 Preciso de um conselho</button>
+                        <button class="btn-game btn-pink" onclick="getAcolhimentoMessage('abraco')">🤗 Preciso de um abraço</button>
+                    </div>
+
+                    <div class="message-display" id="messageDisplay">
+                        Sua mensagem acolhedora aparecerá aqui...
+                    </div>
+                </div>
+
+                <!-- POTINHO DA GRATIDÃO -->
+                <div class="subcard-tool">
+                    <h3>🏺 Potinho da Gratidão</h3>
+                    <p>Liste 3 coisas simples pelas quais você é grato hoje e guarde dentro do potinho virtual:</p>
+                    
+                    <div class="gratitude-layout">
+                        <div class="gratitude-inputs">
+                            <input type="text" id="gratitude1" placeholder="1. Ex: Um café quentinho pela manhã">
+                            <input type="text" id="gratitude2" placeholder="2. Ex: O abraço de um amigo">
+                            <input type="text" id="gratitude3" placeholder="3. Ex: Conseguir descansar um pouco">
+                            <button class="btn-game" onclick="saveGratitude()">Guardar no Potinho 🏺 (+10 🌻)</button>
+                        </div>
+
+                        <div>
+                            <div class="jar-wrapper" id="gratitudeJar">
+                                <!-- Os papéis de gratidão surgirão aqui -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- DIÁRIO PESSOAL -->
+        <section id="diario">
+            <h2>Diário Pessoal de Emoções 📓💛</h2>
+            <p class="lead-text">Um espaço 100% privado e confidencial para guardar seus sentimentos e aliviar o coração.</p>
+
+            <div class="diary-container">
+                <h3 style="color: var(--text-primary); margin-bottom: 0.5rem; font-family: 'Playfair Display', serif;">Como você se sente hoje?</h3>
+                <div class="mood-selector">
+                    <button class="mood-btn" onclick="selectMood('💛 Acolhido(a)', this)">💛 Acolhido(a)</button>
+                    <button class="mood-btn" onclick="selectMood('☁ Ansioso(a)', this)">☁️ Ansioso(a)</button>
+                    <button class="mood-btn" onclick="selectMood('✨ Esperançoso(a)', this)">✨ Esperançoso(a)</button>
+                    <button class="mood-btn" onclick="selectMood('🌧️ Triste', this)">🌧️ Triste</button>
+                    <button class="mood-btn" onclick="selectMood('🌿 Calmo(a)', this)">🌿 Calmo(a)</button>
+                    <button class="mood-btn" onclick="selectMood('🌻 Grato(a)', this)">🌻 Grato(a)</button>
+                </div>
+
+                <textarea id="diary-text" class="diary-textarea" placeholder="Escreva livremente aqui..."></textarea>
+                <button class="btn-game" onclick="saveDiaryEntry()" style="margin-top: 10px;">Guardar no Diário 🔒 (+10 🌻)</button>
+
+                <div class="diary-entries-list" id="diary-entries"></div>
+            </div>
+        </section>
+
+        <!-- ÁREA DE COLORIR -->
+        <section id="colorir">
+            <h2>Área de Colorir para Desacelerar 🎨🌿</h2>
+            <p class="lead-text">Pintar estimula a atenção plena (mindfulness) e acalma os pensamentos. Escolha uma ilustração abaixo e solte sua criatividade!</p>
+
+            <div class="coloring-container">
+                <div class="template-selector">
+                    <button class="template-btn active" onclick="loadTemplate('sunflower', this)">🌻 Girassol da Esperança</button>
+                    <button class="template-btn" onclick="loadTemplate('heart', this)">💛 Coração Acolhedor</button>
+                    <button class="template-btn" onclick="loadTemplate('cloud', this)">☁️ Céu Esperançoso</button>
+                </div>
+
+                <div class="coloring-toolbar">
+                    <span style="font-weight: 700; font-size: 0.88rem; color: var(--text-primary);">Cores:</span>
+                    <div class="color-dot active" style="background:#ffd700;" onclick="selectColor('#ffd700', this)"></div>
+                    <div class="color-dot" style="background:#ff6b6b;" onclick="selectColor('#ff6b6b', this)"></div>
+                    <div class="color-dot" style="background:#ffb3ba;" onclick="selectColor('#ffb3ba', this)"></div>
+                    <div class="color-dot" style="background:#4ecdc4;" onclick="selectColor('#4ecdc4', this)"></div>
+                    <div class="color-dot" style="background:#96ceb4;" onclick="selectColor('#96ceb4', this)"></div>
+                    <div class="color-dot" style="background:#9b59b6;" onclick="selectColor('#9b59b6', this)"></div>
+                    <div class="color-dot" style="background:#f7d794;" onclick="selectColor('#f7d794', this)"></div>
+                    <div class="color-dot" style="background:#3a2e00;" onclick="selectColor('#3a2e00', this)"></div>
+
+                    <button class="tool-btn" id="eraser-btn" onclick="toggleEraser()">🧹 Borracha</button>
+
+                    <div style="display: flex; align-items: center; gap: 5px; margin-left: 5px;">
+                        <span style="font-size: 0.85rem; font-weight: 600;">Tamanho:</span>
+                        <input type="range" id="brush-size" min="4" max="30" value="10" style="width: 70px;">
+                    </div>
+                </div>
+
+                <div class="canvas-wrapper">
+                    <canvas id="coloring-canvas" width="600" height="420"></canvas>
+                </div>
+
+                <div class="coloring-actions">
+                    <button class="btn-game" onclick="clearCanvas()" style="background:#f4f4f4; color:#333;">Limpar Tela 🗑️</button>
+                    <button class="btn-game" onclick="downloadDrawing()" style="background:#e0f0ff; color:#0056b3;">Baixar Desenho 💾</button>
+                    <button class="btn-game" onclick="finishColoring()">Concluir Arte 🌟 (+15 🌻)</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- MOTIVOS -->
+        <section id="motivos">
+            <h2>Motivos para Escolher a Vida 💛</h2>
+            <div class="reasons-grid">
+                <div class="reason-card">
+                    <div class="reason-icon">🌱</div>
+                    <div class="reason-title">A dor passa</div>
+                    <div class="reason-desc">O sofrimento intenso é temporário. Dias mais leves e alegres virão.</div>
+                </div>
+                <div class="reason-card">
+                    <div class="reason-icon">✨</div>
+                    <div class="reason-title">Futuro para viver</div>
+                    <div class="reason-desc">Ainda existem muitas experiências, amizades e sorrisos te esperando.</div>
+                </div>
+                <div class="reason-card">
+                    <div class="reason-icon">🤝</div>
+                    <div class="reason-title">Você não está só</div>
+                    <div class="reason-desc">Falar e pedir ajuda demonstra coragem. Existem pessoas que se importam.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MURAL -->
+        <section id="mural">
+            <h2>Mural das Esperanças 📝✨</h2>
+            <div class="mural-grid" id="mural-notes-container"></div>
+            <div class="mural-form" style="background:var(--bg-box-soft); padding:1.5rem; border-radius:12px; margin-top:2rem; border: 1px solid var(--accent-border);">
+                <h3 style="margin-bottom:0.8rem; font-family: 'Playfair Display', serif;">Escreva sua mensagem de esperança:</h3>
+                <textarea id="mural-input" placeholder="Sua palavra de carinho..."></textarea>
+                <button class="btn-game" onclick="addMuralNote()">Pregar no Mural 📌 (+10 🌻)</button>
+            </div>
+        </section>
+
+        <!-- JOGOS -->
+        <section id="jogos">
+            <h2>Mini-Jogos Relaxantes 🎮</h2>
+            <div class="games-wrapper">
+                <div class="game-card">
+                    <h3>🌻 Caça ao Girassol</h3>
+                    <p style="font-size:0.85rem;">Clique no girassol para colher pontos!</p>
+                    <div class="sunflower-catch-area" id="catch-area">
+                        <div id="target-sunflower" class="clickable-sunflower" onclick="catchSunflower(event)">🌻</div>
+                    </div>
+                    <button class="btn-game" onclick="startCatchGame()">Iniciar 🎮</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- AJUDA -->
+        <section id="ajuda">
+            <h2>Apoio Emocional Gratuito</h2>
+            <div class="cvv-box">
+                <h3>Centro de Valorização da Vida (CVV)</h3>
+                <p>Atendimento sigiloso, gratuito e disponível 24h por dia.</p>
+                <div class="cvv-number">Ligue 188</div>
+                <p>Acesse o chat: <a href="https://www.cvv.org.br" target="_blank" style="color:var(--text-primary); font-weight:700;">www.cvv.org.br</a></p>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <img src="LOGO.webp" alt="Logo EEB Rodolfo Zipperer" class="school-logo">
+        <p style="margin-top:10px;"><strong>E.E.B. RODOLFO ZIPPERER</strong> - Canoinhas SC</p>
+        <p style="color: var(--accent-yellow); margin-top: 0.5rem;">Desenvolvido por: <strong>Sthefany Luiza</strong> e <strong>Mariana Rodrigues</strong></p>
+    </footer>
+
+    <script>
+        const jsConfetti = new JSConfetti();
+        let totalSunflowers = 0;
+
+        function addSunflowers(amount) {
+            totalSunflowers += amount;
+            document.getElementById('global-sunflowers').textContent = totalSunflowers;
+            jsConfetti.addConfetti({ emojis: ['🌻', '✨', '💛'], confettiNumber: 30 });
+        }
+
+        function createSunflowerRain() {
+            const container = document.getElementById('flower-rain');
+            for (let i = 0; i < 8; i++) {
+                const flower = document.createElement('div');
+                flower.classList.add('falling-flower');
+                flower.innerHTML = '🌻';
+                flower.style.left = Math.random() * 100 + 'vw';
+                flower.style.animationDuration = (Math.random() * 5 + 7) + 's';
+                container.appendChild(flower);
+            }
+        }
+
+        /* MODO ESCURO / DARK MODE */
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            document.getElementById('theme-icon').textContent = isDark ? '☀️' : '🌙';
+            localStorage.setItem('sept_darkmode', isDark);
+        }
+
+        if (localStorage.getItem('sept_darkmode') === 'true') {
+            document.body.classList.add('dark-mode');
+            document.getElementById('theme-icon').textContent = '☀️';
+        }
+
+        /* GUIA DE RESPIRAÇÃO GUIADA */
+        let breathingInterval = null;
+        let timerInterval = null;
+        let isBreathing = false;
+
+        function toggleBreathing() {
+            const btn = document.getElementById('startBreatheBtn');
+            if (isBreathing) {
+                stopBreathing();
+                btn.innerText = 'Começar Respiração 🌬️';
+            } else {
+                startBreathing();
+                btn.innerText = 'Parar Respiração ⏹️';
+            }
+            isBreathing = !isBreathing;
+        }
+
+        function startBreathing() {
+            runBreatheCycle();
+            breathingInterval = setInterval(runBreatheCycle, 12000);
+        }
+
+        function stopBreathing() {
+            clearInterval(breathingInterval);
+            clearInterval(timerInterval);
+            const sunflower = document.getElementById('sunflowerBreathe');
+            const text = document.getElementById('breatheText');
+            const timer = document.getElementById('breatheTimer');
+
+            sunflower.style.transform = 'scale(1)';
+            text.innerText = 'Iniciar';
+            timer.innerText = 'Sessão finalizada. Parabéns!';
+        }
+
+        function runBreatheCycle() {
+            const sunflower = document.getElementById('sunflowerBreathe');
+            const text = document.getElementById('breatheText');
+            
+            text.innerText = 'Inspirar';
+            sunflower.style.transform = 'scale(1.7)';
+            countDown(4);
+
+            setTimeout(() => {
+                text.innerText = 'Segurar';
+                countDown(4);
+            }, 4000);
+
+            setTimeout(() => {
+                text.innerText = 'Espirar';
+                sunflower.style.transform = 'scale(1)';
+                countDown(4);
+            }, 8000);
+        }
+
+        function countDown(seconds) {
+            const timerDisplay = document.getElementById('breatheTimer');
+            let current = seconds;
+            timerDisplay.innerText = `${current}s`;
+
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                current--;
+                if (current > 0) {
+                    timerDisplay.innerText = `${current}s`;
+                } else {
+                    clearInterval(timerInterval);
+                }
+            }, 1000);
+        }
+
+        /* CAIXINHA DO ACOLHIMENTO */
+        const conselhosAcolhedores = [
+            "Permita-se ir no seu próprio ritmo. Grandes jornadas são feitas de pequenos passos.",
+            "Não julgue o seu dia difícil como um retrocesso; recarregar as energias faz parte do processo.",
+            "Lembre-se de ser tão gentil consigo mesmo quanto você é com os seus melhores amigos.",
+            "Você não precisa ter todas as respostas hoje. Apenas foque no momento presente."
+        ];
+
+        const abracosAcolhedores = [
+            "Sinta-se abraçado(a) bem forte! Você é uma pessoa incrível e essencial no mundo.",
+            "Um abraço quentinho para te lembrar de que você nunca está sozinho(a) nessa jornada.",
+            "Respire fundo e receba este carinho virtual. Vai dar tudo certo!",
+            "Acolha suas emoções. Estamos enviando boas energias e um carinhoso abraço."
+        ];
+
+        function getAcolhimentoMessage(type) {
+            const display = document.getElementById('messageDisplay');
+            const list = type === 'conselho' ? conselhosAcolhedores : abracosAcolhedores;
+            const randomIndex = Math.floor(Math.random() * list.length);
+            
+            display.style.opacity = '0';
+            setTimeout(() => {
+                display.innerText = `"${list[randomIndex]}"`;
+                display.style.opacity = '1';
+            }, 200);
+        }
+
+        /* POTINHO DA GRATIDÃO */
+        function saveGratitude() {
+            const g1 = document.getElementById('gratitude1').value.trim();
+            const g2 = document.getElementById('gratitude2').value.trim();
+            const g3 = document.getElementById('gratitude3').value.trim();
+
+            if (!g1 || !g2 || !g3) {
+                alert('Por favor, preencha os 3 motivos de gratidão antes de guardar no potinho!');
+                return;
+            }
+
+            const jar = document.getElementById('gratitudeJar');
+            jar.innerHTML = '';
+
+            const items = [g1, g2, g3];
+            items.forEach((itemText, index) => {
+                setTimeout(() => {
+                    const note = document.createElement('div');
+                    note.className = 'jar-note';
+                    note.innerText = itemText;
+                    jar.appendChild(note);
+                }, index * 300);
+            });
+
+            addSunflowers(10);
+
+            document.getElementById('gratitude1').value = '';
+            document.getElementById('gratitude2').value = '';
+            document.getElementById('gratitude3').value = '';
+        }
+
+        /* SONS RELAXANTES */
+        let audioCtx = null;
+        let isPlayingSound = false;
+        let noiseNode = null;
+        let gainNode = null;
+        let oscNode = null;
+
+        function toggleRelaxingSound() {
+            const btn = document.getElementById('play-sound-btn');
+            if (!isPlayingSound) {
+                startSound();
+                btn.textContent = '⏸ Pausar Som';
+                isPlayingSound = true;
+            } else {
+                stopSound();
+                btn.textContent = '▶️ Tocar Som';
+                isPlayingSound = false;
+            }
+        }
+
+        function startSound() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            const soundType = document.getElementById('sound-type').value;
+            const volumeVal = parseFloat(document.getElementById('sound-volume').value);
+
+            gainNode = audioCtx.createGain();
+            gainNode.gain.setValueAtTime(volumeVal, audioCtx.currentTime);
+            gainNode.connect(audioCtx.destination);
+
+            if (soundType === 'calm') {
+                oscNode = audioCtx.createOscillator();
+                oscNode.type = 'sine';
+                oscNode.frequency.setValueAtTime(432, audioCtx.currentTime);
+                oscNode.connect(gainNode);
+                oscNode.start();
+            } else {
+                const bufferSize = audioCtx.sampleRate * 2;
+                const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                const data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) {
+                    data[i] = Math.random() * 2 - 1;
+                }
+
+                noiseNode = audioCtx.createBufferSource();
+                noiseNode.buffer = buffer;
+                noiseNode.loop = true;
+
+                if (soundType === 'rain' || soundType === 'waves') {
+                    const filter = audioCtx.createBiquadFilter();
+                    filter.type = 'lowpass';
+                    filter.frequency.setValueAtTime(soundType === 'rain' ? 800 : 400, audioCtx.currentTime);
+                    noiseNode.connect(filter);
+                    filter.connect(gainNode);
+                } else {
+                    noiseNode.connect(gainNode);
+                }
+                noiseNode.start();
+            }
+        }
+
+        function stopSound() {
+            if (noiseNode) { noiseNode.stop(); noiseNode = null; }
+            if (oscNode) { oscNode.stop(); oscNode = null; }
+        }
+
+        document.getElementById('sound-volume').addEventListener('input', (e) => {
+            if (gainNode && audioCtx) {
+                gainNode.gain.setValueAtTime(parseFloat(e.target.value), audioCtx.currentTime);
+            }
+        });
+
+        document.getElementById('sound-type').addEventListener('change', () => {
+            if (isPlayingSound) { stopSound(); startSound(); }
+        });
+
+        /* DIÁRIO PESSOAL */
+        let selectedMood = '💛 Acolhido(a)';
+        function selectMood(m, el) {
+            selectedMood = m;
+            document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+            el.classList.add('selected');
+        }
+
+        function saveDiaryEntry() {
+            const txt = document.getElementById('diary-text').value.trim();
+            if (!txt) return alert('Escreva uma reflexão antes de salvar.');
+
+            const entries = JSON.parse(localStorage.getItem('sept_diary') || '[]');
+            entries.unshift({ id: Date.now(), date: new Date().toLocaleDateString('pt-BR'), mood: selectedMood, text: txt });
+            localStorage.setItem('sept_diary', JSON.stringify(entries));
+
+            document.getElementById('diary-text').value = '';
+            renderDiary();
+            addSunflowers(10);
+        }
+
+        function renderDiary() {
+            const entries = JSON.parse(localStorage.getItem('sept_diary') || '[]');
+            const container = document.getElementById('diary-entries');
+            container.innerHTML = entries.map(e => `
+                <div class="diary-entry-card">
+                    <div class="diary-entry-header"><span>📅 ${e.date}</span><span class="diary-entry-mood">${e.mood}</span></div>
+                    <p>${e.text}</p>
+                </div>
+            `).join('');
+        }
+
+        /* ÁREA DE COLORIR */
+        const canvas = document.getElementById('coloring-canvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+        let currentColor = '#ffd700';
+        let isEraser = false;
+        let currentTemplate = 'sunflower';
+
+        function loadTemplate(templateName, btn) {
+            currentTemplate = templateName;
+            if (btn) {
+                document.querySelectorAll('.template-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
+            initCanvas();
+        }
+
+        function initCanvas() {
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            drawTemplateOutline(currentTemplate);
+        }
+
+        function drawTemplateOutline(type) {
+            ctx.save();
+            ctx.strokeStyle = '#2c2c2c';
+            ctx.lineWidth = 3.5;
+            ctx.lineCap = 'round';
+
+            if (type === 'sunflower') {
+                ctx.beginPath();
+                ctx.arc(300, 200, 55, 0, Math.PI * 2);
+                ctx.stroke();
+
+                for (let i = 0; i < 14; i++) {
+                    const angle = (i * Math.PI) / 7;
+                    const x1 = 300 + Math.cos(angle) * 55;
+                    const y1 = 200 + Math.sin(angle) * 55;
+                    const x2 = 300 + Math.cos(angle) * 135;
+                    const y2 = 200 + Math.sin(angle) * 135;
+
+                    ctx.beginPath();
+                    ctx.moveTo(x1, y1);
+                    ctx.quadraticCurveTo(300 + Math.cos(angle + 0.25) * 100, 200 + Math.sin(angle + 0.25) * 100, x2, y2);
+                    ctx.quadraticCurveTo(300 + Math.cos(angle - 0.25) * 100, 200 + Math.sin(angle - 0.25) * 100, x1, y1);
+                    ctx.stroke();
+                }
+
+                ctx.beginPath();
+                ctx.moveTo(300, 255);
+                ctx.lineTo(300, 390);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.arc(335, 330, 25, 0, Math.PI);
+                ctx.stroke();
+            } 
+            else if (type === 'heart') {
+                ctx.beginPath();
+                ctx.moveTo(300, 150);
+                ctx.bezierCurveTo(300, 110, 230, 80, 180, 130);
+                ctx.bezierCurveTo(120, 190, 180, 270, 300, 350);
+                ctx.bezierCurveTo(420, 270, 480, 190, 420, 130);
+                ctx.bezierCurveTo(370, 80, 300, 110, 300, 150);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.arc(300, 210, 20, 0, Math.PI * 2);
+                ctx.stroke();
+            } 
+            else if (type === 'cloud') {
+                ctx.beginPath();
+                ctx.arc(220, 220, 45, Math.PI * 0.5, Math.PI * 1.5);
+                ctx.arc(280, 170, 55, Math.PI * 1.0, Math.PI * 1.85);
+                ctx.arc(360, 180, 45, Math.PI * 1.5, Math.PI * 0.2);
+                ctx.arc(400, 230, 35, Math.PI * 1.8, Math.PI * 0.5);
+                ctx.closePath();
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.arc(190, 140, 30, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+
+            ctx.restore();
+        }
+
+        function selectColor(color, el) {
+            currentColor = color;
+            isEraser = false;
+            document.getElementById('eraser-btn').classList.remove('active');
+            document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        function toggleEraser() {
+            isEraser = !isEraser;
+            const btn = document.getElementById('eraser-btn');
+            if (isEraser) {
+                btn.classList.add('active');
+                document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+            } else {
+                btn.classList.remove('active');
+            }
+        }
+
+        function clearCanvas() { initCanvas(); }
+
+        function finishColoring() {
+            addSunflowers(15);
+            alert('Parabéns! Sua arte ficou maravilhosa! 🌻✨');
+        }
+
+        function downloadDrawing() {
+            const link = document.createElement('a');
+            link.download = 'minha-arte-setembro-amarelo.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+
+        function getCanvasCoords(e) {
+            const rect = canvas.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            return {
+                x: (clientX - rect.left) * (canvas.width / rect.width),
+                y: (clientY - rect.top) * (canvas.height / rect.height)
+            };
+        }
+
+        function startDrawing(e) {
+            isDrawing = true;
+            draw(e);
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+            ctx.beginPath();
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const coords = getCanvasCoords(e);
+            const brushSize = document.getElementById('brush-size').value;
+
+            ctx.lineWidth = brushSize;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = isEraser ? '#ffffff' : currentColor;
+
+            ctx.lineTo(coords.x, coords.y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(coords.x, coords.y);
+        }
+
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mousemove', draw);
+
+        canvas.addEventListener('touchstart', startDrawing);
+        canvas.addEventListener('touchend', stopDrawing);
+        canvas.addEventListener('touchmove', draw);
+
+        /* MURAL */
+        const muralData = [
+            { id: 1, text: "Você não está sozinho! Dias ensolarados virão. ☀️", likes: 12 },
+            { id: 2, text: "Seja gentil com você mesmo hoje. 💛", likes: 8 }
+        ];
+
+        function renderMural() {
+            const container = document.getElementById('mural-notes-container');
+            container.innerHTML = muralData.map(item => `
+                <div class="mural-note">
+                    <p class="mural-text">"${item.text}"</p>
+                    <button class="like-btn" onclick="likeNote(${item.id})">❤ ${item.likes}</button>
+                </div>
+            `).join('');
+        }
+
+        function addMuralNote() {
+            const val = document.getElementById('mural-input').value.trim();
+            if (!val) return;
+            muralData.unshift({ id: Date.now(), text: val, likes: 1 });
+            document.getElementById('mural-input').value = '';
+            renderMural();
+            addSunflowers(10);
+        }
+
+        function likeNote(id) {
+            const item = muralData.find(n => n.id === id);
+            if (item) { item.likes++; renderMural(); }
+        }
+
+        /* JOGO */
+        function moveSunflower() {
+            const area = document.getElementById('catch-area');
+            const target = document.getElementById('target-sunflower');
+            target.style.left = Math.floor(Math.random() * (area.clientWidth - 40)) + 'px';
+            target.style.top = Math.floor(Math.random() * (area.clientHeight - 40)) + 'px';
+        }
+
+        function catchSunflower(e) {
+            e.stopPropagation();
+            addSunflowers(5);
+            moveSunflower();
+        }
+
+        function startCatchGame() { moveSunflower(); }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createSunflowerRain();
+            initCanvas();
+            renderDiary();
+            renderMural();
+            startCatchGame();
+        });
+    </script>
+</body>
+</html>
