@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Novembro em estudo</title>
+<style>
+:root{color-scheme:light;--ink:#222a2b;--muted:#546260;--paper:#f6f4ed;--accent:#155895;--tint:#e9f2fc}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:1rem/1.55 "DM Sans",system-ui,sans-serif}
+.wrap{width:min(1060px,calc(100% - 2rem));margin:auto}
+header{background:#173735;color:#fff;padding:3.4rem 0 2.8rem;border-bottom:5px solid #eec77e}
+h1,h2{font-family:Georgia,serif;line-height:1.08;margin:.2em 0}
+h1{font-size:clamp(3rem,8vw,6rem);font-weight:500;letter-spacing:-.055em}
+h2{font-size:clamp(2rem,5vw,3rem);letter-spacing:-.04em}
+h3{font-size:1.3rem;margin:0 0 .5rem}
+p{margin:.5rem 0 1rem}
+header p{max-width:48ch;margin:0;color:#e5eddf}
+nav{display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem;margin:1.5rem 0}
+button{font:inherit;cursor:pointer;font-weight:700;border-radius:.65rem;padding:.62rem 1rem;border:1px solid transparent}
+nav button{background:#fff;color:var(--ink);border-color:#d8ded6;text-align:left}
+nav button[aria-pressed=true]{background:var(--accent);color:#fff;border-color:var(--accent)}
+button:focus-visible,a:focus-visible,textarea:focus-visible,input:focus-visible{outline:3px solid #bc580b;outline-offset:3px}
+.topic{padding:1rem 0}
+.topic p{color:var(--muted)}
+.layout{display:grid;grid-template-columns:1.25fr 1fr;gap:1.2rem;align-items:start}
+.stack{display:grid;gap:1.2rem}
+.card{background:#fff;border:1px solid #dadfd7;border-radius:1rem;padding:clamp(1rem,3vw,1.6rem)}
+fieldset{border:0;border-top:1px solid #e0e5df;margin:0 0 1.15rem;padding:.6rem 0 0;min-width:0}
+legend{font-weight:750;padding:0 .35rem 0 0;max-width:100%}
+.choice{display:flex;align-items:baseline;gap:.5rem;padding:.36rem .45rem;margin:.2rem 0;border-radius:.45rem;background:#f5f6f4;cursor:pointer}
+.choice:has(input:checked){background:var(--tint)}
+input{accent-color:var(--accent)}
+.primary{background:var(--accent);color:white}
+.secondary{background:#fff;border-color:#b9c5be;color:var(--ink)}
+.actions{display:flex;flex-wrap:wrap;gap:.5rem}
+.feedback{margin:.45rem 0 0;font-size:.94rem}
+.feedback:empty,.score:empty{display:none}
+.good{color:#166241}.retry{color:#8e3523}
+.score{font-weight:750;margin:.65rem 0}
+blockquote{margin:.8rem 0 1rem;padding:.8rem 1rem;background:var(--tint);border-left:4px solid var(--accent);border-radius:0 .6rem .6rem 0}
+textarea{display:block;width:100%;min-height:6rem;resize:vertical;border:1px solid #a9b8b0;border-radius:.55rem;padding:.65rem;font:inherit;color:inherit;margin:.35rem 0 .9rem}
+a{color:var(--accent);font-weight:650;text-underline-offset:.2em}
+.research{padding-left:1.25rem;margin:.6rem 0}.research li{padding-left:.15rem;margin-bottom:.7rem}
+small{color:var(--muted)}
+footer{margin-top:2rem;padding:1.15rem 0;border-top:1px solid #d7ddd4;color:var(--muted)}
+@media(max-width:720px){.layout{grid-template-columns:1fr}nav{grid-template-columns:1fr}header{padding:2.2rem 0}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><h1>Novembro em estudo</h1><p>Escolha um tema, responda ao quiz, copie um texto e investigue as fontes indicadas.</p></div></header>
+<main class="wrap">
+<nav aria-label="Temas de novembro">
+<button type="button" data-topic="azul" aria-pressed="true">Novembro Azul</button>
+<button type="button" data-topic="republica" aria-pressed="false">Proclamação da República</button>
+<button type="button" data-topic="consciencia" aria-pressed="false">Consciência Negra</button>
+</nav>
+<div id="atividades"></div>
+<noscript><p>Ative o JavaScript no navegador para abrir as atividades interativas.</p></noscript>
+</main>
+<footer><div class="wrap">Atividades de leitura, escrita e pesquisa</div></footer>
+<script>
+const temas = {
+  azul: {
+    titulo: 'Novembro Azul', cor: '#155895', fundo: '#e9f2fc',
+    introducao: 'Saúde do homem e informação confiável',
+    texto: 'O Novembro Azul incentiva a conversa sobre a saúde do homem. A campanha dá visibilidade ao câncer de próstata e também ajuda a lembrar da importância de cuidar da saúde ao longo do ano. A unidade básica de saúde é um lugar onde as pessoas podem buscar orientação com profissionais.',
+    questoes: [
+      ['Qual é um objetivo do Novembro Azul?', ['Divulgar somente a história das campanhas', 'Incentivar o cuidado com a saúde do homem', 'Promover uma competição esportiva'], 1, 'A campanha abre espaço para conversar sobre a saúde do homem.'],
+      ['Sobre qual tipo de câncer a campanha chama a atenção?', ['Câncer de próstata', 'Câncer de pele', 'Câncer de pulmão'], 0, 'A campanha dá visibilidade ao câncer de próstata.'],
+      ['Quando o cuidado com a saúde pode fazer parte da rotina?', ['Apenas durante as férias', 'Somente no mês da campanha', 'Durante todo o ano'], 2, 'O cuidado com a saúde pode acontecer o ano todo.'],
+      ['Qual atitude ajuda a verificar uma informação de saúde recebida em um grupo?', ['Repassar antes de ler', 'Consultar uma fonte oficial de saúde', 'Confiar na mensagem com mais curtidas'], 1, 'O Ministério da Saúde e o INCA são exemplos de fontes oficiais.']
+    ],
+    pesquisa: ['Por que o Ministério da Saúde destaca a importância de procurar orientação profissional quando aparecem sinais ou sintomas?', 'Que ações de cuidado com a saúde do homem você encontrou na página? Selecione duas e escreva com suas palavras.'],
+    fonte: ['Ministério da Saúde — Novembro Azul', 'https://www.gov.br/saude/pt-br/assuntos/noticias/2024/novembro/saude-orienta-que-a-atencao-aos-sinais-e-sintomas-traz-mais-beneficios-que-o-rastreamento-populacional']
+  },
+  republica: {
+    titulo: 'Proclamação da República', cor: '#326140', fundo: '#eaf4e8',
+    introducao: 'A mudança da Monarquia para a República no Brasil',
+    texto: 'Em 15 de novembro de 1889, a Proclamação da República marcou o fim da Monarquia no Brasil. O imperador Dom Pedro II deixou o poder. O marechal Deodoro da Fonseca liderou o movimento militar e assumiu a chefia do governo provisório.',
+    questoes: [
+      ['Em que data ocorreu a Proclamação da República?', ['7 de setembro de 1822', '13 de maio de 1888', '15 de novembro de 1889'], 2, 'A República foi proclamada em 15 de novembro de 1889.'],
+      ['Qual regime político terminou com a Proclamação da República?', ['Monarquia', 'República', 'Parlamentarismo republicano'], 0, 'O Brasil deixou de ser uma monarquia.'],
+      ['Quem liderou o movimento militar de 15 de novembro?', ['Dom Pedro II', 'Marechal Deodoro da Fonseca', 'Tiradentes'], 1, 'Deodoro da Fonseca chefiou o movimento militar.'],
+      ['Que cargo Dom Pedro II ocupava antes da mudança?', ['Prefeito', 'Presidente da República', 'Imperador'], 2, 'Dom Pedro II era imperador do Brasil.']
+    ],
+    pesquisa: ['O que aconteceu com a família imperial após a Proclamação? Consulte a página indicada e resuma o que encontrou.', 'Em que ano foi promulgada a primeira Constituição republicana? Identifique uma mudança na organização do país apontada pela fonte.'],
+    fonte: ['Câmara dos Deputados — A 1ª República', 'https://www2.camara.leg.br/a-camara/conheca/historia/a1republica.html/']
+  },
+  consciencia: {
+    titulo: 'Consciência Negra', cor: '#854016', fundo: '#f9eedf',
+    introducao: 'Memória, cultura afro-brasileira e combate ao racismo',
+    texto: 'O Dia Nacional de Zumbi e da Consciência Negra é celebrado em 20 de novembro. Zumbi foi uma liderança do Quilombo dos Palmares, símbolo da resistência à escravidão. A data convida a conhecer as contribuições da população negra para a sociedade brasileira e a refletir sobre atitudes de combate ao racismo.',
+    questoes: [
+      ['Quando é celebrado o Dia Nacional de Zumbi e da Consciência Negra?', ['20 de novembro', '15 de novembro', '21 de abril'], 0, 'A data é celebrada em 20 de novembro.'],
+      ['A qual quilombo Zumbi está ligado?', ['Quilombo do Campinho', 'Quilombo do Curiaú', 'Quilombo dos Palmares'], 2, 'Zumbi foi uma liderança do Quilombo dos Palmares.'],
+      ['O que a história de Palmares ajuda a compreender?', ['A chegada da família real', 'A resistência à escravidão', 'A construção de Brasília'], 1, 'Palmares é um símbolo da resistência à escravidão.'],
+      ['Qual atitude ajuda a combater o racismo na escola?', ['Apoiar quem sofreu discriminação e procurar ajuda de um adulto da escola', 'Compartilhar a ofensa em um grupo', 'Tratar a ofensa como brincadeira'], 0, 'Acolher a pessoa e buscar ajuda são atitudes que a comunidade escolar pode tomar.']
+    ],
+    pesquisa: ['Por que o 20 de novembro foi escolhido para celebrar a Consciência Negra? Relacione a data à trajetória de Zumbi.', 'Em que localidade ficava o Quilombo dos Palmares? Registre também um fato sobre a sua história encontrado na fonte.'],
+    fonte: ['Fundação Cultural Palmares — 20 de novembro', 'https://www.gov.br/palmares/pt-br/departamentos/protecao-preservacao-e-articulacao/serra-da-barriga-1/20-de-novembro']
+  }
+};
+
+const atividades = document.querySelector('#atividades');
+const botoes = [...document.querySelectorAll('[data-topic]')];
+
+for (const [id, tema] of Object.entries(temas)) {
+  const painel = document.createElement('section');
+  painel.id = id;
+  painel.hidden = id !== 'azul';
+  painel.setAttribute('aria-labelledby', id + '-titulo');
+  painel.style.setProperty('--accent', tema.cor);
+  painel.style.setProperty('--tint', tema.fundo);
+  painel.innerHTML = `
+    <div class="topic"><h2 id="${id}-titulo">${tema.titulo}</h2><p>${tema.introducao}</p></div>
+    <div class="layout">
+      <form class="card">
+        <h3>Perguntas interativas</h3>
+        <p>Marque uma alternativa em cada pergunta e confira suas respostas.</p>
+        ${tema.questoes.map(([pergunta, opcoes], i) => `
+          <fieldset>
+            <legend>${i + 1}. ${pergunta}</legend>
+            ${opcoes.map((opcao, j) => `<label class="choice"><input type="radio" name="${id}-q${i}" value="${j}"> <span>${opcao}</span></label>`).join('')}
+            <p class="feedback" id="${id}-feedback-${i}"></p>
+          </fieldset>`).join('')}
+        <div class="actions"><button class="primary" type="submit">Corrigir respostas</button><button class="secondary" type="reset">Refazer quiz</button></div>
+        <p class="score" role="status"></p>
+      </form>
+      <div class="stack">
+        <section class="card">
+          <h3>Cópia de texto</h3>
+          <p>Leia e copie o trecho abaixo no caderno ou no campo de escrita.</p>
+          <blockquote>${tema.texto}</blockquote>
+          <label for="${id}-copia">Minha cópia</label>
+          <textarea id="${id}-copia" placeholder="Digite o texto aqui"></textarea>
+        </section>
+        <section class="card">
+          <h3>Pesquisa na internet</h3>
+          <p>Consulte a fonte e responda com suas palavras.</p>
+          <a href="${tema.fonte[1]}" target="_blank" rel="noopener noreferrer">${tema.fonte[0]} ↗</a>
+          <ol class="research">${tema.pesquisa.map((pergunta, i) => `<li><label for="${id}-p${i}">${pergunta}</label><textarea id="${id}-p${i}" placeholder="Escreva sua resposta"></textarea></li>`).join('')}</ol>
+          <label for="${id}-fonte">Fonte consultada</label>
+          <textarea id="${id}-fonte" placeholder="Anote o nome do site, o link e a data de acesso"></textarea>
+          <small>Registre suas respostas no caderno se quiser guardá-las após fechar a página.</small>
+        </section>
+      </div>
+    </div>`;
+  atividades.append(painel);
+
+  const quiz = painel.querySelector('form');
+  const placar = quiz.querySelector('.score');
+  const mensagens = [...quiz.querySelectorAll('.feedback')];
+  function limparCorrecao() {
+    placar.textContent = '';
+    mensagens.forEach(mensagem => {
+      mensagem.textContent = '';
+      mensagem.className = 'feedback';
+    });
+  }
+  quiz.addEventListener('reset', limparCorrecao);
+  quiz.addEventListener('change', limparCorrecao);
+  quiz.addEventListener('submit', evento => {
+    evento.preventDefault();
+    const respostas = new FormData(quiz);
+    let acertos = 0;
+    let pendentes = 0;
+    tema.questoes.forEach(([, , correta, explicacao], i) => {
+      const valor = respostas.get(id + '-q' + i);
+      const mensagem = mensagens[i];
+      if (valor === null) {
+        pendentes++;
+        mensagem.textContent = 'Escolha uma alternativa.';
+        mensagem.className = 'feedback retry';
+      } else if (Number(valor) === correta) {
+        acertos++;
+        mensagem.textContent = 'Correto! ' + explicacao;
+        mensagem.className = 'feedback good';
+      } else {
+        mensagem.textContent = 'Revise sua resposta. ' + explicacao;
+        mensagem.className = 'feedback retry';
+      }
+    });
+    placar.textContent = `Acertos: ${acertos} de ${tema.questoes.length}.` +
+      (pendentes ? ` Em branco: ${pendentes}.` : '');
+  });
+}
+
+botoes.forEach(botao => {
+  botao.addEventListener('click', () => {
+    const ativo = botao.dataset.topic;
+    botoes.forEach(item => {
+      const selecionado = item.dataset.topic === ativo;
+      item.setAttribute('aria-pressed', String(selecionado));
+      document.getElementById(item.dataset.topic).hidden = !selecionado;
+    });
+    document.documentElement.style.setProperty('--accent', temas[ativo].cor);
+  });
+});
+</script>
+</body>
+</html>
