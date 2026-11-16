@@ -35,7 +35,7 @@ input{accent-color:var(--accent)}
 .secondary{background:#fff;border-color:#b9c5be;color:var(--ink)}
 .actions{display:flex;flex-wrap:wrap;gap:.5rem}
 .feedback{margin:.45rem 0 0;font-size:.94rem}
-.feedback:empty,.score:empty{display:none}
+.feedback:empty:not(.resultado-copia),.score:empty{display:none}
 .good{color:#166241}.retry{color:#8e3523}
 .score{font-weight:750;margin:.65rem 0}
 blockquote{margin:.8rem 0 1rem;padding:.8rem 1rem;background:var(--tint);border-left:4px solid var(--accent);border-radius:0 .6rem .6rem 0}
@@ -44,6 +44,12 @@ a{color:var(--accent);font-weight:650;text-underline-offset:.2em}
 .research{padding-left:1.25rem;margin:.6rem 0}.research li{padding-left:.15rem;margin-bottom:.7rem}
 small{color:var(--muted)}
 footer{margin-top:2rem;padding:1.15rem 0;border-top:1px solid #d7ddd4;color:var(--muted)}
+.export-actions{margin:1.25rem 0 0}
+.export-result{margin:1rem 0}
+.export-result[hidden]{display:none}
+#texto-relatorio{min-height:12rem}
+#baixar-pdf{display:inline-block;text-decoration:none;border-radius:.65rem;padding:.62rem 1rem}
+#baixar-pdf[hidden]{display:none}
 @media(max-width:720px){.layout{grid-template-columns:1fr}nav{grid-template-columns:1fr}header{padding:2.2rem 0}}
 </style>
 </head>
@@ -55,8 +61,19 @@ footer{margin-top:2rem;padding:1.15rem 0;border-top:1px solid #d7ddd4;color:var(
 <button type="button" data-topic="republica" aria-pressed="false">Proclamação da República</button>
 <button type="button" data-topic="consciencia" aria-pressed="false">Consciência Negra</button>
 </nav>
+<div class="export-actions">
+  <a class="primary" id="baixar-pdf" download="novembro_em_estudo_respostas.pdf" hidden>Baixar PDF das respostas</a>
+  <div class="card export-result" id="resultado-pdf" hidden>
+    <p id="estado-pdf" role="status"></p>
+    <details>
+      <summary>Ver respostas para copiar</summary>
+      <label for="texto-relatorio">Respostas dos três temas</label>
+      <textarea id="texto-relatorio" readonly></textarea>
+    </details>
+  </div>
+</div>
 <div id="atividades"></div>
-<noscript><p>Ative o JavaScript no navegador para abrir as atividades interativas.</p></noscript>
+<noscript><p>Abra este arquivo HTML diretamente no Chrome, Edge ou Firefox, com JavaScript ativado, para realizar as atividades e gerar o PDF.</p></noscript>
 </main>
 <footer><div class="wrap">Atividades de leitura, escrita e pesquisa</div></footer>
 <script>
@@ -105,6 +122,28 @@ const temas = {
 const atividades = document.querySelector('#atividades');
 const botoes = [...document.querySelectorAll('[data-topic]')];
 
+function conferirCopia(original, digitado) {
+  // Aceita quebras de linha e espaços extras entre palavras.
+  const separarPalavras = texto => texto.normalize('NFC').trim().split(/\s+/u);
+  if (!digitado.trim()) {
+    return { correta: false, mensagem: 'Digite sua cópia antes de conferir.' };
+  }
+  const modelo = separarPalavras(original);
+  const copia = separarPalavras(digitado);
+  for (let i = 0; i < modelo.length; i++) {
+    if (copia[i] === undefined) {
+      return { correta: false, mensagem: `A cópia está incompleta. Continue a partir de “${modelo[i]}”.` };
+    }
+    if (copia[i] !== modelo[i]) {
+      return { correta: false, mensagem: `Revise a palavra ${i + 1}. No texto original aparece “${modelo[i]}”.` };
+    }
+  }
+  if (copia.length > modelo.length) {
+    return { correta: false, mensagem: `Há texto extra no final, a partir de “${copia[modelo.length]}”.` };
+  }
+  return { correta: true, mensagem: 'Cópia correta! Seu texto corresponde ao original.' };
+}
+
 for (const [id, tema] of Object.entries(temas)) {
   const painel = document.createElement('section');
   painel.id = id;
@@ -133,7 +172,10 @@ for (const [id, tema] of Object.entries(temas)) {
           <p>Leia e copie o trecho abaixo no caderno ou no campo de escrita.</p>
           <blockquote>${tema.texto}</blockquote>
           <label for="${id}-copia">Minha cópia</label>
-          <textarea id="${id}-copia" placeholder="Digite o texto aqui"></textarea>
+          <textarea id="${id}-copia" placeholder="Digite o texto aqui" aria-describedby="${id}-copia-dica"></textarea>
+          <p id="${id}-copia-dica"><small>Confira as letras maiúsculas e minúsculas, os acentos e a pontuação.</small></p>
+          <button class="primary conferir-copia" type="button">Conferir cópia</button>
+          <div class="feedback resultado-copia" role="status"></div>
         </section>
         <section class="card">
           <h3>Pesquisa na internet</h3>
@@ -147,6 +189,18 @@ for (const [id, tema] of Object.entries(temas)) {
       </div>
     </div>`;
   atividades.append(painel);
+
+  const campoCopia = painel.querySelector('#' + id + '-copia');
+  const resultadoCopia = painel.querySelector('.resultado-copia');
+  campoCopia.addEventListener('input', () => {
+    resultadoCopia.textContent = '';
+  });
+  painel.querySelector('.conferir-copia').addEventListener('click', () => {
+    const { correta, mensagem } = conferirCopia(tema.texto, campoCopia.value);
+    resultadoCopia.classList.toggle('good', correta);
+    resultadoCopia.classList.toggle('retry', !correta);
+    resultadoCopia.textContent = mensagem;
+  });
 
   const quiz = painel.querySelector('form');
   const placar = quiz.querySelector('.score');
@@ -197,6 +251,186 @@ botoes.forEach(botao => {
     document.documentElement.style.setProperty('--accent', temas[ativo].cor);
   });
 });
+
+// Os comandos PDF ficam em ASCII. Os textos usam a codificação Windows-1252
+// das fontes padrão, que inclui as letras acentuadas do português.
+const caracteresWindows = '€\u0000‚ƒ„…†‡ˆ‰Š‹Œ\u0000Ž\u0000\u0000‘’“”•–—˜™š›œ\u0000žŸ';
+
+function codificarTextoPdf(texto) {
+  return Array.from(texto, caractere => {
+    const codigo = caractere.codePointAt(0);
+    const indice = caracteresWindows.indexOf(caractere);
+    const byte = (codigo >= 32 && codigo <= 126) || (codigo >= 160 && codigo <= 255)
+      ? codigo : indice >= 0 && codigo !== 0 ? indice + 128 : 63;
+    return byte.toString(16).padStart(2, '0');
+  }).join('');
+}
+
+function* quebrarLinhasPdf(texto, largura) {
+  for (const paragrafo of texto.normalize('NFC').split(/\r\n?|\n/u)) {
+    let linha = [];
+    for (const palavra of paragrafo.trim().split(/\s+/u)) {
+      const letras = Array.from(palavra);
+      if (linha.length && linha.length + 1 + letras.length > largura) {
+        yield linha.join('');
+        linha = [];
+      }
+      if (linha.length) linha.push(' ');
+      for (const letra of letras) {
+        if (linha.length === largura) {
+          yield linha.join('');
+          linha = [];
+        }
+        linha.push(letra);
+      }
+    }
+    yield linha.join('');
+  }
+}
+
+function coletarRespostas() {
+  return Object.entries(temas).map(([id, tema]) => {
+    const formulario = document.getElementById(id).querySelector('form');
+    const respostas = new FormData(formulario);
+    const campo = sufixo => document.getElementById(id + sufixo).value;
+    const quiz = tema.questoes.map(([pergunta, opcoes], i) =>
+      [(i + 1) + '. ' + pergunta, opcoes[respostas.get(id + '-q' + i)] ?? '']);
+    const pesquisa = tema.pesquisa.map((pergunta, i) =>
+      [(i + 1) + '. ' + pergunta, campo('-p' + i)]);
+
+    return {
+      titulo: tema.titulo,
+      grupos: [
+        { titulo: 'Perguntas interativas', respostas: quiz },
+        { titulo: 'Cópia de texto', respostas: [['Minha cópia', campo('-copia')]] },
+        { titulo: 'Pesquisa na internet', respostas: [...pesquisa, ['Fonte consultada', campo('-fonte')]] }
+      ]
+    };
+  });
+}
+
+function textoDaResposta(valor) {
+  return valor.trim() || 'Não respondida';
+}
+
+function criarPdfRespostas(relatorio) {
+  // Os quatro primeiros objetos definem catálogo, páginas e fontes.
+  const objetos = [
+    '<< /Type /Catalog /Pages 2 0 R >>', '',
+    '<< /Type /Font /Subtype /Type1 /BaseFont /Courier /Encoding /WinAnsiEncoding >>',
+    '<< /Type /Font /Subtype /Type1 /BaseFont /Courier-Bold /Encoding /WinAnsiEncoding >>'
+  ];
+  const paginas = [];
+  let comandos = [];
+  let y = 0;
+
+  function escrever(linha, tamanho, negrito) {
+    const fonte = negrito ? 'F2' : 'F1';
+    comandos.push('BT /' + fonte + ' ' + tamanho + ' Tf 1 0 0 1 42 ' + y +
+      ' Tm <' + codificarTextoPdf(linha) + '> Tj ET\n');
+    y -= tamanho + 4;
+  }
+
+  function fecharPagina() {
+    const fluxo = comandos.join('');
+    const idFluxo = objetos.push('<< /Length ' + fluxo.length + ' >>\nstream\n' + fluxo + 'endstream');
+    const idPagina = objetos.push('<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] ' +
+      '/Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents ' + idFluxo + ' 0 R >>');
+    paginas.push(idPagina + ' 0 R');
+  }
+
+  for (const tema of relatorio) {
+    function abrirPagina(continuacao = false) {
+      comandos = [];
+      y = 792;
+      escrever('Novembro em estudo - Respostas da atividade', 14, true);
+      y -= 8;
+      escrever(tema.titulo + (continuacao ? ' (continuação)' : ''), 16, true);
+      y -= 10;
+    }
+
+    function garantirEspaco(altura) {
+      if (y - altura >= 37) return;
+      fecharPagina();
+      abrirPagina(true);
+    }
+
+    function adicionarResposta(pergunta, valor) {
+      const perguntaEmLinhas = [...quebrarLinhasPdf(pergunta, 77)];
+      garantirEspaco(perguntaEmLinhas.length * 15 + 15);
+      for (const linha of perguntaEmLinhas) escrever(linha, 11, true);
+      for (const linha of quebrarLinhasPdf(textoDaResposta(valor), 77)) {
+        garantirEspaco(15);
+        escrever(linha, 11, false);
+      }
+      y -= 8;
+    }
+
+    abrirPagina();
+    for (const grupo of tema.grupos) {
+      garantirEspaco(75);
+      escrever(grupo.titulo, 12, true);
+      for (const [pergunta, resposta] of grupo.respostas) {
+        adicionarResposta(pergunta, resposta);
+      }
+    }
+    fecharPagina();
+  }
+
+  objetos[1] = '<< /Type /Pages /Kids [' + paginas.join(' ') + '] /Count ' + paginas.length + ' >>';
+  const partes = ['%PDF-1.4\n'];
+  const deslocamentos = ['0000000000 65535 f \n'];
+  let tamanhoPdf = partes[0].length;
+  objetos.forEach((objeto, i) => {
+    deslocamentos.push(String(tamanhoPdf).padStart(10, '0') + ' 00000 n \n');
+    const parte = (i + 1) + ' 0 obj\n' + objeto + '\nendobj\n';
+    partes.push(parte);
+    tamanhoPdf += parte.length;
+  });
+  partes.push('xref\n0 ' + deslocamentos.length + '\n' + deslocamentos.join('') +
+    'trailer\n<< /Size ' + deslocamentos.length + ' /Root 1 0 R >>\nstartxref\n' + tamanhoPdf + '\n%%EOF\n');
+  return new Blob(partes, {type: 'application/pdf'});
+}
+
+const resultadoPdf = document.querySelector('#resultado-pdf');
+const linkPdf = document.querySelector('#baixar-pdf');
+const estadoPdf = document.querySelector('#estado-pdf');
+const textoRelatorio = document.querySelector('#texto-relatorio');
+let urlPdf;
+
+function atualizarArquivoPdf(relatorio) {
+  const novaUrl = URL.createObjectURL(criarPdfRespostas(relatorio));
+  if (urlPdf) URL.revokeObjectURL(urlPdf);
+  urlPdf = novaUrl;
+  linkPdf.href = urlPdf;
+}
+
+linkPdf.addEventListener('click', evento => {
+  resultadoPdf.hidden = false;
+  try {
+    const relatorio = coletarRespostas();
+    textoRelatorio.value = relatorio.map(tema => [
+      tema.titulo,
+      ...tema.grupos.map(grupo => [
+        grupo.titulo,
+        ...grupo.respostas.map(([pergunta, resposta]) => pergunta + '\n' + textoDaResposta(resposta))
+      ].join('\n\n'))
+    ].join('\n\n')).join('\n\n');
+
+    atualizarArquivoPdf(relatorio);
+    estadoPdf.textContent = 'PDF pronto. Confira os downloads do navegador.';
+  } catch (erro) {
+    evento.preventDefault();
+    console.error(erro);
+    estadoPdf.textContent = 'O PDF não pôde ser baixado. Use “Ver respostas para copiar” para recuperar suas respostas.';
+    resultadoPdf.querySelector('details').open = true;
+  }
+});
+linkPdf.addEventListener('contextmenu', () => {
+  atualizarArquivoPdf(coletarRespostas());
+});
+atualizarArquivoPdf(coletarRespostas());
+linkPdf.hidden = false;
 </script>
 </body>
 </html>
